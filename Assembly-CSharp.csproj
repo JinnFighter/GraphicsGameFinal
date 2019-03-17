@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FullscreenSprite.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\MainSettings.cs" />
+    <Compile Include="Assets\Scripts\MenuControls.cs" />
     <Compile Include="Assets\Scripts\SettingsPopup.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
