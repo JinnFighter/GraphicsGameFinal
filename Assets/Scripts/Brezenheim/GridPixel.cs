@@ -5,11 +5,11 @@ using UnityEngine;
 public class GridPixel : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
-    private bool painted;
+    private bool painted = false;
     // Start is called before the first frame update
     void Start()
     {
-        painted = false;
+        //painted = false;
         pixel_empty.SetActive(true);
     }
 
@@ -18,8 +18,26 @@ public class GridPixel : MonoBehaviour
     {
         
     }
+    public void setPixelState(bool state)
+    {
+        if(painted!=state)
+        {
+            painted = state;
+            pixel_empty.SetActive(!state);
+        }
+        
+    }
     public void OnMouseDown()
     {
-
+        if(painted)
+        {
+            painted = false;
+            pixel_empty.SetActive(true);
+        }
+        else
+        {
+            painted = true;
+            pixel_empty.SetActive(false);
+        }
     }
 }
