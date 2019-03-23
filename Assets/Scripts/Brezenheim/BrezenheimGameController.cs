@@ -2,20 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
+using UnityEngine.UI;
 
 public class BrezenheimGameController : MonoBehaviour
 {
     [SerializeField] public GridPixelScript originalPixel;
-    public  GridPixelScript[,] grid;
+    private  GridPixelScript[,] grid;
+    private List<GridPixelScript> linePoints;
+    private List<int> ds;
+    private GridPixelScript last_point;
+    private GridPixelScript prev_point;
     public const int gridRows = 10;
     public const int gridCols = 10;
     private float offsetX;
     private float offsetY;
+    private int iteration;
+    [SerializeField]private InputField textField;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ds = new List<int>(1);
+        linePoints = new List<GridPixelScript>(1);
         //grid = new GridPixelScript[gridRows][];
         //for(int i=0;i<gridRows;i++)
         //{
@@ -62,7 +72,12 @@ public class BrezenheimGameController : MonoBehaviour
             }
         }
         //drawLine(4,5,9,9);
-        Bresenham4Line(4, 5, 8, 1);
+        //Bresenham4Line(4, 5, 8, 0);
+        Bresenham4Line(4, 5, 9, 9);
+        last_point = linePoints[linePoints.Count-1];
+        iteration = 0;
+        prev_point = linePoints[0];
+        textField.text = ds[0].ToString();
     }
 
     // Update is called once per frame
@@ -246,7 +261,7 @@ public class BrezenheimGameController : MonoBehaviour
         a = b;
         b = c;
     }
-      public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
+    public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
         {
         int x0 = Y0;
         int y0 = X0;
@@ -265,22 +280,30 @@ public class BrezenheimGameController : MonoBehaviour
                 int d1 = dy << 1;
                 int d2 = (dy - dx) << 1;
             grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+            //linePoints.Add(grid[x0, y0]);
+            ds.Add(d);
             //PutPixel(g, clr, x0, y0, 255);
             int x = x0 + sx;
                 int y = y0;
                 for (int i = 1; i <= dx; i++)
                 {
-                    if (d > 0)
+                //Debug.Log(d.ToString());
+                //ds.Add(d);
+                if (d > 0)
                     {
                         d += d2;
                         y += sy;
+                    
                     }
                     else
                         d += d1;
                 grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+                linePoints.Add(grid[x, y]);
+                ds.Add(d);
                 //PutPixel(g, clr, x, y, 255);
-                    x+=sx;
-                }
+                x +=sx;
+                
+            }
             }
             else
             {
@@ -288,12 +311,14 @@ public class BrezenheimGameController : MonoBehaviour
                 int d1 = dx << 1;
                 int d2 = (dx - dy) << 1;
             grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+            //linePoints.Add(grid[x0, y0]);
+            ds.Add(d);
             //PutPixel(g, clr, x0, y0, 255);
-                int x = x0;
+            int x = x0;
                 int y = y0 + sy;
                 for (int i = 1; i <= dy; i++)
                 {
-                    if (d > 0)
+                if (d > 0)
                     {
                         d += d2;
                         x += sx;
@@ -301,9 +326,39 @@ public class BrezenheimGameController : MonoBehaviour
                     else
                         d += d1;
                 grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+                linePoints.Add(grid[x, y]);
+                ds.Add(d);
                 //PutPixel(g, clr, x, y, 255);
-                    y+=sy;
-                }
+                y +=sy;
+                
+            }
             }
         }
+    public void gameCheck(GridPixelScript invoker)
+    {
+        if(prev_point == last_point)
+        {
+            Debug.Log("Enough, start over, it's finished!");
+            return;
+        }
+        else
+        {
+            prev_point = linePoints[iteration];
+            
+            if(invoker == prev_point)
+            {
+                Debug.Log("Correct!");
+                invoker.setPixelState(false);//changle later to true! IMPORTANT!!!
+                iteration++;
+                textField.text = ds[iteration].ToString();
+                prev_point = linePoints[iteration];
+            }
+            else
+            {
+                Debug.Log("Wrong!");
+            }
+            
+        }
+    }
+
 }

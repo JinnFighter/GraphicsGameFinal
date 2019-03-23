@@ -112,12 +112,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &185772428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4281135875453103485, guid: 9f7864dfdbdd3164d896843b37c15aa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 4281135875536094449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &185772429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4281135875453103484, guid: 9f7864dfdbdd3164d896843b37c15aa3,
@@ -130,38 +124,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4281135875536094449}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185772428}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ec301ef7685293489408ba71680c166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &185772431
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185772428}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.14, y: 1.13}
-    newSize: {x: 1.14, y: 1.13}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.14, y: 1.13}
-  m_EdgeRadius: 0
 --- !u!1001 &243243985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -588,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 185772430}
+  textField: {fileID: 2081873855}
 --- !u!1 &1626490249
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +884,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1043443979}
     m_Modifications:
+    - target: {fileID: 7265330314369403927, guid: 9f7864dfdbdd3164d896843b37c15aa3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4281135875453103485, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
       propertyPath: m_Name
@@ -985,5 +959,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1424190824832074488, guid: 9f7864dfdbdd3164d896843b37c15aa3,
+        type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 1197975622}
+    - target: {fileID: 1424190824832074488, guid: 9f7864dfdbdd3164d896843b37c15aa3,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1197975624}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f7864dfdbdd3164d896843b37c15aa3, type: 3}
