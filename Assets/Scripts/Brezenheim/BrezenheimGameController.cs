@@ -61,7 +61,8 @@ public class BrezenheimGameController : MonoBehaviour
                 //Debug.Log(grid[i, j].GetHashCode().ToString());
             }
         }
-        drawLine(4,5, 0, 0);
+        //drawLine(4,5,9,9);
+        Bresenham4Line(4, 5, 8, 1);
     }
 
     // Update is called once per frame
@@ -81,7 +82,7 @@ public class BrezenheimGameController : MonoBehaviour
         //bitmap.SetPixel(A.X, A.Y, color);
 
 
-        /*  int dx = Math.Abs(bx - ax);//разница между иксами первой точки и второй;
+         int dx = Math.Abs(bx - ax);//разница между иксами первой точки и второй;
           int dy = Math.Abs(by - ay);//разница между игреками первой точки и второй;
           int d = (dy << 1) - dx;//разность между двойной разницей игреков и разницей иксов
           int d1 = dy << 1;//умножение разницы игреков на два;
@@ -114,7 +115,7 @@ public class BrezenheimGameController : MonoBehaviour
                       }
 
 
-                      grid[t][y].GetComponent<GridPixel>().setPixelState(true);
+                      grid[t,y].GetComponent<GridPixelScript>().setPixelState(true);
                       //bitmap.SetPixel(t, y, color);
 
 
@@ -147,7 +148,7 @@ public class BrezenheimGameController : MonoBehaviour
                           d -= d1;
                       }
 
-                      grid[t][y].GetComponent<GridPixel>().setPixelState(true);
+                      grid[t,y].GetComponent<GridPixelScript>().setPixelState(true);
                       //bitmap.SetPixel(t, y, color);
 
 
@@ -187,7 +188,7 @@ public class BrezenheimGameController : MonoBehaviour
                       }
 
                   Debug.Log("X: " + t + " y: " + y);
-                      grid[y][t].GetComponent<GridPixel>().setPixelState(true);
+                      grid[y,t].GetComponent<GridPixelScript>().setPixelState(true);
                       //bitmap.SetPixel(y, t, color);
 
 
@@ -219,7 +220,7 @@ public class BrezenheimGameController : MonoBehaviour
                           d -= d1;
                       }
 
-                      grid[y][t].GetComponent<GridPixel>().setPixelState(true);
+                      grid[y,t].GetComponent<GridPixelScript>().setPixelState(true);
                       //bitmap.SetPixel(y, t, color);
 
 
@@ -229,7 +230,7 @@ public class BrezenheimGameController : MonoBehaviour
               } 
 
           }
-          */
+          
 
         //grid[bx][by].GetComponent<GridPixel>().setPixelState(true);
         grid[Bx, By].GetComponent<GridPixelScript>().setPixelState(true);
@@ -245,4 +246,64 @@ public class BrezenheimGameController : MonoBehaviour
         a = b;
         b = c;
     }
+      public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
+        {
+        int x0 = Y0;
+        int y0 = X0;
+        int x1 = Y1;
+        int y1 = X1;
+            //Изменения координат
+            int dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
+            int dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
+            //Направление приращения
+            int sx = (x1 >= x0) ? (1) : (-1);
+            int sy = (y1 >= y0) ? (1) : (-1);
+ 
+            if (dy < dx)
+            {
+                int d = (dy << 1) - dx;
+                int d1 = dy << 1;
+                int d2 = (dy - dx) << 1;
+            grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+            //PutPixel(g, clr, x0, y0, 255);
+            int x = x0 + sx;
+                int y = y0;
+                for (int i = 1; i <= dx; i++)
+                {
+                    if (d > 0)
+                    {
+                        d += d2;
+                        y += sy;
+                    }
+                    else
+                        d += d1;
+                grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+                //PutPixel(g, clr, x, y, 255);
+                    x+=sx;
+                }
+            }
+            else
+            {
+                int d = (dx << 1) - dy;
+                int d1 = dx << 1;
+                int d2 = (dx - dy) << 1;
+            grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+            //PutPixel(g, clr, x0, y0, 255);
+                int x = x0;
+                int y = y0 + sy;
+                for (int i = 1; i <= dy; i++)
+                {
+                    if (d > 0)
+                    {
+                        d += d2;
+                        x += sx;
+                    }
+                    else
+                        d += d1;
+                grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+                //PutPixel(g, clr, x, y, 255);
+                    y+=sy;
+                }
+            }
+        }
 }
