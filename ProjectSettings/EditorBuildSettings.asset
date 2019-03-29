@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ColorPicker.unity
     guid: 275293ee76bc2734a9a207f45cd4dce2
+  - enabled: 1
+    path: Assets/Scenes/Brezenheim.unity
+    guid: a1b6185bcd4448047a2e8aded52cb249
   m_configObjects: {}

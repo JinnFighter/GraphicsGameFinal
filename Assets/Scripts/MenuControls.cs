@@ -17,9 +17,13 @@ public class MenuControls : MonoBehaviour
         
     }
 
-    public void PlayPressed()
+    public void ColorPickerButtonPressed()
     {
         SceneManager.LoadScene("ColorPicker");
+    }
+    public void BrezenheimButtonPressed()
+    {
+        SceneManager.LoadScene("Brezenheim");
     }
     public void ExitPressed()
     {

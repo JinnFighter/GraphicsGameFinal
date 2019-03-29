@@ -4,6 +4,7 @@ C:/dell/Unity Projects/GraphicsGameFinal/Builds/GraphicsGameFinal.exe
 SceneListBegin?
 Assets/Scenes/MainMenu.unity
 Assets/Scenes/ColorPicker.unity
+Assets/Scenes/Brezenheim.unity
 SceneListEnd?
 984dcc0ba3707b7691fbdca8ff508d28 Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 01aa15e337e3a9c62f15153dfac6d589 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
@@ -54,6 +55,7 @@ abf1930d8126d0b2e00e9449129a0190 UnityEngine.UI.dll:UnityEngine.EventSystems.Tou
 64e54c0cbb0177c5ea26f340efb9ff85 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SettingsPopup
 98ad81e9f689a492509f07e75b810aaa Unity.TextMeshPro.dll:TMPro.TMP_InputField
+921320e6e75f41c594eb1d2be84ddc18 Assembly-CSharp.dll:.BrezenheimGameController
 cf9f5cf2c3145a37ac07f00e50e460f9 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 5fc094978ce3e3591a7500ed380d854a UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -163,5 +165,4 @@ c6666661329916e218bee7f5e79e60f5 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
 7e518ca5c2b2e9ba50301811c0cd5463 Assembly-CSharp.dll:.GameController
-e7e7bd39dd1ab7815556ed81f1194f00 Assembly-CSharp.dll:.BrezenheimGameController
-99eae7c93d953912c74e4f276e5de067 Assembly-CSharp.dll:.GridPixel
+d19fdd795c02cd96864c20da96f1b37e Assembly-CSharp.dll:.GridPixelScript

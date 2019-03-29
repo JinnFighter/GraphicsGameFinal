@@ -78,6 +78,8 @@ public class BrezenheimGameController : MonoBehaviour
         iteration = 0;
         prev_point = linePoints[0];
         textField.text = ds[0].ToString();
+        grid[5,4].setPixelState(true);
+        grid[9,9].setPixelState(true);
     }
 
     // Update is called once per frame
@@ -279,7 +281,9 @@ public class BrezenheimGameController : MonoBehaviour
                 int d = (dy << 1) - dx;
                 int d1 = dy << 1;
                 int d2 = (dy - dx) << 1;
-            grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+
+            //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+
             //linePoints.Add(grid[x0, y0]);
             ds.Add(d);
             //PutPixel(g, clr, x0, y0, 255);
@@ -297,7 +301,9 @@ public class BrezenheimGameController : MonoBehaviour
                     }
                     else
                         d += d1;
-                grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+
+                //grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+
                 linePoints.Add(grid[x, y]);
                 ds.Add(d);
                 //PutPixel(g, clr, x, y, 255);
@@ -310,7 +316,9 @@ public class BrezenheimGameController : MonoBehaviour
                 int d = (dx << 1) - dy;
                 int d1 = dx << 1;
                 int d2 = (dx - dy) << 1;
-            grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+
+            //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
+
             //linePoints.Add(grid[x0, y0]);
             ds.Add(d);
             //PutPixel(g, clr, x0, y0, 255);
@@ -325,7 +333,9 @@ public class BrezenheimGameController : MonoBehaviour
                     }
                     else
                         d += d1;
-                grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+
+                //grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
+
                 linePoints.Add(grid[x, y]);
                 ds.Add(d);
                 //PutPixel(g, clr, x, y, 255);
@@ -348,7 +358,7 @@ public class BrezenheimGameController : MonoBehaviour
             if(invoker == prev_point)
             {
                 Debug.Log("Correct!");
-                invoker.setPixelState(false);//changle later to true! IMPORTANT!!!
+                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
                 iteration++;
                 textField.text = ds[iteration].ToString();
                 prev_point = linePoints[iteration];
