@@ -7,17 +7,18 @@ public class TurtleGameController : MonoBehaviour
 {
     [SerializeField] public TurtleGridPixelScript originalPixel;
     private TurtleGridPixelScript[,] grid;
-    [SerializeField] public InputField routeInputField;
     [SerializeField] public Turtle turtle;
+    [SerializeField] public InputField routeInputField;
+    
     private string route;
     public const int gridRows = 10;
     public const int gridCols = 10;
     private float offsetX;
     private float offsetY;
-    private enum commandsEnum {FORWARD, ROTATE_PLUS, ROTATE_MINUS};
-    private Hashtable commandsTable = new Hashtable { {'F', commandsEnum.FORWARD}, { '+', commandsEnum.ROTATE_PLUS },
-        { '-', commandsEnum.ROTATE_MINUS } };
-    private int angle = 90;
+    private int x;
+    private int y;
+    private enum directionEnum { UP, LEFT, DOWN, RIGHT };
+    private int look;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +55,10 @@ public class TurtleGameController : MonoBehaviour
             }
         }
         routeInputField.text = route;
+        x = 0;
+        y = 0;
+        look = (int)directionEnum.RIGHT;
+        turtle.gameObject.transform.Rotate(0, 0, -90);
         executeMoveSequence();
     }
 
@@ -62,27 +67,94 @@ public class TurtleGameController : MonoBehaviour
     {
         
     }
-    void GameChecker()
+    public void rotateLeft()
     {
-
+        turtle.transform.Rotate(0, 0, 90);
+        switch (look)
+        {
+            case (int)directionEnum.UP:
+                look = (int)directionEnum.LEFT;
+                break;
+            case (int)directionEnum.LEFT:
+                look = (int)directionEnum.DOWN;
+                break;
+            case (int)directionEnum.DOWN:
+                look = (int)directionEnum.RIGHT;
+                break;
+            case (int)directionEnum.RIGHT:
+                look = (int)directionEnum.UP;
+                break;
+        }
+    }
+    public void rotateRight()
+    {
+        turtle.transform.Rotate(0, 0, -90);
+        switch (look)
+        {
+            case (int)directionEnum.UP:
+                look = (int)directionEnum.RIGHT;
+                break;
+            case (int)directionEnum.RIGHT:
+                look = (int)directionEnum.DOWN;
+                break;
+            case (int)directionEnum.DOWN:
+                look = (int)directionEnum.LEFT;
+                break;
+            case (int)directionEnum.LEFT:
+                look = (int)directionEnum.UP;
+                break;
+        }
+        //Debug.Log(look);
+    }
+    public void moveForward()
+    {
+        Vector3 startPos = turtle.transform.position;
+        float posX = startPos.x;
+        float posY = startPos.y;
+        switch (look)
+        {
+            case (int)directionEnum.UP:
+                x--;
+                posY += offsetY;
+                break;
+            case (int)directionEnum.RIGHT:
+                y++;
+                posX += offsetX;
+                break;
+            case (int)directionEnum.DOWN:
+                x++;
+                posY -= offsetY;
+                break;
+            case (int)directionEnum.LEFT:
+                y--;
+                posX -= offsetX;
+                break;
+        }
+        Debug.Log(x.ToString() + " " + y.ToString());
+        turtle.transform.position = new Vector3(posX, posY, startPos.z);
     }
     void executeMoveSequence()
     {
-        for(int i=0;i<route.Length;i++)
+        Debug.Log("LooksNowStart" + look);
+        for (int i=0;i<route.Length;i++)
         {
-            switch(route[i])
+           switch(route[i])
             {
                 case 'F':
-                    grid[turtle.x, turtle.y].setPixelState(true);
-                    turtle.moveForward();
+                    grid[x,y].setPixelState(true);
+                    moveForward();
+                    Debug.Log("Moved"+look);
                     break;
                 case '+':
-                    turtle.rotateLeft();
+                    rotateLeft();
+                    Debug.Log("RotatedLeft"+look);
                     break;
                 case '-':
-                    turtle.rotateRight();
+                    rotateRight();
+                    Debug.Log("RotatedRight"+look);
                     break;
             }
+            //Debug.Log(route[i]);
         }
     }
 }

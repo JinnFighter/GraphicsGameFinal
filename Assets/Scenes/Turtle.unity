@@ -191,7 +191,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2136681233}
+      - m_Target: {fileID: 2053776213}
         m_MethodName: rotateRight
         m_Mode: 1
         m_Arguments:
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2136681233}
+      - m_Target: {fileID: 2053776213}
         m_MethodName: rotateLeft
         m_Mode: 1
         m_Arguments:
@@ -739,7 +739,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2136681233}
+      - m_Target: {fileID: 2053776213}
         m_MethodName: moveForward
         m_Mode: 1
         m_Arguments:
@@ -1612,8 +1612,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 538419193}
-  routeInputField: {fileID: 1438763601}
   turtle: {fileID: 2136681233}
+  routeInputField: {fileID: 1438763601}
 --- !u!1 &2136681230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,6 +1707,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 538419193}
-  x: 0
-  y: 0
-  look: 0
