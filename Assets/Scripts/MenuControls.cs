@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuControls : MonoBehaviour
 {
-    public const string path = "Assets/Data/players_base.xml";
+    private ProfilesManager pfManager;
     // Start is called before the first frame update
     void Start()
     {
-        PlayerProfilesContainer container = PlayerProfilesContainer.Load(path);
-
-        foreach(PlayerProfile profile in container.profiles)
-        {
-            Debug.Log(profile.name);
-        }
-
+        pfManager = GetComponent<ProfilesManager>();
     }
 
     // Update is called once per frame
@@ -35,5 +30,22 @@ public class MenuControls : MonoBehaviour
     public void ExitPressed()
     {
         Application.Quit();
+    }
+    public void LoadProfiles(GameObject panel)
+    {
+        if(pfManager.Container.profiles.Count!=0)
+        {
+            
+            foreach (PlayerProfile profile in pfManager.Container.profiles)
+            {
+                GameObject go = new GameObject();
+                go.AddComponent<Button>();
+                Button btn = go.GetComponent<Button>();
+                btn.GetComponent<Text>().text = profile.name;
+                btn.transform.SetParent(panel.transform);
+                Debug.Log(profile.name + " " + profile.active);
+            }
+        }
+        
     }
 }

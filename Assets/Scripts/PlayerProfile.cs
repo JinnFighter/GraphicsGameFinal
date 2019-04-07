@@ -9,4 +9,7 @@ public class PlayerProfile
 
     [XmlAttribute("name")]
     public string name;
+
+    [XmlElement("Active")]
+    public bool active;
 }

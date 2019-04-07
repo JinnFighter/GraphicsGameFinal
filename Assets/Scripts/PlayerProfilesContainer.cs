@@ -29,4 +29,12 @@ public class PlayerProfilesContainer
 
         //return _profiles;
     }
+    public void Save(string path)
+    {
+        var serializer = new XmlSerializer(typeof(PlayerProfilesContainer));
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            serializer.Serialize(stream, this);
+        }
+    }
 }

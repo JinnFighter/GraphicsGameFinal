@@ -18,14 +18,21 @@ public class TurtleGameController : MonoBehaviour
     private int x;
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
+    private enum commandsEnum { FORWARD, ROTATE_LEFT, ROTATE_RIGHT };
+    private List<int> commands_history;
     private int look;
+    private int cur_action;
+    private bool finished;
+    private int last_action;
+    private Vector3 turtle_start_pos;
+    private Quaternion turtle_start_rotation;
     // Start is called before the first frame update
     void Start()
     {
         route = "FFF-FF";
+        commands_history = new List<int>();
         grid = new TurtleGridPixelScript[gridRows, gridCols];
         Vector3 startPos = originalPixel.transform.position;
-
         offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
         offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
         /* for(int i=0;i<numbers.Length;i++)
@@ -59,7 +66,12 @@ public class TurtleGameController : MonoBehaviour
         y = 0;
         look = (int)directionEnum.RIGHT;
         turtle.gameObject.transform.Rotate(0, 0, -90);
+        turtle_start_pos = turtle.transform.position;
+        turtle_start_rotation = turtle.transform.rotation;
         executeMoveSequence();
+        cur_action = 0;
+        last_action = -1;
+        finished = false;
     }
 
     // Update is called once per frame
@@ -85,6 +97,7 @@ public class TurtleGameController : MonoBehaviour
                 look = (int)directionEnum.UP;
                 break;
         }
+        //last_action = (int)commandsEnum.ROTATE_LEFT;
     }
     public void rotateRight()
     {
@@ -104,6 +117,7 @@ public class TurtleGameController : MonoBehaviour
                 look = (int)directionEnum.UP;
                 break;
         }
+        //last_action = (int)commandsEnum.ROTATE_RIGHT;
         //Debug.Log(look);
     }
     public void moveForward()
@@ -130,31 +144,65 @@ public class TurtleGameController : MonoBehaviour
                 posX -= offsetX;
                 break;
         }
-        Debug.Log(x.ToString() + " " + y.ToString());
         turtle.transform.position = new Vector3(posX, posY, startPos.z);
+        //last_action = (int)commandsEnum.FORWARD;
     }
     void executeMoveSequence()
     {
-        Debug.Log("LooksNowStart" + look);
         for (int i=0;i<route.Length;i++)
         {
            switch(route[i])
             {
                 case 'F':
-                    grid[x,y].setPixelState(true);
                     moveForward();
-                    Debug.Log("Moved"+look);
+                    commands_history.Add((int)commandsEnum.FORWARD);
                     break;
                 case '+':
                     rotateLeft();
-                    Debug.Log("RotatedLeft"+look);
+                    commands_history.Add((int)commandsEnum.ROTATE_LEFT);
                     break;
                 case '-':
                     rotateRight();
-                    Debug.Log("RotatedRight"+look);
+                    commands_history.Add((int)commandsEnum.ROTATE_RIGHT);
                     break;
             }
             //Debug.Log(route[i]);
         }
+        turtle.transform.position = turtle_start_pos;
+        turtle.transform.rotation = turtle_start_rotation;
+        look = (int)directionEnum.RIGHT;
+        x = 0;
+        y = 0;
+    }
+    public void GameCheck(int action)
+    {
+
+        if(finished)
+        {
+            return;
+        }
+        last_action = action;
+            if(last_action==commands_history[cur_action])
+            {
+                switch(last_action)
+                {
+                    case (int)commandsEnum.FORWARD:
+                        grid[x, y].setPixelState(true);
+                        moveForward();
+                        break;
+                    case (int)commandsEnum.ROTATE_LEFT:
+                        rotateLeft();
+                        break;
+                    case (int)commandsEnum.ROTATE_RIGHT:
+                        rotateRight();
+                        break;
+            }
+                cur_action++;
+                if(cur_action==commands_history.Count)
+                {
+                    finished = true;
+                }
+            }
+        
     }
 }

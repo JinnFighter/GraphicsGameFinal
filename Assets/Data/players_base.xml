@@ -1,10 +1,14 @@
-<PlayersCollection>
-    <Players>
-        <Player name="a">
-            
-        </Player>
-        <Player name="b">
-            
-        </Player>
-    </Players>
+<?xml version="1.0"?>
+<PlayersCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Players>
+    <Player name="a">
+      <Active>true</Active>
+    </Player>
+    <Player name="b">
+      <Active>false</Active>
+    </Player>
+    <Player name="c">
+      <Active>false</Active>
+    </Player>
+  </Players>
 </PlayersCollection>
