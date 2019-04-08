@@ -2,7 +2,7 @@ Win64
 PlayerPath?
 C:/dell/Unity Projects/GraphicsGameFinal/Builds/GraphicsGameFinal.exe
 SceneListBegin?
-Assets/Scenes/MainMenu.unity
+Assets/Scenes/ColorPicker.unity
 SceneListEnd?
 984dcc0ba3707b7691fbdca8ff508d28 Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 01aa15e337e3a9c62f15153dfac6d589 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
@@ -166,5 +166,5 @@ d791aa6007fa3640be1164ea75bb087d Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 c6666661329916e218bee7f5e79e60f5 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
-7e518ca5c2b2e9ba50301811c0cd5463 Assembly-CSharp.dll:.GameController
+7f01ab2331ecbb07d7b44ef3af123358 Assembly-CSharp.dll:.GameController
 d19fdd795c02cd96864c20da96f1b37e Assembly-CSharp.dll:.GridPixelScript

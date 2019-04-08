@@ -31,21 +31,23 @@ public class MenuControls : MonoBehaviour
     {
         Application.Quit();
     }
-    public void LoadProfiles(GameObject panel)
+    public void LoadProfiles(GameObject panel, Button button)
     {
-        if(pfManager.Container.profiles.Count!=0)
+        if (pfManager.Container.profiles.Count != 0)
         {
-            
+
             foreach (PlayerProfile profile in pfManager.Container.profiles)
             {
-                GameObject go = new GameObject();
-                go.AddComponent<Button>();
-                Button btn = go.GetComponent<Button>();
+                //GameObject go = new GameObject();
+                //go.AddComponent<Button>();
+                //float offsetX = 
+                //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
+                Button btn = Instantiate(button) as Button;
                 btn.GetComponent<Text>().text = profile.name;
                 btn.transform.SetParent(panel.transform);
                 Debug.Log(profile.name + " " + profile.active);
             }
         }
-        
+
     }
 }

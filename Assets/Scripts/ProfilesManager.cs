@@ -20,7 +20,7 @@ public class ProfilesManager : MonoBehaviour
         {
             if(profile.active)
             {
-                ActiveProfile = profile;
+                activeProfile = profile;
             }
         }
     }
@@ -30,5 +30,4 @@ public class ProfilesManager : MonoBehaviour
     {
         
     }
-
 }
