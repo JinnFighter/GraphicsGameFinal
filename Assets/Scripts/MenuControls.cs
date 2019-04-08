@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class MenuControls : MonoBehaviour
 {
     private ProfilesManager pfManager;
+   [SerializeField] private GameObject template;
     // Start is called before the first frame update
     void Start()
     {
+        //template = new GameObject();
         pfManager = GetComponent<ProfilesManager>();
     }
 
@@ -31,23 +33,61 @@ public class MenuControls : MonoBehaviour
     {
         Application.Quit();
     }
-    public void LoadProfiles(GameObject panel, Button button)
+    public void LoadProfiles(GameObject panel)
     {
         if (pfManager.Container.profiles.Count != 0)
         {
 
-            foreach (PlayerProfile profile in pfManager.Container.profiles)
+           //for(int i=0;i<pfManager.Container.profiles.Count;i++)
+            //{
+               // GameObject btn = Instantiate(template) as GameObject;
+                //btn.GetComponentInChildren<Text>().text = pfManager.Container.profiles[i].name;
+                //btn.GetComponent<Button>().onClick.AddListener(
+                   // () => { SetActiveProfile(pfManager.Container.profiles[i].name); }
+                    //);
+                //btn.transform.parent = panel.transform;
+            //}
+            foreach(PlayerProfile profile in pfManager.Container.profiles)
             {
-                //GameObject go = new GameObject();
-                //go.AddComponent<Button>();
-                //float offsetX = 
-                //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-                Button btn = Instantiate(button) as Button;
-                btn.GetComponent<Text>().text = profile.name;
-                btn.transform.SetParent(panel.transform);
-                Debug.Log(profile.name + " " + profile.active);
+                GameObject btn = Instantiate(template) as GameObject;
+                btn.GetComponentInChildren<Text>().text = profile.name;
+                btn.GetComponent<Button>().onClick.AddListener(
+                 () => { SetActiveProfile(profile.name); }
+                );
+                btn.transform.parent = panel.transform;
             }
         }
 
+    }
+    public void SetActiveProfile(string profileName)
+    {
+        //Debug.Log(profileName);
+        foreach (PlayerProfile profile in pfManager.Container.profiles)
+        {
+            if(profile.active)
+            {
+                profile.active = false;
+                //pfManager.ActiveProfile = profile;
+                //Debug.Log(profile.name + " is now active profile!");
+                break;
+            }
+        }
+        foreach (PlayerProfile profile in pfManager.Container.profiles)
+        {
+            if (profile.name == profileName)
+            {
+                profile.active = true;
+                pfManager.ActiveProfile = profile;
+                //Debug.Log(profile.name + " is now active profile!");
+                break;
+            }
+        }
+        //if(profile.name == profileName)
+        // {
+        //  profile.active = true;
+        // pfManager.ActiveProfile = profile;
+        //Debug.Log(profile.name + " is now active profile!");
+        //break;
+        //}
     }
 }
