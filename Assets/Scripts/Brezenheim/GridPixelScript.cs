@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridPixelScript : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
-    [SerializeField] public BrezenheimGameController gameController;
+    [SerializeField] public GameObject gameController;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +27,6 @@ public class GridPixelScript : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        gameController.gameCheck(this);
+        //gameController.GetComponent<BrezenheimGameController>().gameCheck(this);
     }
 }

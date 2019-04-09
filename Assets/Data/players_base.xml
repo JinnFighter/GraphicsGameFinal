@@ -2,13 +2,13 @@
 <PlayersCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Players>
     <Player name="a">
-      <Active>true</Active>
+      <Active>false</Active>
     </Player>
     <Player name="b">
       <Active>false</Active>
     </Player>
     <Player name="c">
-      <Active>false</Active>
+      <Active>true</Active>
     </Player>
   </Players>
 </PlayersCollection>

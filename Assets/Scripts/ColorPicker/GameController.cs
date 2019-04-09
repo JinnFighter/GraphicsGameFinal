@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     private Color curColor;
     private int score;
     private bool winCheck = false;
+	private Stopwatch stpwatch;
     //private Color32[] colors = { Color.black, Color.blue, Color.cyan, Color.green, Color.white, Color.yellow };
     private Color32[] colors = { Color.black, Color.white };
     [SerializeField] public InputField redTextField;
@@ -22,6 +23,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		stpwatch = new Stopwatch();
+		stpwatch.Start();
         restart();
     }
 
@@ -42,6 +45,8 @@ public class GameController : MonoBehaviour
             score += 1;
             scoreText.text = "Score: " + score.ToString();
             winCheck = true;
+			stpwatch.Stop();
+			//UnityEngine.Debug.Log(stpwatch.Elapsed.Seconds.ToString());
         }
         else
         {

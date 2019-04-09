@@ -82,6 +82,7 @@ public class MenuControls : MonoBehaviour
                 break;
             }
         }
+        pfManager.Container.Save(ProfilesManager.path);
         //if(profile.name == profileName)
         // {
         //  profile.active = true;

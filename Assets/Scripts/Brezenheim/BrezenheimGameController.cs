@@ -64,7 +64,7 @@ public class BrezenheimGameController : MonoBehaviour
                 //pixel.setPixelState(true);
                 //grid[i,j].transform.position = new Vector3(posX, posY, startPos.z);
 
-                pixel.transform.SetParent(this.transform.Find("Canvas").transform);
+                //pixel.transform.SetParent(this.transform.Find("Canvas").transform);
                 //pixel.setPixelState(true);
                 grid[i,j] = pixel;
                
@@ -73,189 +73,20 @@ public class BrezenheimGameController : MonoBehaviour
         }
         //drawLine(4,5,9,9);
         //Bresenham4Line(4, 5, 8, 0);
-        Bresenham4Line(4, 5, 9, 9);
+        /* Bresenham4Line(4, 5, 9, 9);
         last_point = linePoints[linePoints.Count-1];
         iteration = 0;
         prev_point = linePoints[0];
         textField.text = ds[0].ToString();
         grid[5,4].setPixelState(true);
-        grid[9,9].setPixelState(true);
+        grid[9,9].setPixelState(true);*/
+		Brezenheim4Circle(5,5,3);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    public void drawLine(int Ax, int Ay, int Bx, int By)
-    {
-        int ax = Ax;
-        int ay = Ay;
-        int bx = Bx;
-        int by = By;
-        //grid[ax][ay].pixel_empty.SetActive(false);
-        grid[ax, ay].GetComponent<GridPixelScript>().setPixelState(true);
-        //bitmap.SetPixel(A.X, A.Y, color);
-
-
-         int dx = Math.Abs(bx - ax);//разница между иксами первой точки и второй;
-          int dy = Math.Abs(by - ay);//разница между игреками первой точки и второй;
-          int d = (dy << 1) - dx;//разность между двойной разницей игреков и разницей иксов
-          int d1 = dy << 1;//умножение разницы игреков на два;
-          int d2 = (dy - dx) << 1;//умножение разности разниц игреков и иксов на два;
-
-          if (Math.Abs(dy) < Math.Abs(dx))
-          {
-              //Swap(ref A,ref B);
-              if (ax <= bx)
-              {
-
-                  int y = ay;//стартовая точка для y;
-                  for (int t = ax; t <= bx; t++)
-                  {
-                      if (d > 0)
-                      {
-                          d += d2;
-                          if (ay <= by)
-                          {
-                              y++;
-                          }
-                          else
-                          {
-                              y--;
-                          }
-                      }
-                      else
-                      {
-                          d += d1;
-                      }
-
-
-                      grid[t,y].GetComponent<GridPixelScript>().setPixelState(true);
-                      //bitmap.SetPixel(t, y, color);
-
-
-                      //this.bitmap.SetPixel(t, y, color);
-                      //Point tmp = new Point(t, y);
-                      //curve.Add(tmp);
-                  }
-              }
-              else
-              {
-                  Swap(ref ax, ref bx);
-              Swap(ref ay, ref by);
-              int y = ay;//стартовая точка для y;
-                  for (int t = ax; t <= bx; t++)
-                  {
-                      if (d < 0)
-                      {
-                          d -= d2;
-                          if (ay <= by)
-                          {
-                              y++;
-                          }
-                          else
-                          {
-                              y--;
-                          }
-                      }
-                      else
-                      {
-                          d -= d1;
-                      }
-
-                      grid[t,y].GetComponent<GridPixelScript>().setPixelState(true);
-                      //bitmap.SetPixel(t, y, color);
-
-
-
-                      //Point tmp = new Point(t, y);
-                      //curve.Add(tmp);
-                  }
-
-              }
-
-          }
-          else
-          {
-              d = (dx << 1) - dy;//разность между двойной разницей игреков и разницей иксов(наоборот)
-              d1 = dx << 1;//умножение разницы игреков на два(наоборот);
-              d2 = (dx - dy) << 1;//умножение разности разниц игреков и иксов на два(наоборот);
-              if (ay<= by)
-              {
-                  int y = ax;//стартовая точка для y;
-                  for (int t = ay; t <= by; t++)
-                  {
-                      if (d > 0)
-                      {
-                          d += d2;
-                          if (ax <= bx)
-                          {
-                              y++;
-                          }
-                          else
-                          {
-                              y--;
-                          }
-                      }
-                      else
-                      {
-                          d += d1;
-                      }
-
-                  Debug.Log("X: " + t + " y: " + y);
-                      grid[y,t].GetComponent<GridPixelScript>().setPixelState(true);
-                      //bitmap.SetPixel(y, t, color);
-
-
-                      //Point tmp = new Point(y, t);
-                      //curve.Add(tmp);
-                  }
-              }
-              else
-              {
-              Swap(ref ax, ref bx);
-              Swap(ref ay, ref by);
-              int y = ax;//стартовая точка для y;
-                  for (int t = ay; t <= by; t++)
-                  {
-                      if (d < 0)
-                      {
-                          d -= d2;
-                          if (ax <= bx)
-                          {
-                              y++;
-                          }
-                          else
-                          {
-                              y--;
-                          }
-                      }
-                      else
-                      {
-                          d -= d1;
-                      }
-
-                      grid[y,t].GetComponent<GridPixelScript>().setPixelState(true);
-                      //bitmap.SetPixel(y, t, color);
-
-
-                      //Point tmp = new Point(y, t);
-                      //curve.Add(tmp);
-                  }
-              } 
-
-          }
-          
-
-        //grid[bx][by].GetComponent<GridPixel>().setPixelState(true);
-        grid[Bx, By].GetComponent<GridPixelScript>().setPixelState(true);
-        //bitmap.SetPixel(B.X, B.Y, color);
-
-
-
-        //pictureBox1.Refresh();
     }
     public void Swap<T>(ref T a, ref T b)
     {
@@ -370,5 +201,35 @@ public class BrezenheimGameController : MonoBehaviour
             
         }
     }
+	public void Brezenheim4Circle(int Xc, int Yc, int r)
+	{
+		int xc = Yc;
+		int yc = Xc;
+		int x,y,d;
+		x=0;
+		y=r;
+		d=3-2*y;
+		while(x<=y)
+		{
+			grid[x+xc,y+yc].setPixelState(true);
+			grid[x+xc,-y+yc].setPixelState(true);
+			grid[-x+xc,-y+yc].setPixelState(true);
+			grid[-x+xc,y+yc].setPixelState(true);
+			grid[y+xc,x+yc].setPixelState(true);
+			grid[y+xc,-x+yc].setPixelState(true);
+			grid[-y+xc,-x+yc].setPixelState(true);
+			grid[-y+xc,x+yc].setPixelState(true);
 
+			if(d<0)
+			{
+				d=d+4*x+6;
+			}
+			else
+			{
+				d=d+4*(x-y)+10;
+				y--;
+			}
+			x++;
+		}
+	}
 }
