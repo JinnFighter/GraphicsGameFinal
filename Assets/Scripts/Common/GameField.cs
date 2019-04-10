@@ -6,11 +6,14 @@ public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
 	[SerializeField] public string fieldSize;
-    private  GridPixelScript[,] grid;
+    public GridPixelScript[,] grid;
 	private int gridRows;
     private int gridCols;
     private float offsetX;
     private float offsetY;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +60,8 @@ public class GameField : MonoBehaviour
                     float posY = -(offsetY * i) + startPos.y;
                     pixel.transform.position = new Vector3(posX, posY, startPos.z);
                 }
-              
+                pixel.X = i;
+                pixel.Y = j;
                 grid[i,j] = pixel;
                
                 
