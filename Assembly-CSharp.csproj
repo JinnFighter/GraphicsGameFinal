@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Brezenheim\BrezenheimGameController.cs" />
      <Compile Include="Assets\Scripts\Brezenheim\GridPixelScript.cs" />
      <Compile Include="Assets\Scripts\ColorPicker\GameController.cs" />
+     <Compile Include="Assets\Scripts\Common\Algorithms.cs" />
      <Compile Include="Assets\Scripts\Common\GameField.cs" />
      <Compile Include="Assets\Scripts\FullscreenSprite.cs" />
      <Compile Include="Assets\Scripts\MainSettings.cs" />
