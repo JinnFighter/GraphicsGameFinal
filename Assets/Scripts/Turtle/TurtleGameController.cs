@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class TurtleGameController : MonoBehaviour
 {
     [SerializeField] public TurtleGridPixelScript originalPixel;
-    private TurtleGridPixelScript[,] grid;
+    //private TurtleGridPixelScript[,] grid;
     [SerializeField] public Turtle turtle;
     [SerializeField] public InputField routeInputField;
     
     private string route;
-    public const int gridRows = 10;
-    public const int gridCols = 10;
-    private float offsetX;
-    private float offsetY;
+    //public const int gridRows = 10;
+    //public const int gridCols = 10;
+    //private float offsetX;
+    //private float offsetY;
     private int x;
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
@@ -31,15 +31,15 @@ public class TurtleGameController : MonoBehaviour
     {
         route = "FFF-FF";
         commands_history = new List<int>();
-        grid = new TurtleGridPixelScript[gridRows, gridCols];
+        //grid = new TurtleGridPixelScript[gridRows, gridCols];
         Vector3 startPos = originalPixel.transform.position;
-        offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
+        //offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
+        //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
         /* for(int i=0;i<numbers.Length;i++)
          {
              Debug.Log(numbers[i] + " ");
          }*/
-        for (int i = 0; i < gridRows; i++)
+        /*for (int i = 0; i < gridRows; i++)
         {
             for (int j = 0; j < gridCols; j++)
             {
@@ -60,7 +60,7 @@ public class TurtleGameController : MonoBehaviour
                 }
                 grid[i, j] = pixel;
             }
-        }
+        }*/
         routeInputField.text = route;
         x = 0;
         y = 0;
@@ -129,19 +129,19 @@ public class TurtleGameController : MonoBehaviour
         {
             case (int)directionEnum.UP:
                 x--;
-                posY += offsetY;
+                posY += GetComponent<GameField>().OffsetY;
                 break;
             case (int)directionEnum.RIGHT:
                 y++;
-                posX += offsetX;
+                posX += GetComponent<GameField>().OffsetX;
                 break;
             case (int)directionEnum.DOWN:
                 x++;
-                posY -= offsetY;
+                posY -= GetComponent<GameField>().OffsetY;
                 break;
             case (int)directionEnum.LEFT:
                 y--;
-                posX -= offsetX;
+                posX -= GetComponent<GameField>().OffsetX;
                 break;
         }
         turtle.transform.position = new Vector3(posX, posY, startPos.z);
@@ -187,8 +187,9 @@ public class TurtleGameController : MonoBehaviour
                 switch(last_action)
                 {
                     case (int)commandsEnum.FORWARD:
-                        grid[x, y].setPixelState(true);
-                        moveForward();
+                    //grid[x, y].setPixelState(true);
+                    GetComponent<GameField>().grid[x, y].setPixelState(true);
+                    moveForward();
                         break;
                     case (int)commandsEnum.ROTATE_LEFT:
                         rotateLeft();

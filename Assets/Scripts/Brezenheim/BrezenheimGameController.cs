@@ -26,37 +26,8 @@ public class BrezenheimGameController : MonoBehaviour
     {
         ds = new List<int>(1);
         linePoints = new List<GridPixelScript>(1);
-        //drawLine(5, 4, 9, 9);
-        
-        //grid = new GridPixelScript[gridRows, gridCols];
-        //Vector3 startPos = originalPixel.transform.position;
-
-        //offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-       
-        /*for (int i = 0; i < gridRows; i++)
-        {
-            for (int j = 0; j < gridCols; j++)
-            {
-                GridPixelScript pixel;
-                
-                if (i == 0 && j == 0)
-                {
-                    pixel = originalPixel;
-                    //grid[i,j] = originalPixel;
-                }
-                else
-                {
-                    //grid[i,j] = Instantiate(originalPixel) as GridPixelScript;
-                    pixel = Instantiate(originalPixel) as GridPixelScript;
-                    float posX = (offsetX * j) + startPos.x;
-                    float posY = -(offsetY * i) + startPos.y;
-                    pixel.transform.position = new Vector3(posX, posY, startPos.z);
-                }
-                grid[i,j] = pixel;
-               
-            }
-        }*/
+        Bresenham4Line(5, 4, 9, 9);
+        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
     }
 
     // Update is called once per frame
@@ -168,6 +139,7 @@ public class BrezenheimGameController : MonoBehaviour
     }
     public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
         {
+        GameField gameField = gameObject.GetComponent("GameField") as GameField;
         int x0 = Y0;
         int y0 = X0;
         int x1 = Y1;
@@ -186,7 +158,7 @@ public class BrezenheimGameController : MonoBehaviour
                 int d2 = (dy - dx) << 1;
 
             //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
-
+            gameField.grid[x0, y0].setPixelState(true);
             //linePoints.Add(grid[x0, y0]);
             ds.Add(d);
             //PutPixel(g, clr, x0, y0, 255);
@@ -207,9 +179,10 @@ public class BrezenheimGameController : MonoBehaviour
 
                 //grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
 
-                
+
                 //linePoints.Add(grid[x, y]);
-                linePoints.Add(GetComponent<GameField>().grid[x,y]);
+                //linePoints.Add(GetComponent<GameField>().grid[x,y]);
+                linePoints.Add(gameField.grid[x,y]);
                 ds.Add(d);
                 //PutPixel(g, clr, x, y, 255);
                 x +=sx;
@@ -222,6 +195,7 @@ public class BrezenheimGameController : MonoBehaviour
                 int d1 = dx << 1;
                 int d2 = (dx - dy) << 1;
 
+            gameField.grid[x0, y0].setPixelState(true);
             //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
 
             //linePoints.Add(grid[x0, y0]);
@@ -249,6 +223,8 @@ public class BrezenheimGameController : MonoBehaviour
                 
             }
             }
+        last_point = linePoints[linePoints.Count - 1];
+        linePoints[linePoints.Count - 1].setPixelState(true);
         }
     public void gameCheck(GridPixelScript invoker)
     {

@@ -1,22 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
-	[SerializeField] public string fieldSize;
+    //[SerializeField] public string fieldSize;
+    private string fieldSize;
     public GridPixelScript[,] grid;
-	private int gridRows;
-    private int gridCols;
+	private int gridRows = 10;
+    private int gridCols = 10;
     private float offsetX;
     private float offsetY;
 
-    
+    public float OffsetX { get => offsetX; set => offsetX = value; }
+    public float OffsetY { get => offsetY; set => offsetY = value; }
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        fieldSize = "small";
 	switch(fieldSize)
 	{
 		case "small":
@@ -35,7 +41,11 @@ public class GameField : MonoBehaviour
 			gridRows = 500;
 			gridCols = 500;
 		break;
-	}
+        default:
+            gridRows = 10;
+            gridCols = 10;
+        break;
+        }
         grid = new GridPixelScript[gridRows, gridCols];
         Vector3 startPos = originalPixel.transform.position;
 
@@ -56,8 +66,8 @@ public class GameField : MonoBehaviour
                 {
                     
                     pixel = Instantiate(originalPixel) as GridPixelScript;
-                    float posX = (offsetX * j) + startPos.x;
-                    float posY = -(offsetY * i) + startPos.y;
+                    float posX = (OffsetX * j) + startPos.x;
+                    float posY = -(OffsetY * i) + startPos.y;
                     pixel.transform.position = new Vector3(posX, posY, startPos.z);
                 }
                 pixel.X = i;

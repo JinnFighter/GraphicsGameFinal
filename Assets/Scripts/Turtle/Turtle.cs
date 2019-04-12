@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Turtle : MonoBehaviour
 {
-    [SerializeField] public TurtleGridPixelScript originalPixel;
+    //[SerializeField] public TurtleGridPixelScript originalPixel;
+    [SerializeField] public GridPixelScript originalPixel;
     private int x;
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };

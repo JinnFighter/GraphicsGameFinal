@@ -127,12 +127,12 @@ PrefabInstance:
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -118.2
+      value: -117.99
       objectReference: {fileID: 0}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -210.6
+      value: -210.71
       objectReference: {fileID: 0}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
@@ -179,6 +179,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 2053776210}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7e7b16037a11147a334c044117f74e, type: 3}
 --- !u!4 &59741383 stripped
@@ -187,6 +192,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 59741382}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &59741384 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
+    type: 3}
+  m_PrefabInstance: {fileID: 59741382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec301ef7685293489408ba71680c166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &152097428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,7 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293f12e55d8b851428046af0e0191948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalPixel: {fileID: 0}
+  originalPixel: {fileID: 59741384}
   fieldSize: small
 --- !u!114 &2053776213
 MonoBehaviour:
@@ -1614,7 +1631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1ce7f49fb0a854cad681f04efdfde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalPixel: {fileID: 538419193}
+  originalPixel: {fileID: 59741384}
 --- !u!1001 &2142928949278191009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1626,6 +1643,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: gridPixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142928949816537687, guid: 4ca24fdd13a02694e87a6f93675ca256,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2142928949816537686, guid: 4ca24fdd13a02694e87a6f93675ca256,
         type: 3}

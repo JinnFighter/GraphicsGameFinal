@@ -269,6 +269,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridPixel
       objectReference: {fileID: 0}
+    - target: {fileID: 4281135875453103485, guid: 9f7864dfdbdd3164d896843b37c15aa3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4281135875453103484, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -307,7 +312,7 @@ PrefabInstance:
     - target: {fileID: 4281135875453103484, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4281135875453103484, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
@@ -339,6 +344,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4281135875453103487, guid: 9f7864dfdbdd3164d896843b37c15aa3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1424190824832074488, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
       propertyPath: gameController
@@ -347,13 +357,8 @@ PrefabInstance:
     - target: {fileID: 1424190824832074488, guid: 9f7864dfdbdd3164d896843b37c15aa3,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4281135875453103487, guid: 9f7864dfdbdd3164d896843b37c15aa3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f7864dfdbdd3164d896843b37c15aa3, type: 3}
 --- !u!4 &519893393 stripped
@@ -607,8 +612,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1197975623}
-  - component: {fileID: 1197975625}
   - component: {fileID: 1197975624}
+  - component: {fileID: 1197975625}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -628,8 +633,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1760579194}
-  - {fileID: 519893393}
   - {fileID: 2142928950684176536}
+  - {fileID: 519893393}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -642,11 +647,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1197975622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79ea2732c0960eb41b53ffbdabb3d166, type: 3}
+  m_Script: {fileID: 11500000, guid: 293f12e55d8b851428046af0e0191948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 1423532754}
-  textField: {fileID: 2081873855}
 --- !u!114 &1197975625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,11 +660,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1197975622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293f12e55d8b851428046af0e0191948, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ea2732c0960eb41b53ffbdabb3d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalPixel: {fileID: 1423532754}
-  fieldSize: small
+  textField: {fileID: 2081873855}
 --- !u!114 &1423532754 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
@@ -1010,11 +1013,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: gridPixelMain
       objectReference: {fileID: 0}
-    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
-        type: 3}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 1197975622}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1053,7 +1051,7 @@ PrefabInstance:
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
@@ -1070,5 +1068,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1197975622}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7e7b16037a11147a334c044117f74e, type: 3}
