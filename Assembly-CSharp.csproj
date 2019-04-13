@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Common\Algorithms.cs" />
      <Compile Include="Assets\Scripts\Common\GameEvents.cs" />
      <Compile Include="Assets\Scripts\Common\GameField.cs" />
+     <Compile Include="Assets\Scripts\Common\GameplayTimer.cs" />
      <Compile Include="Assets\Scripts\Common\GridPixelScript.cs" />
      <Compile Include="Assets\Scripts\Common\Messenger.cs" />
      <Compile Include="Assets\Scripts\FullscreenSprite.cs" />
