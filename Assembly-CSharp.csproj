@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\PlayerProfilesContainer.cs" />
      <Compile Include="Assets\Scripts\ProfilesManager.cs" />
      <Compile Include="Assets\Scripts\SettingsPopup.cs" />
+     <Compile Include="Assets\Scripts\SouthCohen\SouthCohenController.cs" />
      <Compile Include="Assets\Scripts\Turtle\Turtle.cs" />
      <Compile Include="Assets\Scripts\Turtle\TurtleGameController.cs" />
      <Compile Include="Assets\Scripts\Turtle\TurtleGridPixelScript.cs" />

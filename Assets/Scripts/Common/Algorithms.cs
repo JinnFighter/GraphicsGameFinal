@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Algorithms : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class Algorithms : MonoBehaviour
     void Update()
     {
         
+    }
+    void Swap<T>(ref T a, ref T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
     }
     public void drawLine(int X0, int Y0, int X1, int Y1)
     {
@@ -77,7 +84,7 @@ public class Algorithms : MonoBehaviour
                 else
                     d += d1;
 
-                a.grid[x0, y0].setPixelState(true);
+                a.grid[x, y].setPixelState(true);
                 y += sy;
 
             }
@@ -186,5 +193,67 @@ public class Algorithms : MonoBehaviour
 
         //lineTo;
         //hasBezier = true;
+    }
+    public int Code(GridPixelScript point, GridPixelScript rectLeft, GridPixelScript rectRight)
+    {
+        int code = 0;
+        if (point.X < rectLeft.X) code |= 0x01;//_ _ _ 1;
+        if (point.X > rectRight.X) code |= 0x04;//_ 1 _ _;
+        if (point.Y < rectLeft.Y) code |= 0x02;//_ _ 1 _;
+        if (point.Y > rectRight.Y) code |= 0x08;//1 _ _ _;
+        return code;
+    }
+    public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight)
+    {
+        //Point A = new Point();
+        //A = nA;
+        //Point B = new Point();
+        //B = nB;
+        GridPixelScript A = nA;
+        GridPixelScript B = nB;
+        int code1 = this.Code(A, rectLeft, rectRight);
+        int code2 = this.Code(B, rectLeft, rectRight);
+        bool inside = (code1 | code2) == 0;
+        bool outside = (code1 & code2) != 0;
+        while (!inside && !outside)
+        {
+            if (code1 == 0)
+            {
+                //Swap;
+                Swap(ref A, ref B);
+                int c = code1;
+                code1 = code2;
+                code2 = c;
+            }
+            if (Convert.ToBoolean(code1 & 0x01))
+            {
+                A.Y += (rectLeft.X - A.X) * (B.Y - A.Y) / (B.X - A.X);
+                A.X = rectLeft.X;
+            }
+            if (Convert.ToBoolean(code1 & 0x02))
+            {
+                A.X += (rectLeft.Y - A.Y) * (B.X - A.X) / (B.Y - A.Y);
+                A.Y = rectLeft.Y;
+            }
+            if (Convert.ToBoolean(code1 & 0x04))
+            {
+                A.Y += (rectRight.X - A.X) * (B.Y - A.Y) / (B.X - A.X);
+                A.X = rectRight.X;
+            }
+            if (Convert.ToBoolean(code1 & 0x08))
+            {
+                A.X += (rectRight.Y - A.Y) * (B.X - A.X) / (B.Y - A.Y);
+                A.Y = rectRight.Y;
+            }
+
+            code1 = Code(A, rectLeft, rectRight);
+            inside = (code1 | code2) == 0;
+            outside = (code1 & code2) != 0;
+
+        }
+        if (!outside)
+            //drawLine(A, B, Color.Blue);
+            drawLine(A.X, A.Y, B.X, B.Y);
+
     }
 }

@@ -54,7 +54,8 @@ public class BezierGameController : MonoBehaviour
             sx = sx * tau;
             sy = sy * tau;
             //lineTo;
-            GetComponent<BrezenheimGameController>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            gameObject.GetComponent<Algorithms>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            //GetComponent<BrezenheimGameController>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
             //Point F = new Point(Convert.ToInt32(oldx), Convert.ToInt32(oldy));
             //Point G = new Point(Convert.ToInt32(sx), Convert.ToInt32(sy));
             //getCurve(F, G, Color.Red);
@@ -82,7 +83,8 @@ public class BezierGameController : MonoBehaviour
             sx = sx * tau;
             sy = sy * tau;
 
-            GetComponent<BrezenheimGameController>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            gameObject.GetComponent<Algorithms>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            //GetComponent<BrezenheimGameController>().drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
             //Point F = new Point(Convert.ToInt32(oldx), Convert.ToInt32(oldy));
             //Point G = new Point(Convert.ToInt32(sx), Convert.ToInt32(sy));
             //getCurve(F, G, Color.Red);
