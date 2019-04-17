@@ -17,4 +17,8 @@ public class SouthCohenController : MonoBehaviour
     {
         
     }
+    public void gameCheck()
+    {
+
+    }
 }

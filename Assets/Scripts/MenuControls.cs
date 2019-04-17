@@ -23,11 +23,16 @@ public class MenuControls : MonoBehaviour
 
     public void ColorPickerButtonPressed()
     {
-        SceneManager.LoadScene("ColorPicker");
+        //GameObject loadingScreen = new GameObject();
+        //loadingScreen.AddComponent<Sprite>();
+        //this.gameObject.SetActive(true);
+        //GetComponent<SceneLoader>().LoadScene("ColorPicker");
+        //SceneManager.LoadSceneAsync("ColorPicker");
+        //SceneManager.LoadScene("ColorPicker");
     }
     public void BrezenheimButtonPressed()
     {
-        SceneManager.LoadScene("Brezenheim");
+        //SceneManager.LoadScene("Brezenheim");
     }
     public void ExitPressed()
     {
