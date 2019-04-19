@@ -9,7 +9,10 @@ public class BrezenheimGameController : MonoBehaviour
 {
     //[SerializeField] public GridPixelScript originalPixel;
     //private  GridPixelScript[,] grid;
+    private GridPixelScript[,] lines;
     private List<GridPixelScript> linePoints;
+    private List<GridPixelScript>[] LinePoints;
+    private List<int>[] Ds;
     private List<int> ds;
     private GridPixelScript last_point;
     private GridPixelScript prev_point;
@@ -18,16 +21,30 @@ public class BrezenheimGameController : MonoBehaviour
     //private float offsetX;
     //private float offsetY;
     private int iteration;
+    private int cur_line;
+    private int linesQuantity;
     [SerializeField]private InputField textField;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        linesQuantity = 5;
         ds = new List<int>(1);
+        Ds = new List<int>[linesQuantity];
+        LinePoints = new List<GridPixelScript>[linesQuantity];
         linePoints = new List<GridPixelScript>(1);
-        Bresenham4Line(5, 4, 9, 9);
+        lines = new GridPixelScript[2, linesQuantity];
+        GenerateLines();
+        //Bresenham4Line(5, 4, 9, 9);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        for (int i = 0; i < linesQuantity; i++)
+        {
+            for(int j=0;j<Ds[i].Count;j++)
+            {
+                Debug.Log(Ds[i][j]);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -223,12 +240,12 @@ public class BrezenheimGameController : MonoBehaviour
                 
             }
             }
-        last_point = linePoints[linePoints.Count - 1];
-        linePoints[linePoints.Count - 1].setPixelState(true);
+        //last_point = linePoints[linePoints.Count - 1];
+        //linePoints[linePoints.Count - 1].setPixelState(true);
         }
     public void gameCheck(GridPixelScript invoker)
     {
-        if(prev_point == last_point)
+        /*if(prev_point == last_point)
         {
             Debug.Log("Enough, start over, it's finished!");
             return;
@@ -250,7 +267,99 @@ public class BrezenheimGameController : MonoBehaviour
                 Debug.Log("Wrong!");
             }
             
+        }*/
+        if(!GetComponent<GameplayTimer>().Counting)
+        {
+            Debug.Log("Not Counting due to finish or no start");
+            return;
         }
+        if (cur_line == linesQuantity)
+        {
+            Debug.Log("Enough, start over, it's finished!");
+            return;
+        }
+        if (prev_point==last_point)
+        {
+            cur_line++;
+            if (cur_line==linesQuantity)
+            {
+                GetComponent<GameplayTimer>().StopTimer();
+                Debug.Log("Enough, start over, it's finished!");
+
+                return;
+            }
+            else
+            {
+                iteration = 0;
+                GetComponent<GameField>().clearGrid();
+                lines[0, cur_line].setPixelState(true);
+                last_point = LinePoints[cur_line][LinePoints[cur_line].Count - 1];
+                last_point.setPixelState(true);
+                prev_point = null;
+                textField.text = Ds[cur_line][iteration].ToString();
+            }
+        }
+        else
+        {
+            prev_point = LinePoints[cur_line][iteration];
+
+            if (invoker == prev_point)
+            {
+                Debug.Log("Correct!");
+                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
+                iteration++;
+                textField.text = Ds[cur_line][iteration].ToString();
+                prev_point = LinePoints[cur_line][iteration];
+            }
+            else
+            {
+                Debug.Log("Wrong!");
+            }
+        }
+    }
+    public void GenerateLines()
+    {
+        for(int i=0;i< linesQuantity; i++)
+        {
+            int firstX = UnityEngine.Random.Range(0, 9);
+            int firstY = UnityEngine.Random.Range(0, 9);
+
+            int secondX = UnityEngine.Random.Range(0, 9);
+            int secondY = UnityEngine.Random.Range(0, 9);
+            while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
+                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= 1) 
+            {
+                firstX = UnityEngine.Random.Range(0, 9);
+                firstY = UnityEngine.Random.Range(0, 9);
+
+                secondX = UnityEngine.Random.Range(0, 9);
+                secondY = UnityEngine.Random.Range(0, 9);
+            }
+            lines[0, i] = GetComponent<GameField>().grid[firstY,firstX];
+            lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
+            Bresenham4Line(firstX, firstY, secondX, secondY);
+            Ds[i] = new List<int>();
+            LinePoints[i] = new List<GridPixelScript>();
+            for (int j = 0; j < ds.Count;j++)
+            {
+                Ds[i].Add(ds[j]);
+            }
+            for (int j = 0; j < linePoints.Count; j++)
+            {
+                LinePoints[i].Add(linePoints[j]);
+            }
+            //Ds[i] = ds;
+            //LinePoints[i] = linePoints;
+            ds.Clear();
+            linePoints.Clear();
+        }
+        last_point = LinePoints[0][LinePoints[0].Count-1];
+        GetComponent<GameField>().clearGrid();
+        prev_point = null;
+        lines[0, 0].setPixelState(true);
+        //LinePoints[0][0].setPixelState(true);
+        last_point.setPixelState(true);
+
     }
 	public void Brezenheim4Circle(int Xc, int Yc, int r)
 	{

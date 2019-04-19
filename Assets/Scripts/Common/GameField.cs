@@ -84,4 +84,14 @@ public class GameField : MonoBehaviour
     {
         
     }
+    public void clearGrid()
+    {
+        for(int i=0;i<gridRows;i++)
+        {
+            for(int j = 0;j<gridCols;j++)
+            {
+                grid[i, j].setPixelState(false);
+            }
+        }
+    }
 }
