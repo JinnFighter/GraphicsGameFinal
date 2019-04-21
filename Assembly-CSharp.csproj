@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Common\GridPixelScript.cs" />
      <Compile Include="Assets\Scripts\Common\Messenger.cs" />
      <Compile Include="Assets\Scripts\Common\SceneLoader.cs" />
+     <Compile Include="Assets\Scripts\Common\ScoreKeeper.cs" />
      <Compile Include="Assets\Scripts\FullscreenSprite.cs" />
      <Compile Include="Assets\Scripts\MainSettings.cs" />
      <Compile Include="Assets\Scripts\MenuControls.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scripts\Turtle\TurtleGridPixelScript.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
      <None Include="Assets\Data\players_base.xml" />
+     <None Include="Assets\Fonts\license.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/dell/Unity Projects/GraphicsGameFinal/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

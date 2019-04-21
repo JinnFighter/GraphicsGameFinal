@@ -16,6 +16,8 @@ public class GameField : MonoBehaviour
 
     public float OffsetX { get => offsetX; set => offsetX = value; }
     public float OffsetY { get => offsetY; set => offsetY = value; }
+    public int GridRows { get => gridRows; set => gridRows = value; }
+    public int GridCols { get => gridCols; set => gridCols = value; }
 
 
 
@@ -26,34 +28,34 @@ public class GameField : MonoBehaviour
 	switch(fieldSize)
 	{
 		case "small":
-			gridRows = 10;
-			gridCols = 10;
+			GridRows = 10;
+			GridCols = 10;
 		break;
 		case "medium":
-			gridRows = 50;
-			gridCols = 50;
+			GridRows = 50;
+			GridCols = 50;
 		break;
 		case "big":
-			gridRows = 100;
-			gridCols = 100;
+			GridRows = 100;
+			GridCols = 100;
 		break;
 		case "enormous":
-			gridRows = 500;
-			gridCols = 500;
+			GridRows = 500;
+			GridCols = 500;
 		break;
         default:
-            gridRows = 10;
-            gridCols = 10;
+            GridRows = 10;
+            GridCols = 10;
         break;
         }
-        grid = new GridPixelScript[gridRows, gridCols];
+        grid = new GridPixelScript[GridRows, GridCols];
         Vector3 startPos = originalPixel.transform.position;
 
         offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
         offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-		for (int i = 0; i < gridRows; i++)
+		for (int i = 0; i < GridRows; i++)
         {
-            for (int j = 0; j < gridCols; j++)
+            for (int j = 0; j < GridCols; j++)
             {
                 GridPixelScript pixel;
                 
@@ -86,9 +88,9 @@ public class GameField : MonoBehaviour
     }
     public void clearGrid()
     {
-        for(int i=0;i<gridRows;i++)
+        for(int i=0;i<GridRows;i++)
         {
-            for(int j = 0;j<gridCols;j++)
+            for(int j = 0;j<GridCols;j++)
             {
                 grid[i, j].setPixelState(false);
             }

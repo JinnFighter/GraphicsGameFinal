@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TurtleGameController : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class TurtleGameController : MonoBehaviour
     //private TurtleGridPixelScript[,] grid;
     [SerializeField] public Turtle turtle;
     [SerializeField] public InputField routeInputField;
-    
+    private int pathsQuantity;
+    private string[] paths;
     private string route;
     //public const int gridRows = 10;
     //public const int gridCols = 10;
@@ -19,59 +21,50 @@ public class TurtleGameController : MonoBehaviour
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
     private enum commandsEnum { FORWARD, ROTATE_LEFT, ROTATE_RIGHT };
-    private List<int> commands_history;
+    private Dictionary<int, char> commands = new Dictionary<int, char>
+    {
+        {(int)commandsEnum.FORWARD, 'F' },
+        {(int)commandsEnum.ROTATE_LEFT, '+' },
+        {(int)commandsEnum.ROTATE_RIGHT, '-' }
+    };
+    private List<int>[] commands_history;
     private int look;
     private int cur_action;
     private bool finished;
     private int last_action;
+    private int iteration;
     private Vector3 turtle_start_pos;
     private Quaternion turtle_start_rotation;
+    
     // Start is called before the first frame update
     void Start()
     {
-        route = "FFF-FF";
-        commands_history = new List<int>();
-        //grid = new TurtleGridPixelScript[gridRows, gridCols];
-        Vector3 startPos = originalPixel.transform.position;
-        //offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-        /* for(int i=0;i<numbers.Length;i++)
-         {
-             Debug.Log(numbers[i] + " ");
-         }*/
-        /*for (int i = 0; i < gridRows; i++)
+        pathsQuantity = 5;
+        paths = new string[pathsQuantity];
+        //route = "FFF-FF";
+        route = "";
+        commands_history = new List<int>[pathsQuantity];
+        for (int i = 0; i < pathsQuantity; i++)
         {
-            for (int j = 0; j < gridCols; j++)
-            {
-                TurtleGridPixelScript pixel;
-
-                if (i == 0 && j == 0)
-                {
-                    pixel = originalPixel;
-                    //grid[i,j] = originalPixel;
-                }
-                else
-                {
-                    //grid[i,j] = Instantiate(originalPixel) as GridPixelScript;
-                    pixel = Instantiate(originalPixel) as TurtleGridPixelScript;
-                    float posX = (offsetX * j) + startPos.x;
-                    float posY = -(offsetY * i) + startPos.y;
-                    pixel.transform.position = new Vector3(posX, posY, startPos.z);
-                }
-                grid[i, j] = pixel;
-            }
-        }*/
-        routeInputField.text = route;
+            commands_history[i] = new List<int>();
+        }
         x = 0;
         y = 0;
         look = (int)directionEnum.RIGHT;
         turtle.gameObject.transform.Rotate(0, 0, -90);
         turtle_start_pos = turtle.transform.position;
         turtle_start_rotation = turtle.transform.rotation;
-        executeMoveSequence();
+        // executeMoveSequence();
         cur_action = 0;
         last_action = -1;
         finished = false;
+        generateStringPaths();
+       
+        //grid = new TurtleGridPixelScript[gridRows, gridCols];
+        Vector3 startPos = originalPixel.transform.position;
+        routeInputField.text = paths[iteration];
+        //routeInputField.text = route;
+       
     }
 
     // Update is called once per frame
@@ -122,29 +115,54 @@ public class TurtleGameController : MonoBehaviour
     }
     public void moveForward()
     {
+        bool allowMove = true;
         Vector3 startPos = turtle.transform.position;
         float posX = startPos.x;
         float posY = startPos.y;
         switch (look)
         {
             case (int)directionEnum.UP:
+                if(x==0)
+                {
+                    allowMove = false;
+                    break;
+                }
                 x--;
                 posY += GetComponent<GameField>().OffsetY;
                 break;
             case (int)directionEnum.RIGHT:
+                if (y == GetComponent<GameField>().GridCols-1)
+                {
+                    allowMove = false;
+                    break;
+                }
                 y++;
                 posX += GetComponent<GameField>().OffsetX;
                 break;
             case (int)directionEnum.DOWN:
+                if (x == GetComponent<GameField>().GridRows - 1)
+                {
+                    allowMove = false;
+                    break;
+                }
                 x++;
                 posY -= GetComponent<GameField>().OffsetY;
                 break;
             case (int)directionEnum.LEFT:
+                if (y == 0)
+                {
+                    allowMove = false;
+                    break;
+                }
                 y--;
                 posX -= GetComponent<GameField>().OffsetX;
                 break;
         }
-        turtle.transform.position = new Vector3(posX, posY, startPos.z);
+        if(allowMove)
+        {
+            turtle.transform.position = new Vector3(posX, posY, startPos.z);
+        }
+        
         //last_action = (int)commandsEnum.FORWARD;
     }
     void executeMoveSequence()
@@ -155,15 +173,15 @@ public class TurtleGameController : MonoBehaviour
             {
                 case 'F':
                     moveForward();
-                    commands_history.Add((int)commandsEnum.FORWARD);
+                    commands_history[iteration].Add((int)commandsEnum.FORWARD);
                     break;
                 case '+':
                     rotateLeft();
-                    commands_history.Add((int)commandsEnum.ROTATE_LEFT);
+                    commands_history[iteration].Add((int)commandsEnum.ROTATE_LEFT);
                     break;
                 case '-':
                     rotateRight();
-                    commands_history.Add((int)commandsEnum.ROTATE_RIGHT);
+                    commands_history[iteration].Add((int)commandsEnum.ROTATE_RIGHT);
                     break;
             }
             //Debug.Log(route[i]);
@@ -182,8 +200,9 @@ public class TurtleGameController : MonoBehaviour
             return;
         }
         last_action = action;
-            if(last_action==commands_history[cur_action])
+            if(last_action==commands_history[iteration][cur_action])
             {
+            Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER,100);
                 switch(last_action)
                 {
                     case (int)commandsEnum.FORWARD:
@@ -199,11 +218,39 @@ public class TurtleGameController : MonoBehaviour
                         break;
             }
                 cur_action++;
-                if(cur_action==commands_history.Count)
+                if(cur_action==commands_history[iteration].Count)
                 {
-                    finished = true;
+                    //finished = true;
+                    cur_action = 0;
+                    iteration++;
+                    routeInputField.text = paths[iteration];
                 }
             }
-        
+        else
+        {
+            Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
+        }
+    }
+    public void generateStringPaths()
+    {
+        for(int i=0;i<pathsQuantity;i++)
+        {
+            iteration = i;
+            for(int j=0;j<5;j++)
+            {
+                
+                char c = commands[UnityEngine.Random.Range(0, 2)];
+                while (j == 0 && c != commands[0])
+                {
+                   c = commands[UnityEngine.Random.Range(0, 2)];
+                }
+                //String.Concat(route, c);
+                route = String.Concat(route, c);
+            }
+            paths[i] = route;
+            executeMoveSequence();
+            route = "";
+        }
+        iteration = 0;
     }
 }
