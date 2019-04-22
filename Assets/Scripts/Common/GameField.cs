@@ -7,7 +7,7 @@ public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
     //[SerializeField] public string fieldSize;
-    private string fieldSize;
+   [SerializeField] private string fieldSize;
     public GridPixelScript[,] grid;
 	private int gridRows = 10;
     private int gridCols = 10;
@@ -24,28 +24,33 @@ public class GameField : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fieldSize = "small";
+        //fieldSize = "small";
 	switch(fieldSize)
 	{
 		case "small":
 			GridRows = 10;
 			GridCols = 10;
-		break;
+                originalPixel.transform.localScale = new Vector3(20, 20, 1);
+                break;
 		case "medium":
-			GridRows = 50;
+			GridRows = 30;
 			GridCols = 50;
+                originalPixel.transform.localScale =new Vector3 (12,12,1);
 		break;
 		case "big":
-			GridRows = 100;
-			GridCols = 100;
-		break;
+			GridRows = 50;
+			GridCols = 80;
+                originalPixel.transform.localScale = new Vector3(10, 10, 1);
+                break;
 		case "enormous":
-			GridRows = 500;
-			GridCols = 500;
+			GridRows = 80;
+			GridCols = 100;
+                
 		break;
         default:
             GridRows = 10;
             GridCols = 10;
+                originalPixel.transform.localScale = new Vector3(20, 20, 1);
         break;
         }
         grid = new GridPixelScript[GridRows, GridCols];

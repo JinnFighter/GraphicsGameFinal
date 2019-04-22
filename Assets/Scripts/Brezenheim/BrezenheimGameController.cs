@@ -292,6 +292,7 @@ public class BrezenheimGameController : MonoBehaviour
             {
                 iteration = 0;
                 GetComponent<GameField>().clearGrid();
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 lines[0, cur_line].setPixelState(true);
                 last_point = LinePoints[cur_line][LinePoints[cur_line].Count - 1];
                 last_point.setPixelState(true);
@@ -306,6 +307,7 @@ public class BrezenheimGameController : MonoBehaviour
             if (invoker == prev_point)
             {
                 Debug.Log("Correct!");
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
                 iteration++;
                 textField.text = Ds[cur_line][iteration].ToString();
@@ -314,6 +316,7 @@ public class BrezenheimGameController : MonoBehaviour
             else
             {
                 Debug.Log("Wrong!");
+                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
             }
         }
     }

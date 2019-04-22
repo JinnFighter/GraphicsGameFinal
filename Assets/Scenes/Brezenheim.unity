@@ -197,6 +197,23 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 488680743692253447, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500571821737114814, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
+        type: 3}
+    - target: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7c5389e9b65b6e44b1c4402ee0ca46a, type: 3}
 --- !u!1 &324887648
@@ -537,6 +554,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &904035254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+    type: 3}
+  m_PrefabInstance: {fileID: 243243985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1043443978
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +653,7 @@ GameObject:
   - component: {fileID: 1197975624}
   - component: {fileID: 1197975625}
   - component: {fileID: 1197975626}
+  - component: {fileID: 1197975627}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -661,6 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 1423532754}
+  fieldSize: small
 --- !u!114 &1197975625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,6 +718,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1494247158}
+--- !u!114 &1197975627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197975622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f7fa44de1cdf849ae0f219ed38aa26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreNumber: {fileID: 904035254}
 --- !u!114 &1423532754 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
@@ -757,8 +801,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_Font: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a, type: 3}
+    m_FontSize: 17
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1119,15 +1163,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: gridPixelMain
       objectReference: {fileID: 0}
-    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
-        type: 3}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 1197975622}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40
+      value: -156
       objectReference: {fileID: 0}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
@@ -1179,5 +1218,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1197975622}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7e7b16037a11147a334c044117f74e, type: 3}
