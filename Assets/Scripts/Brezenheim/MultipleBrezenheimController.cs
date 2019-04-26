@@ -7,6 +7,8 @@ using System.Linq;
 
 public class MultipleBrezenheimController : MonoBehaviour
 {
+    private GridPixelScript[,] lines;
+    private int linesQuantity;
     private List<GridPixelScript>[] linePoints;
     private List<int>[] ds;
     private GridPixelScript last_point;
@@ -17,17 +19,30 @@ public class MultipleBrezenheimController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        linePoints = new List<GridPixelScript>[2];
-        ds = new List<int>[2];
-        for (int i = 0; i < 2; i++)
+        linesQuantity = 5;
+        lines = new GridPixelScript[2, linesQuantity];
+        linePoints = new List<GridPixelScript>[linesQuantity];
+        ds = new List<int>[linesQuantity];
+        for (int i = 0; i < linesQuantity; i++)
         {
             linePoints[i] = new List<GridPixelScript>();
             ds[i] = new List<int>();
         }
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
-        Bresenham4Polygon(0, 0, 4, 5, 0);
-        Bresenham4Polygon(4, 5, 8, 0, 1);
+        GeneratePolygon();
+        //GetComponent<GameField>().clearGrid();
+        //Bresenham4Polygon(0, 0, 4, 5, 0);
+        //Bresenham4Polygon(4, 5, 8, 0, 1);
+        GetComponent<GameField>().clearGrid();
+        for(int i=0;i<linesQuantity;i++)
+        {
+           // lines[0, i].setPixelState(true);
+        }
         last_point = linePoints[0][linePoints[0].Count - 1];
+        lines[0, 0].setPixelState(true);
+        lines[1, 0].setPixelState(true);
+        
+        //last_point.setPixelState(true);
     }
     // Update is called once per frame
     void Update()
@@ -137,13 +152,14 @@ public class MultipleBrezenheimController : MonoBehaviour
         //linePoints[linePoints.Count - 1].setPixelState(true);
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    /*public void gameCheck(GridPixelScript invoker)
     {
         if (prev_point == last_point)
         {
             if(cur_line==linePoints.Length-1)
             {
                 Debug.Log("Enough, start over, it's finished!");
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 return;
             }
             else
@@ -151,6 +167,7 @@ public class MultipleBrezenheimController : MonoBehaviour
                 cur_line++;
                 iteration = 0;
                 last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
             }
            
         }
@@ -161,6 +178,86 @@ public class MultipleBrezenheimController : MonoBehaviour
             if (invoker == prev_point)
             {
                 Debug.Log("Correct!");
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER,100);
+                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
+                iteration++;
+                textField.text = ds[cur_line][iteration].ToString();
+                prev_point = linePoints[cur_line][iteration];
+            }
+            else
+            {
+                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
+                Debug.Log("Wrong!");
+            }
+
+        }
+    }*/
+    public void gameCheck(GridPixelScript invoker)
+    {
+        /*if(prev_point == last_point)
+        {
+            Debug.Log("Enough, start over, it's finished!");
+            return;
+        }
+        else
+        {
+            prev_point = linePoints[iteration];
+            
+            if(invoker == prev_point)
+            {
+                Debug.Log("Correct!");
+                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
+                iteration++;
+                textField.text = ds[iteration].ToString();
+                prev_point = linePoints[iteration];
+            }
+            else
+            {
+                Debug.Log("Wrong!");
+            }
+            
+        }*/
+        if (!GetComponent<GameplayTimer>().Counting)
+        {
+            Debug.Log("Not Counting due to finish or no start");
+            return;
+        }
+        if (cur_line == linesQuantity)
+        {
+            Debug.Log("Enough, start over, it's finished!");
+            return;
+        }
+        if (prev_point == last_point)
+        {
+            cur_line++;
+            if (cur_line == linesQuantity)
+            {
+                GetComponent<GameplayTimer>().StopTimer();
+                Debug.Log("Enough, start over, it's finished!");
+
+                return;
+            }
+            else
+            {
+                iteration = 0;
+                GetComponent<GameField>().clearGrid();
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
+                lines[0, cur_line].setPixelState(true);
+                lines[1, cur_line].setPixelState(true);
+                last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
+                //last_point.setPixelState(true);
+                prev_point = null;
+                textField.text = ds[cur_line][iteration].ToString();
+            }
+        }
+        else
+        {
+            prev_point = linePoints[cur_line][iteration];
+
+            if (invoker == prev_point)
+            {
+                Debug.Log("Correct!");
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
                 iteration++;
                 textField.text = ds[cur_line][iteration].ToString();
@@ -169,8 +266,124 @@ public class MultipleBrezenheimController : MonoBehaviour
             else
             {
                 Debug.Log("Wrong!");
+                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
             }
+        }
+    }
+    public void GeneratePolygon()
+    {
+        for(int i=0;i<linesQuantity;i++)
+        {
+            int firstX;
+            int firstY;
 
+            int secondX;
+            int secondY;
+
+            if(i==0)
+            {
+                 firstX = UnityEngine.Random.Range(0, 9);
+                 firstY = UnityEngine.Random.Range(0, 9);
+
+                 secondX = UnityEngine.Random.Range(0, 9);
+                 secondY = UnityEngine.Random.Range(0, 9);
+
+                while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
+                    || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < 2)
+                {
+                    //firstX = UnityEngine.Random.Range(0, 9);
+                    //firstY = UnityEngine.Random.Range(0, 9);
+
+                    secondX = UnityEngine.Random.Range(0, 9);
+                    secondY = UnityEngine.Random.Range(0, 9);
+                }
+            }
+            else
+            {
+                firstX = lines[1, i - 1].Y;
+                firstY = lines[1, i - 1].X;
+                if (i == linesQuantity - 1)
+                {
+                    
+
+                    secondX = lines[0, 0].Y;
+                    secondY = lines[0, 0].X;
+
+                    while (true)
+                    {
+                        GameField field = GetComponent<GameField>();
+                        bool check = false;
+                        for (int j = 0; j < i - 1; j++)
+                        {
+                            if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], lines[1, j],
+                                field.grid[firstY, firstX], field.grid[secondY, secondX]))
+                            {
+                                check = true;
+                                break;
+                            }
+
+                        }
+                        if (check)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+
+                    //secondX = UnityEngine.Random.Range(0, 9);
+                    //secondY = UnityEngine.Random.Range(0, 9);
+
+
+                    while (true)
+                    {
+                        secondX = UnityEngine.Random.Range(0, 9);
+                        secondY = UnityEngine.Random.Range(0, 9);
+                        GameField field = GetComponent<GameField>();
+                        if (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
+                        || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= 1)
+                        {
+                            //secondX = UnityEngine.Random.Range(0, 9);
+                            //secondY = UnityEngine.Random.Range(0, 9);
+                            continue;
+                        }
+                        bool check = false;
+                        for (int j = 0; j < i - 1; j++)
+                        {
+
+                            //if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], lines[1, j],
+                            if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
+                             field.grid[firstY, firstX], field.grid[secondY, secondX])) 
+                            //if (GetComponent<Algorithms>().segIntersect(lines[0, j], linePoints[j][linePoints[j].Count - 2],
+                               // field.grid[firstY, firstX], field.grid[secondY, secondX]))
+                            {
+                                check = true;
+                                break;
+                            }
+
+                        }
+                        if (check)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                
+            }
+            
+            lines[0, i] = GetComponent<GameField>().grid[firstY, firstX];
+            lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
+            Bresenham4Polygon(firstX, firstY, secondX, secondY,i);
         }
     }
 }

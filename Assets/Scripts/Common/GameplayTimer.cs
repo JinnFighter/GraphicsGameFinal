@@ -6,7 +6,7 @@ using System;
 
 public class GameplayTimer : MonoBehaviour
 {
-    private float startTime=20f;
+    private float startTime=60f;
     private float currentTime=0f;
     private bool counting;
     private float timeLeft;
@@ -14,12 +14,13 @@ public class GameplayTimer : MonoBehaviour
 
     public bool Counting { get => counting; set => counting = value; }
     public float TimeLeft { get => timeLeft; set => timeLeft = value; }
+    public float StartTime { get => startTime; set => startTime = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentTime = startTime;
-        TimeLeft = startTime;
+        currentTime = StartTime;
+        TimeLeft = StartTime;
         Counting = true;
     }
 
@@ -42,7 +43,7 @@ public class GameplayTimer : MonoBehaviour
     }
     public void StartTimer()
     {
-        currentTime = startTime;
+        currentTime = StartTime;
         Counting = true;
     }
     public void StopTimer()

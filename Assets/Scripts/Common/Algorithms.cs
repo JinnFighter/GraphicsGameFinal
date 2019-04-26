@@ -22,6 +22,12 @@ public class Algorithms : MonoBehaviour
         a = b;
         b = c;
     }
+    void swap<T>( T a,  T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
+    }
     public void drawLine(int X0, int Y0, int X1, int Y1)
     {
         int x0 = Y0;
@@ -255,5 +261,63 @@ public class Algorithms : MonoBehaviour
             //drawLine(A, B, Color.Blue);
             drawLine(A.X, A.Y, B.X, B.Y);
 
+    }
+
+    public bool segmentIntersection(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
+    {
+        int v1= (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
+        int v2= (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
+        int v3= (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+        int v4= (b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X);
+        //v1:= (bx2 - bx1) * (ay1 - by1) - (by2 - by1) * (ax1 - bx1);
+        //v2:= (bx2 - bx1) * (ay2 - by1) - (by2 - by1) * (ax2 - bx1);
+        //v3:= (ax2 - ax1) * (by1 - ay1) - (ay2 - ay1) * (bx1 - ax1);
+        //v4:= (ax2 - ax1) * (by2 - ay1) - (ay2 - ay1) * (bx2 - ax1);
+        //Intersection:= (v1 * v2 < 0) and(v3 * v4 < 0);
+        return (v1 * v2 < 0) && (v3 * v4 < 0);
+    }
+    public bool segIntersect(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
+    {
+        GridPixelScript A = a;
+        GridPixelScript B = b;
+        GridPixelScript C = c;
+        GridPixelScript D = d;
+
+        if(A.X>B.X)
+        {
+            swap( A, B);
+        }
+        if(C.X>D.X)
+        {
+            swap(C, D);
+        }
+        float k1;
+        float k2;
+        if(A.X==B.X)
+        {
+            k1 = 0;
+        }
+        else
+        {
+            k1 = (B.X - A.X) / (B.Y - A.Y);
+        }
+        if (C.X == D.X)
+        {
+            k2 = 0;
+        }
+        else
+        {
+            k2 = (D.X - C.X) / (D.Y - C.Y);
+        }
+        
+
+        if(k1==k2)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

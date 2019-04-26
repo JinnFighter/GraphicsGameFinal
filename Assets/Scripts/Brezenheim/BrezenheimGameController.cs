@@ -330,7 +330,7 @@ public class BrezenheimGameController : MonoBehaviour
             int secondX = UnityEngine.Random.Range(0, 9);
             int secondY = UnityEngine.Random.Range(0, 9);
             while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
-                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= 1) 
+                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < 2) 
             {
                 firstX = UnityEngine.Random.Range(0, 9);
                 firstY = UnityEngine.Random.Range(0, 9);
