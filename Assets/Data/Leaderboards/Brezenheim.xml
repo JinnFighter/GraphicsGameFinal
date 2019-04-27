@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<LeaderboardCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Results>
+    <Player>
+      <Name>Not Admin</Name>
+      <Score>100</Score>
+    </Player>
+    <Player>
+      <Name>Admin</Name>
+      <Score>0</Score>
+    </Player>
+  </Results>
+</LeaderboardCollection>

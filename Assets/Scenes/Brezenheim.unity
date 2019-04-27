@@ -132,6 +132,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIController
       objectReference: {fileID: 0}
+    - target: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
+        type: 3}
     - target: {fileID: 4500571822605560772, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -203,12 +209,6 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4500571821737114814, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
-        type: 3}
-    - target: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
         type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 1197975625}
   - component: {fileID: 1197975626}
   - component: {fileID: 1197975627}
+  - component: {fileID: 1197975628}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -731,6 +732,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreNumber: {fileID: 904035254}
+--- !u!114 &1197975628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197975622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f072dad46cd2ec4292186cb97b1e172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Assets/Data/Leaderboards
 --- !u!114 &1423532754 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
@@ -1163,6 +1177,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: gridPixelMain
       objectReference: {fileID: 0}
+    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1197975622}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1218,10 +1237,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7192515404612294232, guid: 5a7e7b16037a11147a334c044117f74e,
-        type: 3}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 1197975622}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7e7b16037a11147a334c044117f74e, type: 3}
