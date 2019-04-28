@@ -7,25 +7,16 @@ public class BezierGameController : MonoBehaviour
 {
     private List<GridPixelScript> curvePoints;
     private int current;
+    private int pointsQuantity;
     // Start is called before the first frame update
     void Start()
     {
-        curvePoints = new List<GridPixelScript>();
-        GridPixelScript a = new GridPixelScript();
-        a.X = 0;
-        a.Y = 0;
-        GridPixelScript b = new GridPixelScript();
-        b.X = 8;
-        b.Y = 0;
-        GridPixelScript c = new GridPixelScript();
-        c.X = 5;
-        c.Y = 8;
-        //curvePoints.Add(a);
-        //curvePoints.Add(c);
-        //curvePoints.Add(b);
-        curvePoints.Add(GetComponent<GameField>().grid[0, 0]);
-        curvePoints.Add(GetComponent<GameField>().grid[5, 8]);
-        curvePoints.Add(GetComponent<GameField>().grid[8, 0]);
+        pointsQuantity = 3;
+        curvePoints = new List<GridPixelScript>(pointsQuantity);
+        GenerateBezierCurve();
+        //curvePoints.Add(GetComponent<GameField>().grid[0, 0]);
+        //curvePoints.Add(GetComponent<GameField>().grid[5, 8]);
+        //curvePoints.Add(GetComponent<GameField>().grid[8, 0]);
         drawBezier();
         current = 0;
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
@@ -39,13 +30,13 @@ public class BezierGameController : MonoBehaviour
     public void drawBezier()
     {
         double t, sx, sy, oldx, oldy, ax, ay, tau;
-        oldx = curvePoints[0].X;
-        oldy = curvePoints[0].Y;
+        oldx = curvePoints[0].Y;
+        oldy = curvePoints[0].X;
         int counter = curvePoints.Count;
         for (t = 0; t <= 0.5; t += 0.005)
         {
-            sx = curvePoints[0].X;
-            sy = curvePoints[0].Y;
+            sx = curvePoints[0].Y;
+            sy = curvePoints[0].X;
             ax = 1.0;
             ay = 1.0;
             tau = 1.0;
@@ -54,8 +45,8 @@ public class BezierGameController : MonoBehaviour
                 tau = tau * (1 - t);
                 ax = ax * t * (counter - i) / (i * (1 - t));
                 ay = ay * t * (counter - i) / (i * (1 - t));
-                sx = sx + ax * curvePoints[i].X;
-                sy = sy + ay * curvePoints[i].Y;
+                sx = sx + ax * curvePoints[i].Y;
+                sy = sy + ay * curvePoints[i].X;
             }
             sx = sx * tau;
             sy = sy * tau;
@@ -69,12 +60,12 @@ public class BezierGameController : MonoBehaviour
             oldx = sx;
             oldy = sy;
         }
-        oldx = curvePoints[counter - 1].X;
-        oldy = curvePoints[counter - 1].Y;
+        oldx = curvePoints[counter - 1].Y;
+        oldy = curvePoints[counter - 1].X;
         for (t = 1.0; t >= 0.5; t = t - 0.005)
         {
-            sx = curvePoints[counter - 1].X;
-            sy = curvePoints[counter - 1].Y;
+            sx = curvePoints[counter - 1].Y;
+            sy = curvePoints[counter - 1].X;
             ax = 1.0;
             ay = 1.0;
             tau = 1.0;
@@ -83,8 +74,8 @@ public class BezierGameController : MonoBehaviour
                 tau = tau * t;
                 ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
                 ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx = sx + ax * curvePoints[i].X;
-                sy = sy + ay * curvePoints[i].Y;
+                sx = sx + ax * curvePoints[i].Y;
+                sy = sy + ay * curvePoints[i].X;
             }
             sx = sx * tau;
             sy = sy * tau;
@@ -104,7 +95,12 @@ public class BezierGameController : MonoBehaviour
     }
     public void gameCheck(GridPixelScript invoker)
     {
-        if(current == curvePoints.Count-1)
+        if (!GetComponent<GameplayTimer>().Counting)
+        {
+            Debug.Log("Not Counting due to finish or no start");
+            return;
+        }
+        if (current == curvePoints.Count)
         {
             return;
         }
@@ -113,13 +109,25 @@ public class BezierGameController : MonoBehaviour
             if(invoker == curvePoints[current])
             {
                 Debug.Log("Correct");
+                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 //invoker.setPixelState(true);
                 current++;
             }
             else
             {
+                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
                 Debug.Log("Wrong!");
             }
+        }
+    }
+
+    public void GenerateBezierCurve()
+    {
+        for(int i=0;i<pointsQuantity;i++)
+        {
+            int x = UnityEngine.Random.Range(0, 9);
+            int y = UnityEngine.Random.Range(0, 9);
+            curvePoints.Add(GetComponent<GameField>().grid[y,x]);
         }
     }
 }
