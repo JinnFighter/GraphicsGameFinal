@@ -16,13 +16,13 @@ public class Algorithms : MonoBehaviour
     {
         
     }
-    void Swap<T>(ref T a, ref T b)
+    public void Swap<T>(ref T a, ref T b)
     {
         T c = a;
         a = b;
         b = c;
     }
-    void swap<T>( T a,  T b)
+    public void swap<T>( T a,  T b)
     {
         T c = a;
         a = b;
