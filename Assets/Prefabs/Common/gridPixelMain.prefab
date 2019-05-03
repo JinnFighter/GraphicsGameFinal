@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9110153269766251538}
+  - component: {fileID: 913895248597007109}
   - component: {fileID: 9110153269766251549}
   - component: {fileID: 9110153269766251551}
   - component: {fileID: 7192515404612294232}
+  - component: {fileID: 2968659625782734195}
   m_Layer: 0
   m_Name: gridPixelMain
   m_TagString: Untagged
@@ -19,21 +20,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9110153269766251538
-Transform:
+--- !u!224 &913895248597007109
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9110153269766251539}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 45, z: 21.75}
+  m_LocalPosition: {x: 0, y: 0, z: 21.75}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 9110153270698831292}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -40, y: 45}
+  m_SizeDelta: {x: 0.32, y: 0.32}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &9110153269766251549
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -122,6 +128,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixel_empty: {fileID: 9110153270698831293}
   gameController: {fileID: 0}
+--- !u!114 &2968659625782734195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110153269766251539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &9110153270698831293
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +176,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -0.043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 9110153269766251538}
+  m_Father: {fileID: 913895248597007109}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9110153270698831295

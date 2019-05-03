@@ -24,8 +24,6 @@ ScriptsOnlyBuild:
     - UIController
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
-    UnityEditor.UI.dll:
-    - UnityEditor.UI.CanvasScalerEditor
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -35,12 +33,12 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
+    - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
     com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
     Assets/Scenes/Bezier.unity:
@@ -76,6 +74,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9406}
     - Class: 114
       Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9410}
     - Class: 114
       Script: {instanceID: 9442}
     - Class: 114
@@ -145,6 +145,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9406}
     - Class: 114
       Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9410}
     - Class: 114
       Script: {instanceID: 9442}
     - Class: 114
@@ -371,6 +373,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9408}
     - Class: 114
+      Script: {instanceID: 9410}
+    - Class: 114
       Script: {instanceID: 9442}
     - Class: 114
       Script: {instanceID: 9444}
@@ -440,6 +444,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9406}
     - Class: 114
+      Script: {instanceID: 9410}
+    - Class: 114
       Script: {instanceID: 9442}
     - Class: 114
       Script: {instanceID: 9444}
@@ -508,6 +514,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9406}
     - Class: 114
       Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9410}
     - Class: 114
       Script: {instanceID: 9442}
     - Class: 114

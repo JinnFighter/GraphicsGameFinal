@@ -19,12 +19,18 @@ public class SceneLoader : MonoBehaviour
     }
     IEnumerator loadSceneRoutine(string name)
     {
+        string curScene = SceneManager.GetActiveScene().name;
         AsyncOperation sceneLoader = SceneManager.LoadSceneAsync(name);
         while(!sceneLoader.isDone)
         {
             yield return null;
         }
-        loadingImageObject.SetActive(false);
+        AsyncOperation sceneUnloader = SceneManager.UnloadSceneAsync(curScene);
+        while (!sceneUnloader.isDone)
+        {
+            yield return null;
+        }
+        //loadingImageObject.SetActive(false);
         //yield return sceneLoader;
     }
     public void LoadScene(string name)
