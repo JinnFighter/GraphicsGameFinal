@@ -9,6 +9,8 @@ public class BrezenheimGameController : MonoBehaviour
 {
     //[SerializeField] public GridPixelScript originalPixel;
     //private  GridPixelScript[,] grid;
+    private bool gameActive;
+    private bool gameStarted;
     private GridPixelScript[,] lines;
     private List<GridPixelScript> linePoints;
     private List<GridPixelScript>[] LinePoints;
@@ -29,6 +31,8 @@ public class BrezenheimGameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameActive = false;
+        gameStarted = false;
         linesQuantity = 5;
         ds = new List<int>(1);
         Ds = new List<int>[linesQuantity];
@@ -38,6 +42,7 @@ public class BrezenheimGameController : MonoBehaviour
         GenerateLines();
         //Bresenham4Line(5, 4, 9, 9);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         for (int i = 0; i < linesQuantity; i++)
         {
             for(int j=0;j<Ds[i].Count;j++)
@@ -45,6 +50,8 @@ public class BrezenheimGameController : MonoBehaviour
                 Debug.Log(Ds[i][j]);
             }
         }
+        GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     // Update is called once per frame
@@ -268,6 +275,10 @@ public class BrezenheimGameController : MonoBehaviour
             }
             
         }*/
+        if(!gameActive)
+        {
+            return;
+        }
         if(!GetComponent<GameplayTimer>().Counting)
         {
             Debug.Log("Not Counting due to finish or no start");
@@ -276,6 +287,7 @@ public class BrezenheimGameController : MonoBehaviour
         if (cur_line == linesQuantity)
         {
             Debug.Log("Enough, start over, it's finished!");
+            Messenger.Broadcast(GameEvents.TIMER_STOP);
             return;
         }
         if (prev_point==last_point)
@@ -404,4 +416,28 @@ public class BrezenheimGameController : MonoBehaviour
 			x++;
 		}
 	}
+    public void PauseGame()
+    {
+        gameActive = false;
+        GetComponent<GameplayTimer>().PauseTimer();
+    }
+    public void ContinueGame()
+    {
+        gameActive = true;
+        GetComponent<GameplayTimer>().ResumeTimer();
+    }
+    public void ChangeGameState()
+    {
+        if(!gameStarted)
+        {
+            gameActive = true;
+            gameStarted = true;
+            GetComponent<GameplayTimer>().StartTime = 60f;
+            GetComponent<GameplayTimer>().StartTimer();
+        }
+        else
+        {
+            gameActive = false;
+        }
+    }
 }

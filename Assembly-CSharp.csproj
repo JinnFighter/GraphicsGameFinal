@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Common\ProfilesManager.cs" />
      <Compile Include="Assets\Scripts\Common\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\Common\ScoreKeeper.cs" />
+     <Compile Include="Assets\Scripts\Common\StartEndController.cs" />
      <Compile Include="Assets\Scripts\FullscreenSprite.cs" />
      <Compile Include="Assets\Scripts\MainSettings.cs" />
      <Compile Include="Assets\Scripts\MenuControls.cs" />

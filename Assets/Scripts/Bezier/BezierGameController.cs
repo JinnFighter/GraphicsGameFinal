@@ -5,12 +5,16 @@ using System;
 
 public class BezierGameController : MonoBehaviour
 {
+    private bool gameActive;
+    private bool gameStarted;
     private List<GridPixelScript> curvePoints;
     private int current;
     private int pointsQuantity;
     // Start is called before the first frame update
     void Start()
     {
+        gameActive = false;
+        gameStarted = false;
         pointsQuantity = 3;
         curvePoints = new List<GridPixelScript>(pointsQuantity);
         GenerateBezierCurve();
@@ -19,7 +23,10 @@ public class BezierGameController : MonoBehaviour
         //curvePoints.Add(GetComponent<GameField>().grid[8, 0]);
         drawBezier();
         current = 0;
+        GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
+        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     // Update is called once per frame
@@ -128,6 +135,20 @@ public class BezierGameController : MonoBehaviour
             int x = UnityEngine.Random.Range(0, 9);
             int y = UnityEngine.Random.Range(0, 9);
             curvePoints.Add(GetComponent<GameField>().grid[y,x]);
+        }
+    }
+    public void ChangeGameState()
+    {
+        if (!gameStarted)
+        {
+            gameActive = true;
+            gameStarted = true;
+            GetComponent<GameplayTimer>().StartTime = 60f;
+            GetComponent<GameplayTimer>().StartTimer();
+        }
+        else
+        {
+            gameActive = false;
         }
     }
 }
