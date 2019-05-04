@@ -6,7 +6,7 @@ using System;
 
 public class TurtleGameController : MonoBehaviour
 {
-    [SerializeField] public TurtleGridPixelScript originalPixel;
+    [SerializeField] public GridPixelScript originalPixel;
     //private TurtleGridPixelScript[,] grid;
     [SerializeField] public Turtle turtle;
     [SerializeField] public InputField routeInputField;

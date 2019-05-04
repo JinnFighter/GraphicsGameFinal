@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridPixelScript : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
-    [SerializeField] public GameObject gameController;
+    //[SerializeField] public GameObject gameController;
     private int x;
     private int y;
 

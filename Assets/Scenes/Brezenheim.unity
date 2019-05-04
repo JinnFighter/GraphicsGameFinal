@@ -132,12 +132,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIController
       objectReference: {fileID: 0}
-    - target: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
-        type: 3}
     - target: {fileID: 4500571822605560772, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -203,6 +197,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6631356273766904245, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: loadingAnim
+      value: 
+      objectReference: {fileID: 243243986}
+    - target: {fileID: 4384436532461482710, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 15e64618c1e85644f9e754c3b499784a,
+        type: 3}
     - target: {fileID: 488680743692253447, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -216,6 +221,12 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7c5389e9b65b6e44b1c4402ee0ca46a, type: 3}
+--- !u!111 &243243986 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 8754733660336123760, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+    type: 3}
+  m_PrefabInstance: {fileID: 243243985}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &324887648
 GameObject:
   m_ObjectHideFlags: 0
