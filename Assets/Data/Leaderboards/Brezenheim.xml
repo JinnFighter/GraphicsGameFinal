@@ -27,6 +27,10 @@
     </Player>
     <Player>
       <Name>c</Name>
+      <Score>1540</Score>
+    </Player>
+    <Player>
+      <Name>c</Name>
       <Score>1530</Score>
     </Player>
     <Player>
@@ -36,10 +40,6 @@
     <Player>
       <Name>Not Admin</Name>
       <Score>100</Score>
-    </Player>
-    <Player>
-      <Name>Admin</Name>
-      <Score>0</Score>
     </Player>
   </Results>
 </LeaderboardCollection>

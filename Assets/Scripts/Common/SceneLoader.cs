@@ -10,7 +10,7 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Messenger<string>.AddListener(GameEvents.QUIT_GAME, LoadScene);
     }
 
     // Update is called once per frame

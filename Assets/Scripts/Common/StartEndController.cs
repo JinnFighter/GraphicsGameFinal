@@ -60,4 +60,12 @@ public class StartEndController : MonoBehaviour
 
 
     }
+    public void OnRestartButtonClicked()
+    {
+        Messenger.Broadcast(GameEvents.RESTART_GAME);
+    }
+    public void OnQuitButtonClicked()
+    {
+        Messenger<string>.Broadcast(GameEvents.QUIT_GAME, "MainMenu");
+    }
 }
