@@ -53,13 +53,15 @@ public class Leaderboard : MonoBehaviour
         }
     }
     
-    public string path = "Assets/Data/Leaderboards";
+    private string path = "Assets/Data/Leaderboards";
     private BoardMembersContainer container;
 
+    
     internal BoardMembersContainer Container { get => container; set => container = value; }
     // Start is called before the first frame update
     void Start()
     {
+        //Messenger.AddListener(GameEvents.GAME_OVER, ShowLeaderboard);
         LoadLeaderboard();
         foreach(BoardMember a in container.boardMembers)
         {
@@ -93,5 +95,11 @@ public class Leaderboard : MonoBehaviour
         }
         container.Save(path + "/" + SceneManager.GetActiveScene().name + ".xml");
     }
-    
+    /*public void ShowLeaderboard()
+    {
+        string playerName = GetComponent<ProfilesManager>().ActiveProfile.name;
+        int score = GetComponent<ScoreKeeper>().Score;
+        AddScore(playerName, score);
+        endgameScreen.SetActive(true);
+    }*/
 }

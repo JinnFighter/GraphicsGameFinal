@@ -8,6 +8,9 @@ public class ScoreKeeper : MonoBehaviour
     private int score = 0;
     private int streak = 0;
     [SerializeField] private Text scoreNumber;
+
+    public int Score { get => score; set => score = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +27,8 @@ public class ScoreKeeper : MonoBehaviour
     {
         if(streak<5)
             streak++;
-        score +=(int)(points*(1+0.1*streak));
-        scoreNumber.text = score.ToString();
+        Score +=(int)(points*(1+0.1*streak));
+        scoreNumber.text = Score.ToString();
     }
     public void ResetStreak()
     {

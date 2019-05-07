@@ -296,6 +296,7 @@ public class BrezenheimGameController : MonoBehaviour
             if (cur_line==linesQuantity)
             {
                 GetComponent<GameplayTimer>().StopTimer();
+                Messenger.Broadcast(GameEvents.GAME_OVER);
                 Debug.Log("Enough, start over, it's finished!");
 
                 return;

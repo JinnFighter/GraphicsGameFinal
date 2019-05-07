@@ -12,4 +12,5 @@ public static class GameEvents
     public const string START_GAME = "StartGame";
     public const string PAUSE_GAME = "PauseGame";
     public const string OUT_OF_TIME = "OutOfTime";
+    public const string GAME_OVER = "GameOver";
 }
