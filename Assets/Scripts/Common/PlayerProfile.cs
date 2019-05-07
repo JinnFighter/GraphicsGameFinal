@@ -12,4 +12,13 @@ public class PlayerProfile
 
     [XmlElement("Active")]
     public bool active;
+    public PlayerProfile()
+    {
+
+    }
+    public PlayerProfile(string n, bool a)
+    {
+        name = n;
+        active = a;
+    }
 }
