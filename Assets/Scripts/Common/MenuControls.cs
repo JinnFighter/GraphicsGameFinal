@@ -14,6 +14,7 @@ public class MenuControls : MonoBehaviour
     [SerializeField] private GameObject loginPage;
     [SerializeField] private GameObject createProfilePage;
     [SerializeField] private Button loginButton;
+    //private string sceneToLoad;
     // Start is called before the first frame update
     void Start()
     {
@@ -178,4 +179,14 @@ public class MenuControls : MonoBehaviour
             this.gameObject.SetActive(true);
         }
     }
+    /*public void SaveChosenSceneToLoad(string sceneName)
+    {
+        sceneToLoad = sceneName;
+    }*/
+    /*public void LoadChosenScene(int difficulty)
+    {
+        PlayerPrefs.SetInt("difficulty", difficulty);
+        PlayerPrefs.Save();
+        GetComponent<SceneLoader>().LoadScene(sceneToLoad);
+    }*/
 }

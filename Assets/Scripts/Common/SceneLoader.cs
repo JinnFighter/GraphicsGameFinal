@@ -7,6 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] public GameObject loadingImageObject;
     [SerializeField] public Animation loadingAnim;
+    private string sceneToLoad;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,5 +54,15 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(loadSceneRoutine(name));
         //loadingImageObject.SetActive(false);
         // loadingImage.SetActive(false);
+    }
+    public void SaveChosenSceneToLoad(string sceneName)
+    {
+        sceneToLoad = sceneName;
+    }
+    public void LoadChosenScene(int difficulty)
+    {
+        PlayerPrefs.SetInt("difficulty", difficulty);
+        PlayerPrefs.Save();
+        LoadScene(sceneToLoad);
     }
 }

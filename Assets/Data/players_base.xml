@@ -11,7 +11,7 @@
       <Active>false</Active>
     </Player>
     <Player name="Jinn">
-      <Active>false</Active>
+      <Active>true</Active>
     </Player>
     <Player name="Djinn">
       <Active>false</Active>
@@ -20,7 +20,7 @@
       <Active>false</Active>
     </Player>
     <Player name="ddd">
-      <Active>true</Active>
+      <Active>false</Active>
     </Player>
   </Players>
 </PlayersCollection>
