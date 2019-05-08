@@ -84,7 +84,12 @@
      <Compile Include="Assets\Scripts\UIController.cs" />
      <None Include="Assets\Data\players_base.xml" />
      <None Include="Assets\Fonts\license.txt" />
+     <None Include="Assets\Data\Leaderboards\Bezier.xml" />
      <None Include="Assets\Data\Leaderboards\Brezenheim.xml" />
+     <None Include="Assets\Data\Leaderboards\Turtle.xml" />
+     <None Include="Assets\Data\Leaderboards\MultipleBrezenheimPolygons.xml" />
+     <None Include="Assets\Data\Leaderboards\ColorPicker.xml" />
+     <None Include="Assets\Data\Leaderboards\SouthCohen.xml" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/dell/Unity Projects/GraphicsGameFinal/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
