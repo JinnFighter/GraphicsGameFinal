@@ -8,6 +8,8 @@ public class GameplayTimer : MonoBehaviour
 {
     public class TimerFormat
     {
+        public static string s_template_timerText="0";
+        public static string smms_templater_timerText="00:00:000";
         public static string s = "{0:0}";
         public static string smms = "{0:00}:{1:00}:{2:000}";
     }
@@ -24,11 +26,16 @@ public class GameplayTimer : MonoBehaviour
     public string Format { get => format; set => format = value; }
 
     // Start is called before the first frame update
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvents.START_GAME, GameStarter);
+    }
     void Start()
     {
         currentTime = StartTime;
         TimeLeft = StartTime;
         Counting = false;
+       
         Messenger.AddListener(GameEvents.START_GAME,GameStarter);
     }
 
@@ -92,7 +99,7 @@ public class GameplayTimer : MonoBehaviour
         GameField checker = GetComponent<GameField>();
         if(checker==null)
         {
-            Destroy(checker);
+            //Destroy(checker);
             StartTimer();
         }
     }

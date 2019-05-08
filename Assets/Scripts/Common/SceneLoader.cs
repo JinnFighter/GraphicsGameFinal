@@ -19,6 +19,10 @@ public class SceneLoader : MonoBehaviour
     {
         
     }
+    void OnDestroy()
+    {
+        Messenger<string>.RemoveListener(GameEvents.QUIT_GAME, LoadScene);
+    }
     IEnumerator loadSceneRoutine(string name)
     {
         loadingImageObject.SetActive(true);
@@ -38,11 +42,11 @@ public class SceneLoader : MonoBehaviour
             }
             yield return null;
         }
-        AsyncOperation sceneUnloader = SceneManager.UnloadSceneAsync(curScene);
+        /*AsyncOperation sceneUnloader = SceneManager.UnloadSceneAsync(curScene);
         while (!sceneUnloader.isDone)
         {
             yield return null;
-        }
+        }*/
         //loadingImageObject.SetActive(false);
         //yield return sceneLoader;
     }

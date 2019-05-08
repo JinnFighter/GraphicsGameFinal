@@ -25,6 +25,11 @@ public class StartEndController : MonoBehaviour
     {
         
     }
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, OnStartGameEvent);
+        Messenger.RemoveListener(GameEvents.GAME_OVER, OnEndGameEvent);
+    }
     public void OnStartGameEvent()
     {
         if(start)
@@ -62,6 +67,7 @@ public class StartEndController : MonoBehaviour
     }
     public void OnRestartButtonClicked()
     {
+        start = true;
         Messenger.Broadcast(GameEvents.RESTART_GAME);
     }
     public void OnQuitButtonClicked()

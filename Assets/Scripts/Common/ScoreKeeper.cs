@@ -23,6 +23,11 @@ public class ScoreKeeper : MonoBehaviour
     {
         
     }
+    void OnDestroy()
+    {
+        Messenger<int>.RemoveListener(GameEvents.ACTION_RIGHT_ANSWER, AddScore);
+        Messenger.RemoveListener(GameEvents.ACTION_WRONG_ANSWER, ResetStreak);
+    }
     public void AddScore(int points)
     {
         if(streak<5)

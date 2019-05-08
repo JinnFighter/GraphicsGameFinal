@@ -9,8 +9,11 @@ public class BrezenheimGameController : MonoBehaviour
 {
     //[SerializeField] public GridPixelScript originalPixel;
     //private  GridPixelScript[,] grid;
+    private int difficulty;
     private bool gameActive;
     private bool gameStarted;
+    private int minLineLength;
+    private int maxLineLength;
     private GridPixelScript[,] lines;
     private List<GridPixelScript> linePoints;
     private List<GridPixelScript>[] LinePoints;
@@ -31,9 +34,33 @@ public class BrezenheimGameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        difficulty = GetComponent<GameField>().Difficulty;
         gameActive = false;
         gameStarted = false;
-        linesQuantity = 5;
+        switch(difficulty)
+        {
+            case 0:
+                linesQuantity = 5;
+                minLineLength = 2;
+                maxLineLength = 5;
+                break;
+            case 1:
+                linesQuantity = 7;
+                minLineLength = 4;
+                maxLineLength = 8;
+                break;
+            case 2:
+                linesQuantity = 10;
+                minLineLength = 5;
+                maxLineLength = 10;
+                break;
+            default:
+                linesQuantity = 5;
+                minLineLength = 2;
+                maxLineLength = 5;
+                break;
+        }
+        //linesQuantity = 5;
         ds = new List<int>(1);
         Ds = new List<int>[linesQuantity];
         LinePoints = new List<GridPixelScript>[linesQuantity];
@@ -43,13 +70,16 @@ public class BrezenheimGameController : MonoBehaviour
         //Bresenham4Line(5, 4, 9, 9);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        for (int i = 0; i < linesQuantity; i++)
+        Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
+        /*for (int i = 0; i < linesQuantity; i++)
         {
             for(int j=0;j<Ds[i].Count;j++)
             {
                 Debug.Log(Ds[i][j]);
             }
-        }
+        }*/
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
@@ -58,6 +88,14 @@ public class BrezenheimGameController : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnDestroy()
+    {
+        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
     public void Swap<T>(ref T a, ref T b)
     {
@@ -342,8 +380,8 @@ public class BrezenheimGameController : MonoBehaviour
 
             int secondX = UnityEngine.Random.Range(0, 9);
             int secondY = UnityEngine.Random.Range(0, 9);
-            while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
-                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < 2) 
+            while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength) 
             {
                 firstX = UnityEngine.Random.Range(0, 9);
                 firstY = UnityEngine.Random.Range(0, 9);
@@ -433,12 +471,44 @@ public class BrezenheimGameController : MonoBehaviour
         {
             gameActive = true;
             gameStarted = true;
-            GetComponent<GameplayTimer>().StartTime = 60f;
+            switch(difficulty)
+            {
+                case 0:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+                case 1:
+                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    break;
+                case 2:
+                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    break;
+                default:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+            }
+            //GetComponent<GameplayTimer>().StartTime = 60f;
             GetComponent<GameplayTimer>().StartTimer();
         }
         else
         {
             gameActive = false;
         }
+    }
+    public void RestartGame()
+    {
+        gameActive = false;
+        gameStarted = false;
+        GetComponent<GameField>().clearGrid();
+        ds.Clear();
+        for(int i = 0;i<linesQuantity;i++)
+        {
+            Ds[i].Clear();
+            linePoints.Clear();
+        }
+        cur_line = 0;
+        iteration = 0;
+        GenerateLines();
+        GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 }

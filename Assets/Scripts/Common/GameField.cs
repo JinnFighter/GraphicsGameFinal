@@ -7,8 +7,9 @@ public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
     //[SerializeField] public string fieldSize;
-   [SerializeField] private string fieldSize;
+   //[SerializeField] private string fieldSize;
     public GridPixelScript[,] grid;
+    private int difficulty;
 	private int gridRows = 10;
     private int gridCols = 10;
     private float offsetX;
@@ -18,14 +19,39 @@ public class GameField : MonoBehaviour
     public float OffsetY { get => offsetY; set => offsetY = value; }
     public int GridRows { get => gridRows; set => gridRows = value; }
     public int GridCols { get => gridCols; set => gridCols = value; }
+    public int Difficulty { get => difficulty; set => difficulty = value; }
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Difficulty = PlayerPrefs.GetInt("difficulty");
         //fieldSize = "small";
-	switch(fieldSize)
+        switch(Difficulty)
+        {
+            case 0:
+                GridRows = 10;
+                GridCols = 10;
+                originalPixel.transform.localScale = new Vector3(20, 20, 1);
+                break;
+            case 1:
+                GridRows = 15;
+                GridCols = 15;
+                originalPixel.transform.localScale = new Vector3(12, 12, 1);
+                break;
+            case 2:
+                GridRows = 20;
+                GridCols = 20;
+                originalPixel.transform.localScale = new Vector3(10, 10, 1);
+                break;
+            default:
+                GridRows = 10;
+                GridCols = 10;
+                originalPixel.transform.localScale = new Vector3(20, 20, 1);
+                break;
+        }
+	/*switch(fieldSize)
 	{
 		case "small":
 			GridRows = 10;
@@ -52,7 +78,7 @@ public class GameField : MonoBehaviour
             GridCols = 10;
                 originalPixel.transform.localScale = new Vector3(20, 20, 1);
         break;
-        }
+        }*/
         grid = new GridPixelScript[GridRows, GridCols];
         Vector3 startPos = originalPixel.transform.position;
 

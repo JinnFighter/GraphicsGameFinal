@@ -15,4 +15,5 @@ public static class GameEvents
     public const string GAME_OVER = "GameOver";
     public const string RESTART_GAME = "RestartGame";
     public const string QUIT_GAME = "QuitGame";
+    public const string CONTINUE_GAME = "ContinueGame";
 }

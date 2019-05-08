@@ -18,10 +18,12 @@ public class SettingsPopup : MonoBehaviour
     }
     public void Open()
     {
+        Messenger.Broadcast(GameEvents.PAUSE_GAME);
         this.gameObject.SetActive(true);
     }
     public void Close()
     {
+        Messenger.Broadcast(GameEvents.CONTINUE_GAME);
         this.gameObject.SetActive(false);
     }
     public void Quit()
