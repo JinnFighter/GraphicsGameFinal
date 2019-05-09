@@ -9,6 +9,8 @@ public class BrezenheimGameController : MonoBehaviour
 {
     //[SerializeField] public GridPixelScript originalPixel;
     //private  GridPixelScript[,] grid;
+    private int maxLengthSum;
+    private List<int> linesLengths;
     private int difficulty;
     private bool gameActive;
     private bool gameStarted;
@@ -43,21 +45,25 @@ public class BrezenheimGameController : MonoBehaviour
                 linesQuantity = 5;
                 minLineLength = 2;
                 maxLineLength = 5;
+                maxLengthSum = 20;
                 break;
             case 1:
                 linesQuantity = 7;
                 minLineLength = 4;
                 maxLineLength = 8;
+                maxLengthSum = 48;
                 break;
             case 2:
                 linesQuantity = 10;
                 minLineLength = 5;
                 maxLineLength = 10;
+                maxLengthSum = 90;
                 break;
             default:
                 linesQuantity = 5;
                 minLineLength = 2;
                 maxLineLength = 5;
+                maxLengthSum = 20;
                 break;
         }
         //linesQuantity = 5;
@@ -380,15 +386,37 @@ public class BrezenheimGameController : MonoBehaviour
 
             int secondX = UnityEngine.Random.Range(0, 9);
             int secondY = UnityEngine.Random.Range(0, 9);
-            while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
-                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength) 
+            if(maxLengthSum>0)
             {
-                firstX = UnityEngine.Random.Range(0, 9);
-                firstY = UnityEngine.Random.Range(0, 9);
+                if(maxLengthSum- (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY))<minLineLength
+                    && maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY))!=0)
+                {
+                    while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+               || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
+                    {
+                        firstX = UnityEngine.Random.Range(0, 9);
+                        firstY = UnityEngine.Random.Range(0, 9);
 
-                secondX = UnityEngine.Random.Range(0, 9);
-                secondY = UnityEngine.Random.Range(0, 9);
+                        secondX = UnityEngine.Random.Range(0, 9);
+                        secondY = UnityEngine.Random.Range(0, 9);
+                    }
+                }
+                
+                else
+                {
+                    while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+               || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
+                    {
+                        firstX = UnityEngine.Random.Range(0, 9);
+                        firstY = UnityEngine.Random.Range(0, 9);
+
+                        secondX = UnityEngine.Random.Range(0, 9);
+                        secondY = UnityEngine.Random.Range(0, 9);
+                    }
+                }
+                maxLengthSum -=(int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
             }
+           
             lines[0, i] = GetComponent<GameField>().grid[firstY,firstX];
             lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
             Bresenham4Line(firstX, firstY, secondX, secondY);
@@ -507,6 +535,21 @@ public class BrezenheimGameController : MonoBehaviour
         }
         cur_line = 0;
         iteration = 0;
+        switch (difficulty)
+        {
+            case 0:
+                maxLengthSum = 20;
+                break;
+            case 1:
+                maxLengthSum = 48;
+                break;
+            case 2:
+                maxLengthSum = 90;
+                break;
+            default:
+                maxLengthSum = 20;
+                break;
+        }
         GenerateLines();
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
