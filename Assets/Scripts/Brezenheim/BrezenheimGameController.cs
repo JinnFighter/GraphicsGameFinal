@@ -10,7 +10,6 @@ public class BrezenheimGameController : MonoBehaviour
     //[SerializeField] public GridPixelScript originalPixel;
     //private  GridPixelScript[,] grid;
     private int maxLengthSum;
-    private List<int> linesLengths;
     private int difficulty;
     private bool gameActive;
     private bool gameStarted;
@@ -551,6 +550,7 @@ public class BrezenheimGameController : MonoBehaviour
                 break;
         }
         GenerateLines();
+
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }

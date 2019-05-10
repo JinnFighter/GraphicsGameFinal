@@ -89,7 +89,7 @@ public class Leaderboard : MonoBehaviour
         }
         container.boardMembers.Add(new BoardMember(playerName, score));
         container.boardMembers.Sort((i1, i2) => i2.score.CompareTo(i1.score));
-        if(container.boardMembers.Count==11)
+        if(container.boardMembers.Count==8)
         {
             container.boardMembers.RemoveAt(container.boardMembers.Count-1);
         }

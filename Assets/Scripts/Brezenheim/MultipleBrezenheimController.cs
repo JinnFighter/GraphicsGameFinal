@@ -15,11 +15,48 @@ public class MultipleBrezenheimController : MonoBehaviour
     private GridPixelScript prev_point;
     private int cur_line;
     private int iteration;
+    private bool gameActive;
+    private bool gameStarted;
+    private int minLineLength;
+    private int maxLineLength;
+    private int maxLengthSum;
+    private int difficulty;
     [SerializeField] private InputField textField;
+    
     // Start is called before the first frame update
     void Start()
     {
-        linesQuantity = 5;
+        difficulty = GetComponent<GameField>().Difficulty;
+        gameActive = false;
+        gameStarted = false;
+        switch (difficulty)
+        {
+            case 0:
+                linesQuantity = 5;
+                minLineLength = 2;
+                maxLineLength = 5;
+                maxLengthSum = 20;
+                break;
+            case 1:
+                linesQuantity = 7;
+                minLineLength = 4;
+                maxLineLength = 8;
+                maxLengthSum = 48;
+                break;
+            case 2:
+                linesQuantity = 10;
+                minLineLength = 5;
+                maxLineLength = 10;
+                maxLengthSum = 90;
+                break;
+            default:
+                linesQuantity = 5;
+                minLineLength = 2;
+                maxLineLength = 5;
+                maxLengthSum = 20;
+                break;
+        }
+        //linesQuantity = 5;
         lines = new GridPixelScript[2, linesQuantity];
         linePoints = new List<GridPixelScript>[linesQuantity];
         ds = new List<int>[linesQuantity];
@@ -29,6 +66,10 @@ public class MultipleBrezenheimController : MonoBehaviour
             ds[i] = new List<int>();
         }
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
         GeneratePolygon();
         //GetComponent<GameField>().clearGrid();
         //Bresenham4Polygon(0, 0, 4, 5, 0);
@@ -41,13 +82,23 @@ public class MultipleBrezenheimController : MonoBehaviour
         last_point = linePoints[0][linePoints[0].Count - 1];
         lines[0, 0].setPixelState(true);
         lines[1, 0].setPixelState(true);
-        
+        GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
+        GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        Messenger.Broadcast(GameEvents.START_GAME);
         //last_point.setPixelState(true);
     }
     // Update is called once per frame
     void Update()
     {
         
+    }
+    void OnDestroy()
+    {
+        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
     public void Bresenham4Polygon(int X0, int Y0, int X1, int Y1, int j)
     {
@@ -217,6 +268,10 @@ public class MultipleBrezenheimController : MonoBehaviour
             }
             
         }*/
+        if (!gameActive)
+        {
+            return;
+        }
         if (!GetComponent<GameplayTimer>().Counting)
         {
             Debug.Log("Not Counting due to finish or no start");
@@ -225,6 +280,7 @@ public class MultipleBrezenheimController : MonoBehaviour
         if (cur_line == linesQuantity)
         {
             Debug.Log("Enough, start over, it's finished!");
+            Messenger.Broadcast(GameEvents.TIMER_STOP);
             return;
         }
         if (prev_point == last_point)
@@ -234,6 +290,7 @@ public class MultipleBrezenheimController : MonoBehaviour
             {
                 GetComponent<GameplayTimer>().StopTimer();
                 Debug.Log("Enough, start over, it's finished!");
+                Messenger.Broadcast(GameEvents.GAME_OVER);
 
                 return;
             }
@@ -288,8 +345,8 @@ public class MultipleBrezenheimController : MonoBehaviour
                  secondX = UnityEngine.Random.Range(0, 9);
                  secondY = UnityEngine.Random.Range(0, 9);
 
-                while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
-                    || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < 2)
+                while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+                    || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
                 {
                     //firstX = UnityEngine.Random.Range(0, 9);
                     //firstY = UnityEngine.Random.Range(0, 9);
@@ -345,8 +402,8 @@ public class MultipleBrezenheimController : MonoBehaviour
                         secondX = UnityEngine.Random.Range(0, 9);
                         secondY = UnityEngine.Random.Range(0, 9);
                         GameField field = GetComponent<GameField>();
-                        if (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > 5
-                        || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= 1)
+                        if (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+                        || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= minLineLength-1)
                         {
                             //secondX = UnityEngine.Random.Range(0, 9);
                             //secondY = UnityEngine.Random.Range(0, 9);
@@ -385,5 +442,83 @@ public class MultipleBrezenheimController : MonoBehaviour
             lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
             Bresenham4Polygon(firstX, firstY, secondX, secondY,i);
         }
+    }
+    public void PauseGame()
+    {
+        gameActive = false;
+        GetComponent<GameplayTimer>().PauseTimer();
+    }
+    public void ContinueGame()
+    {
+        gameActive = true;
+        GetComponent<GameplayTimer>().ResumeTimer();
+    }
+    public void ChangeGameState()
+    {
+        if (!gameStarted)
+        {
+            gameActive = true;
+            gameStarted = true;
+            switch (difficulty)
+            {
+                case 0:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+                case 1:
+                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    break;
+                case 2:
+                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    break;
+                default:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+            }
+            //GetComponent<GameplayTimer>().StartTime = 60f;
+            GetComponent<GameplayTimer>().StartTimer();
+        }
+        else
+        {
+            gameActive = false;
+        }
+    }
+    public void RestartGame()
+    {
+        gameActive = false;
+        gameStarted = false;
+        GetComponent<GameField>().clearGrid();
+        //foreach(List<int> d in ds)
+        //{
+           // d.Clear();
+        //}
+        //ds.Clear();
+        for (int i = 0; i < linesQuantity; i++)
+        {
+            ds[i].Clear();
+            linePoints[i].Clear();
+        }
+        cur_line = 0;
+        iteration = 0;
+        switch (difficulty)
+        {
+            case 0:
+                maxLengthSum = 20;
+                break;
+            case 1:
+                maxLengthSum = 48;
+                break;
+            case 2:
+                maxLengthSum = 90;
+                break;
+            default:
+                maxLengthSum = 20;
+                break;
+        }
+        GeneratePolygon();
+        last_point = linePoints[0][linePoints[0].Count - 1];
+        lines[0, 0].setPixelState(true);
+        lines[1, 0].setPixelState(true);
+        GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 }
