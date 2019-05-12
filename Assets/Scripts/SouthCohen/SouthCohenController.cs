@@ -5,6 +5,9 @@ using System;
 
 public class SouthCohenController : MonoBehaviour
 {
+    private bool gameActive;
+    private bool gameStarted;
+    private int difficulty;
     private GridPixelScript[] borderPoints;
     private int linesQuantity;
     private GridPixelScript[,] lines;
@@ -16,7 +19,10 @@ public class SouthCohenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        linesQuantity=1;
+        difficulty = GetComponent<GameField>().Difficulty;
+        gameActive = false;
+        gameStarted = false;
+        linesQuantity =1;
         lineZones = new List<int>[linesQuantity];
         for(int i = 0;i<linesQuantity;i++)
         {
@@ -47,6 +53,15 @@ public class SouthCohenController : MonoBehaviour
         southCohen(lines[0,0], lines[1,0],
             borderPoints[0], borderPoints[1]);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
+        
+        GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
+
+
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     // Update is called once per frame
@@ -54,27 +69,59 @@ public class SouthCohenController : MonoBehaviour
     {
         
     }
+    void OnDestroy()
+    {
+        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
+    }
     public void gameCheck(GridPixelScript invoker)
     {
+        if (!gameActive)
+        {
+            return;
+        }
         if (!GetComponent<GameplayTimer>().Counting)
         {
             Debug.Log("Not Counting due to finish or no start");
             return;
         }
+        
+        if(iteration==linesQuantity)
+        {
+            Messenger.Broadcast(GameEvents.GAME_OVER);
+            return;
+        }
         bool check = false;
+        int c=-1;
         foreach (int a in lineZones[iteration])
         {
             if(a==Code(invoker, borderPoints[0], borderPoints[1]))
             {
+                
                 check = true;
                 Debug.Log(a);
+                c = a;
+                //lineZones[iteration].Remove(a);
                 break;
             }
         }
         if(check)
         {
             Debug.Log("Correct");
+            lineZones[iteration].Remove(c);
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
+           
+            if (lineZones[iteration].Count == 0)
+            {
+                iteration++;
+            }
+            if (iteration == linesQuantity)
+            {
+                Messenger.Broadcast(GameEvents.GAME_OVER);
+            }
         }
         else
         {
@@ -132,7 +179,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.X = rectLeft.X;
                 ay += (rectLeft.X - ax) * (by - ay) / (bx - ax);
                 ax = rectLeft.X;
-                lineZones[0].Add(code1);
+                if(!lineZones[0].Contains(code1))
+                    lineZones[0].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x02))
             {
@@ -140,7 +188,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.Y = rectLeft.Y;
                 ax += (rectLeft.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectLeft.Y;
-                lineZones[0].Add(code1);
+                if (!lineZones[0].Contains(code1))
+                    lineZones[0].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x04))
             {
@@ -148,7 +197,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.X = rectRight.X;
                 ay += (rectRight.X - ax) * (by - ay) / (bx - ax);
                 ax = rectRight.X;
-                lineZones[0].Add(code1);
+                if (!lineZones[0].Contains(code1))
+                    lineZones[0].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x08))
             {
@@ -156,7 +206,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.Y = rectRight.Y;
                 ax += (rectRight.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectRight.Y;
-                lineZones[0].Add(code1);
+                if (!lineZones[0].Contains(code1))
+                    lineZones[0].Add(code1);
             }
 
             //code1 = Code(A, rectLeft, rectRight);
@@ -186,5 +237,77 @@ public class SouthCohenController : MonoBehaviour
         {
 
         }
+    }
+    public void PauseGame()
+    {
+        gameActive = false;
+        GetComponent<GameplayTimer>().PauseTimer();
+    }
+    public void ContinueGame()
+    {
+        gameActive = true;
+        GetComponent<GameplayTimer>().ResumeTimer();
+    }
+    public void ChangeGameState()
+    {
+        if (!gameStarted)
+        {
+            gameActive = true;
+            gameStarted = true;
+            switch (difficulty)
+            {
+                case 0:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+                case 1:
+                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    break;
+                case 2:
+                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    break;
+                default:
+                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    break;
+            }
+            //GetComponent<GameplayTimer>().StartTime = 60f;
+            GetComponent<GameplayTimer>().StartTimer();
+        }
+        else
+        {
+            gameActive = false;
+        }
+    }
+    public void RestartGame()
+    {
+        gameActive = false;
+        gameStarted = false;
+        GetComponent<GameField>().clearGrid();
+        //ds.Clear();
+        for (int i = 0; i < linesQuantity; i++)
+        {
+            //Ds[i].Clear();
+            //linePoints.Clear();
+        }
+        //cur_line = 0;
+        iteration = 0;
+        switch (difficulty)
+        {
+            case 0:
+                //maxLengthSum = 20;
+                break;
+            case 1:
+                //maxLengthSum = 48;
+                break;
+            case 2:
+                //maxLengthSum = 90;
+                break;
+            default:
+                //maxLengthSum = 20;
+                break;
+        }
+        GenerateLines();
+
+        GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 }

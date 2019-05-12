@@ -197,16 +197,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4500571822944730264, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6631356273766904245, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
         type: 3}
       propertyPath: loadingAnim
       value: 
       objectReference: {fileID: 57106382}
+    - target: {fileID: 4500571822944730264, guid: b7c5389e9b65b6e44b1c4402ee0ca46a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7c5389e9b65b6e44b1c4402ee0ca46a, type: 3}
 --- !u!111 &57106382 stripped
@@ -267,7 +267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPixel: {fileID: 1499306294}
-  fieldSize: 
 --- !u!114 &438353944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1472dfbe33db32e45aebe093d3404566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 60
   timerText: {fileID: 1118127743}
 --- !u!114 &438353947
 MonoBehaviour:
@@ -767,6 +765,11 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 438353941}
+    - target: {fileID: 913895248597007109, guid: 5a7e7b16037a11147a334c044117f74e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 368
+      objectReference: {fileID: 0}
     - target: {fileID: 9110153269766251538, guid: 5a7e7b16037a11147a334c044117f74e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -832,11 +835,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 913895248597007109, guid: 5a7e7b16037a11147a334c044117f74e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 368
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7e7b16037a11147a334c044117f74e, type: 3}
 --- !u!224 &1574613093 stripped
@@ -866,7 +864,7 @@ PrefabInstance:
     - target: {fileID: 8157091587577419284, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8157091587577419275, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
@@ -973,5 +971,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 78361578598601280, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: scoreNumber
+      value: 
+      objectReference: {fileID: 1405354274}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dcd4f902e7612244818df2e63807e9d, type: 3}
