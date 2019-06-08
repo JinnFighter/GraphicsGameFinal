@@ -71,26 +71,15 @@ public class GameController : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         winCheck = false;
 
-        //Color color = new Color((float)chosenColor.r / 255, (float)chosenColor.g / 255, 0, 1);
-        //Color32 color = new Color32(chosenColor.r, chosenColor.g, 0, 1);
         curColor = new Color(chosenColor.r/255, chosenColor.g/255, 0,1);
         userColorHolder.color = curColor;
-        //Color32 c = new Color32(chosenColor.r, chosenColor.g, 0, 1);
-        //userColorHolder.color = (Color)c;
-        //userColorHolder.color = new Color32(chosenColor.r, chosenColor.g, 0, 0);
+
     } 
     public void SetChosenColor(float component)
     {
         blueTextField.text = component.ToString();
         curColor.b = component/255;
         userColorHolder.color = curColor;
-        //byte[] vOut = BitConverter.GetBytes(component);
-        //Color c = new Color((float)chosenColor.r, (float)chosenColor.g, component);
-        //Color32 c = new Color(chosenColor.r, chosenColor.g, (byte)component);
-        //Color32 c = new Color32(chosenColor.r, chosenColor.g, 0, 1);
-        //colorImage.color = Color.black;
-        //Color color = new Color((float)chosenColor.r / 255, (float)chosenColor.g / 255, component, 1);
-       // Color32 color = new Color32(chosenColor.r, chosenColor.g, component, 1);
-        //userColorHolder.color = color;
+
     }
 }

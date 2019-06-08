@@ -32,32 +32,17 @@ public class SceneLoader : MonoBehaviour
         sceneLoader.allowSceneActivation = false;
         while(!sceneLoader.isDone)
         {
-            
-        
             if (sceneLoader.progress == 0.9f)
             {
                 loadingAnim.Stop("loadingPixels");
-                //loadingImageObject.SetActive(false);
                 sceneLoader.allowSceneActivation = true;
             }
             yield return null;
         }
-        /*AsyncOperation sceneUnloader = SceneManager.UnloadSceneAsync(curScene);
-        while (!sceneUnloader.isDone)
-        {
-            yield return null;
-        }*/
-        //loadingImageObject.SetActive(false);
-        //yield return sceneLoader;
     }
     public void LoadScene(string name)
     {
-        // loadingImage.SetActive(true);
-        
-        
         StartCoroutine(loadSceneRoutine(name));
-        //loadingImageObject.SetActive(false);
-        // loadingImage.SetActive(false);
     }
     public void SaveChosenSceneToLoad(string sceneName)
     {

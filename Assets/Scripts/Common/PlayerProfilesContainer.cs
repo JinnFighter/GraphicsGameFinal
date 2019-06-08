@@ -17,17 +17,10 @@ public class PlayerProfilesContainer
         TextAsset _xml_file = Resources.Load<TextAsset>(path);
 
         XmlSerializer serializer = new XmlSerializer(typeof(PlayerProfilesContainer));
-
-        //StringReader reader = new StringReader(_xml_file.text);
-
-        //PlayerProfilesContainer _profiles = serializer.Deserialize(reader) as PlayerProfilesContainer;
         using (var stream = new FileStream(path, FileMode.Open))
         {
             return serializer.Deserialize(stream) as PlayerProfilesContainer;
         }
-        //reader.Close();
-
-        //return _profiles;
     }
     public void Save(string path)
     {
@@ -38,3 +31,4 @@ public class PlayerProfilesContainer
         }
     }
 }
+

@@ -20,6 +20,18 @@ public class SouthCohenController : MonoBehaviour
     void Start()
     {
         difficulty = GetComponent<GameField>().Difficulty;
+        switch(difficulty)
+        {
+            case 0:
+                linesQuantity = 1;
+                break;
+            case 1:
+                linesQuantity = 1;
+                break;
+            case 2:
+                linesQuantity = 1;
+                break;
+        }
         gameActive = false;
         gameStarted = false;
         linesQuantity =1;

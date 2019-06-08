@@ -51,12 +51,9 @@ public class GameplayTimer : MonoBehaviour
             }
             else
             {
-               // timerText.text = String.Format("{0:00}:{1:00}:{2:000}", (int)(currentTime / 60f) % 60,
-                   // (int)(currentTime % 60), (int)(currentTime * 1000f) % 1000);
                 timerText.text = String.Format(Format, (int)(currentTime / 60f) % 60, 
                     (int)(currentTime % 60), (int)(currentTime * 1000f) % 1000);
             }
-            //timerText.text = currentTime.ToString("0");
             if (currentTime <= 0.0000f)
             {
                 currentTime = 0.0000f;
