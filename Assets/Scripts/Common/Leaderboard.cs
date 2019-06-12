@@ -95,11 +95,5 @@ public class Leaderboard : MonoBehaviour
         }
         container.Save(path + "/" + SceneManager.GetActiveScene().name + ".xml");
     }
-    /*public void ShowLeaderboard()
-    {
-        string playerName = GetComponent<ProfilesManager>().ActiveProfile.name;
-        int score = GetComponent<ScoreKeeper>().Score;
-        AddScore(playerName, score);
-        endgameScreen.SetActive(true);
-    }*/
 }
+

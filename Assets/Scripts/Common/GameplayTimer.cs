@@ -13,7 +13,7 @@ public class GameplayTimer : MonoBehaviour
         public static string s = "{0:0}";
         public static string smms = "{0:00}:{1:00}:{2:000}";
     }
-    private float startTime=10f;
+    private float startTime=4f;
     private float currentTime=0f;
     private bool counting;
     private float timeLeft;
@@ -96,8 +96,8 @@ public class GameplayTimer : MonoBehaviour
         GameField checker = GetComponent<GameField>();
         if(checker==null)
         {
-            //Destroy(checker);
             StartTimer();
         }
     }
 }
+

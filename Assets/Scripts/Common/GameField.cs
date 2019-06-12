@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
-    //[SerializeField] public string fieldSize;
-   //[SerializeField] private string fieldSize;
     public GridPixelScript[,] grid;
     private int difficulty;
 	private int gridRows = 10;
@@ -20,9 +18,7 @@ public class GameField : MonoBehaviour
     public int GridRows { get => gridRows; set => gridRows = value; }
     public int GridCols { get => gridCols; set => gridCols = value; }
     public int Difficulty { get => difficulty; set => difficulty = value; }
-
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -51,34 +47,6 @@ public class GameField : MonoBehaviour
                 originalPixel.transform.localScale = new Vector3(20, 20, 1);
                 break;
         }
-	/*switch(fieldSize)
-	{
-		case "small":
-			GridRows = 10;
-			GridCols = 10;
-                originalPixel.transform.localScale = new Vector3(20, 20, 1);
-                break;
-		case "medium":
-			GridRows = 30;
-			GridCols = 50;
-                originalPixel.transform.localScale =new Vector3 (12,12,1);
-		break;
-		case "big":
-			GridRows = 50;
-			GridCols = 80;
-                originalPixel.transform.localScale = new Vector3(10, 10, 1);
-                break;
-		case "enormous":
-			GridRows = 80;
-			GridCols = 100;
-                
-		break;
-        default:
-            GridRows = 10;
-            GridCols = 10;
-                originalPixel.transform.localScale = new Vector3(20, 20, 1);
-        break;
-        }*/
         grid = new GridPixelScript[GridRows, GridCols];
         Vector3 startPos = originalPixel.transform.position;
 
@@ -128,3 +96,4 @@ public class GameField : MonoBehaviour
         }
     }
 }
+

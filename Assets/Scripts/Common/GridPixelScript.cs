@@ -5,7 +5,6 @@ using UnityEngine;
 public class GridPixelScript : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
-    //[SerializeField] public GameObject gameController;
     private int x;
     private int y;
 
@@ -15,7 +14,7 @@ public class GridPixelScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pixel_empty.SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -25,15 +24,13 @@ public class GridPixelScript : MonoBehaviour
     }
     public void setPixelState(bool state)
     {
-        //if(painted!=state)
-       // {
-            pixel_empty.SetActive(!state);
-        //}
-        
+        pixel_empty.SetActive(!state);
     }
     public void OnMouseDown()
     {
         Messenger<GridPixelScript>.Broadcast(GameEvents.GAME_CHECK,this);
-        //gameController.GetComponent<BrezenheimGameController>().gameCheck(this);
     }
 }
+
+
+

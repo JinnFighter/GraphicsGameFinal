@@ -513,7 +513,6 @@ public class BrezenheimGameController : MonoBehaviour
                     GetComponent<GameplayTimer>().StartTime = 60f;
                     break;
             }
-            //GetComponent<GameplayTimer>().StartTime = 60f;
             GetComponent<GameplayTimer>().StartTimer();
         }
         else

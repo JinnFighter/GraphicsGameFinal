@@ -14,7 +14,7 @@ public class StartEndController : MonoBehaviour
     {
         GameplayTimer timer = GetComponent<GameplayTimer>();
         timer.Format = GameplayTimer.TimerFormat.s;
-        timer.StartTime = 3f;
+        timer.StartTime = 4f;
         Messenger.AddListener(GameEvents.TIMER_STOP,OnStartGameEvent);
         Messenger.AddListener(GameEvents.GAME_OVER, OnEndGameEvent);
         //timer.StartTimer();
@@ -39,7 +39,7 @@ public class StartEndController : MonoBehaviour
         }
         else
         {
-
+            Messenger.Broadcast(GameEvents.GAME_OVER);
         }
         
     }
@@ -60,8 +60,6 @@ public class StartEndController : MonoBehaviour
             text.transform.SetParent(originalText.transform.parent);
         }
         endgameScreen.SetActive(true);
-        //GetComponent<Leaderboard>().AddScore(GetComponent<ProfilesManager>().ActiveProfile.name,
-        //  GetComponent<ScoreKeeper>().Score);
 
 
     }
@@ -75,3 +73,4 @@ public class StartEndController : MonoBehaviour
         Messenger<string>.Broadcast(GameEvents.QUIT_GAME, "MainMenu");
     }
 }
+
