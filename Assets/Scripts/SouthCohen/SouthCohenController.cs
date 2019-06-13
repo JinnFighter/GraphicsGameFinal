@@ -16,6 +16,11 @@ public class SouthCohenController : MonoBehaviour
     private int borderWidth;
     private int borderHeight;
     [SerializeField] private SpriteRenderer border;
+    private int[,] gridCodes;
+    private int gridCodesWidth;
+    private int gridCodesHeight;
+    private int maxLineLength;
+    private int minLineLength;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,30 +28,50 @@ public class SouthCohenController : MonoBehaviour
         switch(difficulty)
         {
             case 0:
-                linesQuantity = 1;
+                linesQuantity = 5;
+                borderWidth = 5;
+                borderHeight = 5;
+                maxLineLength = 8;
+                minLineLength = 5;
                 break;
             case 1:
-                linesQuantity = 1;
+                linesQuantity = 7;
+                borderWidth = 7;
+                borderHeight = 7;
+                maxLineLength = 10;
+                minLineLength = 8;
                 break;
             case 2:
-                linesQuantity = 1;
+                linesQuantity = 10;
+                borderWidth = 10;
+                borderHeight = 10;
+                maxLineLength = 11;
+                minLineLength = 10;
                 break;
+            default:
+                linesQuantity = 5;
+                borderWidth = 5;
+                borderHeight = 5;
+                maxLineLength = 8;
+                minLineLength = 5;
+                break;
+
         }
         gameActive = false;
         gameStarted = false;
-        linesQuantity =1;
+        //linesQuantity =1;
         lineZones = new List<int>[linesQuantity];
         for(int i = 0;i<linesQuantity;i++)
         {
             lineZones[i] = new List<int>();
         }
         lines = new GridPixelScript[2, linesQuantity];
-        borderWidth = 5;
-        borderHeight = 5;
+        
         borderPoints = new GridPixelScript[2];
+        GenerateLines();
         GameField gameField = gameObject.GetComponent<GameField>();
-        lines[0, 0] = gameField.grid[0, 1];
-        lines[1, 0] = gameField.grid[9, 9];
+        //lines[0, 0] = gameField.grid[0, 1];
+        //lines[1, 0] = gameField.grid[9, 9];
         borderPoints[0] = gameField.grid[3, 3];
         borderPoints[1] = gameField.grid[7, 7];
         Vector3 pos = borderPoints[0].transform.position;
@@ -58,12 +83,26 @@ public class SouthCohenController : MonoBehaviour
         scale.x = (scale.x) * 10;
         scale.y = (scale.y ) * 10;
         border.transform.localScale = scale;
-
+        gridCodesWidth = gameField.GridCols;
+        gridCodesHeight = gameField.GridRows;
+        gridCodes = new int[gridCodesHeight, gridCodesWidth];
+        for(int i=0;i<gridCodesHeight;i++)
+        {
+            for(int j=0;j<gridCodesWidth;j++)
+            {
+                gridCodes[i, j] = this.Code(gameField.grid[i, j], borderPoints[0], borderPoints[1]);
+            }
+        }
         //border.transform.localScale.Set(border.transform.localScale.x + borderWidth, border.transform.localScale.y + borderHeight, border.transform.localScale.z);
         //border.sprite.rect.size.Set(border.sprite.rect.size.x*borderWidth, border.sprite.rect.size.y*borderHeight);
-        //gameObject.GetComponent<Algorithms>().southCohen(gameField.grid[0, 0], gameField.grid[9, 9], 
-        southCohen(lines[0,0], lines[1,0],
-            borderPoints[0], borderPoints[1]);
+        //gameObject.GetComponent<Algorithms>().southCohen(gameField.grid[0, 0], gameField.grid[9, 9],
+        for(int i=0;i<linesQuantity;i++)
+        {
+            southCohen(lines[0, i], lines[1, i],
+           borderPoints[0], borderPoints[1],i);
+        }
+        gameField.clearGrid();
+        GetComponent<Algorithms>().drawLine(lines[0, 0].X,lines[0,0].Y, lines[1, 0].X,lines[1,0].Y);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
@@ -123,6 +162,7 @@ public class SouthCohenController : MonoBehaviour
         if(check)
         {
             Debug.Log("Correct");
+            ClearZone(c);
             lineZones[iteration].Remove(c);
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
            
@@ -133,6 +173,12 @@ public class SouthCohenController : MonoBehaviour
             if (iteration == linesQuantity)
             {
                 Messenger.Broadcast(GameEvents.GAME_OVER);
+            }
+            else
+            {
+                GetComponent<GameField>().clearGrid();
+                GetComponent<Algorithms>().drawLine(lines[0, iteration].X, lines[0, iteration].Y, 
+                    lines[1, iteration].X, lines[1, iteration].Y);
             }
         }
         else
@@ -152,11 +198,20 @@ public class SouthCohenController : MonoBehaviour
 
             int secondX = UnityEngine.Random.Range(0, 9);
             int secondY = UnityEngine.Random.Range(0, 9);
+             while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+               || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
+                    {
+                        firstX = UnityEngine.Random.Range(0, 9);
+                        firstY = UnityEngine.Random.Range(0, 9);
+
+                        secondX = UnityEngine.Random.Range(0, 9);
+                        secondY = UnityEngine.Random.Range(0, 9);
+                    }
             lines[0, i] = GetComponent<GameField>().grid[firstY, firstX];
             lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
         }
     }
-    public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight)
+    public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight,int i)
     {
         //Point A = new Point();
         //A = nA;
@@ -191,8 +246,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.X = rectLeft.X;
                 ay += (rectLeft.X - ax) * (by - ay) / (bx - ax);
                 ax = rectLeft.X;
-                if(!lineZones[0].Contains(code1))
-                    lineZones[0].Add(code1);
+                if(!lineZones[i].Contains(code1))
+                    lineZones[i].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x02))
             {
@@ -200,8 +255,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.Y = rectLeft.Y;
                 ax += (rectLeft.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectLeft.Y;
-                if (!lineZones[0].Contains(code1))
-                    lineZones[0].Add(code1);
+                if (!lineZones[i].Contains(code1))
+                    lineZones[i].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x04))
             {
@@ -209,8 +264,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.X = rectRight.X;
                 ay += (rectRight.X - ax) * (by - ay) / (bx - ax);
                 ax = rectRight.X;
-                if (!lineZones[0].Contains(code1))
-                    lineZones[0].Add(code1);
+                if (!lineZones[i].Contains(code1))
+                    lineZones[i].Add(code1);
             }
             if (Convert.ToBoolean(code1 & 0x08))
             {
@@ -218,8 +273,8 @@ public class SouthCohenController : MonoBehaviour
                 //A.Y = rectRight.Y;
                 ax += (rectRight.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectRight.Y;
-                if (!lineZones[0].Contains(code1))
-                    lineZones[0].Add(code1);
+                if (!lineZones[i].Contains(code1))
+                    lineZones[i].Add(code1);
             }
 
             //code1 = Code(A, rectLeft, rectRight);
@@ -245,9 +300,18 @@ public class SouthCohenController : MonoBehaviour
     }
     public void ClearZone(int code)
     {
-        if(Convert.ToBoolean(code & 0x01))
+        for(int i=0;i<gridCodesHeight;i++)
         {
-
+            for(int j=0;j<gridCodesWidth;j++)
+            {
+                if(gridCodes[i,j]==code)
+                {
+                    if(!GetComponent<GameField>().grid[i,j].pixel_empty.activeSelf)
+                    {
+                        GetComponent<GameField>().grid[i, j].setPixelState(false);
+                    }
+                }
+            }
         }
     }
     public void PauseGame()
