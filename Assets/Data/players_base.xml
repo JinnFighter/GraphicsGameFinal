@@ -22,5 +22,8 @@
     <Player name="ddd">
       <Active>false</Active>
     </Player>
+    <Player name="dinn">
+      <Active>false</Active>
+    </Player>
   </Players>
 </PlayersCollection>

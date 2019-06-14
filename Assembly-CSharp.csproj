@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\Common\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\Common\ScoreKeeper.cs" />
      <Compile Include="Assets\Scripts\Common\SettingsPopup.cs" />
+     <Compile Include="Assets\Scripts\Common\SoundController.cs" />
      <Compile Include="Assets\Scripts\Common\StartEndController.cs" />
      <Compile Include="Assets\Scripts\Common\UIController.cs" />
      <Compile Include="Assets\Scripts\SouthCohen\SouthCohenController.cs" />
