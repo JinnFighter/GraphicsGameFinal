@@ -7,7 +7,19 @@
     </Player>
     <Player>
       <Name>Jinn</Name>
+      <Score>950</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>910</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
       <Score>780</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>700</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
@@ -15,19 +27,7 @@
     </Player>
     <Player>
       <Name>Jinn</Name>
-      <Score>500</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>230</Score>
-    </Player>
-    <Player>
-      <Name>Not Admin</Name>
-      <Score>100</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>0</Score>
+      <Score>650</Score>
     </Player>
   </Results>
 </LeaderboardCollection>

@@ -68,10 +68,7 @@ public class SouthCohenController : MonoBehaviour
         lines = new GridPixelScript[2, linesQuantity];
         
         borderPoints = new GridPixelScript[2];
-        GenerateLines();
         GameField gameField = gameObject.GetComponent<GameField>();
-        //lines[0, 0] = gameField.grid[0, 1];
-        //lines[1, 0] = gameField.grid[9, 9];
         borderPoints[0] = gameField.grid[3, 3];
         borderPoints[1] = gameField.grid[7, 7];
         Vector3 pos = borderPoints[0].transform.position;
@@ -81,8 +78,10 @@ public class SouthCohenController : MonoBehaviour
         border.transform.position = pos;
         Vector3 scale = border.transform.localScale;
         scale.x = (scale.x) * 10;
-        scale.y = (scale.y ) * 10;
+        scale.y = (scale.y) * 10;
         border.transform.localScale = scale;
+        GenerateLines();
+        
         gridCodesWidth = gameField.GridCols;
         gridCodesHeight = gameField.GridRows;
         gridCodes = new int[gridCodesHeight, gridCodesWidth];
@@ -179,6 +178,7 @@ public class SouthCohenController : MonoBehaviour
             }
             if (iteration == linesQuantity)
             {
+                GetComponent<GameplayTimer>().StopTimer();
                 Messenger.Broadcast(GameEvents.GAME_OVER);
             }
             else
@@ -205,8 +205,9 @@ public class SouthCohenController : MonoBehaviour
 
             int secondX = UnityEngine.Random.Range(0, 9);
             int secondY = UnityEngine.Random.Range(0, 9);
-             while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
+             while ((Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
+               &&(!CheckIntersection(firstX,firstY,secondX,secondY)))
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -365,32 +366,41 @@ public class SouthCohenController : MonoBehaviour
         gameActive = false;
         gameStarted = false;
         GetComponent<GameField>().clearGrid();
-        //ds.Clear();
         for (int i = 0; i < linesQuantity; i++)
         {
-            //Ds[i].Clear();
-            //linePoints.Clear();
+            lineZones[i].Clear();
         }
-        //cur_line = 0;
         iteration = 0;
-        switch (difficulty)
-        {
-            case 0:
-                //maxLengthSum = 20;
-                break;
-            case 1:
-                //maxLengthSum = 48;
-                break;
-            case 2:
-                //maxLengthSum = 90;
-                break;
-            default:
-                //maxLengthSum = 20;
-                break;
-        }
         GenerateLines();
+        for (int i = 0; i < linesQuantity; i++)
+        {
+            southCohen(lines[0, i], lines[1, i],
+           borderPoints[0], borderPoints[1], i);
+        }
+        GetComponent<GameField>().clearGrid();
+        iteration = 0;
+        GetComponent<Algorithms>().drawLine(lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
 
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
+    }
+    public bool CheckIntersection(int ax,int ay,int bx, int by)
+    {
+        int[,] matr = new int[2, 2];
+        matr[0, 0] = ax.CompareTo(borderPoints[0].X)+ax.CompareTo(borderPoints[1].X);
+        matr[0, 1] = ay.CompareTo(borderPoints[0].Y)+ay.CompareTo(borderPoints[1].Y);
+        matr[1, 0] = bx.CompareTo(borderPoints[0].X)+bx.CompareTo(borderPoints[1].X);
+        matr[1, 1] = by.CompareTo(borderPoints[0].Y)+by.CompareTo(borderPoints[1].Y);
+        int checker = matr[0, 0];
+        if((checker==matr[0,1])&&(checker==matr[1,0])&&(checker==matr[1,1]))
+        {
+            return false;
+        }
+        else
+        {
+            int res = (matr[0, 0] * matr[1, 1]) - (matr[1, 0] * matr[0, 1]);
+            return (res == 0);
+        }
+        
     }
 }
