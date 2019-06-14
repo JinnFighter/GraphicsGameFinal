@@ -96,18 +96,20 @@ public class SouthCohenController : MonoBehaviour
         //border.transform.localScale.Set(border.transform.localScale.x + borderWidth, border.transform.localScale.y + borderHeight, border.transform.localScale.z);
         //border.sprite.rect.size.Set(border.sprite.rect.size.x*borderWidth, border.sprite.rect.size.y*borderHeight);
         //gameObject.GetComponent<Algorithms>().southCohen(gameField.grid[0, 0], gameField.grid[9, 9],
-        for(int i=0;i<linesQuantity;i++)
+        for (int i=0;i<linesQuantity;i++)
         {
             southCohen(lines[0, i], lines[1, i],
            borderPoints[0], borderPoints[1],i);
         }
         gameField.clearGrid();
-        GetComponent<Algorithms>().drawLine(lines[0, 0].X,lines[0,0].Y, lines[1, 0].X,lines[1,0].Y);
+        iteration = 0;
+        GetComponent<Algorithms>().drawLine(lines[0, 0].Y,lines[0,0].X, lines[1, 0].Y,lines[1,0].X);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
+        
         
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
 
@@ -147,13 +149,14 @@ public class SouthCohenController : MonoBehaviour
         }
         bool check = false;
         int c=-1;
+        Debug.Log("Invoker"+this.Code(invoker, borderPoints[0], borderPoints[1]));
         foreach (int a in lineZones[iteration])
         {
-            if(a==Code(invoker, borderPoints[0], borderPoints[1]))
+            if(a==this.Code(invoker, borderPoints[0], borderPoints[1]))
             {
                 
                 check = true;
-                Debug.Log(a);
+                Debug.Log("Found Code:"+a);
                 c = a;
                 //lineZones[iteration].Remove(a);
                 break;
@@ -170,6 +173,10 @@ public class SouthCohenController : MonoBehaviour
             {
                 iteration++;
             }
+            else
+            {
+                return;
+            }
             if (iteration == linesQuantity)
             {
                 Messenger.Broadcast(GameEvents.GAME_OVER);
@@ -177,8 +184,8 @@ public class SouthCohenController : MonoBehaviour
             else
             {
                 GetComponent<GameField>().clearGrid();
-                GetComponent<Algorithms>().drawLine(lines[0, iteration].X, lines[0, iteration].Y, 
-                    lines[1, iteration].X, lines[1, iteration].Y);
+                GetComponent<Algorithms>().drawLine(lines[0, iteration].Y, lines[0, iteration].X, 
+                    lines[1, iteration].Y, lines[1, iteration].X);
             }
         }
         else

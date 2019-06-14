@@ -3,6 +3,14 @@
   <Results>
     <Player>
       <Name>Jinn</Name>
+      <Score>1100</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>780</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
       <Score>670</Score>
     </Player>
     <Player>
@@ -16,6 +24,10 @@
     <Player>
       <Name>Not Admin</Name>
       <Score>100</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>0</Score>
     </Player>
   </Results>
 </LeaderboardCollection>
