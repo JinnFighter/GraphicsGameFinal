@@ -207,7 +207,7 @@ public class SouthCohenController : MonoBehaviour
             int secondY = UnityEngine.Random.Range(0, 9);
              while ((Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
-               &&(!CheckIntersection(firstX,firstY,secondX,secondY)))
+               ||(!CheckIntersection(firstX,firstY,secondX,secondY)))
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -384,9 +384,19 @@ public class SouthCohenController : MonoBehaviour
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
-    public bool CheckIntersection(int ax,int ay,int bx, int by)
+    public bool CheckIntersection(int Ax,int Ay,int Bx, int By)
     {
+        int ax = Ax;
+        int ay = Ay;
+        int bx = Bx;
+        int by = By;
+        if(ax>bx)
+        {
+            GetComponent<Algorithms>().swap(ax, bx);
+            GetComponent<Algorithms>().swap(ay, by);
+        }
         int[,] matr = new int[2, 2];
+
         matr[0, 0] = ax.CompareTo(borderPoints[0].X)+ax.CompareTo(borderPoints[1].X);
         matr[0, 1] = ay.CompareTo(borderPoints[0].Y)+ay.CompareTo(borderPoints[1].Y);
         matr[1, 0] = bx.CompareTo(borderPoints[0].X)+bx.CompareTo(borderPoints[1].X);
@@ -399,7 +409,15 @@ public class SouthCohenController : MonoBehaviour
         else
         {
             int res = (matr[0, 0] * matr[1, 1]) - (matr[1, 0] * matr[0, 1]);
-            return (res == 0);
+            if(res==0)
+            {
+                Debug.Log("chosen opred: "+res);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
     }

@@ -3,6 +3,22 @@
   <Results>
     <Player>
       <Name>Jinn</Name>
+      <Score>4350</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>3550</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>2500</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1600</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
       <Score>1100</Score>
     </Player>
     <Player>
@@ -12,22 +28,6 @@
     <Player>
       <Name>Jinn</Name>
       <Score>910</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>780</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>700</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>670</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>650</Score>
     </Player>
   </Results>
 </LeaderboardCollection>
