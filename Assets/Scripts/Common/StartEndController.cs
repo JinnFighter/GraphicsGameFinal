@@ -9,9 +9,11 @@ public class StartEndController : MonoBehaviour
     bool start = true;
     [SerializeField] private GameObject endgameScreen;
     [SerializeField] private Text originalText;
+    private List<Text> texts;
     // Start is called before the first frame update
     void Start()
     {
+        texts = new List<Text>();
         GameplayTimer timer = GetComponent<GameplayTimer>();
         timer.Format = GameplayTimer.TimerFormat.s;
         timer.StartTime = 4f;
@@ -45,12 +47,23 @@ public class StartEndController : MonoBehaviour
     }
     public void OnEndGameEvent()
     {
+        
         string playerName = GetComponent<ProfilesManager>().ActiveProfile.name;
         int score = GetComponent<ScoreKeeper>().Score;
         GetComponent<Leaderboard>().AddScore(playerName, score);
         
         originalText.text = GetComponent<Leaderboard>().Container.boardMembers[0].name
             + GetComponent<Leaderboard>().Container.boardMembers[0].score;
+        if(texts.Count!=0)
+        {
+            for (int i = 0; i < texts.Count; i++)
+            {
+                texts[i].transform.SetParent(null);
+                Destroy(texts[i]);
+            }
+            texts.Clear();
+        }
+        
         for(int i=1;i< GetComponent<Leaderboard>().Container.boardMembers.Count;i++)
         {
             playerName = GetComponent<Leaderboard>().Container.boardMembers[i].name;
@@ -58,6 +71,7 @@ public class StartEndController : MonoBehaviour
             Text text = Instantiate(originalText) as Text;
             text.text = playerName + score;
             text.transform.SetParent(originalText.transform.parent);
+            texts.Add(text);
         }
         endgameScreen.SetActive(true);
 

@@ -23,8 +23,6 @@ ScriptsOnlyBuild:
     - Turtle
     - TurtleGameController
     - UIController
-    UnityEditor.TestRunner.dll:
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -40,7 +38,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
     com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
     - UnityEngine.Networking.NetworkIdentity
   sceneClasses:
     Assets/Scenes/Bezier.unity:
@@ -61,6 +58,10 @@ ScriptsOnlyBuild:
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -108,6 +109,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10758}
     - Class: 114
       Script: {instanceID: 10840}
+    - Class: 114
+      Script: {instanceID: 10900}
     - Class: 114
       Script: {instanceID: 10920}
     - Class: 114
@@ -931,6 +934,18 @@ ScriptsOnlyBuild:
     className: NetworkTransform
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.Advertisements.dll
+    namespaceName: UnityEngine.Advertisements
+    className: CallbackExecutor
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.Advertisements.dll
+    namespaceName: UnityEngine.Advertisements.Editor
+    className: Placeholder
+  - hash:
+      serializedVersion: 2
       Hash: 71f256f661256b67db157b182fd6358a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1519,7 +1534,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 49c2f2287d7ad7286812b195cb39d7a1
+      Hash: 027797cf7d91a695bf3c7a1e7fd02454
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SoundController

@@ -1,8 +1,33 @@
-<LeaderboardCollection>
+<?xml version="1.0"?>
+<LeaderboardCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Results>
     <Player>
-      <Name>Not Admin</Name>
-      <Score>100</Score>
+      <Name>Jinn</Name>
+      <Score>1300</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1190</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1170</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1160</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1140</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1110</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1060</Score>
     </Player>
   </Results>
 </LeaderboardCollection>
