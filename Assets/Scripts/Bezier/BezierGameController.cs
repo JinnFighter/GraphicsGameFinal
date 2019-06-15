@@ -7,6 +7,9 @@ public class BezierGameController : MonoBehaviour
 {
     private bool gameActive;
     private bool gameStarted;
+    private int difficulty;
+    private int minLineLength;
+    private int maxLineLength;
     private List<GridPixelScript> curvePoints;
     private int current;
     private int pointsQuantity;
@@ -15,7 +18,31 @@ public class BezierGameController : MonoBehaviour
     {
         gameActive = false;
         gameStarted = false;
-        pointsQuantity = 3;
+        difficulty = GetComponent<GameField>().Difficulty;
+        switch(difficulty)
+        {
+            case 0:
+                pointsQuantity = 3;
+                minLineLength=3;
+                maxLineLength=5;
+                break;
+            case 1:
+                pointsQuantity = 5;
+                minLineLength = 4;
+                maxLineLength = 6;
+                break;
+            case 2:
+                pointsQuantity = 7;
+                minLineLength = 5;
+                maxLineLength = 7;
+                break;
+            default:
+                pointsQuantity = 3;
+                minLineLength = 3;
+                maxLineLength = 5;
+                break;
+        }
+        
         curvePoints = new List<GridPixelScript>(pointsQuantity);
         GenerateBezierCurve();
         //curvePoints.Add(GetComponent<GameField>().grid[0, 0]);
@@ -23,9 +50,17 @@ public class BezierGameController : MonoBehaviour
         //curvePoints.Add(GetComponent<GameField>().grid[8, 0]);
         drawBezier();
         current = 0;
+        for(int i=0;i<curvePoints.Count;i++)
+        {
+            Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
+        }
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
+        Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+       
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
@@ -33,6 +68,14 @@ public class BezierGameController : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
+        Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
+        Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
+        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
     }
     public void drawBezier()
     {
@@ -102,6 +145,10 @@ public class BezierGameController : MonoBehaviour
     }
     public void gameCheck(GridPixelScript invoker)
     {
+        if (!gameActive)
+        {
+            return;
+        }
         if (!GetComponent<GameplayTimer>().Counting)
         {
             Debug.Log("Not Counting due to finish or no start");
@@ -119,6 +166,11 @@ public class BezierGameController : MonoBehaviour
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 //invoker.setPixelState(true);
                 current++;
+                if(current == curvePoints.Count)
+                {
+                    GetComponent<GameplayTimer>().StopTimer();
+                    Messenger.Broadcast(GameEvents.GAME_OVER);
+                }
             }
             else
             {
@@ -134,6 +186,17 @@ public class BezierGameController : MonoBehaviour
         {
             int x = UnityEngine.Random.Range(0, 9);
             int y = UnityEngine.Random.Range(0, 9);
+            if(i!=0)
+            {
+                while ((Math.Sqrt((x - curvePoints[i-1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLineLength
+              || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLineLength))
+              
+                {
+                    x= UnityEngine.Random.Range(0, 9);
+                    y= UnityEngine.Random.Range(0, 9);
+                }
+            }
+
             curvePoints.Add(GetComponent<GameField>().grid[y,x]);
         }
     }
@@ -150,5 +213,33 @@ public class BezierGameController : MonoBehaviour
         {
             gameActive = false;
         }
+    }
+    public void PauseGame()
+    {
+        gameActive = false;
+        GetComponent<GameplayTimer>().PauseTimer();
+    }
+    public void ContinueGame()
+    {
+        gameActive = true;
+        GetComponent<GameplayTimer>().ResumeTimer();
+    }
+    public void RestartGame()
+    {
+        gameActive = false;
+        gameStarted = false;
+        GetComponent<GameField>().clearGrid();
+        curvePoints.Clear();
+
+        current = 0;
+        GenerateBezierCurve();
+        drawBezier();
+        current = 0;
+        for (int i = 0; i < curvePoints.Count; i++)
+        {
+            Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
+        }
+        GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 }

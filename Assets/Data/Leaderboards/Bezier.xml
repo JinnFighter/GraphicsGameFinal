@@ -1,5 +1,18 @@
-<LeaderboardCollection>
+<?xml version="1.0"?>
+<LeaderboardCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Results>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>340</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>330</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>110</Score>
+    </Player>
     <Player>
       <Name>Not Admin</Name>
       <Score>100</Score>
