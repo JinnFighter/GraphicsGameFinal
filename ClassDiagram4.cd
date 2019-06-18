@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BezierGameController">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQBAAgBACgABAAAEAAAIABAgAAAAEAAAAQAAQAghAA=</HashCode>
+      <FileName>Assets\Scripts\Bezier\BezierGameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BrezenheimGameController">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQQBAAhBBSjAEAEAAAAAIABAAAIDQAIAAAUCIQAggAA=</HashCode>
+      <FileName>Assets\Scripts\Brezenheim\BrezenheimGameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultipleBrezenheimController">
+    <Position X="20" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQQBAAhBBCiAEAEAAIAAIABAAAIAAAAAAAQCIQIggAA=</HashCode>
+      <FileName>Assets\Scripts\Brezenheim\MultipleBrezenheimController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAFABQCAAIQAwAgAgAgAAAgAEAACoAACAAAQAAAA=</HashCode>
+      <FileName>Assets\Scripts\ColorPicker\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algorithms">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAICAAAAAAAAAgAAAAAAADSEAAAQAAAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Algorithms.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEvents">
+    <Position X="7" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAQAAAACAAAAhAAAAAAQCIAQAAAIAAAIAAE=</HashCode>
+      <FileName>Assets\Scripts\Common\GameEvents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameField">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABACIAAQDAAAAAgCAAAAAAAALAAAAIAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Common\GameField.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="originalPixel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GameplayTimer">
+    <Position X="11" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Class Name="GameplayTimer.TimerFormat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Common\GameplayTimer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAACAAhAAAAAAgCAIIIAgIBACAiAQAAgAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\GameplayTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GridPixelScript">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACgAAAAEAAAAAAAAAAAAAAAAIABgAAAAYAA=</HashCode>
+      <FileName>Assets\Scripts\Common\GridPixelScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Leaderboard">
+    <Position X="8.25" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Leaderboard.BoardMember" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Common\Leaderboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Leaderboard.BoardMembersContainer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Common\Leaderboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAQAAAQAACAAAAAAAAACAIAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Leaderboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainSettings">
+    <Position X="16.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\MainSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuControls">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACQSAAASBAIQAIAAAQAQAAAAAAAgAAAAAgACA=</HashCode>
+      <FileName>Assets\Scripts\Common\MenuControls.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="pfManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MessengerInternal">
+    <Position X="0.5" Y="11.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="MessengerInternal.BroadcastException" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Common\Messenger.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="MessengerInternal.ListenerException" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Common\Messenger.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAgABAAAggAAgAAAAAAIAAACAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Messenger">
+    <Position X="3.75" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Messenger&lt;T&gt;">
+    <Position X="3.75" Y="12" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Messenger&lt;T, U&gt;">
+    <Position X="3.75" Y="13.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Messenger&lt;T, U, V&gt;">
+    <Position X="3.75" Y="15.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerProfile">
+    <Position X="0.5" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\PlayerProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerProfilesContainer">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\PlayerProfilesContainer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="profiles" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProfilesManager">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAQAACAAACAAAAACAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\ProfilesManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="container" />
+      <Field Name="activeProfile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SceneLoader">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQNAAAAACAAAAAAAAAAKAAAAAABAAAAAIAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\SceneLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScoreKeeper">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAABACAAAAgAAAIIAAAAAAAAAAABCAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\ScoreKeeper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SettingsPopup">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAACAAQA=</HashCode>
+      <FileName>Assets\Scripts\Common\SettingsPopup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundController">
+    <Position X="13.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQRAAAIACBAAAIAgAAAAAAABEAAQAAAAAAIAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\SoundController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StartEndController">
+    <Position X="13.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBABAAQCEAAAAgAMAABAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\StartEndController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIController">
+    <Position X="6.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\UIController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="settingsPopup" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SouthCohenController">
+    <Position X="22.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>goYBAAgBJCjAAAAAEIBgIEBAAAIAAAAAAAQAAQIggAA=</HashCode>
+      <FileName>Assets\Scripts\SouthCohen\SouthCohenController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Turtle">
+    <Position X="25.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Turtle.directionEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Turtle\Turtle.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAECAAACDAAAAAASAAAAgAAAAAAABgAABAYAA=</HashCode>
+      <FileName>Assets\Scripts\Turtle\Turtle.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="originalPixel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TurtleGameController">
+    <Position X="25.5" Y="5.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="TurtleGameController.directionEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Turtle\TurtleGameController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="TurtleGameController.commandsEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Turtle\TurtleGameController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAQBACgBFSIBAGAAAAIAISREAAgABAIAAgFgCQAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Turtle\TurtleGameController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="originalPixel" />
+      <Field Name="turtle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="MessengerMode">
+    <Position X="0.5" Y="10.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Common\Messenger.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
