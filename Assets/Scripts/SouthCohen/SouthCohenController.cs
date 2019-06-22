@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SouthCohenController : MonoBehaviour
 {
@@ -112,8 +113,11 @@ public class SouthCohenController : MonoBehaviour
         
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
 
-
-        Messenger.Broadcast(GameEvents.START_GAME);
+        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 0)
+        {
+            Messenger.Broadcast(GameEvents.START_GAME);
+        }
+        //Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     // Update is called once per frame
@@ -324,13 +328,21 @@ public class SouthCohenController : MonoBehaviour
     }
     public void PauseGame()
     {
-        gameActive = false;
-        GetComponent<GameplayTimer>().PauseTimer();
+        if(gameStarted)
+        {
+            gameActive = false;
+            GetComponent<GameplayTimer>().PauseTimer();
+        }
+        
     }
     public void ContinueGame()
     {
-        gameActive = true;
-        GetComponent<GameplayTimer>().ResumeTimer();
+        if(gameStarted)
+        {
+            gameActive = true;
+            GetComponent<GameplayTimer>().ResumeTimer();
+        }
+        
     }
     public void ChangeGameState()
     {
@@ -420,5 +432,15 @@ public class SouthCohenController : MonoBehaviour
             }
         }
         
+    }
+    public void SendStartGameEvent()
+    {
+        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        {
+            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.Save();
+            Messenger.Broadcast(GameEvents.START_GAME);
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class MultipleBrezenheimController : MonoBehaviour
 {
@@ -84,7 +85,11 @@ public class MultipleBrezenheimController : MonoBehaviour
         lines[1, 0].setPixelState(true);
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
-        Messenger.Broadcast(GameEvents.START_GAME);
+        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 0)
+        {
+            Messenger.Broadcast(GameEvents.START_GAME);
+        }
+        //Messenger.Broadcast(GameEvents.START_GAME);
         //last_point.setPixelState(true);
     }
     // Update is called once per frame
@@ -375,7 +380,7 @@ public class MultipleBrezenheimController : MonoBehaviour
                             if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], lines[1, j],
                                 field.grid[firstY, firstX], field.grid[secondY, secondX]))
                             {
-                                check = true;
+                                //check = true;
                                 break;
                             }
 
@@ -419,7 +424,7 @@ public class MultipleBrezenheimController : MonoBehaviour
                             //if (GetComponent<Algorithms>().segIntersect(lines[0, j], linePoints[j][linePoints[j].Count - 2],
                                // field.grid[firstY, firstX], field.grid[secondY, secondX]))
                             {
-                                check = true;
+                                //check = true;
                                 break;
                             }
 
@@ -445,13 +450,21 @@ public class MultipleBrezenheimController : MonoBehaviour
     }
     public void PauseGame()
     {
-        gameActive = false;
-        GetComponent<GameplayTimer>().PauseTimer();
+        if(gameStarted)
+        {
+            gameActive = false;
+            GetComponent<GameplayTimer>().PauseTimer();
+        }
+        
     }
     public void ContinueGame()
     {
-        gameActive = true;
-        GetComponent<GameplayTimer>().ResumeTimer();
+        if(gameStarted)
+        {
+            gameActive = true;
+            GetComponent<GameplayTimer>().ResumeTimer();
+        }
+        
     }
     public void ChangeGameState()
     {
@@ -520,5 +533,15 @@ public class MultipleBrezenheimController : MonoBehaviour
         lines[1, 0].setPixelState(true);
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
+    }
+    public void SendStartGameEvent()
+    {
+        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        {
+            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.Save();
+            Messenger.Broadcast(GameEvents.START_GAME);
+        }
+
     }
 }

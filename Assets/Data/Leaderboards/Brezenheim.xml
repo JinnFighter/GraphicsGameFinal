@@ -2,72 +2,28 @@
 <LeaderboardCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Results>
     <Player>
-      <Name>Jinn</Name>
-      <Score>4880</Score>
+      <Name>Alex</Name>
+      <Score>2050</Score>
+    </Player>
+    <Player>
+      <Name>Kenobi</Name>
+      <Score>1940</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
-      <Score>4360</Score>
+      <Score>1780</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
-      <Score>3860</Score>
+      <Score>1690</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
-      <Score>3260</Score>
+      <Score>1670</Score>
     </Player>
     <Player>
-      <Name>Jinn</Name>
-      <Score>3000</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>2370</Score>
-    </Player>
-    <Player>
-      <Name>c</Name>
-      <Score>2150</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>2100</Score>
-    </Player>
-    <Player>
-      <Name>c</Name>
-      <Score>2040</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1980</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1930</Score>
-    </Player>
-    <Player>
-      <Name>c</Name>
-      <Score>1920</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1890</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1730</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1600</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1530</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>0</Score>
+      <Name>Kenobi</Name>
+      <Score>1500</Score>
     </Player>
   </Results>
 </LeaderboardCollection>

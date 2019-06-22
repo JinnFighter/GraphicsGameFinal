@@ -1,28 +1,13 @@
 <?xml version="1.0"?>
 <PlayersCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Players>
-    <Player name="a">
-      <Active>false</Active>
-    </Player>
-    <Player name="b">
-      <Active>false</Active>
-    </Player>
-    <Player name="c">
-      <Active>false</Active>
-    </Player>
     <Player name="Jinn">
       <Active>true</Active>
     </Player>
-    <Player name="Djinn">
+    <Player name="Alex">
       <Active>false</Active>
     </Player>
-    <Player name="ttt">
-      <Active>false</Active>
-    </Player>
-    <Player name="ddd">
-      <Active>false</Active>
-    </Player>
-    <Player name="dinn">
+    <Player name="Kenobi">
       <Active>false</Active>
     </Player>
   </Players>

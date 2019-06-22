@@ -53,7 +53,7 @@ public class StartEndController : MonoBehaviour
         GetComponent<Leaderboard>().AddScore(playerName, score);
         
         originalText.text = GetComponent<Leaderboard>().Container.boardMembers[0].name
-            + GetComponent<Leaderboard>().Container.boardMembers[0].score;
+            + " " + GetComponent<Leaderboard>().Container.boardMembers[0].score;
         if(texts.Count!=0)
         {
             for (int i = 0; i < texts.Count; i++)
@@ -69,7 +69,7 @@ public class StartEndController : MonoBehaviour
             playerName = GetComponent<Leaderboard>().Container.boardMembers[i].name;
             score = GetComponent<Leaderboard>().Container.boardMembers[i].score;
             Text text = Instantiate(originalText) as Text;
-            text.text = playerName + score;
+            text.text = playerName + " " + score;
             text.transform.SetParent(originalText.transform.parent);
             texts.Add(text);
         }

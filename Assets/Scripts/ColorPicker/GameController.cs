@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -171,6 +172,16 @@ public class GameController : MonoBehaviour
         blueTextField.text = component.ToString();
         curColor.b = component/255;
         userColorHolder.color = curColor;
+
+    }
+    public void SendStartGameEvent()
+    {
+        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        {
+            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.Save();
+            //Messenger.Broadcast(GameEvents.START_GAME);
+        }
 
     }
 }
