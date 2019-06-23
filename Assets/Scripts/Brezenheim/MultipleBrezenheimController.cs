@@ -83,6 +83,7 @@ public class MultipleBrezenheimController : MonoBehaviour
         last_point = linePoints[0][linePoints[0].Count - 1];
         lines[0, 0].setPixelState(true);
         lines[1, 0].setPixelState(true);
+        textField.text = ds[0][0].ToString();
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 0)

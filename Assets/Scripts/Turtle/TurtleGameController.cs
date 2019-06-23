@@ -57,14 +57,14 @@ public class TurtleGameController : MonoBehaviour
             case 1:
                 pathsQuantity = 7;
                 pathsLength = 7;
-                x = 0;
-                y = 0;
+                x = 6;
+                y = 6;
                 break;
             case 2:
                 pathsQuantity = 10;
                 pathsLength = 10;
-                x = 0;
-                y = 0;
+                x = 7;
+                y = 7;
                 break;
             default:
                 pathsQuantity = 5;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <LeaderboardCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Results>
     <Player>
@@ -8,6 +8,10 @@
     <Player>
       <Name>Jinn</Name>
       <Score>7210</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>6510</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
@@ -24,10 +28,6 @@
     <Player>
       <Name>Jinn</Name>
       <Score>650</Score>
-    </Player>
-    <Player>
-      <Name>Not Admin</Name>
-      <Score>100</Score>
     </Player>
   </Results>
 </LeaderboardCollection>

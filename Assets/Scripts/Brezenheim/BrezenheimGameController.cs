@@ -73,6 +73,7 @@ public class BrezenheimGameController : MonoBehaviour
         linePoints = new List<GridPixelScript>(1);
         lines = new GridPixelScript[2, linesQuantity];
         GenerateLines();
+        textField.text = Ds[0][0].ToString();
         //Bresenham4Line(5, 4, 9, 9);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
