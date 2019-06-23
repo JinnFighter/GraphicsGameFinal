@@ -2341,6 +2341,26 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8157091587577419279, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157091587577419279, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1183451045}
+    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -81
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dcd4f902e7612244818df2e63807e9d, type: 3}
 --- !u!224 &2049431827 stripped

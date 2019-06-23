@@ -26,7 +26,11 @@ public class SouthCohenController : MonoBehaviour
     void Start()
     {
         difficulty = GetComponent<GameField>().Difficulty;
-        switch(difficulty)
+        borderPoints = new GridPixelScript[2];
+        GameField gameField = gameObject.GetComponent<GameField>();
+        Vector3 pos;
+        Vector3 scale;
+        switch (difficulty)
         {
             case 0:
                 linesQuantity = 5;
@@ -34,6 +38,17 @@ public class SouthCohenController : MonoBehaviour
                 borderHeight = 5;
                 maxLineLength = 8;
                 minLineLength = 5;
+                borderPoints[0] = gameField.grid[3, 3];
+                borderPoints[1] = gameField.grid[7, 7];
+                pos = borderPoints[0].transform.position;
+                pos.x += 12.5f;
+                pos.y -= 12.5f;
+                pos.z = border.transform.position.z;
+                border.transform.position = pos;
+                scale = border.transform.localScale;
+                scale.x = (scale.x) * 10;
+                scale.y = (scale.y) * 10;
+                border.transform.localScale = scale;
                 break;
             case 1:
                 linesQuantity = 7;
@@ -41,6 +56,17 @@ public class SouthCohenController : MonoBehaviour
                 borderHeight = 7;
                 maxLineLength = 10;
                 minLineLength = 8;
+                borderPoints[0] = gameField.grid[2, 2];
+                borderPoints[1] = gameField.grid[8, 8];
+                pos = borderPoints[0].transform.position;
+                pos.x += 9.5f;
+                pos.y -= 9.5f;
+                pos.z = border.transform.position.z;
+                border.transform.position = pos;
+                scale = border.transform.localScale;
+                scale.x = (scale.x) * 7.5f;
+                scale.y = (scale.y) * 7.5f;
+                border.transform.localScale = scale;
                 break;
             case 2:
                 linesQuantity = 10;
@@ -48,6 +74,17 @@ public class SouthCohenController : MonoBehaviour
                 borderHeight = 10;
                 maxLineLength = 11;
                 minLineLength = 10;
+                borderPoints[0] = gameField.grid[2, 2];
+                borderPoints[1] = gameField.grid[11, 11];
+                pos = borderPoints[0].transform.position;
+                pos.x += 14.5f;
+                pos.y -= 14.5f;
+                pos.z = border.transform.position.z;
+                border.transform.position = pos;
+                scale = border.transform.localScale;
+                scale.x = (scale.x) * 10;
+                scale.y = (scale.y) * 10;
+                border.transform.localScale = scale;
                 break;
             default:
                 linesQuantity = 5;
@@ -55,9 +92,29 @@ public class SouthCohenController : MonoBehaviour
                 borderHeight = 5;
                 maxLineLength = 8;
                 minLineLength = 5;
+                borderPoints[0] = gameField.grid[3, 3];
+                borderPoints[1] = gameField.grid[7, 7];
+                pos = borderPoints[0].transform.position;
+                pos.x += 12.5f;
+                pos.y -= 12.5f;
+                pos.z = border.transform.position.z;
+                border.transform.position = pos;
+                scale = border.transform.localScale;
+                scale.x = (scale.x) * 10;
+                scale.y = (scale.y) * 10;
+                border.transform.localScale = scale;
                 break;
 
         }
+       /* Vector3 pos = borderPoints[0].transform.position;
+        pos.x += 12.5f;
+        pos.y -= 12.5f;
+        pos.z = border.transform.position.z;
+        border.transform.position = pos;
+        Vector3 scale = border.transform.localScale;
+        scale.x = (scale.x) * 10;
+        scale.y = (scale.y) * 10;
+        border.transform.localScale = scale;*/
         gameActive = false;
         gameStarted = false;
         //linesQuantity =1;
@@ -68,19 +125,10 @@ public class SouthCohenController : MonoBehaviour
         }
         lines = new GridPixelScript[2, linesQuantity];
         
-        borderPoints = new GridPixelScript[2];
-        GameField gameField = gameObject.GetComponent<GameField>();
-        borderPoints[0] = gameField.grid[3, 3];
-        borderPoints[1] = gameField.grid[7, 7];
-        Vector3 pos = borderPoints[0].transform.position;
-        pos.x += 12.5f;
-        pos.y -= 12.5f;
-        pos.z = border.transform.position.z;
-        border.transform.position = pos;
-        Vector3 scale = border.transform.localScale;
-        scale.x = (scale.x) * 10;
-        scale.y = (scale.y) * 10;
-        border.transform.localScale = scale;
+        
+       
+       
+        
         GenerateLines();
         
         gridCodesWidth = gameField.GridCols;
@@ -202,22 +250,39 @@ public class SouthCohenController : MonoBehaviour
     }
     public void GenerateLines()
     {
+        
+        int b;
+        switch(difficulty)
+        {
+            case 0:
+                b = 9;
+                break;
+            case 1:
+                b = 14;
+                break;
+            case 2:
+                b = 19;
+                break;
+            default:
+                b = 9;
+                break;
+        }
         for(int i=0;i<linesQuantity;i++)
         {
-            int firstX = UnityEngine.Random.Range(0, 9);
-            int firstY = UnityEngine.Random.Range(0, 9);
+            int firstX = UnityEngine.Random.Range(0, b);
+            int firstY = UnityEngine.Random.Range(0, b);
 
-            int secondX = UnityEngine.Random.Range(0, 9);
-            int secondY = UnityEngine.Random.Range(0, 9);
+            int secondX = UnityEngine.Random.Range(0, b);
+            int secondY = UnityEngine.Random.Range(0, b);
              while ((Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
                ||(!CheckIntersection(firstX,firstY,secondX,secondY)))
                     {
-                        firstX = UnityEngine.Random.Range(0, 9);
-                        firstY = UnityEngine.Random.Range(0, 9);
+                        firstX = UnityEngine.Random.Range(0, b);
+                        firstY = UnityEngine.Random.Range(0, b);
 
-                        secondX = UnityEngine.Random.Range(0, 9);
-                        secondY = UnityEngine.Random.Range(0, 9);
+                        secondX = UnityEngine.Random.Range(0, b);
+                        secondY = UnityEngine.Random.Range(0, b);
                     }
             lines[0, i] = GetComponent<GameField>().grid[firstY, firstX];
             lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
