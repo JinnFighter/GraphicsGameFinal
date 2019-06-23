@@ -409,7 +409,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &4500571822258661499
@@ -865,7 +865,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 1
+        m_CallState: 2
       - m_Target: {fileID: 4500571822954426798}
         m_MethodName: Open
         m_Mode: 1
@@ -876,7 +876,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &4500571822954426794
@@ -1407,11 +1407,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: tutorialImage
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029303065336313607, guid: 9b64f3bebc9011941898fbfcdcab9035,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4589132378417264180, guid: 9b64f3bebc9011941898fbfcdcab9035,
         type: 3}
