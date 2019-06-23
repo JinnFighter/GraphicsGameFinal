@@ -1408,6 +1408,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: tutorialImage
       objectReference: {fileID: 0}
+    - target: {fileID: 9029303065336313607, guid: 9b64f3bebc9011941898fbfcdcab9035,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4589132378417264180, guid: 9b64f3bebc9011941898fbfcdcab9035,
         type: 3}
       propertyPath: m_LocalPosition.x
