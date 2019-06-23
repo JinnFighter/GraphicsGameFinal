@@ -26,10 +26,7 @@ public class GameplayTimer : MonoBehaviour
     public string Format { get => format; set => format = value; }
 
     // Start is called before the first frame update
-    void OnDestroy()
-    {
-        Messenger.RemoveListener(GameEvents.START_GAME, GameStarter);
-    }
+    
     void Start()
     {
         currentTime = StartTime;
@@ -38,7 +35,10 @@ public class GameplayTimer : MonoBehaviour
        
         Messenger.AddListener(GameEvents.START_GAME,GameStarter);
     }
-
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvents.START_GAME, GameStarter);
+    }
     // Update is called once per frame
     void Update()
     {
