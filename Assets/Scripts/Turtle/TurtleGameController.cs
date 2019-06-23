@@ -51,18 +51,26 @@ public class TurtleGameController : MonoBehaviour
             case 0:
                 pathsQuantity = 5;
                 pathsLength = 5;
+                x = 4;
+                y = 4;
                 break;
             case 1:
                 pathsQuantity = 7;
                 pathsLength = 7;
+                x = 0;
+                y = 0;
                 break;
             case 2:
                 pathsQuantity = 10;
                 pathsLength = 10;
+                x = 0;
+                y = 0;
                 break;
             default:
                 pathsQuantity = 5;
                 pathsLength = 5;
+                x = 4;
+                y = 4;
                 break;
         }
         paths = new string[pathsQuantity];
@@ -73,10 +81,10 @@ public class TurtleGameController : MonoBehaviour
         {
             commands_history[i] = new List<int>();
         }
-        x = 0;
-        y = 0;
+        
         look = (int)directionEnum.RIGHT;
         turtle.gameObject.transform.Rotate(0, 0, -90);
+        turtle.transform.position = new Vector3(GetComponent<GameField>().grid[x, y].transform.position.x, GetComponent<GameField>().grid[x, y].transform.position.y, turtle.transform.position.z);
         turtle_start_pos = turtle.transform.position;
         turtle_start_rotation = turtle.transform.rotation;
         // executeMoveSequence();
@@ -84,9 +92,9 @@ public class TurtleGameController : MonoBehaviour
         last_action = -1;
         finished = false;
         generateStringPaths();
-       
-        //grid = new TurtleGridPixelScript[gridRows, gridCols];
-        Vector3 startPos = originalPixel.transform.position;
+
+        //Vector3 startPos = originalPixel.transform.position;
+        Vector3 startPos = turtle_start_pos;
         routeInputField.text = paths[iteration];
         //routeInputField.text = route;
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
@@ -230,8 +238,26 @@ public class TurtleGameController : MonoBehaviour
         turtle.transform.position = turtle_start_pos;
         turtle.transform.rotation = turtle_start_rotation;
         look = (int)directionEnum.RIGHT;
-        x = 0;
-        y = 0;
+        switch(difficulty)
+        {
+            case 0:
+                x = 4;
+                y = 4;
+                break;
+            case 1:
+                x = 6;
+                y = 6;
+                break;
+            case 2:
+                x = 7;
+                y = 7;
+                break;
+            default:
+                x = 4;
+                y = 4;
+                break;
+        }
+        
     }
     public void GameCheck(int action)
     {
@@ -367,16 +393,50 @@ public class TurtleGameController : MonoBehaviour
             commands_history[i].Clear();
             paths[i] = "";
         }
-        x = 0;
-        y = 0;
+        switch (difficulty)
+        {
+            case 0:
+                x = 4;
+                y = 4;
+                break;
+            case 1:
+                x = 6;
+                y = 6;
+                break;
+            case 2:
+                x = 7;
+                y = 7;
+                break;
+            default:
+                x = 4;
+                y = 4;
+                break;
+        }
         cur_action = 0;
         last_action = -1;
         finished = false;
         iteration = 0;
         look = (int)directionEnum.RIGHT;
         generateStringPaths();
-        x = 0;
-        y = 0;
+        switch (difficulty)
+        {
+            case 0:
+                x = 4;
+                y = 4;
+                break;
+            case 1:
+                x = 6;
+                y = 6;
+                break;
+            case 2:
+                x = 7;
+                y = 7;
+                break;
+            default:
+                x = 4;
+                y = 4;
+                break;
+        }
         iteration = 0;
         cur_action = 0;
         last_action = -1;
