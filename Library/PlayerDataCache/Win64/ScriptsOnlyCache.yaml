@@ -23,8 +23,6 @@ ScriptsOnlyBuild:
     - Turtle
     - TurtleGameController
     - UIController
-    UnityEditor.TestRunner.dll:
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -1591,4 +1589,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Bezier.unity
   - Assets/Scenes/MultipleBrezenheimPolygons.unity
   - Assets/Scenes/SouthCohen.unity
-  playerPath: C:/dell/Unity Projects/GraphicsGameFinal/Builds/GraphicsGameFinal.exe
+  playerPath: C:/dell/Unity Projects/Final builds/GraphicsGameFinal.exe

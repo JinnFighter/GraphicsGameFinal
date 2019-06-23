@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <PlayersCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Players>
-    <Player name="Jinn">
+    <!--<Player name="Jinn">
       <Active>true</Active>
     </Player>
     <Player name="Alex">
@@ -9,6 +9,6 @@
     </Player>
     <Player name="Kenobi">
       <Active>false</Active>
-    </Player>
+    </Player>-->
   </Players>
 </PlayersCollection>
