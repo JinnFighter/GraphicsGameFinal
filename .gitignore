@@ -1,13 +1,1 @@
 Builds/
-Temp/
-Obj/
-UnityGenerated/
-
-ExportedObj/
-*.svd
-*.userprefs
-*.csproj
-*.pidb
-*.suo
-*.sln
-*.user
