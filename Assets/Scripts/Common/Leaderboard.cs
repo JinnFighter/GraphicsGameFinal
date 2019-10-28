@@ -53,7 +53,7 @@ public class Leaderboard : MonoBehaviour
         }
     }
     
-    private string path = "Assets/Data/Leaderboards";
+    private string path = "Data/Leaderboards";
     private BoardMembersContainer container;
 
     

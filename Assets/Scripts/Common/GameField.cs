@@ -23,7 +23,6 @@ public class GameField : MonoBehaviour
     void Start()
     {
         Difficulty = PlayerPrefs.GetInt("difficulty");
-        //fieldSize = "small";
         switch(Difficulty)
         {
             case 0:
@@ -61,21 +60,18 @@ public class GameField : MonoBehaviour
                 if (i == 0 && j == 0)
                 {
                     pixel = originalPixel;
-                   
                 }
                 else
-                {
-                    
+                {    
                     pixel = Instantiate(originalPixel) as GridPixelScript;
                     float posX = (OffsetX * j) + startPos.x;
                     float posY = -(OffsetY * i) + startPos.y;
                     pixel.transform.position = new Vector3(posX, posY, startPos.z);
                 }
+
                 pixel.X = i;
                 pixel.Y = j;
-                grid[i,j] = pixel;
-               
-                
+                grid[i,j] = pixel;  
             }
         }
     }
@@ -96,4 +92,3 @@ public class GameField : MonoBehaviour
         }
     }
 }
-

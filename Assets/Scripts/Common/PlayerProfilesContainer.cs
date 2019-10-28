@@ -14,7 +14,8 @@ public class PlayerProfilesContainer
 
     public static PlayerProfilesContainer Load(string path)
     {
-        TextAsset _xml_file = Resources.Load<TextAsset>(path);
+        
+        TextAsset _xml_file = Resources.Load(path) as TextAsset;
 
         XmlSerializer serializer = new XmlSerializer(typeof(PlayerProfilesContainer));
         using (var stream = new FileStream(path, FileMode.Open))

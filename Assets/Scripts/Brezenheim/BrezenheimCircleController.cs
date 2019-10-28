@@ -31,15 +31,6 @@ public class BrezenheimCircleController : MonoBehaviour
         d = 3 - 2 * y;
         while (x <= y)
         {
-            //grid[x+xc,y+yc].setPixelState(true);
-            //grid[x+xc,-y+yc].setPixelState(true);
-            //grid[-x+xc,-y+yc].setPixelState(true);
-            //grid[-x+xc,y+yc].setPixelState(true);
-            //grid[y+xc,x+yc].setPixelState(true);
-            //grid[y+xc,-x+yc].setPixelState(true);
-            //grid[-y+xc,-x+yc].setPixelState(true);
-            //grid[-y+xc,x+yc].setPixelState(true);
-
             GetComponent<GameField>().grid[x + xc, y + yc].setPixelState(true);
             GetComponent<GameField>().grid[x + xc, -y + yc].setPixelState(true);
             GetComponent<GameField>().grid[-x + xc, -y + yc].setPixelState(true);

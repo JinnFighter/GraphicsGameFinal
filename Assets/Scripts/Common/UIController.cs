@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
         {
             PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 1);
             PlayerPrefs.Save();
-            tutorImage.SetActive(true);
+            //tutorImage.SetActive(true);
         }
     }
 

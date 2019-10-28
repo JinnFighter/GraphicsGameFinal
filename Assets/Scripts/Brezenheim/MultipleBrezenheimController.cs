@@ -57,7 +57,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                 maxLengthSum = 20;
                 break;
         }
-        //linesQuantity = 5;
         lines = new GridPixelScript[2, linesQuantity];
         linePoints = new List<GridPixelScript>[linesQuantity];
         ds = new List<int>[linesQuantity];
@@ -72,26 +71,16 @@ public class MultipleBrezenheimController : MonoBehaviour
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
         GeneratePolygon();
-        //GetComponent<GameField>().clearGrid();
-        //Bresenham4Polygon(0, 0, 4, 5, 0);
-        //Bresenham4Polygon(4, 5, 8, 0, 1);
+
         GetComponent<GameField>().clearGrid();
-        for(int i=0;i<linesQuantity;i++)
-        {
-           // lines[0, i].setPixelState(true);
-        }
+
         last_point = linePoints[0][linePoints[0].Count - 1];
         lines[0, 0].setPixelState(true);
         lines[1, 0].setPixelState(true);
         textField.text = ds[0][0].ToString();
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
-        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 0)
-        {
-            Messenger.Broadcast(GameEvents.START_GAME);
-        }
-        //Messenger.Broadcast(GameEvents.START_GAME);
-        //last_point.setPixelState(true);
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
     // Update is called once per frame
     void Update()
@@ -109,10 +98,7 @@ public class MultipleBrezenheimController : MonoBehaviour
     public void Bresenham4Polygon(int X0, int Y0, int X1, int Y1, int j)
     {
         GameField gameField = gameObject.GetComponent("GameField") as GameField;
-        if(gameField.grid==null)
-        {
-            Debug.Log("gameField failed");
-        }
+
         int x0 = Y0;
         int y0 = X0;
         int x1 = Y1;
@@ -130,40 +116,25 @@ public class MultipleBrezenheimController : MonoBehaviour
             int d1 = dy << 1;
             int d2 = (dy - dx) << 1;
 
-            //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
-            //GameField a = gameObject.GetComponent("GameField") as GameField;
-            //a.grid[x0, y0].setPixelState(true);
             gameField.grid[x0, y0].setPixelState(true);
-            //field.grid[x0, y0].setPixelState(true);
-            //linePoints.Add(grid[x0, y0]);
             ds[j].Add(d);
-            //PutPixel(g, clr, x0, y0, 255);
+
             int x = x0 + sx;
             int y = y0;
             for (int i = 1; i <= dx; i++)
             {
-                //Debug.Log(d.ToString());
-                //ds.Add(d);
                 if (d > 0)
                 {
                     d += d2;
                     y += sy;
-
                 }
                 else
                     d += d1;
 
-                //grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
-
-
-                //linePoints.Add(grid[x, y]);
-                //linePoints.Add(GetComponent<GameField>().grid[x,y]);
-                //linePoints[j].Add(GameObject.Find("GameController").GetComponent<GameField>().grid[x, y]);
-;                linePoints[j].Add(gameField.grid[x, y]);
+                linePoints[j].Add(gameField.grid[x, y]);
                 ds[j].Add(d);
-                //PutPixel(g, clr, x, y, 255);
-                x += sx;
 
+                x += sx;
             }
         }
         else
@@ -173,12 +144,8 @@ public class MultipleBrezenheimController : MonoBehaviour
             int d2 = (dx - dy) << 1;
 
             gameField.grid[x0, y0].setPixelState(true);
-            //field.grid[x0,y0].setPixelState(true);
-            //grid[x0, y0].GetComponent<GridPixelScript>().setPixelState(true);
-
-            //linePoints.Add(grid[x0, y0]);
             ds[j].Add(d);
-            //PutPixel(g, clr, x0, y0, 255);
+
             int x = x0;
             int y = y0 + sy;
             for (int i = 1; i <= dy; i++)
@@ -191,101 +158,26 @@ public class MultipleBrezenheimController : MonoBehaviour
                 else
                     d += d1;
 
-                //grid[x, y].GetComponent<GridPixelScript>().setPixelState(true);
-
-                //linePoints.Add(grid[x, y]);
                 linePoints[j].Add(GetComponent<GameField>().grid[x, y]);
                 ds[j].Add(d);
-                //PutPixel(g, clr, x, y, 255);
                 y += sy;
-
             }
         }
         last_point = linePoints[j][linePoints[j].Count - 1];
         last_point.setPixelState(true);
-        //List<GridPixelScript> temp = linePoints[linePoints.Length - 1];
-        //last_point = temp[temp.Count - 1];
-        //temp[temp.Count - 1].setPixelState(true);
-        //linePoints[linePoints.Count - 1].setPixelState(true);
     }
-
-    /*public void gameCheck(GridPixelScript invoker)
-    {
-        if (prev_point == last_point)
-        {
-            if(cur_line==linePoints.Length-1)
-            {
-                Debug.Log("Enough, start over, it's finished!");
-                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                return;
-            }
-            else
-            {
-                cur_line++;
-                iteration = 0;
-                last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
-                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-            }
-           
-        }
-        else
-        {
-            prev_point = linePoints[cur_line][iteration];
-
-            if (invoker == prev_point)
-            {
-                Debug.Log("Correct!");
-                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER,100);
-                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
-                iteration++;
-                textField.text = ds[cur_line][iteration].ToString();
-                prev_point = linePoints[cur_line][iteration];
-            }
-            else
-            {
-                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-                Debug.Log("Wrong!");
-            }
-
-        }
-    }*/
     public void gameCheck(GridPixelScript invoker)
     {
-        /*if(prev_point == last_point)
-        {
-            Debug.Log("Enough, start over, it's finished!");
-            return;
-        }
-        else
-        {
-            prev_point = linePoints[iteration];
-            
-            if(invoker == prev_point)
-            {
-                Debug.Log("Correct!");
-                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
-                iteration++;
-                textField.text = ds[iteration].ToString();
-                prev_point = linePoints[iteration];
-            }
-            else
-            {
-                Debug.Log("Wrong!");
-            }
-            
-        }*/
         if (!gameActive)
         {
             return;
         }
         if (!GetComponent<GameplayTimer>().Counting)
         {
-            Debug.Log("Not Counting due to finish or no start");
             return;
         }
         if (cur_line == linesQuantity)
         {
-            Debug.Log("Enough, start over, it's finished!");
             Messenger.Broadcast(GameEvents.TIMER_STOP);
             return;
         }
@@ -295,9 +187,7 @@ public class MultipleBrezenheimController : MonoBehaviour
             if (cur_line == linesQuantity)
             {
                 GetComponent<GameplayTimer>().StopTimer();
-                Debug.Log("Enough, start over, it's finished!");
                 Messenger.Broadcast(GameEvents.GAME_OVER);
-
                 return;
             }
             else
@@ -308,7 +198,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                 lines[0, cur_line].setPixelState(true);
                 lines[1, cur_line].setPixelState(true);
                 last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
-                //last_point.setPixelState(true);
                 prev_point = null;
                 textField.text = ds[cur_line][iteration].ToString();
             }
@@ -319,16 +208,14 @@ public class MultipleBrezenheimController : MonoBehaviour
 
             if (invoker == prev_point)
             {
-                Debug.Log("Correct!");
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                invoker.setPixelState(true);//changle later to true! IMPORTANT!!!
+                invoker.setPixelState(true);
                 iteration++;
                 textField.text = ds[cur_line][iteration].ToString();
                 prev_point = linePoints[cur_line][iteration];
             }
             else
             {
-                Debug.Log("Wrong!");
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
             }
         }
@@ -354,9 +241,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                 while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                     || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
                 {
-                    //firstX = UnityEngine.Random.Range(0, 9);
-                    //firstY = UnityEngine.Random.Range(0, 9);
-
                     secondX = UnityEngine.Random.Range(0, 9);
                     secondY = UnityEngine.Random.Range(0, 9);
                 }
@@ -367,8 +251,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                 firstY = lines[1, i - 1].X;
                 if (i == linesQuantity - 1)
                 {
-                    
-
                     secondX = lines[0, 0].Y;
                     secondY = lines[0, 0].X;
 
@@ -381,10 +263,8 @@ public class MultipleBrezenheimController : MonoBehaviour
                             if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], lines[1, j],
                                 field.grid[firstY, firstX], field.grid[secondY, secondX]))
                             {
-                                //check = true;
                                 break;
                             }
-
                         }
                         if (check)
                         {
@@ -398,11 +278,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                 }
                 else
                 {
-
-                    //secondX = UnityEngine.Random.Range(0, 9);
-                    //secondY = UnityEngine.Random.Range(0, 9);
-
-
                     while (true)
                     {
                         secondX = UnityEngine.Random.Range(0, 9);
@@ -411,24 +286,16 @@ public class MultipleBrezenheimController : MonoBehaviour
                         if (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                         || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= minLineLength-1)
                         {
-                            //secondX = UnityEngine.Random.Range(0, 9);
-                            //secondY = UnityEngine.Random.Range(0, 9);
                             continue;
                         }
                         bool check = false;
                         for (int j = 0; j < i - 1; j++)
                         {
-
-                            //if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], lines[1, j],
                             if (GetComponent<Algorithms>().segmentIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
-                             field.grid[firstY, firstX], field.grid[secondY, secondX])) 
-                            //if (GetComponent<Algorithms>().segIntersect(lines[0, j], linePoints[j][linePoints[j].Count - 2],
-                               // field.grid[firstY, firstX], field.grid[secondY, secondX]))
+                             field.grid[firstY, firstX], field.grid[secondY, secondX]))
                             {
-                                //check = true;
                                 break;
                             }
-
                         }
                         if (check)
                         {
@@ -439,11 +306,9 @@ public class MultipleBrezenheimController : MonoBehaviour
                             break;
                         }
                     }
-                }
-
-                
+                }    
             }
-            
+
             lines[0, i] = GetComponent<GameField>().grid[firstY, firstX];
             lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
             Bresenham4Polygon(firstX, firstY, secondX, secondY,i);
@@ -456,7 +321,6 @@ public class MultipleBrezenheimController : MonoBehaviour
             gameActive = false;
             GetComponent<GameplayTimer>().PauseTimer();
         }
-        
     }
     public void ContinueGame()
     {
@@ -465,7 +329,6 @@ public class MultipleBrezenheimController : MonoBehaviour
             gameActive = true;
             GetComponent<GameplayTimer>().ResumeTimer();
         }
-        
     }
     public void ChangeGameState()
     {
@@ -488,7 +351,6 @@ public class MultipleBrezenheimController : MonoBehaviour
                     GetComponent<GameplayTimer>().StartTime = 60f;
                     break;
             }
-            //GetComponent<GameplayTimer>().StartTime = 60f;
             GetComponent<GameplayTimer>().StartTimer();
         }
         else
@@ -501,11 +363,6 @@ public class MultipleBrezenheimController : MonoBehaviour
         gameActive = false;
         gameStarted = false;
         GetComponent<GameField>().clearGrid();
-        //foreach(List<int> d in ds)
-        //{
-           // d.Clear();
-        //}
-        //ds.Clear();
         for (int i = 0; i < linesQuantity; i++)
         {
             ds[i].Clear();
@@ -543,6 +400,5 @@ public class MultipleBrezenheimController : MonoBehaviour
             PlayerPrefs.Save();
             Messenger.Broadcast(GameEvents.START_GAME);
         }
-
     }
 }

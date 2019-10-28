@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class TurtleGameController : MonoBehaviour
 {
     [SerializeField] public GridPixelScript originalPixel;
-    //private TurtleGridPixelScript[,] grid;
     [SerializeField] public Turtle turtle;
     [SerializeField] public InputField routeInputField;
 
@@ -16,10 +15,6 @@ public class TurtleGameController : MonoBehaviour
     private string[] paths;
     private int pathsLength;
     private string route;
-    //public const int gridRows = 10;
-    //public const int gridCols = 10;
-    //private float offsetX;
-    //private float offsetY;
     private int x;
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
@@ -74,7 +69,6 @@ public class TurtleGameController : MonoBehaviour
                 break;
         }
         paths = new string[pathsQuantity];
-        //route = "FFF-FF";
         route = "";
         commands_history = new List<int>[pathsQuantity];
         for (int i = 0; i < pathsQuantity; i++)
@@ -87,26 +81,19 @@ public class TurtleGameController : MonoBehaviour
         turtle.transform.position = new Vector3(GetComponent<GameField>().grid[x, y].transform.position.x, GetComponent<GameField>().grid[x, y].transform.position.y, turtle.transform.position.z);
         turtle_start_pos = turtle.transform.position;
         turtle_start_rotation = turtle.transform.rotation;
-        // executeMoveSequence();
         cur_action = 0;
         last_action = -1;
         finished = false;
         generateStringPaths();
 
-        //Vector3 startPos = originalPixel.transform.position;
         Vector3 startPos = turtle_start_pos;
         routeInputField.text = paths[iteration];
-        //routeInputField.text = route;
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
         GetComponent<GameplayTimer>().Format = GameplayTimer.TimerFormat.smms;
-        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 0)
-        {
-            Messenger.Broadcast(GameEvents.START_GAME);
-        }
-        //Messenger.Broadcast(GameEvents.START_GAME);
+        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     // Update is called once per frame
@@ -139,7 +126,6 @@ public class TurtleGameController : MonoBehaviour
                 look = (int)directionEnum.UP;
                 break;
         }
-        //last_action = (int)commandsEnum.ROTATE_LEFT;
     }
     public void rotateRight()
     {
@@ -159,8 +145,6 @@ public class TurtleGameController : MonoBehaviour
                 look = (int)directionEnum.UP;
                 break;
         }
-        //last_action = (int)commandsEnum.ROTATE_RIGHT;
-        //Debug.Log(look);
     }
     public void moveForward()
     {
@@ -211,8 +195,6 @@ public class TurtleGameController : MonoBehaviour
         {
             turtle.transform.position = new Vector3(posX, posY, startPos.z);
         }
-        
-        //last_action = (int)commandsEnum.FORWARD;
     }
     void executeMoveSequence()
     {
@@ -233,7 +215,6 @@ public class TurtleGameController : MonoBehaviour
                     commands_history[iteration].Add((int)commandsEnum.ROTATE_RIGHT);
                     break;
             }
-            //Debug.Log(route[i]);
         }
         turtle.transform.position = turtle_start_pos;
         turtle.transform.rotation = turtle_start_rotation;
@@ -256,8 +237,7 @@ public class TurtleGameController : MonoBehaviour
                 x = 4;
                 y = 4;
                 break;
-        }
-        
+        } 
     }
     public void GameCheck(int action)
     {
@@ -267,7 +247,6 @@ public class TurtleGameController : MonoBehaviour
         }
         if (!GetComponent<GameplayTimer>().Counting)
         {
-            Debug.Log("Not Counting due to finish or no start");
             return;
         }
         if (finished)
@@ -281,7 +260,6 @@ public class TurtleGameController : MonoBehaviour
             switch (last_action)
             {
                 case (int)commandsEnum.FORWARD:
-                    //grid[x, y].setPixelState(true);
                     GetComponent<GameField>().grid[x, y].setPixelState(true);
                     moveForward();
                     break;
@@ -295,7 +273,6 @@ public class TurtleGameController : MonoBehaviour
             cur_action++;
             if (cur_action == commands_history[iteration].Count)
             {
-                //finished = true;
                 cur_action = 0;
                 iteration++;
                 if (iteration == pathsQuantity)
@@ -320,14 +297,12 @@ public class TurtleGameController : MonoBehaviour
         {
             iteration = i;
             for(int j=0;j<pathsLength;j++)
-            {
-                
+            { 
                 char c = commands[UnityEngine.Random.Range(0, 2)];
                 while (j == 0 && c != commands[0])
                 {
                    c = commands[UnityEngine.Random.Range(0, 2)];
                 }
-                //String.Concat(route, c);
                 route = String.Concat(route, c);
             }
             paths[i] = route;
@@ -343,7 +318,6 @@ public class TurtleGameController : MonoBehaviour
             gameActive = false;
             GetComponent<GameplayTimer>().PauseTimer();
         }
-        
     }
     public void ContinueGame()
     {
@@ -351,8 +325,7 @@ public class TurtleGameController : MonoBehaviour
         {
             gameActive = true;
             GetComponent<GameplayTimer>().ResumeTimer();
-        }
-        
+        }  
     }
     public void ChangeGameState()
     {
@@ -456,6 +429,5 @@ public class TurtleGameController : MonoBehaviour
             PlayerPrefs.Save();
             Messenger.Broadcast(GameEvents.START_GAME);
         }
-
     }
 }

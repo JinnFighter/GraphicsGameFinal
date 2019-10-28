@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Turtle : MonoBehaviour
 {
-    //[SerializeField] public TurtleGridPixelScript originalPixel;
     [SerializeField] public GridPixelScript originalPixel;
     private int x;
     private int y;
@@ -32,13 +31,7 @@ public class Turtle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //x = 0;
-        //y = 0;
-        //look = (int)directionEnum.RIGHT;
-        //offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        //offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-        //this.transform.Rotate(0, 0, -90);
-        
+
     }
 
     // Update is called once per frame
@@ -83,7 +76,6 @@ public class Turtle : MonoBehaviour
                 look = (int)directionEnum.UP;
                 break;
         }
-        //Debug.Log(look);
     }
     public void moveForward()
     {
@@ -109,7 +101,6 @@ public class Turtle : MonoBehaviour
                 posX -= offsetX;
             break;
         }
-        Debug.Log(x.ToString() + " " + y.ToString());
         this.gameObject.transform.position = new Vector3(posX, posY, startPos.z);
     }
 }

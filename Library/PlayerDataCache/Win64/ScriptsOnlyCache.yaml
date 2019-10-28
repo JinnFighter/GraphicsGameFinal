@@ -332,6 +332,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
     - Class: 65
@@ -1591,4 +1593,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Bezier.unity
   - Assets/Scenes/MultipleBrezenheimPolygons.unity
   - Assets/Scenes/SouthCohen.unity
-  playerPath: C:/dell/Unity Projects/GraphicsGameFinal/Builds/GraphicsGameFinal.exe
+  playerPath: C:/dell/Unity Projects/GraphicsGameFinal/Builds/PIXELGRID.exe

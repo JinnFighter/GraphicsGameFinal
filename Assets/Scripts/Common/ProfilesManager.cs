@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProfilesManager : MonoBehaviour
 {
-    public const string path = "Assets/Data/players_base.xml";
+    public static string path = "Data/players_base.xml";
     private PlayerProfile activeProfile;
     public PlayerProfile ActiveProfile { get => activeProfile; set => activeProfile = value; }
     private PlayerProfilesContainer container;

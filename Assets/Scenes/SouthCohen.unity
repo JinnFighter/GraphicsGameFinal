@@ -1737,17 +1737,27 @@ PrefabInstance:
     - target: {fileID: 8157091587872504189, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.9245283
       objectReference: {fileID: 0}
     - target: {fileID: 8157091587872504189, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.6896711
       objectReference: {fileID: 0}
     - target: {fileID: 8157091587872504189, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -99
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -63
       objectReference: {fileID: 0}
     - target: {fileID: 8157091587577419279, guid: 5dcd4f902e7612244818df2e63807e9d,
         type: 3}
@@ -1759,16 +1769,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 888799532}
-    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -99
-      objectReference: {fileID: 0}
-    - target: {fileID: 8495919554926811436, guid: 5dcd4f902e7612244818df2e63807e9d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -63
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dcd4f902e7612244818df2e63807e9d, type: 3}
 --- !u!1 &8157091588141986396 stripped
