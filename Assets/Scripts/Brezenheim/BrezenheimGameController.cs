@@ -98,74 +98,9 @@ public class BrezenheimGameController : MonoBehaviour
         a = b;
         b = c;
     }
-    public void drawLine(int X0, int Y0, int X1, int Y1)
-    {
-        int x0 = Y0;
-        int y0 = X0;
-        int x1 = Y1;
-        int y1 = X1;
-        //Изменения координат
-        int dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
-        int dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
-        //Направление приращения
-        int sx = (x1 >= x0) ? (1) : (-1);
-        int sy = (y1 >= y0) ? (1) : (-1);
-
-        if (dy < dx)
-        {
-            int d = (dy << 1) - dx;
-            int d1 = dy << 1;
-            int d2 = (dy - dx) << 1;
-
-            GameField a = gameObject.GetComponent<GameField>();
-            a.grid[x0, y0].setPixelState(true);
-
-            int x = x0 + sx;
-            int y = y0;
-            for (int i = 1; i <= dx; i++)
-            {
-                if (d > 0)
-                {
-                    d += d2;
-                    y += sy;
-
-                }
-                else
-                    d += d1;
-
-                a.grid[x, y].setPixelState(true);
-                x += sx;
-            }
-        }
-        else
-        {
-            int d = (dx << 1) - dy;
-            int d1 = dx << 1;
-            int d2 = (dx - dy) << 1;
-
-            GameField a = gameObject.GetComponent<GameField>();
-            a.grid[x0, y0].setPixelState(true);
-
-            int x = x0;
-            int y = y0 + sy;
-            for (int i = 1; i <= dy; i++)
-            {
-                if (d > 0)
-                {
-                    d += d2;
-                    x += sx;
-                }
-                else
-                    d += d1;
-                
-                a.grid[x0, y0].setPixelState(true);
-                y += sy;
-            }
-        }
-    }
     public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
     {
-        GameField gameField = gameObject.GetComponent("GameField") as GameField;
+        GameField gameField = gameObject.GetComponent<GameField>();
         int x0 = Y0;
         int y0 = X0;
         int x1 = Y1;
@@ -184,7 +119,7 @@ public class BrezenheimGameController : MonoBehaviour
             int d1 = dy << 1;
             int d2 = (dy - dx) << 1;
 
-            gameField.grid[x0, y0].setPixelState(true);
+            //gameField.grid[x0, y0].setPixelState(true);
             ds.Add(d);
 
             int x = x0 + sx;
@@ -210,7 +145,7 @@ public class BrezenheimGameController : MonoBehaviour
             int d1 = dx << 1;
             int d2 = (dx - dy) << 1;
 
-            gameField.grid[x0, y0].setPixelState(true);
+            //gameField.grid[x0, y0].setPixelState(true);
             ds.Add(d);
 
             int x = x0;
@@ -225,7 +160,7 @@ public class BrezenheimGameController : MonoBehaviour
                 else
                     d += d1;
 
-                linePoints.Add(GetComponent<GameField>().grid[x, y]);
+                linePoints.Add(gameField.grid[x, y]);
                 ds.Add(d);
 
                 y +=sy; 
@@ -325,9 +260,9 @@ public class BrezenheimGameController : MonoBehaviour
                 }
                 maxLengthSum -=(int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
             }
-           
-            lines[0, i] = GetComponent<GameField>().grid[firstY,firstX];
-            lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
+            GameField field = GetComponent<GameField>();
+            lines[0, i] = field.grid[firstY,firstX];
+            lines[1, i] = field.grid[secondY, secondX];
             Bresenham4Line(firstX, firstY, secondX, secondY);
             Ds[i] = new List<int>();
             LinePoints[i] = new List<GridPixelScript>();
@@ -343,42 +278,10 @@ public class BrezenheimGameController : MonoBehaviour
             linePoints.Clear();
         }
         last_point = LinePoints[0][LinePoints[0].Count-1];
-        GetComponent<GameField>().clearGrid();
         prev_point = null;
         lines[0, 0].setPixelState(true);
         last_point.setPixelState(true);
     }
-	public void Brezenheim4Circle(int Xc, int Yc, int r)
-	{
-		int xc = Yc;
-		int yc = Xc;
-		int x,y,d;
-		x=0;
-		y=r;
-		d=3-2*y;
-		while(x<=y)
-		{
-            GetComponent<GameField>().grid[x+xc,y+yc].setPixelState(true);
-            GetComponent<GameField>().grid[x+xc,-y+yc].setPixelState(true);
-            GetComponent<GameField>().grid[-x+xc,-y+yc].setPixelState(true);
-            GetComponent<GameField>().grid[-x+xc,y+yc].setPixelState(true);
-            GetComponent<GameField>().grid[y+xc,x+yc].setPixelState(true);
-            GetComponent<GameField>().grid[y+xc,-x+yc].setPixelState(true);
-            GetComponent<GameField>().grid[-y+xc,-x+yc].setPixelState(true);
-            GetComponent<GameField>().grid[-y+xc,x+yc].setPixelState(true);
-
-            if (d<0)
-			{
-				d=d+4*x+6;
-			}
-			else
-			{
-				d=d+4*(x-y)+10;
-				y--;
-			}
-			x++;
-		}
-	}
     public void PauseGame()
     {
         if(gameStarted)
@@ -401,22 +304,23 @@ public class BrezenheimGameController : MonoBehaviour
         {
             gameActive = true;
             gameStarted = true;
+            GameplayTimer timer = GetComponent<GameplayTimer>();
             switch(difficulty)
             {
                 case 0:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
                 case 1:
-                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    timer.StartTime = 80f;
                     break;
                 case 2:
-                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    timer.StartTime = 120f;
                     break;
                 default:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
             }
-            GetComponent<GameplayTimer>().StartTimer();
+            timer.StartTimer();
         }
         else
         {
@@ -458,9 +362,10 @@ public class BrezenheimGameController : MonoBehaviour
     }
     public void SendStartGameEvent()
     {
-        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
-            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
             PlayerPrefs.Save();
             Messenger.Broadcast(GameEvents.START_GAME);
         }   
