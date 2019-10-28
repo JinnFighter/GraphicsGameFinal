@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class TurtleGameController : MonoBehaviour
 {
-    [SerializeField] public GridPixelScript originalPixel;
-    [SerializeField] public Turtle turtle;
-    [SerializeField] public InputField routeInputField;
+    [SerializeField] private GridPixelScript originalPixel;
+    [SerializeField] private Turtle turtle;
+    [SerializeField] private InputField routeInputField;
 
     private int pathsQuantity;
     private string[] paths;
@@ -333,22 +333,23 @@ public class TurtleGameController : MonoBehaviour
         {
             gameActive = true;
             gameStarted = true;
+            GameplayTimer timer = GetComponent<GameplayTimer>();
             switch (difficulty)
             {
                 case 0:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
                 case 1:
-                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    timer.StartTime = 80f;
                     break;
                 case 2:
-                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    timer.StartTime = 120f;
                     break;
                 default:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
             }
-            GetComponent<GameplayTimer>().StartTimer();
+            timer.StartTimer();
         }
         else
         {
@@ -423,9 +424,10 @@ public class TurtleGameController : MonoBehaviour
     }
     public void SendStartGameEvent()
     {
-        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
-            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
             PlayerPrefs.Save();
             Messenger.Broadcast(GameEvents.START_GAME);
         }
