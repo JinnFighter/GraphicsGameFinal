@@ -14,8 +14,6 @@ public class SouthCohenController : MonoBehaviour
     private GridPixelScript[,] lines;
     private int iteration;
     private List<int>[] lineZones;
-    private int borderWidth;
-    private int borderHeight;
     [SerializeField] private SpriteRenderer border;
     private int[,] gridCodes;
     private int gridCodesWidth;
@@ -25,17 +23,15 @@ public class SouthCohenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        difficulty = GetComponent<GameField>().Difficulty;
+        GameField gameField = GetComponent<GameField>();
+        difficulty = gameField.Difficulty;
         borderPoints = new GridPixelScript[2];
-        GameField gameField = gameObject.GetComponent<GameField>();
         Vector3 pos;
         Vector3 scale;
         switch (difficulty)
         {
             case 0:
                 linesQuantity = 5;
-                borderWidth = 5;
-                borderHeight = 5;
                 maxLineLength = 8;
                 minLineLength = 5;
                 borderPoints[0] = gameField.grid[3, 3];
@@ -52,8 +48,6 @@ public class SouthCohenController : MonoBehaviour
                 break;
             case 1:
                 linesQuantity = 7;
-                borderWidth = 7;
-                borderHeight = 7;
                 maxLineLength = 10;
                 minLineLength = 8;
                 borderPoints[0] = gameField.grid[2, 2];
@@ -70,8 +64,6 @@ public class SouthCohenController : MonoBehaviour
                 break;
             case 2:
                 linesQuantity = 10;
-                borderWidth = 10;
-                borderHeight = 10;
                 maxLineLength = 11;
                 minLineLength = 10;
                 borderPoints[0] = gameField.grid[2, 2];
@@ -88,8 +80,6 @@ public class SouthCohenController : MonoBehaviour
                 break;
             default:
                 linesQuantity = 5;
-                borderWidth = 5;
-                borderHeight = 5;
                 maxLineLength = 8;
                 minLineLength = 5;
                 borderPoints[0] = gameField.grid[3, 3];
@@ -133,7 +123,6 @@ public class SouthCohenController : MonoBehaviour
             southCohen(lines[0, i], lines[1, i],
            borderPoints[0], borderPoints[1],i);
         }
-        gameField.clearGrid();
         iteration = 0;
         GetComponent<Algorithms>().drawLine(lines[0, 0].Y,lines[0,0].X, lines[1, 0].Y,lines[1,0].X);
         Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
@@ -222,6 +211,7 @@ public class SouthCohenController : MonoBehaviour
     public void GenerateLines()
     { 
         int b;
+        GameField field = GetComponent<GameField>();
         switch(difficulty)
         {
             case 0:
@@ -254,28 +244,29 @@ public class SouthCohenController : MonoBehaviour
                         secondX = UnityEngine.Random.Range(0, b);
                         secondY = UnityEngine.Random.Range(0, b);
                     }
-            lines[0, i] = GetComponent<GameField>().grid[firstY, firstX];
-            lines[1, i] = GetComponent<GameField>().grid[secondY, secondX];
+            lines[0, i] = field.grid[firstY, firstX];
+            lines[1, i] = field.grid[secondY, secondX];
         }
     }
     public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight,int i)
     {
         GridPixelScript A = nA;
         GridPixelScript B = nB;
+        Algorithms algorithms = GetComponent<Algorithms>();
         int ax = A.X;
         int ay = A.Y;
         int bx = B.X;
         int by = B.Y;
-        int code1 = this.Code(A, rectLeft, rectRight);
-        int code2 = this.Code(B, rectLeft, rectRight);
+        int code1 = Code(A, rectLeft, rectRight);
+        int code2 = Code(B, rectLeft, rectRight);
         bool inside = (code1 | code2) == 0;
         bool outside = (code1 & code2) != 0;
         while (!inside && !outside)
         {
             if (code1 == 0)
             {
-                GetComponent<Algorithms>().Swap(ref ax,ref bx);
-                GetComponent<Algorithms>().Swap(ref ay,ref by);
+                algorithms.Swap(ref ax,ref bx);
+                algorithms.Swap(ref ay,ref by);
                 int c = code1;
                 code1 = code2;
                 code2 = c;
@@ -313,8 +304,6 @@ public class SouthCohenController : MonoBehaviour
             inside = (code1 | code2) == 0;
             outside = (code1 & code2) != 0;
         }
-        if (!outside)
-            GetComponent<Algorithms>().drawLine(ax, ay, bx, by);
     }
     public int Code(GridPixelScript point, GridPixelScript rectLeft, GridPixelScript rectRight)
     {
@@ -327,15 +316,16 @@ public class SouthCohenController : MonoBehaviour
     }
     public void ClearZone(int code)
     {
+        GameField field = GetComponent<GameField>();
         for(int i=0;i<gridCodesHeight;i++)
         {
             for(int j=0;j<gridCodesWidth;j++)
             {
                 if(gridCodes[i,j]==code)
                 {
-                    if(!GetComponent<GameField>().grid[i,j].pixel_empty.activeSelf)
+                    if(!field.grid[i,j].pixel_empty.activeSelf)
                     {
-                        GetComponent<GameField>().grid[i, j].setPixelState(false);
+                        field.grid[i, j].setPixelState(false);
                     }
                 }
             }
@@ -363,22 +353,23 @@ public class SouthCohenController : MonoBehaviour
         {
             gameActive = true;
             gameStarted = true;
+            GameplayTimer timer = GetComponent<GameplayTimer>();
             switch (difficulty)
             {
                 case 0:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
                 case 1:
-                    GetComponent<GameplayTimer>().StartTime = 80f;
+                    timer.StartTime = 80f;
                     break;
                 case 2:
-                    GetComponent<GameplayTimer>().StartTime = 120f;
+                    timer.StartTime = 120f;
                     break;
                 default:
-                    GetComponent<GameplayTimer>().StartTime = 60f;
+                    timer.StartTime = 60f;
                     break;
             }
-            GetComponent<GameplayTimer>().StartTimer();
+            timer.StartTimer();
         }
         else
         {
@@ -401,7 +392,6 @@ public class SouthCohenController : MonoBehaviour
             southCohen(lines[0, i], lines[1, i],
            borderPoints[0], borderPoints[1], i);
         }
-        GetComponent<GameField>().clearGrid();
         iteration = 0;
         GetComponent<Algorithms>().drawLine(lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
 
@@ -416,8 +406,9 @@ public class SouthCohenController : MonoBehaviour
         int by = By;
         if(ax>bx)
         {
-            GetComponent<Algorithms>().swap(ax, bx);
-            GetComponent<Algorithms>().swap(ay, by);
+            Algorithms algorithms = GetComponent<Algorithms>();
+            algorithms.swap(ax, bx);
+            algorithms.swap(ay, by);
         }
         int[,] matr = new int[2, 2];
 
@@ -445,9 +436,10 @@ public class SouthCohenController : MonoBehaviour
     }
     public void SendStartGameEvent()
     {
-        if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
+        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
-            PlayerPrefs.SetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
+            PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
             PlayerPrefs.Save();
             Messenger.Broadcast(GameEvents.START_GAME);
         }
