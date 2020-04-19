@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.SceneManagement;
 
 public class BezierGameController : MonoBehaviour
 {
@@ -50,7 +48,7 @@ public class BezierGameController : MonoBehaviour
         drawBezier();
         current = 0;
 
-        for(int i=0;i<curvePoints.Count;i++)
+        for(var i = 0; i < curvePoints.Count; i++)
         {
             Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
         }
@@ -78,8 +76,8 @@ public class BezierGameController : MonoBehaviour
         double t, sx, sy, oldx, oldy, ax, ay, tau;
         oldx = curvePoints[0].Y;
         oldy = curvePoints[0].X;
-        int counter = curvePoints.Count;
-        Algorithms algorithms = GetComponent<Algorithms>();
+        var counter = curvePoints.Count;
+        var algorithms = GetComponent<Algorithms>();
         for (t = 0; t <= 0.5; t += 0.005)
         {
             sx = curvePoints[0].Y;
@@ -89,40 +87,40 @@ public class BezierGameController : MonoBehaviour
             tau = 1.0;
             for (int i = 1; i < counter; i++)//counter;
             {
-                tau = tau * (1 - t);
+                tau *= 1 - t;
                 ax = ax * t * (counter - i) / (i * (1 - t));
                 ay = ay * t * (counter - i) / (i * (1 - t));
-                sx = sx + ax * curvePoints[i].Y;
-                sy = sy + ay * curvePoints[i].X;
+                sx += ax * curvePoints[i].Y;
+                sy += ay * curvePoints[i].X;
             }
-            sx = sx * tau;
-            sy = sy * tau;
-            algorithms.drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            sx *= tau;
+            sy *= tau;
+            algorithms.drawLine((int)oldx, (int)oldy, (int)sx, (int)sy);
 
             oldx = sx;
             oldy = sy;
         }
         oldx = curvePoints[counter - 1].Y;
         oldy = curvePoints[counter - 1].X;
-        for (t = 1.0; t >= 0.5; t = t - 0.005)
+        for (t = 1.0; t >= 0.5; t -= 0.005)
         {
             sx = curvePoints[counter - 1].Y;
             sy = curvePoints[counter - 1].X;
             ax = 1.0;
             ay = 1.0;
             tau = 1.0;
-            for (int i = counter - 2; i >= 0; i--)
+            for (var i = counter - 2; i >= 0; i--)
             {
-                tau = tau * t;
+                tau *= t;
                 ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
                 ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx = sx + ax * curvePoints[i].Y;
-                sy = sy + ay * curvePoints[i].X;
+                sx += ax * curvePoints[i].Y;
+                sy += ay * curvePoints[i].X;
             }
-            sx = sx * tau;
-            sy = sy * tau;
+            sx *= tau;
+            sy *= tau;
 
-            algorithms.drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            algorithms.drawLine((int)oldx, (int)oldy, (int)sx, (int)sy);
 
             oldx = sx;
             oldy = sy;
@@ -159,32 +157,30 @@ public class BezierGameController : MonoBehaviour
 
     public void GenerateBezierCurve()
     {
-        GameField field = GetComponent<GameField>();
-        for(int i=0;i<pointsQuantity;i++)
+        var field = GetComponent<GameField>();
+        for(var i = 0; i < pointsQuantity; i++)
         {
-            int x = UnityEngine.Random.Range(0, 9);
-            int y = UnityEngine.Random.Range(0, 9);
-            if(i!=0)
+            var x = UnityEngine.Random.Range(0, 9);
+            var y = UnityEngine.Random.Range(0, 9);
+            if(i != 0)
             {
-                while ((Math.Sqrt((x - curvePoints[i-1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLineLength
+                while ((Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLineLength
               || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLineLength))
               
                 {
-                    x= UnityEngine.Random.Range(0, 9);
-                    y= UnityEngine.Random.Range(0, 9);
+                    x = UnityEngine.Random.Range(0, 9);
+                    y = UnityEngine.Random.Range(0, 9);
                 }
             }
 
-            curvePoints.Add(field.grid[y,x]);
+            curvePoints.Add(field.grid[y, x]);
         }
     }
 
     public void ChangeGameState()
     {
         if (gameStarted)
-        {
             gameActive = false;
-        }
         else
         {
             gameActive = true;

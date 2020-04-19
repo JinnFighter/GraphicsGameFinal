@@ -24,7 +24,7 @@ public class BrezenheimGameController : MonoBehaviour
     private int iteration;
     private int cur_line;
     private int linesQuantity;
-    [SerializeField]private InputField textField;
+    [SerializeField] private InputField textField;
 
     // Start is called before the first frame update
     void Start()
@@ -79,11 +79,6 @@ public class BrezenheimGameController : MonoBehaviour
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnDestroy()
     {
         Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
@@ -92,39 +87,41 @@ public class BrezenheimGameController : MonoBehaviour
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
+
     public void Swap<T>(ref T a, ref T b)
     {
         T c = a;
         a = b;
         b = c;
     }
+
     public void Bresenham4Line( int X0, int Y0, int X1, int Y1)
     {
-        GameField gameField = gameObject.GetComponent<GameField>();
-        int x0 = Y0;
-        int y0 = X0;
-        int x1 = Y1;
-        int y1 = X1;
+        var gameField = gameObject.GetComponent<GameField>();
+        var x0 = Y0;
+        var y0 = X0;
+        var x1 = Y1;
+        var y1 = X1;
     
         //Изменения координат
-        int dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
-        int dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
+        var dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
+        var dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
         //Направление приращения
-        int sx = (x1 >= x0) ? (1) : (-1);
-        int sy = (y1 >= y0) ? (1) : (-1);
+        var sx = (x1 >= x0) ? 1 : (-1);
+        var sy = (y1 >= y0) ? 1 : (-1);
  
         if (dy < dx)
         {
-            int d = (dy << 1) - dx;
-            int d1 = dy << 1;
-            int d2 = (dy - dx) << 1;
+            var d = (dy << 1) - dx;
+            var d1 = dy << 1;
+            var d2 = (dy - dx) << 1;
 
             //gameField.grid[x0, y0].setPixelState(true);
             ds.Add(d);
 
-            int x = x0 + sx;
-            int y = y0;
-            for (int i = 1; i <= dx; i++)
+            var x = x0 + sx;
+            var y = y0;
+            for (var i = 1; i <= dx; i++)
             {
                 if (d > 0)
                 {
@@ -134,23 +131,23 @@ public class BrezenheimGameController : MonoBehaviour
                 else
                     d += d1;
 
-                linePoints.Add(gameField.grid[x,y]);
+                linePoints.Add(gameField.grid[x, y]);
                 ds.Add(d);
-                x +=sx;     
+                x += sx;
             }
         }
         else
         {
-            int d = (dx << 1) - dy;
-            int d1 = dx << 1;
-            int d2 = (dx - dy) << 1;
+            var d = (dx << 1) - dy;
+            var d1 = dx << 1;
+            var d2 = (dx - dy) << 1;
 
             //gameField.grid[x0, y0].setPixelState(true);
             ds.Add(d);
 
-            int x = x0;
-            int y = y0 + sy;
-            for (int i = 1; i <= dy; i++)
+            var x = x0;
+            var y = y0 + sy;
+            for (var i = 1; i <= dy; i++)
             {
                 if (d > 0)
                 {
@@ -163,29 +160,27 @@ public class BrezenheimGameController : MonoBehaviour
                 linePoints.Add(gameField.grid[x, y]);
                 ds.Add(d);
 
-                y +=sy; 
+                y +=sy;
             }
         }
     }
+
     public void gameCheck(GridPixelScript invoker)
     {
-        if(!gameActive)
-        {
-            return;
-        }
-        if(!GetComponent<GameplayTimer>().Counting)
-        {
-            return;
-        }
+        if(!gameActive) return;
+
+        if(!GetComponent<GameplayTimer>().Counting) return;
+
         if (cur_line == linesQuantity)
         {
             Messenger.Broadcast(GameEvents.TIMER_STOP);
             return;
         }
-        if (prev_point==last_point)
+
+        if (prev_point == last_point)
         {
             cur_line++;
-            if (cur_line==linesQuantity)
+            if (cur_line == linesQuantity)
             {
                 GetComponent<GameplayTimer>().StopTimer();
                 Messenger.Broadcast(GameEvents.GAME_OVER);
@@ -216,24 +211,23 @@ public class BrezenheimGameController : MonoBehaviour
                 prev_point = LinePoints[cur_line][iteration];
             }
             else
-            {
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-            }
         }
     }
+
     public void GenerateLines()
     {
-        for(int i=0;i< linesQuantity; i++)
+        for(var i = 0; i < linesQuantity; i++)
         {
-            int firstX = UnityEngine.Random.Range(0, 9);
-            int firstY = UnityEngine.Random.Range(0, 9);
+            var firstX = UnityEngine.Random.Range(0, 9);
+            var firstY = UnityEngine.Random.Range(0, 9);
 
-            int secondX = UnityEngine.Random.Range(0, 9);
-            int secondY = UnityEngine.Random.Range(0, 9);
-            if(maxLengthSum>0)
+            var secondX = UnityEngine.Random.Range(0, 9);
+            var secondY = UnityEngine.Random.Range(0, 9);
+            if(maxLengthSum > 0)
             {
-                if(maxLengthSum- (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY))<minLineLength
-                    && maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY))!=0)
+                if(maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength
+                    && maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) != 0)
                 {
                     while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
@@ -258,30 +252,31 @@ public class BrezenheimGameController : MonoBehaviour
                         secondY = UnityEngine.Random.Range(0, 9);
                     }
                 }
-                maxLengthSum -=(int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
+                maxLengthSum -= (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
             }
-            GameField field = GetComponent<GameField>();
-            lines[0, i] = field.grid[firstY,firstX];
+            var field = GetComponent<GameField>();
+            lines[0, i] = field.grid[firstY, firstX];
             lines[1, i] = field.grid[secondY, secondX];
             Bresenham4Line(firstX, firstY, secondX, secondY);
             Ds[i] = new List<int>();
             LinePoints[i] = new List<GridPixelScript>();
-            for (int j = 0; j < ds.Count;j++)
+            for (var j = 0; j < ds.Count; j++)
             {
                 Ds[i].Add(ds[j]);
             }
-            for (int j = 0; j < linePoints.Count; j++)
+            for (var j = 0; j < linePoints.Count; j++)
             {
                 LinePoints[i].Add(linePoints[j]);
             }
             ds.Clear();
             linePoints.Clear();
         }
-        last_point = LinePoints[0][LinePoints[0].Count-1];
+        last_point = LinePoints[0][LinePoints[0].Count - 1];
         prev_point = null;
         lines[0, 0].setPixelState(true);
         last_point.setPixelState(true);
     }
+
     public void PauseGame()
     {
         if(gameStarted)
@@ -290,6 +285,7 @@ public class BrezenheimGameController : MonoBehaviour
             GetComponent<GameplayTimer>().PauseTimer();
         } 
     }
+
     public void ContinueGame()
     {
         if(gameStarted)
@@ -298,71 +294,56 @@ public class BrezenheimGameController : MonoBehaviour
             GetComponent<GameplayTimer>().ResumeTimer();
         }  
     }
+
     public void ChangeGameState()
     {
         if(!gameStarted)
         {
             gameActive = true;
             gameStarted = true;
-            GameplayTimer timer = GetComponent<GameplayTimer>();
-            switch(difficulty)
+            var timer = GetComponent<GameplayTimer>();
+            timer.StartTime = difficulty switch
             {
-                case 0:
-                    timer.StartTime = 60f;
-                    break;
-                case 1:
-                    timer.StartTime = 80f;
-                    break;
-                case 2:
-                    timer.StartTime = 120f;
-                    break;
-                default:
-                    timer.StartTime = 60f;
-                    break;
-            }
+                0 => 60f,
+                1 => 80f,
+                2 => 120f,
+                _ => 60f,
+            };
             timer.StartTimer();
         }
         else
-        {
             gameActive = false;
-        }
     }
+
     public void RestartGame()
     {
         gameActive = false;
         gameStarted = false;
         GetComponent<GameField>().clearGrid();
         ds.Clear();
-        for(int i = 0;i<linesQuantity;i++)
+        for(int i = 0; i < linesQuantity; i++)
         {
             Ds[i].Clear();
             linePoints.Clear();
         }
         cur_line = 0;
         iteration = 0;
-        switch (difficulty)
+        maxLengthSum = difficulty switch
         {
-            case 0:
-                maxLengthSum = 20;
-                break;
-            case 1:
-                maxLengthSum = 48;
-                break;
-            case 2:
-                maxLengthSum = 90;
-                break;
-            default:
-                maxLengthSum = 20;
-                break;
-        }
+            0 => 20,
+            1 => 48,
+            2 => 90,
+            _ => 20,
+        };
         GenerateLines();
 
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
+
     public void SendStartGameEvent()
     {
-        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        var pfManager = GetComponent<ProfilesManager>();
         if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
             PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);
