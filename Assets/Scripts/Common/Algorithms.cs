@@ -116,7 +116,7 @@ public class Algorithms : MonoBehaviour
         }
     }
 
-    public void drawBezier(List<GridPixelScript> curvePoints)
+    public void drawBezier(List<Pixel> curvePoints)
     {
         double t, sx, sy, oldx, oldy, ax, ay, tau;
         oldx = curvePoints[0].X;
@@ -175,7 +175,7 @@ public class Algorithms : MonoBehaviour
         //hasBezier = true;
     }
 
-    public int Code(GridPixelScript point, GridPixelScript rectLeft, GridPixelScript rectRight)
+    public int Code(Pixel point, Pixel rectLeft, Pixel rectRight)
     {
         var code = 0;
         if (point.X < rectLeft.X) code |= 0x01;//_ _ _ 1;
@@ -185,7 +185,7 @@ public class Algorithms : MonoBehaviour
         return code;
     }
 
-    public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight)
+    public void southCohen(Pixel nA, Pixel nB, Pixel rectLeft, Pixel rectRight)
     {
         var A = nA;
         var B = nB;
@@ -232,7 +232,7 @@ public class Algorithms : MonoBehaviour
             drawLine(A.X, A.Y, B.X, B.Y);
     }
 
-    public bool segmentIntersection(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
+    public bool segmentIntersection(Pixel a, Pixel b, Pixel c, Pixel d)
     {
         int v1 = (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
         int v2 = (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
@@ -241,7 +241,7 @@ public class Algorithms : MonoBehaviour
         return (v1 * v2 < 0) && (v3 * v4 < 0);
     }
 
-    public bool segIntersect(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
+    public bool segIntersect(Pixel a, Pixel b, Pixel c, Pixel d)
     {
         var A = a;
         var B = b;

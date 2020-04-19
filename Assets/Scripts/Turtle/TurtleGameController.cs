@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TurtleGameController : MonoBehaviour
 {
-    [SerializeField] private GridPixelScript originalPixel;
+    [SerializeField] private Pixel originalPixel;
     [SerializeField] private Turtle turtle;
     [SerializeField] private InputField routeInputField;
 

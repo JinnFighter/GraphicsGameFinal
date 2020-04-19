@@ -5,10 +5,10 @@ public class BrezenheimCircleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, gameCheck);
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    public void gameCheck(Pixel invoker)
     {
 
     }

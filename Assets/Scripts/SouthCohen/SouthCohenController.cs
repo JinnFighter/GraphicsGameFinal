@@ -8,9 +8,9 @@ public class SouthCohenController : MonoBehaviour
     private bool gameActive;
     private bool gameStarted;
     private int difficulty;
-    private GridPixelScript[] borderPoints;
+    private Pixel[] borderPoints;
     private int linesQuantity;
-    private GridPixelScript[,] lines;
+    private Pixel[,] lines;
     private int iteration;
     private List<int>[] lineZones;
     [SerializeField] private SpriteRenderer border;
@@ -25,7 +25,7 @@ public class SouthCohenController : MonoBehaviour
     {
         var gameField = GetComponent<GameField>();
         difficulty = gameField.Difficulty;
-        borderPoints = new GridPixelScript[2];
+        borderPoints = new Pixel[2];
         Vector3 pos;
         Vector3 scale;
         switch (difficulty)
@@ -103,7 +103,7 @@ public class SouthCohenController : MonoBehaviour
         {
             lineZones[i] = new List<int>();
         }
-        lines = new GridPixelScript[2, linesQuantity];
+        lines = new Pixel[2, linesQuantity];
 
         GenerateLines();
 
@@ -126,7 +126,7 @@ public class SouthCohenController : MonoBehaviour
 
         iteration = 0;
         GetComponent<Algorithms>().drawLine(lines[0, 0].Y,lines[0,0].X, lines[1, 0].Y,lines[1,0].X);
-        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
@@ -138,14 +138,14 @@ public class SouthCohenController : MonoBehaviour
 
     void OnDestroy()
     {
-        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    public void gameCheck(Pixel invoker)
     {
         if (!gameActive) return;
 
@@ -238,7 +238,7 @@ public class SouthCohenController : MonoBehaviour
         }
     }
 
-    public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight,int i)
+    public void southCohen(Pixel nA, Pixel nB, Pixel rectLeft, Pixel rectRight,int i)
     {
         var A = nA;
         var B = nB;
@@ -300,7 +300,7 @@ public class SouthCohenController : MonoBehaviour
         }
     }
 
-    public int Code(GridPixelScript point, GridPixelScript rectLeft, GridPixelScript rectRight)
+    public int Code(Pixel point, Pixel rectLeft, Pixel rectRight)
     {
         var code = 0;
         if (point.X < rectLeft.X) code |= 0x01;//_ _ _ 1;

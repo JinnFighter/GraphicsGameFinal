@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GridPixelScript : MonoBehaviour
+public class Pixel : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
 
@@ -9,7 +9,7 @@ public class GridPixelScript : MonoBehaviour
 
     public void setPixelState(bool state) => pixel_empty.SetActive(!state);
 
-    public void OnMouseDown() => Messenger<GridPixelScript>.Broadcast(GameEvents.GAME_CHECK, this);
+    public void OnMouseDown() => Messenger<Pixel>.Broadcast(GameEvents.GAME_CHECK, this);
 }
 
 

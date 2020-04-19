@@ -5,7 +5,7 @@
 
     }
 
-    public override void CheckAction(GridPixelScript invoker) => throw new System.NotImplementedException();
+    public override void CheckAction(Pixel invoker) => throw new System.NotImplementedException();
 
     public override void Restart() => throw new System.NotImplementedException();
 }

@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class MultipleBrezenheimController : MonoBehaviour
 {
-    private GridPixelScript[,] lines;
+    private Pixel[,] lines;
     private int linesQuantity;
-    private List<GridPixelScript>[] linePoints;
+    private List<Pixel>[] linePoints;
     private List<int>[] ds;
-    private GridPixelScript last_point;
-    private GridPixelScript prev_point;
+    private Pixel last_point;
+    private Pixel prev_point;
     private int cur_line;
     private int iteration;
     private bool gameActive;
@@ -50,15 +50,15 @@ public class MultipleBrezenheimController : MonoBehaviour
                 maxLineLength = 5;
                 break;
         }
-        lines = new GridPixelScript[2, linesQuantity];
-        linePoints = new List<GridPixelScript>[linesQuantity];
+        lines = new Pixel[2, linesQuantity];
+        linePoints = new List<Pixel>[linesQuantity];
         ds = new List<int>[linesQuantity];
         for (var i = 0; i < linesQuantity; i++)
         {
-            linePoints[i] = new List<GridPixelScript>();
+            linePoints[i] = new List<Pixel>();
             ds[i] = new List<int>();
         }
-        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
@@ -77,7 +77,7 @@ public class MultipleBrezenheimController : MonoBehaviour
 
     void OnDestroy()
     {
-        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
@@ -156,7 +156,7 @@ public class MultipleBrezenheimController : MonoBehaviour
         //last_point.setPixelState(true);
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    public void gameCheck(Pixel invoker)
     {
         if (!gameActive) return;
 

@@ -13,7 +13,7 @@
         _difficulty = difficulty;
     }
 
-    public abstract void CheckAction(GridPixelScript invoker);
+    public abstract void CheckAction(Pixel invoker);
 
     public virtual void Pause()
     {

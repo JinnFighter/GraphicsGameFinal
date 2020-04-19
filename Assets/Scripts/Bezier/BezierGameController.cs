@@ -9,7 +9,7 @@ public class BezierGameController : MonoBehaviour
     private int difficulty;
     private int minLineLength;
     private int maxLineLength;
-    private List<GridPixelScript> curvePoints;
+    private List<Pixel> curvePoints;
     private int current;
     private int pointsQuantity;
 
@@ -43,7 +43,7 @@ public class BezierGameController : MonoBehaviour
                 break;
         }
         
-        curvePoints = new List<GridPixelScript>(pointsQuantity);
+        curvePoints = new List<Pixel>(pointsQuantity);
         GenerateBezierCurve();
         drawBezier();
         current = 0;
@@ -58,7 +58,7 @@ public class BezierGameController : MonoBehaviour
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.AddListener(GameEvents.RESTART_GAME, RestartGame);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.Broadcast(GameEvents.START_GAME);  
     }
 
@@ -68,7 +68,7 @@ public class BezierGameController : MonoBehaviour
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
         Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
     }
 
     public void drawBezier()
@@ -127,7 +127,7 @@ public class BezierGameController : MonoBehaviour
         }
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    public void gameCheck(Pixel invoker)
     {
         if (!gameActive) return;
 

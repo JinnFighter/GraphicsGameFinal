@@ -2,8 +2,8 @@
 
 public class GameField : MonoBehaviour
 {
-	[SerializeField] public GridPixelScript originalPixel;
-    public GridPixelScript[,] grid;
+	[SerializeField] public Pixel originalPixel;
+    public Pixel[,] grid;
     public float OffsetX { get; set; }
     public float OffsetY { get; set; }
     public int GridRows { get; set; } = 10;
@@ -37,7 +37,7 @@ public class GameField : MonoBehaviour
                 originalPixel.transform.localScale = new Vector3(20, 20, 1);
                 break;
         }
-        grid = new GridPixelScript[GridRows, GridCols];
+        grid = new Pixel[GridRows, GridCols];
         var startPos = originalPixel.transform.position;
 
         OffsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
@@ -46,13 +46,13 @@ public class GameField : MonoBehaviour
         {
             for (var j = 0; j < GridCols; j++)
             {
-                GridPixelScript pixel;
+                Pixel pixel;
                 
                 if (i == 0 && j == 0)
                     pixel = originalPixel;
                 else
                 {    
-                    pixel = Instantiate(originalPixel) as GridPixelScript;
+                    pixel = Instantiate(originalPixel) as Pixel;
                     float posX = (OffsetX * j) + startPos.x;
                     float posY = -(OffsetY * i) + startPos.y;
                     pixel.transform.position = new Vector3(posX, posY, startPos.z);

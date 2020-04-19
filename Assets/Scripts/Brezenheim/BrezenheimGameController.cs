@@ -12,13 +12,13 @@ public class BrezenheimGameController : MonoBehaviour
     private bool gameStarted;
     private int minLineLength;
     private int maxLineLength;
-    private GridPixelScript[,] lines;
-    private List<GridPixelScript> linePoints;
-    private List<GridPixelScript>[] LinePoints;
+    private Pixel[,] lines;
+    private List<Pixel> linePoints;
+    private List<Pixel>[] LinePoints;
     private List<int>[] Ds;
     private List<int> ds;
-    private GridPixelScript last_point;
-    private GridPixelScript prev_point;
+    private Pixel last_point;
+    private Pixel prev_point;
     private int iteration;
     private int cur_line;
     private int linesQuantity;
@@ -60,13 +60,13 @@ public class BrezenheimGameController : MonoBehaviour
 
         ds = new List<int>(1);
         Ds = new List<int>[linesQuantity];
-        LinePoints = new List<GridPixelScript>[linesQuantity];
-        linePoints = new List<GridPixelScript>(1);
-        lines = new GridPixelScript[2, linesQuantity];
+        LinePoints = new List<Pixel>[linesQuantity];
+        linePoints = new List<Pixel>(1);
+        lines = new Pixel[2, linesQuantity];
         GenerateLines();
         textField.text = Ds[0][0].ToString();
 
-        Messenger<GridPixelScript>.AddListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, ContinueGame);
@@ -79,7 +79,7 @@ public class BrezenheimGameController : MonoBehaviour
 
     void OnDestroy()
     {
-        Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
+        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
         Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.RemoveListener(GameEvents.PAUSE_GAME, PauseGame);
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
@@ -163,7 +163,7 @@ public class BrezenheimGameController : MonoBehaviour
         }
     }
 
-    public void gameCheck(GridPixelScript invoker)
+    public void gameCheck(Pixel invoker)
     {
         if(!gameActive) return;
 
@@ -257,7 +257,7 @@ public class BrezenheimGameController : MonoBehaviour
             lines[1, i] = field.grid[secondY, secondX];
             Bresenham4Line(firstX, firstY, secondX, secondY);
             Ds[i] = new List<int>();
-            LinePoints[i] = new List<GridPixelScript>();
+            LinePoints[i] = new List<Pixel>();
             for (var j = 0; j < ds.Count; j++)
             {
                 Ds[i].Add(ds[j]);

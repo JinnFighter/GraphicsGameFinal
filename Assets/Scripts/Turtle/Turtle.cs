@@ -2,7 +2,7 @@
 
 public class Turtle : MonoBehaviour
 {
-    [SerializeField] public GridPixelScript originalPixel;
+    [SerializeField] public Pixel originalPixel;
 
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
 
