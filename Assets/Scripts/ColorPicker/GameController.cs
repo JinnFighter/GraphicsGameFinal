@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -30,18 +27,14 @@ public class GameController : MonoBehaviour
         restart();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnGUI()
     {
 
     }
+
     public void checkAnswer()
     {
-        if(Math.Abs(chosenColor.b-byte.Parse(blueTextField.text))<5)
+        if(Math.Abs(chosenColor.b - byte.Parse(blueTextField.text)) < 5)
         {
             if(Math.Abs(chosenColor.b - byte.Parse(blueTextField.text)) >= 3)
             {
@@ -50,7 +43,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if(Math.Abs(chosenColor.b - byte.Parse(blueTextField.text))>=1)
+                if(Math.Abs(chosenColor.b - byte.Parse(blueTextField.text)) >= 1)
                 {
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 150);
                     winCheck = true;
@@ -80,12 +73,13 @@ public class GameController : MonoBehaviour
                 redTextField.text = chosenColor.r.ToString();
                 greenTextField.text = chosenColor.g.ToString();
                 colorImage.color = chosenColor;
-                float b = curColor.b;
+                var b = curColor.b;
                 curColor = new Color(chosenColor.r / 255, chosenColor.g / 255, b, 1);
                 userColorHolder.color = curColor;
             }
         }
     }
+
     public void restart()
     {
         switch (difficulty)
@@ -109,16 +103,18 @@ public class GameController : MonoBehaviour
         blueTextField.text = "0";
         colorImage.color = chosenColor;
         winCheck = false;
-        curColor = new Color(chosenColor.r/255, chosenColor.g/255, 0,1);
+        curColor = new Color(chosenColor.r / 255, chosenColor.g / 255, 0, 1);
         userColorHolder.color = curColor;
         Messenger.Broadcast(GameEvents.RESTART_GAME);
-    } 
+    }
+
     public void SetChosenColor(float component)
     {
         blueTextField.text = component.ToString();
         curColor.b = component/255;
         userColorHolder.color = curColor;
     }
+
     public void SendStartGameEvent()
     {
         if (PlayerPrefs.GetInt(GetComponent<ProfilesManager>().ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)

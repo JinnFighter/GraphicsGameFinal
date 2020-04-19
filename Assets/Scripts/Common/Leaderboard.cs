@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-
 
 public class Leaderboard : MonoBehaviour
 {
@@ -20,11 +18,13 @@ public class Leaderboard : MonoBehaviour
             name = Name;
             score = Score;
         }
+
         public BoardMember()
         {
 
         }
     }
+
     [XmlRoot("LeaderboardCollection")]
     public class BoardMembersContainer
     {
@@ -34,9 +34,9 @@ public class Leaderboard : MonoBehaviour
         
         public static BoardMembersContainer LoadBoardMembers(string path)
         {
-            TextAsset _xml_file = Resources.Load<TextAsset>(path);
+            _ = Resources.Load<TextAsset>(path);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(BoardMembersContainer));
+            var serializer = new XmlSerializer(typeof(BoardMembersContainer));
 
             using (var stream = new FileStream(path, FileMode.Open))
             {
@@ -54,46 +54,32 @@ public class Leaderboard : MonoBehaviour
     }
     
     private string path = "Data/Leaderboards";
-    private BoardMembersContainer container;
 
-    
-    internal BoardMembersContainer Container { get => container; set => container = value; }
+    internal BoardMembersContainer Container { get; set; }
     // Start is called before the first frame update
     void Start()
     {
         //Messenger.AddListener(GameEvents.GAME_OVER, ShowLeaderboard);
         LoadLeaderboard();
-        foreach(BoardMember a in container.boardMembers)
-        {
+        foreach(var a in Container.boardMembers)
             Debug.Log("Profile name: " + a.name + ", Score: " + a.score);
-        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void LoadLeaderboard()
-    {
-        container = BoardMembersContainer.LoadBoardMembers(path + "/" + SceneManager.GetActiveScene().name + ".xml");
-    }
+    public void LoadLeaderboard() => Container = BoardMembersContainer.LoadBoardMembers(path + "/" + SceneManager.GetActiveScene().name + ".xml");
+
     public void AddScore(string playerName, int score)
     {
-        foreach(BoardMember a in container.boardMembers)
+        foreach(var a in Container.boardMembers)
         {
-            if(a.name==playerName&&a.score==score)
-            {
+            if(a.name == playerName && a.score == score)
                 return;
-            }
         }
-        container.boardMembers.Add(new BoardMember(playerName, score));
-        container.boardMembers.Sort((i1, i2) => i2.score.CompareTo(i1.score));
-        if(container.boardMembers.Count==8)
-        {
-            container.boardMembers.RemoveAt(container.boardMembers.Count-1);
-        }
-        container.Save(path + "/" + SceneManager.GetActiveScene().name + ".xml");
+
+        Container.boardMembers.Add(new BoardMember(playerName, score));
+        Container.boardMembers.Sort((i1, i2) => i2.score.CompareTo(i1.score));
+        if(Container.boardMembers.Count == 8)
+            Container.boardMembers.RemoveAt(Container.boardMembers.Count - 1);
+        Container.Save(path + "/" + SceneManager.GetActiveScene().name + ".xml");
     }
 }
 

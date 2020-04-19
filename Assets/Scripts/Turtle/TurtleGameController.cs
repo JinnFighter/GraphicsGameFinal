@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -19,7 +18,7 @@ public class TurtleGameController : MonoBehaviour
     private int y;
     private enum directionEnum { UP, LEFT, DOWN, RIGHT };
     private enum commandsEnum { FORWARD, ROTATE_LEFT, ROTATE_RIGHT };
-    private Dictionary<int, char> commands = new Dictionary<int, char>
+    private readonly Dictionary<int, char> commands = new Dictionary<int, char>
     {
         {(int)commandsEnum.FORWARD, 'F' },
         {(int)commandsEnum.ROTATE_LEFT, '+' },
@@ -71,10 +70,8 @@ public class TurtleGameController : MonoBehaviour
         paths = new string[pathsQuantity];
         route = "";
         commands_history = new List<int>[pathsQuantity];
-        for (int i = 0; i < pathsQuantity; i++)
-        {
+        for (var i = 0; i < pathsQuantity; i++)
             commands_history[i] = new List<int>();
-        }
         
         look = (int)directionEnum.RIGHT;
         turtle.gameObject.transform.Rotate(0, 0, -90);
@@ -96,11 +93,6 @@ public class TurtleGameController : MonoBehaviour
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnDestroy()
     {
         Messenger.RemoveListener(GameEvents.TIMER_STOP, ChangeGameState);
@@ -108,6 +100,7 @@ public class TurtleGameController : MonoBehaviour
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
+
     public void rotateLeft()
     {
         turtle.transform.Rotate(0, 0, 90);
@@ -146,16 +139,17 @@ public class TurtleGameController : MonoBehaviour
                 break;
         }
     }
+
     public void moveForward()
     {
-        bool allowMove = true;
-        Vector3 startPos = turtle.transform.position;
-        float posX = startPos.x;
-        float posY = startPos.y;
+        var allowMove = true;
+        var startPos = turtle.transform.position;
+        var posX = startPos.x;
+        var posY = startPos.y;
         switch (look)
         {
             case (int)directionEnum.UP:
-                if(x==0)
+                if(x == 0)
                 {
                     allowMove = false;
                     break;
@@ -164,7 +158,7 @@ public class TurtleGameController : MonoBehaviour
                 posY += GetComponent<GameField>().OffsetY;
                 break;
             case (int)directionEnum.RIGHT:
-                if (y == GetComponent<GameField>().GridCols-1)
+                if (y == GetComponent<GameField>().GridCols - 1)
                 {
                     allowMove = false;
                     break;
@@ -192,13 +186,12 @@ public class TurtleGameController : MonoBehaviour
                 break;
         }
         if(allowMove)
-        {
             turtle.transform.position = new Vector3(posX, posY, startPos.z);
-        }
     }
+
     void executeMoveSequence()
     {
-        for (int i=0;i<route.Length;i++)
+        for(var i = 0;i < route.Length; i++)
         {
            switch(route[i])
             {
@@ -241,20 +234,14 @@ public class TurtleGameController : MonoBehaviour
     }
     public void GameCheck(int action)
     {
-        if (!gameActive)
-        {
-            return;
-        }
-        if (!GetComponent<GameplayTimer>().Counting)
-        {
-            return;
-        }
-        if (finished)
-        {
-            return;
-        }
+        if (!gameActive) return;
+
+        if (!GetComponent<GameplayTimer>().Counting) return;
+
+        if (finished) return;
+
         last_action = action;
-        if(last_action==commands_history[iteration][cur_action])
+        if(last_action == commands_history[iteration][cur_action])
         {
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER,100);
             switch (last_action)
@@ -281,28 +268,24 @@ public class TurtleGameController : MonoBehaviour
                     Messenger.Broadcast(GameEvents.GAME_OVER);
                 }
                 else
-                {
                     routeInputField.text = paths[iteration];
-                }
             }
         }
         else
-        {
             Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-        }
     }
+
     public void generateStringPaths()
     {
-        for(int i=0;i<pathsQuantity;i++)
+        for(var i = 0;i < pathsQuantity; i++)
         {
             iteration = i;
-            for(int j=0;j<pathsLength;j++)
+            for(var j = 0; j < pathsLength; j++)
             { 
-                char c = commands[UnityEngine.Random.Range(0, 2)];
+                var c = commands[UnityEngine.Random.Range(0, 2)];
                 while (j == 0 && c != commands[0])
-                {
                    c = commands[UnityEngine.Random.Range(0, 2)];
-                }
+
                 route = String.Concat(route, c);
             }
             paths[i] = route;
@@ -311,6 +294,7 @@ public class TurtleGameController : MonoBehaviour
         }
         iteration = 0;
     }
+
     public void PauseGame()
     {
         if(gameStarted)
@@ -319,6 +303,7 @@ public class TurtleGameController : MonoBehaviour
             GetComponent<GameplayTimer>().PauseTimer();
         }
     }
+
     public void ContinueGame()
     {
         if(gameStarted)
@@ -327,6 +312,7 @@ public class TurtleGameController : MonoBehaviour
             GetComponent<GameplayTimer>().ResumeTimer();
         }  
     }
+
     public void ChangeGameState()
     {
         if (!gameStarted)
@@ -352,17 +338,16 @@ public class TurtleGameController : MonoBehaviour
             timer.StartTimer();
         }
         else
-        {
             gameActive = false;
-        }
     }
+
     public void RestartGame()
     {
         gameActive = false;
         gameStarted = false;
         GetComponent<GameField>().clearGrid();
         route = "";
-        for (int i=0;i<pathsQuantity;i++)
+        for (var i = 0; i < pathsQuantity; i++)
         {
             commands_history[i].Clear();
             paths[i] = "";
@@ -422,9 +407,10 @@ public class TurtleGameController : MonoBehaviour
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
+
     public void SendStartGameEvent()
     {
-        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        var pfManager = GetComponent<ProfilesManager>();
         if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
             PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);

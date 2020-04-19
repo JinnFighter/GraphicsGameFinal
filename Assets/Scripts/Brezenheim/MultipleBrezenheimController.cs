@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class MultipleBrezenheimController : MonoBehaviour
@@ -20,7 +18,6 @@ public class MultipleBrezenheimController : MonoBehaviour
     private bool gameStarted;
     private int minLineLength;
     private int maxLineLength;
-    private int maxLengthSum;
     private int difficulty;
     [SerializeField] private InputField textField;
     
@@ -36,31 +33,27 @@ public class MultipleBrezenheimController : MonoBehaviour
                 linesQuantity = 5;
                 minLineLength = 2;
                 maxLineLength = 5;
-                maxLengthSum = 20;
                 break;
             case 1:
                 linesQuantity = 7;
                 minLineLength = 4;
                 maxLineLength = 8;
-                maxLengthSum = 48;
                 break;
             case 2:
                 linesQuantity = 10;
                 minLineLength = 5;
                 maxLineLength = 10;
-                maxLengthSum = 90;
                 break;
             default:
                 linesQuantity = 5;
                 minLineLength = 2;
                 maxLineLength = 5;
-                maxLengthSum = 20;
                 break;
         }
         lines = new GridPixelScript[2, linesQuantity];
         linePoints = new List<GridPixelScript>[linesQuantity];
         ds = new List<int>[linesQuantity];
-        for (int i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < linesQuantity; i++)
         {
             linePoints[i] = new List<GridPixelScript>();
             ds[i] = new List<int>();
@@ -76,16 +69,12 @@ public class MultipleBrezenheimController : MonoBehaviour
         lines[0, 0].setPixelState(true);
         lines[1, 0].setPixelState(true);
         textField.text = ds[0][0].ToString();
-        GameplayTimer timer = GetComponent<GameplayTimer>();
+        var timer = GetComponent<GameplayTimer>();
         timer.Format = GameplayTimer.TimerFormat.smms;
         timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     void OnDestroy()
     {
         Messenger<GridPixelScript>.RemoveListener(GameEvents.GAME_CHECK, gameCheck);
@@ -94,33 +83,34 @@ public class MultipleBrezenheimController : MonoBehaviour
         Messenger.RemoveListener(GameEvents.CONTINUE_GAME, ContinueGame);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, RestartGame);
     }
+
     public void Bresenham4Polygon(int X0, int Y0, int X1, int Y1, int j)
     {
-        GameField gameField = gameObject.GetComponent<GameField>();
+        var gameField = gameObject.GetComponent<GameField>();
 
-        int x0 = Y0;
-        int y0 = X0;
-        int x1 = Y1;
-        int y1 = X1;
+        var x0 = Y0;
+        var y0 = X0;
+        var x1 = Y1;
+        var y1 = X1;
         //Изменения координат
-        int dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
-        int dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
+        var dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
+        var dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
         //Направление приращения
-        int sx = (x1 >= x0) ? (1) : (-1);
-        int sy = (y1 >= y0) ? (1) : (-1);
+        var sx = (x1 >= x0) ? 1 : (-1);
+        var sy = (y1 >= y0) ? 1 : (-1);
 
         if (dy < dx)
         {
-            int d = (dy << 1) - dx;
-            int d1 = dy << 1;
-            int d2 = (dy - dx) << 1;
+            var d = (dy << 1) - dx;
+            var d1 = dy << 1;
+            var d2 = (dy - dx) << 1;
 
             //gameField.grid[x0, y0].setPixelState(true);
             ds[j].Add(d);
 
-            int x = x0 + sx;
-            int y = y0;
-            for (int i = 1; i <= dx; i++)
+            var x = x0 + sx;
+            var y = y0;
+            for (var i = 1; i <= dx; i++)
             {
                 if (d > 0)
                 {
@@ -138,16 +128,16 @@ public class MultipleBrezenheimController : MonoBehaviour
         }
         else
         {
-            int d = (dx << 1) - dy;
-            int d1 = dx << 1;
-            int d2 = (dx - dy) << 1;
+            var d = (dx << 1) - dy;
+            var d1 = dx << 1;
+            var d2 = (dx - dy) << 1;
 
             //gameField.grid[x0, y0].setPixelState(true);
             ds[j].Add(d);
 
-            int x = x0;
-            int y = y0 + sy;
-            for (int i = 1; i <= dy; i++)
+            var x = x0;
+            var y = y0 + sy;
+            for (var i = 1; i <= dy; i++)
             {
                 if (d > 0)
                 {
@@ -165,21 +155,19 @@ public class MultipleBrezenheimController : MonoBehaviour
         last_point = linePoints[j][linePoints[j].Count - 1];
         //last_point.setPixelState(true);
     }
+
     public void gameCheck(GridPixelScript invoker)
     {
-        if (!gameActive)
-        {
-            return;
-        }
-        if (!GetComponent<GameplayTimer>().Counting)
-        {
-            return;
-        }
+        if (!gameActive) return;
+
+        if (!GetComponent<GameplayTimer>().Counting) return;
+
         if (cur_line == linesQuantity)
         {
             Messenger.Broadcast(GameEvents.TIMER_STOP);
             return;
         }
+
         if (prev_point == last_point)
         {
             cur_line++;
@@ -214,16 +202,15 @@ public class MultipleBrezenheimController : MonoBehaviour
                 prev_point = linePoints[cur_line][iteration];
             }
             else
-            {
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-            }
         }
     }
+
     public void GeneratePolygon()
     {
-        GameField field = GetComponent<GameField>();
-        Algorithms algorithms = GetComponent<Algorithms>();
-        for(int i=0;i<linesQuantity;i++)
+        var field = GetComponent<GameField>();
+        var algorithms = GetComponent<Algorithms>();
+        for(var i = 0; i < linesQuantity; i++)
         {
             int firstX;
             int firstY;
@@ -231,7 +218,7 @@ public class MultipleBrezenheimController : MonoBehaviour
             int secondX;
             int secondY;
 
-            if(i==0)
+            if(i == 0)
             {
                  firstX = UnityEngine.Random.Range(0, 9);
                  firstY = UnityEngine.Random.Range(0, 9);
@@ -258,7 +245,7 @@ public class MultipleBrezenheimController : MonoBehaviour
                     while (true)
                     {
                         bool check = false;
-                        for (int j = 0; j < i - 1; j++)
+                        for (var j = 0; j < i - 1; j++)
                         {
                             if (algorithms.segmentIntersection(lines[0, j], lines[1, j],
                                 field.grid[firstY, firstX], field.grid[secondY, secondX]))
@@ -267,13 +254,9 @@ public class MultipleBrezenheimController : MonoBehaviour
                             }
                         }
                         if (check)
-                        {
                             continue;
-                        }
                         else
-                        {
                             break;
-                        }
                     }
                 }
                 else
@@ -283,12 +266,13 @@ public class MultipleBrezenheimController : MonoBehaviour
                         secondX = UnityEngine.Random.Range(0, 9);
                         secondY = UnityEngine.Random.Range(0, 9);
                         if (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
-                        || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= minLineLength-1)
+                        || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) <= minLineLength - 1)
                         {
                             continue;
                         }
+
                         bool check = false;
-                        for (int j = 0; j < i - 1; j++)
+                        for (var j = 0; j < i - 1; j++)
                         {
                             if (algorithms.segmentIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
                              field.grid[firstY, firstX], field.grid[secondY, secondX]))
@@ -296,23 +280,21 @@ public class MultipleBrezenheimController : MonoBehaviour
                                 break;
                             }
                         }
+
                         if (check)
-                        {
                             continue;
-                        }
                         else
-                        {
                             break;
-                        }
                     }
                 }    
             }
 
             lines[0, i] = field.grid[firstY, firstX];
             lines[1, i] = field.grid[secondY, secondX];
-            Bresenham4Polygon(firstX, firstY, secondX, secondY,i);
+            Bresenham4Polygon(firstX, firstY, secondX, secondY, i);
         }
     }
+
     public void PauseGame()
     {
         if(gameStarted)
@@ -321,6 +303,7 @@ public class MultipleBrezenheimController : MonoBehaviour
             GetComponent<GameplayTimer>().PauseTimer();
         }
     }
+
     public void ContinueGame()
     {
         if(gameStarted)
@@ -329,6 +312,7 @@ public class MultipleBrezenheimController : MonoBehaviour
             GetComponent<GameplayTimer>().ResumeTimer();
         }
     }
+
     public void ChangeGameState()
     {
         if (!gameStarted)
@@ -354,37 +338,22 @@ public class MultipleBrezenheimController : MonoBehaviour
             timer.StartTimer();
         }
         else
-        {
             gameActive = false;
-        }
     }
+
     public void RestartGame()
     {
         gameActive = false;
         gameStarted = false;
         GetComponent<GameField>().clearGrid();
-        for (int i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < linesQuantity; i++)
         {
             ds[i].Clear();
             linePoints[i].Clear();
         }
         cur_line = 0;
         iteration = 0;
-        switch (difficulty)
-        {
-            case 0:
-                maxLengthSum = 20;
-                break;
-            case 1:
-                maxLengthSum = 48;
-                break;
-            case 2:
-                maxLengthSum = 90;
-                break;
-            default:
-                maxLengthSum = 20;
-                break;
-        }
+        
         GeneratePolygon();
         last_point = linePoints[0][linePoints[0].Count - 1];
         lines[0, 0].setPixelState(true);
@@ -392,9 +361,10 @@ public class MultipleBrezenheimController : MonoBehaviour
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
         Messenger.Broadcast(GameEvents.START_GAME);
     }
+
     public void SendStartGameEvent()
     {
-        ProfilesManager pfManager = GetComponent<ProfilesManager>();
+        var pfManager = GetComponent<ProfilesManager>();
         if (PlayerPrefs.GetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit") == 1)
         {
             PlayerPrefs.SetInt(pfManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit", 0);

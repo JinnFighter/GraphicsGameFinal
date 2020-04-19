@@ -1,22 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class Algorithms : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Swap<T>(ref T a, ref T b)
     {
         T c = a;
@@ -24,7 +11,7 @@ public class Algorithms : MonoBehaviour
         b = c;
     }
 
-    public void swap<T>( T a,  T b)
+    public void swap<T>(T a, T b)
     {
         T c = a;
         a = b;
@@ -33,30 +20,30 @@ public class Algorithms : MonoBehaviour
 
     public void drawLine(int X0, int Y0, int X1, int Y1)
     {
-        int x0 = Y0;
-        int y0 = X0;
-        int x1 = Y1;
-        int y1 = X1;
+        var x0 = Y0;
+        var y0 = X0;
+        var x1 = Y1;
+        var y1 = X1;
         //Изменения координат
-        int dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
-        int dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
+        var dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
+        var dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
         //Направление приращения
-        int sx = (x1 >= x0) ? (1) : (-1);
-        int sy = (y1 >= y0) ? (1) : (-1);
+        var sx = (x1 >= x0) ? (1) : (-1);
+        var sy = (y1 >= y0) ? (1) : (-1);
 
-        GameField field = gameObject.GetComponent<GameField>();
+        var field = gameObject.GetComponent<GameField>();
 
         if (dy < dx)
         {
-            int d = (dy << 1) - dx;
-            int d1 = dy << 1;
-            int d2 = (dy - dx) << 1;
+            var d = (dy << 1) - dx;
+            var d1 = dy << 1;
+            var d2 = (dy - dx) << 1;
 
             field.grid[x0, y0].setPixelState(true);
 
-            int x = x0 + sx;
-            int y = y0;
-            for (int i = 1; i <= dx; i++)
+            var x = x0 + sx;
+            var y = y0;
+            for (var i = 1; i <= dx; i++)
             {
                 if (d > 0)
                 {
@@ -72,15 +59,15 @@ public class Algorithms : MonoBehaviour
         }
         else
         {
-            int d = (dx << 1) - dy;
-            int d1 = dx << 1;
-            int d2 = (dx - dy) << 1;
+            var d = (dx << 1) - dy;
+            var d1 = dx << 1;
+            var d2 = (dx - dy) << 1;
 
             field.grid[x0, y0].setPixelState(true);
 
-            int x = x0;
-            int y = y0 + sy;
-            for (int i = 1; i <= dy; i++)
+            var x = x0;
+            var y = y0 + sy;
+            for (var i = 1; i <= dy; i++)
             {
                 if (d > 0)
                 {
@@ -98,13 +85,13 @@ public class Algorithms : MonoBehaviour
 
     public void Brezenheim4Circle(int Xc, int Yc, int r)
     {
-        int xc = Yc;
-        int yc = Xc;
+        var xc = Yc;
+        var yc = Xc;
         int x, y, d;
         x = 0;
         y = r;
         d = 3 - 2 * y;
-        GameField field = GetComponent<GameField>();
+        var field = GetComponent<GameField>();
         while (x <= y)
         {
             field.grid[x + xc, y + yc].setPixelState(true);
@@ -134,7 +121,7 @@ public class Algorithms : MonoBehaviour
         double t, sx, sy, oldx, oldy, ax, ay, tau;
         oldx = curvePoints[0].X;
         oldy = curvePoints[0].Y;
-        int counter = curvePoints.Count;
+        var counter = curvePoints.Count;
 
         for (t = 0; t <= 0.5; t += 0.005)
         {
@@ -145,41 +132,41 @@ public class Algorithms : MonoBehaviour
             tau = 1.0;
             for (int i = 1; i < counter; i++)//counter;
             {
-                tau = tau * (1 - t);
+                tau *= (1 - t);
                 ax = ax * t * (counter - i) / (i * (1 - t));
                 ay = ay * t * (counter - i) / (i * (1 - t));
-                sx = sx + ax * curvePoints[i].X;
-                sy = sy + ay * curvePoints[i].Y;
+                sx += ax * curvePoints[i].X;
+                sy += ay * curvePoints[i].Y;
             }
-            sx = sx * tau;
-            sy = sy * tau;
+            sx *= tau;
+            sy *= tau;
 
-            drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            drawLine((int)oldx, (int)oldy, (int)sx, (int)sy);
 
             oldx = sx;
             oldy = sy;
         }
         oldx = curvePoints[counter - 1].X;
         oldy = curvePoints[counter - 1].Y;
-        for (t = 1.0; t >= 0.5; t = t - 0.005)
+        for (t = 1.0; t >= 0.5; t -= 0.005)
         {
             sx = curvePoints[counter - 1].X;
             sy = curvePoints[counter - 1].Y;
             ax = 1.0;
             ay = 1.0;
             tau = 1.0;
-            for (int i = counter - 2; i >= 0; i--)
+            for (var i = counter - 2; i >= 0; i--)
             {
-                tau = tau * t;
+                tau *= t;
                 ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
                 ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx = sx + ax * curvePoints[i].X;
-                sy = sy + ay * curvePoints[i].Y;
+                sx += ax * curvePoints[i].X;
+                sy += ay * curvePoints[i].Y;
             }
-            sx = sx * tau;
-            sy = sy * tau;
+            sx *= tau;
+            sy *= tau;
 
-            drawLine((int)(oldx), (int)(oldy), (int)(sx), (int)(sy));
+            drawLine((int)oldx, (int)oldy, (int)sx, (int)sy);
 
             oldx = sx;
             oldy = sy;
@@ -190,7 +177,7 @@ public class Algorithms : MonoBehaviour
 
     public int Code(GridPixelScript point, GridPixelScript rectLeft, GridPixelScript rectRight)
     {
-        int code = 0;
+        var code = 0;
         if (point.X < rectLeft.X) code |= 0x01;//_ _ _ 1;
         if (point.X > rectRight.X) code |= 0x04;//_ 1 _ _;
         if (point.Y < rectLeft.Y) code |= 0x02;//_ _ 1 _;
@@ -200,8 +187,8 @@ public class Algorithms : MonoBehaviour
 
     public void southCohen(GridPixelScript nA, GridPixelScript nB, GridPixelScript rectLeft, GridPixelScript rectRight)
     {
-        GridPixelScript A = nA;
-        GridPixelScript B = nB;
+        var A = nA;
+        var B = nB;
         int code1 = this.Code(A, rectLeft, rectRight);
         int code2 = this.Code(B, rectLeft, rectRight);
         bool inside = (code1 | code2) == 0;
@@ -247,58 +234,33 @@ public class Algorithms : MonoBehaviour
 
     public bool segmentIntersection(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
     {
-        int v1= (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
-        int v2= (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
-        int v3= (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
-        int v4= (b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X);
+        int v1 = (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
+        int v2 = (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
+        int v3 = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+        int v4 = (b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X);
         return (v1 * v2 < 0) && (v3 * v4 < 0);
     }
 
     public bool segIntersect(GridPixelScript a, GridPixelScript b, GridPixelScript c, GridPixelScript d)
     {
-        GridPixelScript A = a;
-        GridPixelScript B = b;
-        GridPixelScript C = c;
-        GridPixelScript D = d;
+        var A = a;
+        var B = b;
+        var C = c;
+        var D = d;
 
-        if(A.X>B.X)
-        {
-            swap( A, B);
-        }
+        if(A.X > B.X)
+            swap(A, B);
 
-        if(C.X>D.X)
-        {
+        if(C.X > D.X)
             swap(C, D);
-        }
 
         float k1;
         float k2;
 
-        if(A.X==B.X)
-        {
-            k1 = 0;
-        }
-        else
-        {
-            k1 = (B.X - A.X) / (B.Y - A.Y);
-        }
+        k1 = A.X == B.X ? 0 : (float)((B.X - A.X) / (B.Y - A.Y));
 
-        if (C.X == D.X)
-        {
-            k2 = 0;
-        }
-        else
-        {
-            k2 = (D.X - C.X) / (D.Y - C.Y);
-        }
-        
-        if(k1==k2)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        k2 = C.X == D.X ? 0 : (float)((D.X - C.X) / (D.Y - C.Y));
+
+        return k1 != k2;
     }
 }

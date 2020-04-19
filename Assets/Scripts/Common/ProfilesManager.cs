@@ -1,33 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ProfilesManager : MonoBehaviour
 {
     public static string path = "Data/players_base.xml";
-    private PlayerProfile activeProfile;
-    public PlayerProfile ActiveProfile { get => activeProfile; set => activeProfile = value; }
-    private PlayerProfilesContainer container;
-    public PlayerProfilesContainer Container { get => container; set => container = value; }
-    
+
+    public PlayerProfile ActiveProfile { get; set; }
+    public PlayerProfilesContainer Container { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
        Container = PlayerProfilesContainer.Load(path);
 
-        foreach (PlayerProfile profile in container.profiles)
+        foreach (var profile in Container.profiles)
         {
             if(profile.active)
-            {
-                activeProfile = profile;
-            }
+                ActiveProfile = profile;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

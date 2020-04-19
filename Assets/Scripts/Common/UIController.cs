@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] public SettingsPopup settingsPopup;
     [SerializeField] public GameObject tutorImage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +15,5 @@ public class UIController : MonoBehaviour
             PlayerPrefs.Save();
             //tutorImage.SetActive(true);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

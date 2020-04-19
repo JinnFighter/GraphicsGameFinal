@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -302,13 +300,22 @@ public class BrezenheimGameController : MonoBehaviour
             gameActive = true;
             gameStarted = true;
             var timer = GetComponent<GameplayTimer>();
-            timer.StartTime = difficulty switch
+            switch(difficulty)
             {
-                0 => 60f,
-                1 => 80f,
-                2 => 120f,
-                _ => 60f,
-            };
+                case 0:
+                    timer.StartTime = 60f;
+                    break;
+                case 1:
+                    timer.StartTime = 80f;
+                    break;
+                case 2:
+                    timer.StartTime = 120f;
+                    break;
+                default:
+                    timer.StartTime = 60f;
+                    break;
+            }
+
             timer.StartTimer();
         }
         else
@@ -328,13 +335,22 @@ public class BrezenheimGameController : MonoBehaviour
         }
         cur_line = 0;
         iteration = 0;
-        maxLengthSum = difficulty switch
+        switch(difficulty)
         {
-            0 => 20,
-            1 => 48,
-            2 => 90,
-            _ => 20,
-        };
+            case 0:
+                maxLengthSum = 20;
+                break;
+            case 1:
+                maxLengthSum = 48;
+                break;
+            case 2:
+                maxLengthSum = 90;
+                break;
+            default:
+                maxLengthSum = 20;
+                break;
+        }
+
         GenerateLines();
 
         GetComponent<GameplayTimer>().timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;

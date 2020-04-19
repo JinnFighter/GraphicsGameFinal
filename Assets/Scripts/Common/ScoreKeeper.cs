@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    private int score = 0;
     private int streak = 0;
     [SerializeField] private Text scoreNumber;
 
-    public int Score { get => score; set => score = value; }
+    public int Score { get; set; } = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,33 +16,27 @@ public class ScoreKeeper : MonoBehaviour
         Messenger.AddListener(GameEvents.RESTART_GAME, OnRestartGameEvent);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnDestroy()
     {
         Messenger<int>.RemoveListener(GameEvents.ACTION_RIGHT_ANSWER, AddScore);
         Messenger.RemoveListener(GameEvents.ACTION_WRONG_ANSWER, ResetStreak);
         Messenger.RemoveListener(GameEvents.RESTART_GAME, OnRestartGameEvent);
     }
+
     public void AddScore(int points)
     {
-        if(streak<5)
+        if(streak < 5)
             streak++;
-        Score +=(int)(points*(1+0.1*streak));
+        Score += (int)(points * (1 + 0.1 * streak));
         scoreNumber.text = Score.ToString();
     }
-    public void ResetStreak()
-    {
-        streak = 0;
-    }
+
+    public void ResetStreak() => streak = 0;
+
     public void OnRestartGameEvent()
     {
-        score = 0;
+        Score = 0;
         streak = 0;
-        scoreNumber.text = score.ToString();
+        scoreNumber.text = Score.ToString();
     }
-    
 }

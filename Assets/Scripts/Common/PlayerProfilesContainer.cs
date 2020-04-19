@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -13,9 +11,8 @@ public class PlayerProfilesContainer
     public List<PlayerProfile> profiles = new List<PlayerProfile>();
 
     public static PlayerProfilesContainer Load(string path)
-    {
-        
-        TextAsset _xml_file = Resources.Load(path) as TextAsset;
+    {   
+        _ = Resources.Load(path) as TextAsset;
 
         XmlSerializer serializer = new XmlSerializer(typeof(PlayerProfilesContainer));
         using (var stream = new FileStream(path, FileMode.Open))
@@ -23,6 +20,7 @@ public class PlayerProfilesContainer
             return serializer.Deserialize(stream) as PlayerProfilesContainer;
         }
     }
+
     public void Save(string path)
     {
         var serializer = new XmlSerializer(typeof(PlayerProfilesContainer));

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuControls : MonoBehaviour
@@ -22,48 +20,37 @@ public class MenuControls : MonoBehaviour
         profileButtons = new List<GameObject>();
         //template = new GameObject();
         pfManager = GetComponent<ProfilesManager>();
-        if(pfManager.Container.profiles.Count==0)
+        if(pfManager.Container.profiles.Count == 0)
         {
             noProfilesText.gameObject.SetActive(true);
             loginPage.gameObject.SetActive(true);
             this.gameObject.SetActive(false);
         }
-        if(pfManager.ActiveProfile!=null)
-        {
+        if(pfManager.ActiveProfile != null)
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
-        }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ColorPickerButtonPressed()
     {
 
     }
+
     public void BrezenheimButtonPressed()
     {
 
     }
-    public void ExitPressed()
-    {
-        Application.Quit();
-    }
+
+    public void ExitPressed() => Application.Quit();
+
     public void LoadProfiles(GameObject panel)
     {
-        if(loadedProfiles)
-        {
-            return;
-        }
+        if(loadedProfiles) return;
+
         if (pfManager.Container.profiles.Count != 0)
         {
-            foreach(PlayerProfile profile in pfManager.Container.profiles)
+            foreach(var profile in pfManager.Container.profiles)
             {
-                GameObject btn = Instantiate(template) as GameObject;
+                var btn = Instantiate(template) as GameObject;
                 btn.GetComponentInChildren<Text>().text = profile.name;
                 btn.transform.parent = panel.transform;
                 btn.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
@@ -76,13 +63,12 @@ public class MenuControls : MonoBehaviour
             loadedProfiles = true;
         }
         else
-        {
             noProfilesText.gameObject.SetActive(true);
-        }
     }
+
     public void SetActiveProfile(string profileName)
     {
-        foreach (PlayerProfile profile in pfManager.Container.profiles)
+        foreach (var profile in pfManager.Container.profiles)
         {
             if(profile.active)
             {
@@ -90,7 +76,8 @@ public class MenuControls : MonoBehaviour
                 break;
             }
         }
-        foreach (PlayerProfile profile in pfManager.Container.profiles)
+
+        foreach (var profile in pfManager.Container.profiles)
         {
             if (profile.name == profileName)
             {
@@ -105,42 +92,36 @@ public class MenuControls : MonoBehaviour
         loginPage.gameObject.SetActive(false);
         this.gameObject.SetActive(true);
     }
+
     public void SubmitNewProfile(InputField field)
     {
-        if(field.text=="")
-        {
+        if(field.text == "")
             Debug.Log("Enter name!");
-        }
         else
         { 
-            foreach (PlayerProfile profile in pfManager.Container.profiles)
+            foreach (var profile in pfManager.Container.profiles)
             {
-                if(profile.name == field.text)
-                {
-                    return;
-                }
+                if(profile.name == field.text) return;
             }
-            PlayerProfile p = new PlayerProfile(field.text, false);
+
+            var p = new PlayerProfile(field.text, false);
             pfManager.Container.profiles.Add(p);
             SetActiveProfile(field.text);
             pfManager.Container.Save(ProfilesManager.path);
 
-            foreach (PlayerProfile profile in pfManager.Container.profiles)
-            {
+            foreach (var profile in pfManager.Container.profiles)
                 Debug.Log(profile.name);
-            }
+
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
 
-            foreach (GameObject obj in profileButtons)
-            {
+            foreach (var obj in profileButtons)
                 Destroy(obj);
-            }
+
             profileButtons.Clear();
 
             if(noProfilesText.gameObject.activeSelf)
-            {
                 noProfilesText.gameObject.SetActive(false);
-            }
+
             loadedProfiles = false;
             loginPage.gameObject.SetActive(false);
             createProfilePage.gameObject.SetActive(false);

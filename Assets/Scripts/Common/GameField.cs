@@ -1,24 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class GameField : MonoBehaviour
 {
 	[SerializeField] public GridPixelScript originalPixel;
     public GridPixelScript[,] grid;
-    private int difficulty;
-	private int gridRows = 10;
-    private int gridCols = 10;
-    private float offsetX;
-    private float offsetY;
+    public float OffsetX { get; set; }
+    public float OffsetY { get; set; }
+    public int GridRows { get; set; } = 10;
+    public int GridCols { get; set; } = 10;
+    public int Difficulty { get; set; }
 
-    public float OffsetX { get => offsetX; set => offsetX = value; }
-    public float OffsetY { get => offsetY; set => offsetY = value; }
-    public int GridRows { get => gridRows; set => gridRows = value; }
-    public int GridCols { get => gridCols; set => gridCols = value; }
-    public int Difficulty { get => difficulty; set => difficulty = value; }
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,20 +38,18 @@ public class GameField : MonoBehaviour
                 break;
         }
         grid = new GridPixelScript[GridRows, GridCols];
-        Vector3 startPos = originalPixel.transform.position;
+        var startPos = originalPixel.transform.position;
 
-        offsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        offsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-		for (int i = 0; i < GridRows; i++)
+        OffsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
+        OffsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
+		for (var i = 0; i < GridRows; i++)
         {
-            for (int j = 0; j < GridCols; j++)
+            for (var j = 0; j < GridCols; j++)
             {
                 GridPixelScript pixel;
                 
                 if (i == 0 && j == 0)
-                {
                     pixel = originalPixel;
-                }
                 else
                 {    
                     pixel = Instantiate(originalPixel) as GridPixelScript;
@@ -76,16 +65,11 @@ public class GameField : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void clearGrid()
     {
-        for(int i=0;i<GridRows;i++)
+        for(var i = 0; i < GridRows; i++)
         {
-            for(int j = 0;j<GridCols;j++)
+            for(var j = 0; j < GridCols; j++)
             {
                 grid[i, j].setPixelState(false);
             }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 
@@ -8,25 +6,20 @@ public class GameplayTimer : MonoBehaviour
 {
     public class TimerFormat
     {
-        public static string s_template_timerText="0";
-        public static string smms_templater_timerText="00:00:000";
+        public static string s_template_timerText = "0";
+        public static string smms_templater_timerText = "00:00:000";
         public static string s = "{0:0}";
         public static string smms = "{0:00}:{1:00}:{2:000}";
     }
-    private float startTime=4f;
-    private float currentTime=0f;
-    private bool counting;
-    private float timeLeft;
+    private float currentTime = 0f;
     [SerializeField] public Text timerText;
-    private string format;
 
-    public bool Counting { get => counting; set => counting = value; }
-    public float TimeLeft { get => timeLeft; set => timeLeft = value; }
-    public float StartTime { get => startTime; set => startTime = value; }
-    public string Format { get => format; set => format = value; }
+    public bool Counting { get; set; }
+    public float TimeLeft { get; set; }
+    public float StartTime { get; set; } = 4f;
+    public string Format { get; set; }
 
     // Start is called before the first frame update
-    
     void Start()
     {
         currentTime = StartTime;
@@ -35,10 +28,12 @@ public class GameplayTimer : MonoBehaviour
        
         Messenger.AddListener(GameEvents.START_GAME,GameStarter);
     }
+
     void OnDestroy()
     {
         Messenger.RemoveListener(GameEvents.START_GAME, GameStarter);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,9 +41,7 @@ public class GameplayTimer : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
             if( Format == TimerFormat.s)
-            {
                 timerText.text = String.Format(Format,(int)(currentTime % 60));
-            }
             else
             {
                 timerText.text = String.Format(Format, (int)(currentTime / 60f) % 60, 
@@ -73,31 +66,28 @@ public class GameplayTimer : MonoBehaviour
         }
         
     }
+
     public void StartTimer()
     {
         currentTime = StartTime;
         Counting = true;
     }
+
     public void StopTimer()
     {
         Counting = false;
         TimeLeft = currentTime;
     }
-    public void PauseTimer()
-    {
-        Counting = false;
-    }
-    public void ResumeTimer()
-    {
-        Counting = true;
-    }
+
+    public void PauseTimer() => Counting = false;
+
+    public void ResumeTimer() => Counting = true;
+
     public void GameStarter()
     {
-        GameField checker = GetComponent<GameField>();
-        if(checker==null)
-        {
+        var checker = GetComponent<GameField>();
+        if(checker == null)
             StartTimer();
-        }
     }
 }
 
