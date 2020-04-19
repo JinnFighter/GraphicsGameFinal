@@ -1,37 +1,42 @@
 ﻿public abstract class GameMode
 {
-    private readonly GameplayTimer _timer;
-    private bool _gameActive;
-    private bool _gameStarted;
-    private int _difficulty;
+    protected readonly GameplayTimer timer;
+    protected bool gameActive;
+    protected bool gameStarted;
+    protected int difficulty;
 
     public GameMode(GameplayTimer timer, int difficulty)
     {
-        _gameStarted = false;
-        _gameActive = false;
-        _timer = timer;
-        _difficulty = difficulty;
+        gameStarted = false;
+        gameActive = false;
+        timer = timer;
+        difficulty = difficulty;
     }
 
     public abstract void CheckAction(Pixel invoker);
 
     public virtual void Pause()
     {
-        if (_gameStarted)
+        if (gameStarted)
         {
-            _gameActive = false;
-            _timer.PauseTimer();
+            gameActive = false;
+            timer.PauseTimer();
         }
     }
 
     public virtual void Continue()
     {
-        if (_gameStarted)
+        if (gameStarted)
         {
-            _gameActive = true;
-            _timer.ResumeTimer();
+            gameActive = true;
+            timer.ResumeTimer();
         }
     }
 
+    public abstract void ChangeGameState();
+
     public abstract void Restart();
+
+    protected virtual bool CanCheckAction() => gameActive && timer.Counting;
+    
 }
