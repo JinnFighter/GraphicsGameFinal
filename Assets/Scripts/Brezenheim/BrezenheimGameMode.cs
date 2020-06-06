@@ -8,10 +8,8 @@ public class BrezenheimGameMode : GameMode
     private int _minLineLength;
     private int _maxLineLength;
     private Pixel[,] _lines;
-    private List<Pixel> _linePoints;
     private List<Pixel>[] _LinePoints;
     private List<int>[] _Ds;
-    private List<int> _ds;
     private Pixel _last_point;
     private Pixel _prev_point;
     private int _iteration;
@@ -45,11 +43,8 @@ public class BrezenheimGameMode : GameMode
                 _maxLengthSum = 20;
                 break;
         }
-
-        _ds = new List<int>();
         _Ds = new List<int>[_linesQuantity];
         _LinePoints = new List<Pixel>[_linesQuantity];
-        _linePoints = new List<Pixel>();
         _lines = new Pixel[2, _linesQuantity];
 
         GenerateLines();
@@ -113,22 +108,13 @@ public class BrezenheimGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            switch (difficulty)
+            timer.StartTime = difficulty switch
             {
-                case 0:
-                    timer.StartTime = 60f;
-                    break;
-                case 1:
-                    timer.StartTime = 80f;
-                    break;
-                case 2:
-                    timer.StartTime = 120f;
-                    break;
-                default:
-                    timer.StartTime = 60f;
-                    break;
-            }
-
+                0 => 60f,
+                1 => 80f,
+                2 => 120f,
+                _ => 60f,
+            };
             timer.StartTimer();
         }
         else
@@ -140,27 +126,18 @@ public class BrezenheimGameMode : GameMode
         gameActive = false;
         gameStarted = false;
         _gameField.clearGrid();
-        _ds.Clear();
         for (var i = 0; i < _linesQuantity; i++)
         {
             _Ds[i].Clear();
-            _linePoints.Clear();
         }
         _cur_line = 0;
         _iteration = 0;
-        switch (difficulty)
+        _maxLengthSum = difficulty switch
         {
-            case 1:
-                _maxLengthSum = 48;
-                break;
-            case 2:
-                _maxLengthSum = 90;
-                break;
-            default:
-                _maxLengthSum = 20;
-                break;
-        }
-
+            1 => 48,
+            2 => 90,
+            _ => 20,
+        };
         GenerateLines();
 
         timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
@@ -179,11 +156,11 @@ public class BrezenheimGameMode : GameMode
             var secondY = UnityEngine.Random.Range(0, 9);
             if (maxLengthSum > 0)
             {
-                if (maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength
-                    && maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) != 0)
+                if (maxLengthSum - (int)GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength
+                    && maxLengthSum - (int)GetLineLength(firstX, firstY, secondX, secondY) != 0)
                 {
-                    while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > _maxLineLength
-               || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength)
+                    while (GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
+               || GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -195,8 +172,8 @@ public class BrezenheimGameMode : GameMode
 
                 else
                 {
-                    while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > _maxLineLength
-               || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength)
+                    while (GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
+               || GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -205,29 +182,29 @@ public class BrezenheimGameMode : GameMode
                         secondY = UnityEngine.Random.Range(0, 9);
                     }
                 }
-                maxLengthSum -= (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
+                maxLengthSum -= (int)GetLineLength(firstX, firstY, secondX, secondY);
             }
             _lines[0, i] = _gameField.grid[firstY, firstX];
             _lines[1, i] = _gameField.grid[secondY, secondX];
-            Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out _ds, out _linePoints);
+            Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out var ds, out var linePoints);
             _Ds[i] = new List<int>();
             _LinePoints[i] = new List<Pixel>();
-            for (var j = 0; j < _ds.Count; j++)
+            for (var j = 0; j < ds.Count; j++)
             {
-                _Ds[i].Add(_ds[j]);
+                _Ds[i].Add(ds[j]);
             }
-            for (var j = 0; j < _linePoints.Count; j++)
+            for (var j = 0; j < linePoints.Count; j++)
             {
-                _LinePoints[i].Add(_linePoints[j]);
+                _LinePoints[i].Add(linePoints[j]);
             }
-            _ds.Clear();
-            _linePoints.Clear();
         }
         _last_point = _LinePoints[0][_LinePoints[0].Count - 1];
         _prev_point = null;
         _lines[0, 0].setPixelState(true);
         _last_point.setPixelState(true);
     }
+
+    private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 
     ~BrezenheimGameMode()
     {
