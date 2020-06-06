@@ -17,11 +17,13 @@ public class BrezenheimGameMode : GameMode
     private int _linesQuantity;
     private GameField _gameField;
     private InputField textField;
+    private IEventReactor _eventReactor;
 
     public BrezenheimGameMode(GameplayTimer timer, int difficulty, GameField inputField, InputField nextTextField) : base(timer, difficulty)
     {
         textField = nextTextField;
         _gameField = inputField;
+        
         switch (difficulty)
         {
             case 1:
@@ -55,7 +57,8 @@ public class BrezenheimGameMode : GameMode
         Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
-        timer.Format = GameplayTimer.TimerFormat.smms;
+
+        _eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);
     }
@@ -69,8 +72,8 @@ public class BrezenheimGameMode : GameMode
             _cur_line++;
             if (_cur_line == _linesQuantity)
             {
-                timer.StopTimer();
                 Messenger.Broadcast(GameEvents.GAME_OVER);
+                _eventReactor.OnGameOver();
                 return;
             }
             else
@@ -108,23 +111,7 @@ public class BrezenheimGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            switch(difficulty)
-            {
-                case 0:
-                    timer.StartTime = 60f;
-                    break;
-                case 1:
-                    timer.StartTime = 80f;
-                    break;
-                case 2:
-                    timer.StartTime = 120f;
-                    break;
-                default:
-                    timer.StartTime = 60f;
-                    break;
-            }
-          
-            timer.StartTimer();
+            _eventReactor.OnChangeState(difficulty);
         }
         else
             gameActive = false;
@@ -155,7 +142,7 @@ public class BrezenheimGameMode : GameMode
         }
         GenerateLines();
 
-        timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        _eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
@@ -218,6 +205,26 @@ public class BrezenheimGameMode : GameMode
         _lines[0, 0].setPixelState(true);
         _last_point.setPixelState(true);
     }
+
+    public override void Pause()
+    {
+        if (gameStarted)
+        {
+            gameActive = false;
+            _eventReactor.OnPause();
+        }
+    }
+
+    public override void Continue()
+    {
+        if (gameStarted)
+        {
+            gameActive = true;
+            _eventReactor.OnContinue();
+        }
+    }
+
+    protected override bool CanCheckAction() => gameActive && _eventReactor.CanCheckAction();
 
     private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 
