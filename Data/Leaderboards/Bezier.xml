@@ -17,5 +17,9 @@
       <Name>Not Admin</Name>
       <Score>100</Score>
     </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>0</Score>
+    </Player>
   </Results>
 </LeaderboardCollection>
