@@ -108,13 +108,22 @@ public class BrezenheimGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            timer.StartTime = difficulty switch
+            switch(difficulty)
             {
-                0 => 60f,
-                1 => 80f,
-                2 => 120f,
-                _ => 60f,
-            };
+                case 0:
+                    timer.StartTime = 60f;
+                    break;
+                case 1:
+                    timer.StartTime = 80f;
+                    break;
+                case 2:
+                    timer.StartTime = 120f;
+                    break;
+                default:
+                    timer.StartTime = 60f;
+                    break;
+            }
+          
             timer.StartTimer();
         }
         else
@@ -132,12 +141,18 @@ public class BrezenheimGameMode : GameMode
         }
         _cur_line = 0;
         _iteration = 0;
-        _maxLengthSum = difficulty switch
+        switch(difficulty)
         {
-            1 => 48,
-            2 => 90,
-            _ => 20,
-        };
+            case 1:
+                _maxLengthSum = 48;
+                break;
+            case 2:
+                _maxLengthSum = 90;
+                break;
+            default:
+                _maxLengthSum = 20;
+                break;
+        }
         GenerateLines();
 
         timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
