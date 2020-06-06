@@ -11,7 +11,15 @@
     </Player>
     <Player>
       <Name>Jinn</Name>
+      <Score>1830</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
       <Score>1780</Score>
+    </Player>
+    <Player>
+      <Name>Jinn</Name>
+      <Score>1770</Score>
     </Player>
     <Player>
       <Name>Jinn</Name>
@@ -20,14 +28,6 @@
     <Player>
       <Name>Jinn</Name>
       <Score>1670</Score>
-    </Player>
-    <Player>
-      <Name>Jinn</Name>
-      <Score>1620</Score>
-    </Player>
-    <Player>
-      <Name>Kenobi</Name>
-      <Score>1500</Score>
     </Player>
   </Results>
 </LeaderboardCollection>

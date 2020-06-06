@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BrezenheimGameMode : GameMode
 {
@@ -16,9 +17,13 @@ public class BrezenheimGameMode : GameMode
     private int _iteration;
     private int _cur_line;
     private int _linesQuantity;
+    private GameField _gameField;
+    private InputField textField;
 
-    public BrezenheimGameMode(GameplayTimer timer, int difficulty) : base(timer, difficulty)
+    public BrezenheimGameMode(GameplayTimer timer, int difficulty, GameField inputField, InputField nextTextField) : base(timer, difficulty)
     {
+        textField = nextTextField;
+        _gameField = inputField;
         switch (difficulty)
         {
             case 1:
@@ -47,6 +52,9 @@ public class BrezenheimGameMode : GameMode
         _linePoints = new List<Pixel>();
         _lines = new Pixel[2, _linesQuantity];
 
+        GenerateLines();
+        textField.text = _Ds[0][0].ToString();
+
         Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
         Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
@@ -73,13 +81,13 @@ public class BrezenheimGameMode : GameMode
             else
             {
                 _iteration = 0;
-                //GetComponent<GameField>().clearGrid();
+                _gameField.clearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 _lines[0, _cur_line].setPixelState(true);
                 _last_point = _LinePoints[_cur_line][_LinePoints[_cur_line].Count - 1];
                 _last_point.setPixelState(true);
                 _prev_point = null;
-                //textField.text = Ds[cur_line][iteration].ToString();
+                textField.text = _Ds[_cur_line][_iteration].ToString();
             }
         }
         else
@@ -91,7 +99,7 @@ public class BrezenheimGameMode : GameMode
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);
                 _iteration++;
-                //textField.text = Ds[cur_line][iteration].ToString();
+                textField.text = _Ds[_cur_line][_iteration].ToString();
                 _prev_point = _LinePoints[_cur_line][_iteration];
             }
             else
@@ -131,7 +139,7 @@ public class BrezenheimGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        //GetComponent<GameField>().clearGrid();
+        _gameField.clearGrid();
         _ds.Clear();
         for (var i = 0; i < _linesQuantity; i++)
         {
@@ -161,6 +169,7 @@ public class BrezenheimGameMode : GameMode
 
     public void GenerateLines()
     {
+        var maxLengthSum = _maxLengthSum;
         for (var i = 0; i < _linesQuantity; i++)
         {
             var firstX = UnityEngine.Random.Range(0, 9);
@@ -168,10 +177,10 @@ public class BrezenheimGameMode : GameMode
 
             var secondX = UnityEngine.Random.Range(0, 9);
             var secondY = UnityEngine.Random.Range(0, 9);
-            if (_maxLengthSum > 0)
+            if (maxLengthSum > 0)
             {
-                if (_maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength
-                    && _maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) != 0)
+                if (maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength
+                    && maxLengthSum - (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) != 0)
                 {
                     while (Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > _maxLineLength
                || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < _minLineLength)
@@ -196,12 +205,11 @@ public class BrezenheimGameMode : GameMode
                         secondY = UnityEngine.Random.Range(0, 9);
                     }
                 }
-                _maxLengthSum -= (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
+                maxLengthSum -= (int)Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY));
             }
-            //var field = GetComponent<GameField>();
-            //_lines[0, i] = field.grid[firstY, firstX];
-            //_lines[1, i] = field.grid[secondY, secondX];
-            //Bresenham4Line(firstX, firstY, secondX, secondY);
+            _lines[0, i] = _gameField.grid[firstY, firstX];
+            _lines[1, i] = _gameField.grid[secondY, secondX];
+            Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out _ds, out _linePoints);
             _Ds[i] = new List<int>();
             _LinePoints[i] = new List<Pixel>();
             for (var j = 0; j < _ds.Count; j++)

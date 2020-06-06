@@ -5,12 +5,12 @@
     protected bool gameStarted;
     protected int difficulty;
 
-    public GameMode(GameplayTimer timer, int difficulty)
+    public GameMode(GameplayTimer inputTimer, int inputDifficulty)
     {
         gameStarted = false;
         gameActive = false;
-        timer = timer;
-        difficulty = difficulty;
+        timer = inputTimer;
+        difficulty = inputDifficulty;
     }
 
     public abstract void CheckAction(Pixel invoker);
