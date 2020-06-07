@@ -6,8 +6,6 @@
     {
         _timer = timer;
         SetupTimer(difficulty);
-        timer.Format = GameplayTimer.TimerFormat.smms;
-        _timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
     }
 
     public bool CanCheckAction() => _timer.Counting;
@@ -19,38 +17,26 @@
         _timer.StartTimer();
     }
 
-    public void OnContinue()
-    {
-        _timer.ResumeTimer();
-    }
+    public void OnContinue() => _timer.ResumeTimer();
 
-    public void OnGameOver()
-    {
-        _timer.StopTimer();
-    }
+    public void OnGameOver() => _timer.StopTimer();
 
-    public void OnPause()
-    {
-        _timer.PauseTimer();
-    }
+    public void OnPause() => _timer.PauseTimer();
 
-    public void OnRestart()
-    {
-        _timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
-    }
+    public void OnRestart() => _timer.ResetTimer();
 
     private void SetupTimer(int difficulty)
     {
         switch (difficulty)
         {
             case 1:
-                _timer.StartTime = 80f;
+                _timer.SetStartTime(80f);
                 break;
             case 2:
-                _timer.StartTime = 120f;
+                _timer.SetStartTime(120f);
                 break;
             default:
-                _timer.StartTime = 60f;
+                _timer.SetStartTime(60f);
                 break;
         }
     }

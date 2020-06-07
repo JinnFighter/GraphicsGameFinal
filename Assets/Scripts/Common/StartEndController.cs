@@ -14,7 +14,6 @@ public class StartEndController : MonoBehaviour
     {
         texts = new List<Text>();
         var timer = GetComponent<GameplayTimer>();
-        timer.Format = GameplayTimer.TimerFormat.s;
         timer.StartTime = 4f;
         Messenger.AddListener(GameEvents.TIMER_STOP,OnStartGameEvent);
         Messenger.AddListener(GameEvents.GAME_OVER, OnEndGameEvent);

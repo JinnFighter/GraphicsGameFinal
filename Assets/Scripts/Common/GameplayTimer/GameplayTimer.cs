@@ -1,23 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class GameplayTimer : MonoBehaviour
 {
-    public class TimerFormat
-    {
-        public static string s_template_timerText = "0";
-        public static string smms_templater_timerText = "00:00:000";
-        public static string s = "{0:0}";
-        public static string smms = "{0:00}:{1:00}:{2:000}";
-    }
     private float currentTime = 0f;
     [SerializeField] public Text timerText;
+    [SerializeField] private ITimerOutput output;
 
     public bool Counting { get; set; }
     public float TimeLeft { get; set; }
     public float StartTime { get; set; } = 4f;
-    public string Format { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -40,25 +32,11 @@ public class GameplayTimer : MonoBehaviour
         if(Counting)
         {
             currentTime -= Time.deltaTime;
-            if( Format == TimerFormat.s)
-                timerText.text = String.Format(Format,(int)(currentTime % 60));
-            else
-            {
-                timerText.text = String.Format(Format, (int)(currentTime / 60f) % 60, 
-                    (int)(currentTime % 60), (int)(currentTime * 1000f) % 1000);
-            }
+            output.DisplayTime(currentTime);
+
             if (currentTime <= 0.0000f)
             {
-                currentTime = 0.0000f;
-                if (Format == TimerFormat.s)
-                {
-                    timerText.text = String.Format(Format, (int)(currentTime % 60));
-                }
-                else
-                {
-                    timerText.text = String.Format(Format, (int)(currentTime / 60f) % 60,
-                        (int)(currentTime % 60), (int)(currentTime * 1000f) % 1000);
-                }
+                ResetTimer();
                 
                 Counting = false;
                 Messenger.Broadcast(GameEvents.TIMER_STOP);
@@ -89,5 +67,13 @@ public class GameplayTimer : MonoBehaviour
         if(checker == null)
             StartTimer();
     }
+
+    public void ResetTimer()
+    {
+        currentTime = 0.0000f;
+        output.DisplayTime(currentTime);
+    }
+
+    public void SetStartTime(float time) => StartTime = time;
 }
 
