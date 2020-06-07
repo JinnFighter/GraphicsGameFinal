@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TextFieldTimerOutput : ITimerOutput
+public class TextFieldTimerOutput : TimerOutput
 {
     [SerializeField] private TimerFormat _timerFormat;
     [SerializeField] private Text _timerText;

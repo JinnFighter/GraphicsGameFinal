@@ -5,7 +5,7 @@ public class GameplayTimer : MonoBehaviour
 {
     private float currentTime = 0f;
     [SerializeField] public Text timerText;
-    [SerializeField] private ITimerOutput output;
+    [SerializeField] private TimerOutput output;
 
     public bool Counting { get; set; }
     public float TimeLeft { get; set; }

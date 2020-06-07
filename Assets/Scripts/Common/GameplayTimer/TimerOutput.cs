@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class ITimerOutput : MonoBehaviour
+public abstract class TimerOutput : MonoBehaviour
 {
     public abstract void DisplayTime(float currentTime);
 }
