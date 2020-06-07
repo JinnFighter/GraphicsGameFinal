@@ -1,16 +1,14 @@
 ﻿public abstract class GameMode
 {
-    protected readonly GameplayTimer timer;
     protected bool gameActive;
     protected bool gameStarted;
     protected int difficulty;
     protected IEventReactor eventReactor;
 
-    public GameMode(GameplayTimer inputTimer, int inputDifficulty)
+    public GameMode(int inputDifficulty)
     {
         gameStarted = false;
         gameActive = false;
-        timer = inputTimer;
         difficulty = inputDifficulty;
     }
 

@@ -11,7 +11,7 @@ public class BezierGameMode : GameMode
     private int pointsQuantity;
     private GameField _gameField;
 
-    public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(timer, difficulty)
+    public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
     {
         gameActive = false;
         gameStarted = false;

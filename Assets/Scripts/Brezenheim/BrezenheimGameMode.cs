@@ -18,7 +18,7 @@ public class BrezenheimGameMode : GameMode
     private GameField _gameField;
     private InputField textField;
 
-    public BrezenheimGameMode(GameplayTimer timer, int difficulty, GameField inputField, InputField nextTextField) : base(timer, difficulty)
+    public BrezenheimGameMode(GameplayTimer timer, int difficulty, GameField inputField, InputField nextTextField) : base(difficulty)
     {
         textField = nextTextField;
         _gameField = inputField;

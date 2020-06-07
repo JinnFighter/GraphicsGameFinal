@@ -17,7 +17,7 @@ public class SouthCohenGameMode : GameMode
     private int minLineLength;
     private GameField _gameField;
 
-    public SouthCohenGameMode(GameplayTimer timer, SpriteRenderer border, GameField field, int difficulty) : base(timer, difficulty)
+    public SouthCohenGameMode(GameplayTimer timer, SpriteRenderer border, GameField field, int difficulty) : base(difficulty)
     {
         _gameField = field;
         difficulty = _gameField.Difficulty;

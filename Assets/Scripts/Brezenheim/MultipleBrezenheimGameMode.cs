@@ -17,7 +17,7 @@ public class MultipleBrezenheimGameMode : GameMode
     private InputField textField;
     private GameField _gameField;
 
-    public MultipleBrezenheimGameMode(GameplayTimer timer, int diff, GameField inputField, InputField nextTextField) : base(timer, diff)
+    public MultipleBrezenheimGameMode(GameplayTimer timer, int diff, GameField inputField, InputField nextTextField) : base(diff)
     {
         textField = nextTextField;
         _gameField = inputField;

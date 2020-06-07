@@ -33,7 +33,7 @@ public class TurtleGameMode : GameMode
     private Quaternion turtle_start_rotation;
     private GameField _gameField;
 
-    public TurtleGameMode(Pixel pixel, Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(timer, difficulty)
+    public TurtleGameMode(Pixel pixel, Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(difficulty)
     {
         originalPixel = pixel;
         this.turtle = turtle;
