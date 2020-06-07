@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class ColorPickerController : MonoBehaviour
 {
     private Color32 chosenColor;
     private Color curColor;
