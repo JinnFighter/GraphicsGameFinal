@@ -4,14 +4,14 @@ using System;
 
 public class Algorithms : MonoBehaviour
 {
-    public void Swap<T>(ref T a, ref T b)
+    public static void Swap<T>(ref T a, ref T b)
     {
         T c = a;
         a = b;
         b = c;
     }
 
-    public void swap<T>(T a, T b)
+    public static void swap<T>(T a, T b)
     {
         T c = a;
         a = b;
