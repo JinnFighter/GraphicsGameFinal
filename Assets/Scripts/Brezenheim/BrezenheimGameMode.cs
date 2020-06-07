@@ -78,7 +78,7 @@ public class BrezenheimGameMode : GameMode
             else
             {
                 _iteration = 0;
-                _gameField.clearGrid();
+                _gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 _lines[0, _cur_line].setPixelState(true);
                 _last_point = _LinePoints[_cur_line][_LinePoints[_cur_line].Count - 1];
@@ -120,7 +120,7 @@ public class BrezenheimGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        _gameField.clearGrid();
+        _gameField.ClearGrid();
         for (var i = 0; i < _linesQuantity; i++)
         {
             _Ds[i].Clear();

@@ -106,7 +106,7 @@ public class BezierGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        _gameField.clearGrid();
+        _gameField.ClearGrid();
         curvePoints.Clear();
 
         current = 0;

@@ -116,7 +116,7 @@ public class MultipleBrezenheimGameMode : GameMode
                 else
                 {
                     iteration = 0;
-                    _gameField.clearGrid();
+                    _gameField.ClearGrid();
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                     lines[0, cur_line].setPixelState(true);
                     lines[1, cur_line].setPixelState(true);
@@ -146,7 +146,7 @@ public class MultipleBrezenheimGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        _gameField.clearGrid();
+        _gameField.ClearGrid();
         for (var i = 0; i < linesQuantity; i++)
         {
             ds[i].Clear();

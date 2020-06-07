@@ -104,8 +104,8 @@ public class SouthCohenGameMode : GameMode
 
         GenerateLines();
 
-        gridCodesWidth = _gameField.GridCols;
-        gridCodesHeight = _gameField.GridRows;
+        gridCodesWidth = _gameField.Width;
+        gridCodesHeight = _gameField.Height;
         gridCodes = new int[gridCodesHeight, gridCodesWidth];
         for (var i = 0; i < gridCodesHeight; i++)
         {
@@ -338,7 +338,7 @@ public class SouthCohenGameMode : GameMode
             }
             else
             {
-                _gameField.clearGrid();
+                _gameField.ClearGrid();
                 Algorithms.DrawLine(_gameField, lines[0, iteration].Y, lines[0, iteration].X,
                     lines[1, iteration].Y, lines[1, iteration].X);
             }
@@ -366,7 +366,7 @@ public class SouthCohenGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        _gameField.clearGrid();
+        _gameField.ClearGrid();
         for (var i = 0; i < linesQuantity; i++)
             lineZones[i].Clear();
 

@@ -180,7 +180,7 @@ public class TurtleGameMode : GameMode
                 posY += _gameField.OffsetY;
                 break;
             case (int)directionEnum.RIGHT:
-                if (y == _gameField.GridCols - 1)
+                if (y == _gameField.Width - 1)
                 {
                     allowMove = false;
                     break;
@@ -189,7 +189,7 @@ public class TurtleGameMode : GameMode
                 posX += _gameField.OffsetX;
                 break;
             case (int)directionEnum.DOWN:
-                if (x == _gameField.GridRows - 1)
+                if (x == _gameField.Height - 1)
                 {
                     allowMove = false;
                     break;
@@ -313,7 +313,7 @@ public class TurtleGameMode : GameMode
     {
         gameActive = false;
         gameStarted = false;
-        _gameField.clearGrid();
+        _gameField.ClearGrid();
         route = "";
         for (var i = 0; i < pathsQuantity; i++)
         {

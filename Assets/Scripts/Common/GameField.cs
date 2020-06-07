@@ -6,8 +6,8 @@ public class GameField : MonoBehaviour
     public Pixel[,] grid;
     public float OffsetX { get; set; }
     public float OffsetY { get; set; }
-    public int GridRows { get; set; } = 10;
-    public int GridCols { get; set; } = 10;
+    public int Height { get; set; } = 10;
+    public int Width { get; set; } = 10;
     public int Difficulty { get; set; }
 
     // Start is called before the first frame update
@@ -17,34 +17,34 @@ public class GameField : MonoBehaviour
         switch(Difficulty)
         {
             case 0:
-                GridRows = 10;
-                GridCols = 10;
+                Height = 10;
+                Width = 10;
                 originalPixel.transform.localScale = new Vector3(20, 20, 1);
                 break;
             case 1:
-                GridRows = 15;
-                GridCols = 15;
+                Height = 15;
+                Width = 15;
                 originalPixel.transform.localScale = new Vector3(12, 12, 1);
                 break;
             case 2:
-                GridRows = 20;
-                GridCols = 20;
+                Height = 20;
+                Width = 20;
                 originalPixel.transform.localScale = new Vector3(10, 10, 1);
                 break;
             default:
-                GridRows = 10;
-                GridCols = 10;
+                Height = 10;
+                Width = 10;
                 originalPixel.transform.localScale = new Vector3(20, 20, 1);
                 break;
         }
-        grid = new Pixel[GridRows, GridCols];
+        grid = new Pixel[Height, Width];
         var startPos = originalPixel.transform.position;
 
         OffsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
         OffsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
-		for (var i = 0; i < GridRows; i++)
+		for (var i = 0; i < Height; i++)
         {
-            for (var j = 0; j < GridCols; j++)
+            for (var j = 0; j < Width; j++)
             {
                 Pixel pixel;
                 
@@ -65,11 +65,11 @@ public class GameField : MonoBehaviour
         }
     }
 
-    public void clearGrid()
+    public void ClearGrid()
     {
-        for(var i = 0; i < GridRows; i++)
+        for(var i = 0; i < Height; i++)
         {
-            for(var j = 0; j < GridCols; j++)
+            for(var j = 0; j < Width; j++)
             {
                 grid[i, j].setPixelState(false);
             }
