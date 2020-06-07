@@ -17,7 +17,6 @@ public class BrezenheimGameMode : GameMode
     private int _linesQuantity;
     private GameField _gameField;
     private InputField textField;
-    private IEventReactor _eventReactor;
 
     public BrezenheimGameMode(GameplayTimer timer, int difficulty, GameField inputField, InputField nextTextField) : base(timer, difficulty)
     {
@@ -58,7 +57,7 @@ public class BrezenheimGameMode : GameMode
         Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
 
-        _eventReactor = new DefaultReactor(timer, difficulty);
+        eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);
     }
@@ -73,7 +72,7 @@ public class BrezenheimGameMode : GameMode
             if (_cur_line == _linesQuantity)
             {
                 Messenger.Broadcast(GameEvents.GAME_OVER);
-                _eventReactor.OnGameOver();
+                eventReactor.OnGameOver();
                 return;
             }
             else
@@ -111,7 +110,7 @@ public class BrezenheimGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            _eventReactor.OnChangeState(difficulty);
+            eventReactor.OnChangeState(difficulty);
         }
         else
             gameActive = false;
@@ -142,7 +141,7 @@ public class BrezenheimGameMode : GameMode
         }
         GenerateLines();
 
-        _eventReactor.OnRestart();
+        eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
@@ -205,26 +204,6 @@ public class BrezenheimGameMode : GameMode
         _lines[0, 0].setPixelState(true);
         _last_point.setPixelState(true);
     }
-
-    public override void Pause()
-    {
-        if (gameStarted)
-        {
-            gameActive = false;
-            _eventReactor.OnPause();
-        }
-    }
-
-    public override void Continue()
-    {
-        if (gameStarted)
-        {
-            gameActive = true;
-            _eventReactor.OnContinue();
-        }
-    }
-
-    protected override bool CanCheckAction() => gameActive && _eventReactor.CanCheckAction();
 
     private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 

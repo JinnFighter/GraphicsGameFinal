@@ -32,7 +32,6 @@ public class TurtleGameMode : GameMode
     private Vector3 turtle_start_pos;
     private Quaternion turtle_start_rotation;
     private GameField _gameField;
-    private IEventReactor _eventReactor;
 
     public TurtleGameMode(Pixel pixel, Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(timer, difficulty)
     {
@@ -91,7 +90,7 @@ public class TurtleGameMode : GameMode
         Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
 
-        _eventReactor = new DefaultReactor(timer, difficulty);
+        eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);
     }
@@ -262,7 +261,7 @@ public class TurtleGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            _eventReactor.OnChangeState(difficulty);
+            eventReactor.OnChangeState(difficulty);
         }
         else
             gameActive = false;
@@ -300,7 +299,7 @@ public class TurtleGameMode : GameMode
                 iteration++;
                 if (iteration == pathsQuantity)
                 {
-                    _eventReactor.OnGameOver();
+                    eventReactor.OnGameOver();
                 }
                 else
                     routeInputField.text = paths[iteration];
@@ -373,28 +372,8 @@ public class TurtleGameMode : GameMode
         turtle.transform.position = turtle_start_pos;
         turtle.transform.rotation = turtle_start_rotation;
         routeInputField.text = paths[iteration];
-        _eventReactor.OnRestart();
+        eventReactor.OnRestart();
 
         Messenger.Broadcast(GameEvents.START_GAME);
     }
-
-    public override void Pause()
-    {
-        if (gameStarted)
-        {
-            gameActive = false;
-            _eventReactor.OnPause();
-        }
-    }
-
-    public override void Continue()
-    {
-        if (gameStarted)
-        {
-            gameActive = true;
-            _eventReactor.OnContinue();
-        }
-    }
-
-    protected override bool CanCheckAction() => gameActive && _eventReactor.CanCheckAction();
 }

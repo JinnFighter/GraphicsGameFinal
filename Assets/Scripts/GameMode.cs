@@ -4,6 +4,7 @@
     protected bool gameActive;
     protected bool gameStarted;
     protected int difficulty;
+    protected IEventReactor eventReactor;
 
     public GameMode(GameplayTimer inputTimer, int inputDifficulty)
     {
@@ -15,21 +16,21 @@
 
     public abstract void CheckAction(Pixel invoker);
 
-    public virtual void Pause()
+    public void Pause()
     {
         if (gameStarted)
         {
             gameActive = false;
-            timer.PauseTimer();
+            eventReactor.OnPause();
         }
     }
 
-    public virtual void Continue()
+    public void Continue()
     {
         if (gameStarted)
         {
             gameActive = true;
-            timer.ResumeTimer();
+            eventReactor.OnContinue();
         }
     }
 
@@ -37,6 +38,6 @@
 
     public abstract void Restart();
 
-    protected virtual bool CanCheckAction() => gameActive && timer.Counting;
+    protected bool CanCheckAction() => gameActive && eventReactor.CanCheckAction();
     
 }
