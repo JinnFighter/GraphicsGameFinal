@@ -32,6 +32,7 @@ public class TurtleGameMode : GameMode
     private Vector3 turtle_start_pos;
     private Quaternion turtle_start_rotation;
     private GameField _gameField;
+    private IEventReactor _eventReactor;
 
     public TurtleGameMode(Pixel pixel, Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(timer, difficulty)
     {
@@ -89,7 +90,9 @@ public class TurtleGameMode : GameMode
         Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
         Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
-        timer.Format = GameplayTimer.TimerFormat.smms;
+
+        _eventReactor = new DefaultReactor(timer, difficulty);
+
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
@@ -259,22 +262,7 @@ public class TurtleGameMode : GameMode
         {
             gameActive = true;
             gameStarted = true;
-            switch (difficulty)
-            {
-                case 0:
-                    timer.StartTime = 60f;
-                    break;
-                case 1:
-                    timer.StartTime = 80f;
-                    break;
-                case 2:
-                    timer.StartTime = 120f;
-                    break;
-                default:
-                    timer.StartTime = 60f;
-                    break;
-            }
-            timer.StartTimer();
+            _eventReactor.OnChangeState(difficulty);
         }
         else
             gameActive = false;
@@ -284,7 +272,7 @@ public class TurtleGameMode : GameMode
     {
         if (!gameActive) return;
 
-        if (!timer.Counting) return;
+        //if (!timer.Counting) return;
 
         if (finished) return;
 
@@ -312,8 +300,7 @@ public class TurtleGameMode : GameMode
                 iteration++;
                 if (iteration == pathsQuantity)
                 {
-                    timer.StopTimer();
-                    Messenger.Broadcast(GameEvents.GAME_OVER);
+                    _eventReactor.OnGameOver();
                 }
                 else
                     routeInputField.text = paths[iteration];
@@ -386,7 +373,28 @@ public class TurtleGameMode : GameMode
         turtle.transform.position = turtle_start_pos;
         turtle.transform.rotation = turtle_start_rotation;
         routeInputField.text = paths[iteration];
-        timer.timerText.text = GameplayTimer.TimerFormat.smms_templater_timerText;
+        _eventReactor.OnRestart();
+
         Messenger.Broadcast(GameEvents.START_GAME);
     }
+
+    public override void Pause()
+    {
+        if (gameStarted)
+        {
+            gameActive = false;
+            _eventReactor.OnPause();
+        }
+    }
+
+    public override void Continue()
+    {
+        if (gameStarted)
+        {
+            gameActive = true;
+            _eventReactor.OnContinue();
+        }
+    }
+
+    protected override bool CanCheckAction() => gameActive && _eventReactor.CanCheckAction();
 }
