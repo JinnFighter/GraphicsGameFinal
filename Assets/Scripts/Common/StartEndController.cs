@@ -15,9 +15,8 @@ public class StartEndController : MonoBehaviour
         texts = new List<Text>();
         var timer = GetComponent<GameplayTimer>();
         timer.StartTime = 4f;
-        Messenger.AddListener(GameEvents.TIMER_STOP,OnStartGameEvent);
+        Messenger.AddListener(GameEvents.TIMER_STOP, OnStartGameEvent);
         Messenger.AddListener(GameEvents.GAME_OVER, OnEndGameEvent);
-        //timer.StartTimer();
     }
 
     void OnDestroy()
@@ -31,7 +30,7 @@ public class StartEndController : MonoBehaviour
         if(start)
         {
             start = false;
-            GetComponent<GameplayTimer>().timerText.gameObject.SetActive(false);
+            GetComponent<GameplayTimer>().GetOutput().gameObject.SetActive(false);
         }
         else
             Messenger.Broadcast(GameEvents.GAME_OVER);
@@ -70,6 +69,7 @@ public class StartEndController : MonoBehaviour
     public void OnRestartButtonClicked()
     {
         start = true;
+        GetComponent<GameplayTimer>().GetOutput().gameObject.SetActive(true);
         Messenger.Broadcast(GameEvents.RESTART_GAME);
     }
 

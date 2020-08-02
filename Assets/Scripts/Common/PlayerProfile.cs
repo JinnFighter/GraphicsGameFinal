@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
 
-public class PlayerProfile
+public class PlayerProfile : ISerialized
 {
     [XmlAttribute("name")]
     public string name;
@@ -18,5 +18,19 @@ public class PlayerProfile
     {
         name = n;
         active = a;
+    }
+
+    public ObjectData ExportToData()
+    {
+        var data = new ProfileData();
+        data.WriteObject("Name", name);
+        data.WriteObject("IsActive", active);
+        return data;
+    }
+
+    public void ImportFromData(ObjectData data)
+    {
+        name = data.ReadObject<string>("Name");
+        active = data.ReadObject<bool>("IsActive");
     }
 }

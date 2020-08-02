@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class GameplayTimer : MonoBehaviour
 {
     private float currentTime = 0f;
-    [SerializeField] public Text timerText;
     [SerializeField] private TimerOutput output;
 
     public bool Counting { get; set; }
@@ -75,5 +73,7 @@ public class GameplayTimer : MonoBehaviour
     }
 
     public void SetStartTime(float time) => StartTime = time;
+
+    public TimerOutput GetOutput() => output;
 }
 
