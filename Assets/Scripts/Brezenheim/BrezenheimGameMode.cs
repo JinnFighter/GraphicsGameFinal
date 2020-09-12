@@ -4,9 +4,6 @@ using UnityEngine.UI;
 public class BrezenheimGameMode : GameMode
 {
     private ILineGenerator _lineGenerator;
-    private int _maxLengthSum;
-    private int _minLineLength;
-    private int _maxLineLength;
     private Line[] _lines;
     private List<Position>[] _LinePoints;
     private List<int>[] _Ds;
@@ -23,36 +20,11 @@ public class BrezenheimGameMode : GameMode
         textField = nextTextField;
         _gameField = inputField;
         
-        switch (difficulty)
-        {
-            case 1:
-                _linesQuantity = 7;
-                _minLineLength = 4;
-                _maxLineLength = 8;
-                _maxLengthSum = 48;
-                break;
-            case 2:
-                _linesQuantity = 10;
-                _minLineLength = 5;
-                _maxLineLength = 10;
-                _maxLengthSum = 90;
-                break;
-            default:
-                _linesQuantity = 5;
-                _minLineLength = 2;
-                _maxLineLength = 5;
-                _maxLengthSum = 20;
-                break;
-        }
         _Ds = new List<int>[_linesQuantity];
         _LinePoints = new List<Position>[_linesQuantity];
         _lines = new Line[_linesQuantity];
 
-        _lineGenerator = new RandomLineGenerator(_minLineLength, _maxLineLength, _maxLengthSum);
-
-        var lines = _lineGenerator.Generate(_linesQuantity);
-        for(var i = 0; i < _linesQuantity; i++)
-            _lines[i] = lines[i];
+        GenerateLines();
 
         textField.text = _Ds[0][0].ToString();
 
@@ -115,24 +87,43 @@ public class BrezenheimGameMode : GameMode
         }
         _cur_line = 0;
         _iteration = 0;
-        switch(difficulty)
-        {
-            case 1:
-                _maxLengthSum = 48;
-                break;
-            case 2:
-                _maxLengthSum = 90;
-                break;
-            default:
-                _maxLengthSum = 20;
-                break;
-        }
-        var lines = _lineGenerator.Generate(_linesQuantity);
-        for (var i = 0; i < _linesQuantity; i++)
-            _lines[i] = lines[i];
+        GenerateLines();
+        
 
         eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
+    }
+
+    private void GenerateLines()
+    {
+        int minLength;
+        int maxLength;
+        int maxLengthSum;
+        switch (difficulty)
+        {
+            case 1:
+                _linesQuantity = 7;
+                minLength = 4;
+                maxLength = 8;
+                maxLengthSum = 48;
+                break;
+            case 2:
+                _linesQuantity = 10;
+                minLength = 5;
+                maxLength = 10;
+                maxLengthSum = 90;
+                break;
+            default:
+                _linesQuantity = 5;
+                minLength = 2;
+                maxLength = 5;
+                maxLengthSum = 20;
+                break;
+        }
+        _lineGenerator = new RandomLineGenerator(minLength, maxLength, maxLengthSum);
+        var lines = _lineGenerator.Generate(_linesQuantity);
+        for (var i = 0; i < _linesQuantity; i++)
+            _lines[i] = lines[i];
     }
 
     ~BrezenheimGameMode()
