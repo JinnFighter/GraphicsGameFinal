@@ -6,11 +6,11 @@ public class BrezenheimGameMode : GameMode
     private int _maxLengthSum;
     private int _minLineLength;
     private int _maxLineLength;
-    private Pixel[,] _lines;
-    private List<Pixel>[] _LinePoints;
+    private Line[] _lines;
+    private List<Position>[] _LinePoints;
     private List<int>[] _Ds;
-    private Pixel _last_point;
-    private Pixel _prev_point;
+    private Position _last_point;
+    private Position _prev_point;
     private int _iteration;
     private int _cur_line;
     private int _linesQuantity;
@@ -44,8 +44,8 @@ public class BrezenheimGameMode : GameMode
                 break;
         }
         _Ds = new List<int>[_linesQuantity];
-        _LinePoints = new List<Pixel>[_linesQuantity];
-        _lines = new Pixel[2, _linesQuantity];
+        _LinePoints = new List<Position>[_linesQuantity];
+        _lines = new Line[_linesQuantity];
 
         GenerateLines();
         textField.text = _Ds[0][0].ToString();
@@ -73,9 +73,10 @@ public class BrezenheimGameMode : GameMode
                 _iteration = 0;
                 _gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                _lines[0, _cur_line].setPixelState(true);
+                _gameField.grid[(int)_lines[_cur_line].GetStart().X, (int)_lines[_cur_line].GetStart().Y].setPixelState(true);
                 _last_point = _LinePoints[_cur_line][_LinePoints[_cur_line].Count - 1];
-                _last_point.setPixelState(true);
+                _gameField.grid[(int)_last_point.X, (int)_last_point.Y].setPixelState(true);
+              
                 _prev_point = null;
                 textField.text = _Ds[_cur_line][_iteration].ToString();
             }
@@ -84,7 +85,7 @@ public class BrezenheimGameMode : GameMode
         {
             _prev_point = _LinePoints[_cur_line][_iteration];
 
-            if (invoker == _prev_point)
+            if (invoker.X == _prev_point.X && invoker.Y == _prev_point.Y)
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);
@@ -186,11 +187,10 @@ public class BrezenheimGameMode : GameMode
                 }
                 maxLengthSum -= (int)lineLength;
             }
-            _lines[0, i] = _gameField.grid[y0, x0];
-            _lines[1, i] = _gameField.grid[y1, x1];
-            Algorithms.GetBrezenheimLineData(_gameField, x0, y0, x1, y1, out var ds, out var linePoints);
+            _lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
+            Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out var ds, out var linePoints);
             _Ds[i] = new List<int>();
-            _LinePoints[i] = new List<Pixel>();
+            _LinePoints[i] = new List<Position>();
             for (var j = 0; j < ds.Count; j++)
             {
                 _Ds[i].Add(ds[j]);
@@ -202,8 +202,8 @@ public class BrezenheimGameMode : GameMode
         }
         _last_point = _LinePoints[0][_LinePoints[0].Count - 1];
         _prev_point = null;
-        _lines[0, 0].setPixelState(true);
-        _last_point.setPixelState(true);
+        _gameField.grid[(int)_lines[0].GetStart().X, (int)_lines[0].GetStart().Y].setPixelState(true);
+        _gameField.grid[(int)_last_point.X, (int)_last_point.Y].setPixelState(true);
     }
 
     ~BrezenheimGameMode()
