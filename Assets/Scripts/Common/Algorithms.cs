@@ -3,20 +3,6 @@ using UnityEngine;
 
 public class Algorithms : MonoBehaviour
 {
-    public static void Swap<T>(ref T a, ref T b)
-    {
-        T c = a;
-        a = b;
-        b = c;
-    }
-
-    public static void swap<T>(T a, T b)
-    {
-        T c = a;
-        a = b;
-        b = c;
-    }
-
     public static List<Position> GetBrezenheimLineData(Line line, out List<int> ds)
     {
         ds = new List<int>();

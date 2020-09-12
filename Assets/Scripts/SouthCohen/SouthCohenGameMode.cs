@@ -156,8 +156,8 @@ public class SouthCohenGameMode : GameMode
         {
             if (code1 == 0)
             {
-                Algorithms.Swap(ref ax, ref bx);
-                Algorithms.Swap(ref ay, ref by);
+                Swap(ref ax, ref bx);
+                Swap(ref ay, ref by);
                 int c = code1;
                 code1 = code2;
                 code2 = c;
@@ -261,8 +261,8 @@ public class SouthCohenGameMode : GameMode
         var by = By;
         if (ax > bx)
         {
-            Algorithms.swap(ax, bx);
-            Algorithms.swap(ay, by);
+            swap(ax, bx);
+            swap(ay, by);
         }
         int[,] matr = new int[2, 2];
 
@@ -372,5 +372,19 @@ public class SouthCohenGameMode : GameMode
         eventReactor.OnRestart();
 
         Messenger.Broadcast(GameEvents.START_GAME);
+    }
+
+    private void Swap<T>(ref T a, ref T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
+    }
+
+    private void swap<T>(T a, T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
     }
 }
