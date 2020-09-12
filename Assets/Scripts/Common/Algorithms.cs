@@ -17,12 +17,14 @@ public class Algorithms : MonoBehaviour
         b = c;
     }
 
-    public static void DrawLine(GameField field, int X0, int Y0, int X1, int Y1)
+    public static void DrawLine(GameField field, Line line)
     {
-        var x0 = Y0;
-        var y0 = X0;
-        var x1 = Y1;
-        var y1 = X1;
+        var start = line.GetStart();
+        var end = line.GetEnd();
+        int x0 = (int)start.Y;
+        int y0 = (int)start.X;
+        int x1 = (int)end.Y;
+        int y1 = (int)end.X;
         //Изменения координат
         var dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);
         var dy = (y1 > y0) ? (y1 - y0) : (y0 - y1);
@@ -174,7 +176,7 @@ public class Algorithms : MonoBehaviour
             sx *= tau;
             sy *= tau;
 
-            DrawLine(field,(int)oldx, (int)oldy, (int)sx, (int)sy);
+            DrawLine(field, new Line(new Position(oldx, oldy), new Position(sx, sy)));
 
             oldx = sx;
             oldy = sy;
@@ -199,7 +201,7 @@ public class Algorithms : MonoBehaviour
             sx *= tau;
             sy *= tau;
 
-            DrawLine(field, (int)oldx, (int)oldy, (int)sx, (int)sy);
+            DrawLine(field, new Line(new Position(oldx, oldy), new Position(sx, sy)));
 
             oldx = sx;
             oldy = sy;

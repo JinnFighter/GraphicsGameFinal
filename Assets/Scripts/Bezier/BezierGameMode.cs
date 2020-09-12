@@ -144,7 +144,7 @@ public class BezierGameMode : GameMode
             }
             sx *= tau;
             sy *= tau;
-            Algorithms.DrawLine(_gameField, (int)oldx, (int)oldy, (int)sx, (int)sy);
+            Algorithms.DrawLine(_gameField, new Line(new Position(oldx, oldy), new Position(sx, sy)));
 
             oldx = sx;
             oldy = sy;
@@ -169,12 +169,10 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            Algorithms.DrawLine(_gameField, (int)oldx, (int)oldy, (int)sx, (int)sy);
+            Algorithms.DrawLine(_gameField, new Line(new Position(oldx, oldy), new Position(sx, sy)));
 
             oldx = sx;
             oldy = sy;
         }
     }
-
-    private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 }

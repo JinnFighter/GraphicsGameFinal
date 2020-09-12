@@ -122,7 +122,8 @@ public class SouthCohenGameMode : GameMode
         }
 
         iteration = 0;
-        Algorithms.DrawLine(_gameField, lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
+   
+        Algorithms.DrawLine(_gameField, new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)));
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
@@ -322,8 +323,9 @@ public class SouthCohenGameMode : GameMode
             else
             {
                 _gameField.ClearGrid();
-                Algorithms.DrawLine(_gameField, lines[0, iteration].Y, lines[0, iteration].X,
-                    lines[1, iteration].Y, lines[1, iteration].X);
+
+                
+                Algorithms.DrawLine(_gameField, new Line(new Position(lines[0, iteration].Y, lines[0, iteration].X), new Position(lines[1, iteration].Y, lines[1, iteration].X)));
             }
         }
         else
@@ -362,7 +364,7 @@ public class SouthCohenGameMode : GameMode
            borderPoints[0], borderPoints[1], i);
         }
         iteration = 0;
-        Algorithms.DrawLine(_gameField, lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
+        Algorithms.DrawLine(_gameField, new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)));
 
         eventReactor.OnRestart();
 

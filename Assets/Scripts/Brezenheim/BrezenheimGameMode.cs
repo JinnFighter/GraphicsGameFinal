@@ -128,7 +128,6 @@ public class BrezenheimGameMode : GameMode
 
     public void GenerateLines()
     {
-        var geometry = new Geometry();
         var maxLengthSum = _maxLengthSum;
         for (var i = 0; i < _linesQuantity; i++)
         {
