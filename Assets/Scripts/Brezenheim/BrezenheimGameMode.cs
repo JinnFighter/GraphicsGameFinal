@@ -121,7 +121,27 @@ public class BrezenheimGameMode : GameMode
                 break;
         }
         _lineGenerator = new RandomLineGenerator(minLength, maxLength, maxLengthSum);
-        _lines = _lineGenerator.Generate(_linesCount);  
+        _lines = _lineGenerator.Generate(_linesCount);
+
+        foreach(var line in _lines)
+        {
+            var linePoints = Algorithms.GetBrezenheimLineData(line, out var ds);
+            var i = _lines.IndexOf(line);
+            _Ds[i] = new List<int>();
+            _LinePoints[i] = new List<Position>();
+            for (var j = 0; j < ds.Count; j++)
+            {
+                _Ds[i].Add(ds[j]);
+            }
+            for (var j = 0; j < linePoints.Count; j++)
+            {
+                _LinePoints[i].Add(linePoints[j]);
+            }
+        }
+        _last_point = _LinePoints[0][_LinePoints[0].Count - 1];
+        _prev_point = null;
+        _gameField.grid[(int)_lines[0].GetStart().X, (int)_lines[0].GetStart().Y].setPixelState(true);
+        _gameField.grid[(int)_last_point.X, (int)_last_point.Y].setPixelState(true);  
     }
 
     ~BrezenheimGameMode()
