@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class BrezenheimGameMode : GameMode
@@ -147,6 +146,7 @@ public class BrezenheimGameMode : GameMode
 
     public void GenerateLines()
     {
+        var geometry = new Geometry();
         var maxLengthSum = _maxLengthSum;
         for (var i = 0; i < _linesQuantity; i++)
         {
@@ -157,11 +157,11 @@ public class BrezenheimGameMode : GameMode
             var secondY = UnityEngine.Random.Range(0, 9);
             if (maxLengthSum > 0)
             {
-                if (maxLengthSum - (int)GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength
-                    && maxLengthSum - (int)GetLineLength(firstX, firstY, secondX, secondY) != 0)
+                if (maxLengthSum - (int)geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength
+                    && maxLengthSum - (int)geometry.GetLineLength(firstX, firstY, secondX, secondY) != 0)
                 {
-                    while (GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
-               || GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
+                    while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
+               || geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -173,8 +173,8 @@ public class BrezenheimGameMode : GameMode
 
                 else
                 {
-                    while (GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
-               || GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
+                    while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
+               || geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
                     {
                         firstX = UnityEngine.Random.Range(0, 9);
                         firstY = UnityEngine.Random.Range(0, 9);
@@ -183,7 +183,7 @@ public class BrezenheimGameMode : GameMode
                         secondY = UnityEngine.Random.Range(0, 9);
                     }
                 }
-                maxLengthSum -= (int)GetLineLength(firstX, firstY, secondX, secondY);
+                maxLengthSum -= (int)geometry.GetLineLength(firstX, firstY, secondX, secondY);
             }
             _lines[0, i] = _gameField.grid[firstY, firstX];
             _lines[1, i] = _gameField.grid[secondY, secondX];
@@ -204,8 +204,6 @@ public class BrezenheimGameMode : GameMode
         _lines[0, 0].setPixelState(true);
         _last_point.setPixelState(true);
     }
-
-    private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 
     ~BrezenheimGameMode()
     {
