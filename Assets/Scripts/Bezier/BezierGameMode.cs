@@ -145,7 +145,7 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLine(new Line(new Position(oldx, oldy), new Position(sx, sy)));
+            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
             _gameField.Draw(linePts);
 
             oldx = sx;
@@ -171,7 +171,7 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLine(new Line(new Position(oldx, oldy), new Position(sx, sy)));
+            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
             _gameField.Draw(linePts);
 
             oldx = sx;
@@ -204,7 +204,7 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLine(new Line(new Position(oldx, oldy), new Position(sx, sy)));
+            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
             field.Draw(linePts);
 
             oldx = sx;
@@ -230,7 +230,7 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLine(new Line(new Position(oldx, oldy), new Position(sx, sy)));
+            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
             field.Draw(linePts);
 
             oldx = sx;

@@ -188,7 +188,7 @@ public class BrezenheimGameMode : GameMode
                 maxLengthSum -= (int)lineLength;
             }
             _lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
-            Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out var ds, out var linePoints);
+            var linePoints = Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out var ds);
             _Ds[i] = new List<int>();
             _LinePoints[i] = new List<Position>();
             for (var j = 0; j < ds.Count; j++)

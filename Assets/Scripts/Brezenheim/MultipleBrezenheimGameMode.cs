@@ -240,7 +240,7 @@ public class MultipleBrezenheimGameMode : GameMode
             }
 
             lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
-            Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out ds[i], out linePoints[i]);
+            linePoints[i] = Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out ds[i]);
         }
     }
 
