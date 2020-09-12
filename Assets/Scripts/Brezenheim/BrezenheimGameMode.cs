@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class BrezenheimGameMode : GameMode
 {
     private ILineGenerator _lineGenerator;
-    private Line[] _lines;
+    private List<Line> _lines;
     private List<Position>[] _LinePoints;
     private List<int>[] _Ds;
     private Position _last_point;
@@ -22,7 +22,7 @@ public class BrezenheimGameMode : GameMode
         
         _Ds = new List<int>[_linesQuantity];
         _LinePoints = new List<Position>[_linesQuantity];
-        _lines = new Line[_linesQuantity];
+        _lines = new List<Line>(_linesQuantity);
 
         GenerateLines();
 
@@ -121,9 +121,7 @@ public class BrezenheimGameMode : GameMode
                 break;
         }
         _lineGenerator = new RandomLineGenerator(minLength, maxLength, maxLengthSum);
-        var lines = _lineGenerator.Generate(_linesQuantity);
-        for (var i = 0; i < _linesQuantity; i++)
-            _lines[i] = lines[i];
+        _lines = _lineGenerator.Generate(_linesQuantity);  
     }
 
     ~BrezenheimGameMode()
