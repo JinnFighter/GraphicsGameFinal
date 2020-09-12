@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class BrezenheimGameMode : GameMode
 {
+    private ILineGenerator _lineGenerator;
     private int _maxLengthSum;
     private int _minLineLength;
     private int _maxLineLength;
@@ -47,7 +48,12 @@ public class BrezenheimGameMode : GameMode
         _LinePoints = new List<Position>[_linesQuantity];
         _lines = new Line[_linesQuantity];
 
-        GenerateLines();
+        _lineGenerator = new RandomLineGenerator(_minLineLength, _maxLineLength, _maxLengthSum);
+
+        var lines = _lineGenerator.Generate(_linesQuantity);
+        for(var i = 0; i < _linesQuantity; i++)
+            _lines[i] = lines[i];
+
         textField.text = _Ds[0][0].ToString();
 
         eventReactor = new DefaultReactor(timer, difficulty);
@@ -121,89 +127,12 @@ public class BrezenheimGameMode : GameMode
                 _maxLengthSum = 20;
                 break;
         }
-        GenerateLines();
+        var lines = _lineGenerator.Generate(_linesQuantity);
+        for (var i = 0; i < _linesQuantity; i++)
+            _lines[i] = lines[i];
 
         eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
-    }
-
-    public void GenerateLines()
-    {
-        var maxLengthSum = _maxLengthSum;
-        for (var i = 0; i < _linesQuantity; i++)
-        {
-            var x0 = UnityEngine.Random.Range(0, 9);
-            var y0 = UnityEngine.Random.Range(0, 9);
-
-            var x1 = UnityEngine.Random.Range(0, 9);
-            var y1 = UnityEngine.Random.Range(0, 9);
-
-
-            var line = new Line(new Position(x0, y0), new Position(x1, y1));
-            var lineLength = line.GetLength();
-            if (maxLengthSum > 0)
-            {
-                if (maxLengthSum - (int)lineLength < _minLineLength
-                    && maxLengthSum - (int)lineLength != 0)
-                {
-                    while (lineLength> _maxLineLength
-               || lineLength < _minLineLength)
-                    {
-                        x0 = UnityEngine.Random.Range(0, 9);
-                        y0 = UnityEngine.Random.Range(0, 9);
-
-                        x1 = UnityEngine.Random.Range(0, 9);
-                        y1 = UnityEngine.Random.Range(0, 9);
-
-                        var start = line.GetStart();
-                        start.X = x0;
-                        start.Y = y0;
-                        var end = line.GetEnd();
-                        end.X = x1;
-                        end.Y = y1;
-                        lineLength = line.GetLength();
-                    }
-                }
-
-                else
-                {
-                    while (lineLength > _maxLineLength
-               || lineLength < _minLineLength)
-                    {
-                        x0 = UnityEngine.Random.Range(0, 9);
-                        y0 = UnityEngine.Random.Range(0, 9);
-
-                        x1 = UnityEngine.Random.Range(0, 9);
-                        y1 = UnityEngine.Random.Range(0, 9);
-
-                        var start = line.GetStart();
-                        start.X = x0;
-                        start.Y = y0;
-                        var end = line.GetEnd();
-                        end.X = x1;
-                        end.Y = y1;
-                        lineLength = line.GetLength();
-                    }
-                }
-                maxLengthSum -= (int)lineLength;
-            }
-            _lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
-            var linePoints = Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out var ds);
-            _Ds[i] = new List<int>();
-            _LinePoints[i] = new List<Position>();
-            for (var j = 0; j < ds.Count; j++)
-            {
-                _Ds[i].Add(ds[j]);
-            }
-            for (var j = 0; j < linePoints.Count; j++)
-            {
-                _LinePoints[i].Add(linePoints[j]);
-            }
-        }
-        _last_point = _LinePoints[0][_LinePoints[0].Count - 1];
-        _prev_point = null;
-        _gameField.grid[(int)_lines[0].GetStart().X, (int)_lines[0].GetStart().Y].setPixelState(true);
-        _gameField.grid[(int)_last_point.X, (int)_last_point.Y].setPixelState(true);
     }
 
     ~BrezenheimGameMode()
