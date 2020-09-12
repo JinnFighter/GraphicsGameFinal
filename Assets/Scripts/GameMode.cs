@@ -32,7 +32,17 @@
         }
     }
 
-    public abstract void ChangeGameState();
+    public void ChangeGameState()
+    {
+        if (gameStarted)
+            gameActive = false;
+        else
+        {
+            gameActive = true;
+            gameStarted = true;
+            eventReactor.OnChangeState(difficulty);
+        }
+    }
 
     public abstract void Restart();
 

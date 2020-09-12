@@ -62,18 +62,6 @@ public class BezierGameMode : GameMode
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    public override void ChangeGameState()
-    {
-        if (gameStarted)
-            gameActive = false;
-        else
-        {
-            gameActive = true;
-            gameStarted = true;
-            eventReactor.OnChangeState(difficulty);
-        }
-    }
-
     public override void CheckAction(Pixel invoker)
     {
             if (!gameActive) return;

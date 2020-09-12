@@ -255,18 +255,6 @@ public class TurtleGameMode : GameMode
         }
     }
 
-    public override void ChangeGameState()
-    {
-        if (!gameStarted)
-        {
-            gameActive = true;
-            gameStarted = true;
-            eventReactor.OnChangeState(difficulty);
-        }
-        else
-            gameActive = false;
-    }
-
     public override void CheckAction(Pixel invoker)
     {
         if (!gameActive) return;
