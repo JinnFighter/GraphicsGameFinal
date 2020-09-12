@@ -167,35 +167,37 @@ public class MultipleBrezenheimGameMode : GameMode
         var geometry = new Geometry();
         for (var i = 0; i < linesQuantity; i++)
         {
-            int firstX;
-            int firstY;
+            int x0;
+            int y0;
 
-            int secondX;
-            int secondY;
+            int x1;
+            int y1;
 
             if (i == 0)
             {
-                firstX = UnityEngine.Random.Range(0, 9);
-                firstY = UnityEngine.Random.Range(0, 9);
+                x0 = UnityEngine.Random.Range(0, 9);
+                y0 = UnityEngine.Random.Range(0, 9);
 
-                secondX = UnityEngine.Random.Range(0, 9);
-                secondY = UnityEngine.Random.Range(0, 9);
+                x1 = UnityEngine.Random.Range(0, 9);
+                y1 = UnityEngine.Random.Range(0, 9);
 
-                while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
-                    || geometry.GetLineLength(firstX, firstY, secondX, secondY) < minLineLength)
+                var lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                while (lineLength > maxLineLength
+                    || lineLength < minLineLength)
                 {
-                    secondX = UnityEngine.Random.Range(0, 9);
-                    secondY = UnityEngine.Random.Range(0, 9);
+                    x1 = UnityEngine.Random.Range(0, 9);
+                    y1 = UnityEngine.Random.Range(0, 9);
+                    lineLength = geometry.GetLineLength(x0, y0, x1, y1);
                 }
             }
             else
             {
-                firstX = lines[1, i - 1].Y;
-                firstY = lines[1, i - 1].X;
+                x0 = lines[1, i - 1].Y;
+                y0 = lines[1, i - 1].X;
                 if (i == linesQuantity - 1)
                 {
-                    secondX = lines[0, 0].Y;
-                    secondY = lines[0, 0].X;
+                    x1 = lines[0, 0].Y;
+                    y1 = lines[0, 0].X;
 
                     while (true)
                     {
@@ -203,7 +205,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         for (var j = 0; j < i - 1; j++)
                         {
                             if (Algorithms.GetSegmentIntersection(lines[0, j], lines[1, j],
-                                _gameField.grid[firstY, firstX], _gameField.grid[secondY, secondX]))
+                                _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
                             }
@@ -218,11 +220,13 @@ public class MultipleBrezenheimGameMode : GameMode
                 {
                     while (true)
                     {
-                        secondX = UnityEngine.Random.Range(0, 9);
-                        secondY = UnityEngine.Random.Range(0, 9);
-                        if (geometry.GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
-                        || geometry.GetLineLength(firstX, firstY, secondX, secondY) <= minLineLength - 1)
+                        x1 = UnityEngine.Random.Range(0, 9);
+                        y1 = UnityEngine.Random.Range(0, 9);
+                        var lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                        if (lineLength > maxLineLength
+                        || lineLength <= minLineLength - 1)
                         {
+                            lineLength = geometry.GetLineLength(x0, y0, x1, y1);
                             continue;
                         }
 
@@ -230,7 +234,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         for (var j = 0; j < i - 1; j++)
                         {
                             if (Algorithms.GetSegmentIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
-                             _gameField.grid[firstY, firstX], _gameField.grid[secondY, secondX]))
+                             _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
                             }
@@ -244,9 +248,9 @@ public class MultipleBrezenheimGameMode : GameMode
                 }
             }
 
-            lines[0, i] = _gameField.grid[firstY, firstX];
-            lines[1, i] = _gameField.grid[secondY, secondX];
-            Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out ds[i], out linePoints[i]);
+            lines[0, i] = _gameField.grid[y0, x0];
+            lines[1, i] = _gameField.grid[y1, x1];
+            Algorithms.GetBrezenheimLineData(_gameField, x0, y0, x1, y1, out ds[i], out linePoints[i]);
         }
     }
 }
