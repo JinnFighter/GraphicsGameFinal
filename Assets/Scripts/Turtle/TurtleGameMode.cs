@@ -85,10 +85,7 @@ public class TurtleGameMode : GameMode
 
         Vector3 startPos = turtle_start_pos;
         routeInputField.text = paths[iteration];
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
+        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, CheckAction);
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
@@ -253,18 +250,6 @@ public class TurtleGameMode : GameMode
                 y = 4;
                 break;
         }
-    }
-
-    public override void ChangeGameState()
-    {
-        if (!gameStarted)
-        {
-            gameActive = true;
-            gameStarted = true;
-            eventReactor.OnChangeState(difficulty);
-        }
-        else
-            gameActive = false;
     }
 
     public override void CheckAction(Pixel invoker)

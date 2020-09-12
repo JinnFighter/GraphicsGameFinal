@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameField : MonoBehaviour
 {
@@ -73,6 +74,17 @@ public class GameField : MonoBehaviour
             {
                 grid[i, j].setPixelState(false);
             }
+        }
+    }
+
+    public bool Contains(Position position) => position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
+
+    public void Draw(List<Position> positions)
+    {
+        foreach(var position in positions)
+        {
+            if (Contains(position))
+                grid[(int)position.X, (int)position.Y].setPixelState(true);
         }
     }
 }

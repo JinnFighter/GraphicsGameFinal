@@ -122,12 +122,9 @@ public class SouthCohenGameMode : GameMode
         }
 
         iteration = 0;
-        Algorithms.DrawLine(_gameField, lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
+
+        var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)), out _);
+        _gameField.Draw(linePts);
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
@@ -159,8 +156,8 @@ public class SouthCohenGameMode : GameMode
         {
             if (code1 == 0)
             {
-                Algorithms.Swap(ref ax, ref bx);
-                Algorithms.Swap(ref ay, ref by);
+                Swap(ref ax, ref bx);
+                Swap(ref ay, ref by);
                 int c = code1;
                 code1 = code2;
                 code2 = c;
@@ -264,8 +261,8 @@ public class SouthCohenGameMode : GameMode
         var by = By;
         if (ax > bx)
         {
-            Algorithms.swap(ax, bx);
-            Algorithms.swap(ay, by);
+            swap(ax, bx);
+            swap(ay, by);
         }
         int[,] matr = new int[2, 2];
 
@@ -284,18 +281,6 @@ public class SouthCohenGameMode : GameMode
             else
                 return false;
         }
-    }
-
-    public override void ChangeGameState()
-    {
-        if (!gameStarted)
-        {
-            gameActive = true;
-            gameStarted = true;
-            eventReactor.OnChangeState(difficulty);
-        }
-        else
-            gameActive = false;
     }
 
     public override void CheckAction(Pixel invoker)
@@ -339,8 +324,9 @@ public class SouthCohenGameMode : GameMode
             else
             {
                 _gameField.ClearGrid();
-                Algorithms.DrawLine(_gameField, lines[0, iteration].Y, lines[0, iteration].X,
-                    lines[1, iteration].Y, lines[1, iteration].X);
+
+                var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, iteration].Y, lines[0, iteration].X), new Position(lines[1, iteration].Y, lines[1, iteration].X)), out _);
+                _gameField.Draw(linePts);
             }
         }
         else
@@ -379,10 +365,26 @@ public class SouthCohenGameMode : GameMode
            borderPoints[0], borderPoints[1], i);
         }
         iteration = 0;
-        Algorithms.DrawLine(_gameField, lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
+
+        var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)), out _);
+        _gameField.Draw(linePts);
 
         eventReactor.OnRestart();
 
         Messenger.Broadcast(GameEvents.START_GAME);
+    }
+
+    private void Swap<T>(ref T a, ref T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
+    }
+
+    private void swap<T>(T a, T b)
+    {
+        T c = a;
+        a = b;
+        b = c;
     }
 }
