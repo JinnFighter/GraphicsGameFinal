@@ -148,7 +148,6 @@ public class MultipleBrezenheimGameMode : GameMode
 
     public void GeneratePolygon()
     {
-        var geometry = new Geometry();
         for (var i = 0; i < linesQuantity; i++)
         {
             int x0;
@@ -192,7 +191,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (geometry.HasSegmentsIntersection(lines[0, j], lines[1, j],
+                            if (HasSegmentsIntersection(lines[0, j], lines[1, j],
                                 _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
@@ -225,7 +224,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (geometry.HasSegmentsIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
+                            if (HasSegmentsIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
                              _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
@@ -244,5 +243,14 @@ public class MultipleBrezenheimGameMode : GameMode
             lines[1, i] = _gameField.grid[y1, x1];
             Algorithms.GetBrezenheimLineData(_gameField, x0, y0, x1, y1, out ds[i], out linePoints[i]);
         }
+    }
+
+    private bool HasSegmentsIntersection(Pixel a, Pixel b, Pixel c, Pixel d)
+    {
+        int v1 = (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
+        int v2 = (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
+        int v3 = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+        int v4 = (b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X);
+        return (v1 * v2 < 0) && (v3 * v4 < 0);
     }
 }
