@@ -148,8 +148,10 @@ public class MultipleBrezenheimGameMode : GameMode
 
     public void GeneratePolygon()
     {
+        var lPoints = new List<Position>[linesQuantity];
         for (var i = 0; i < linesQuantity; i++)
         {
+            lPoints[i] = new List<Position>();
             int x0;
             int y0;
 
@@ -185,23 +187,6 @@ public class MultipleBrezenheimGameMode : GameMode
                 {
                     x1 = (int)lines[0].GetStart().Y;
                     y1 = (int)lines[0].GetStart().X;
-
-                    while (true)
-                    {
-                        bool check = false;
-                        for (var j = 0; j < i - 1; j++)
-                        {
-                            if (HasSegmentsIntersection(lines[j].GetStart(), lines[j].GetEnd(),
-                                new Position(y0, x0), new Position(y1, x1)))
-                            {
-                                break;
-                            }
-                        }
-                        if (check)
-                            continue;
-                        else
-                            break;
-                    }
                 }
                 else
                 {
@@ -224,7 +209,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (HasSegmentsIntersection(lines[j].GetStart(), linePoints[j][linePoints[j].Count - 2],
+                            if (HasSegmentsIntersection(lines[j].GetStart(), lPoints[j][lPoints[j].Count - 2],
                              new Position(y0, x0), new Position(y1, x1)));
                             {
                                 break;
@@ -240,6 +225,7 @@ public class MultipleBrezenheimGameMode : GameMode
             }
 
             lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
+            lPoints[i] = Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out ds[i]);
             linePoints[i] = Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out ds[i]);
         }
     }
