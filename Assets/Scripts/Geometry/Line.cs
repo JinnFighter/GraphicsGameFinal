@@ -17,4 +17,8 @@ public class Line
         var ydif = _end.Y - _start.Y;
         return Math.Sqrt(xdif * xdif + ydif * ydif); 
     }
+
+    public Position GetStart() => _start;
+
+    public Position GetEnd() => _end;
 }

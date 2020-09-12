@@ -169,13 +169,17 @@ public class MultipleBrezenheimGameMode : GameMode
                 x1 = UnityEngine.Random.Range(0, 9);
                 y1 = UnityEngine.Random.Range(0, 9);
 
-                var lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                var line = new Line(new Position(x0, y0), new Position(x1, y1));
+                var lineLength = line.GetLength();
                 while (lineLength > maxLineLength
                     || lineLength < minLineLength)
                 {
                     x1 = UnityEngine.Random.Range(0, 9);
                     y1 = UnityEngine.Random.Range(0, 9);
-                    lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                    var end = line.GetEnd();
+                    end.X = x1;
+                    end.Y = y1;
+                    lineLength = line.GetLength();
                 }
             }
             else
@@ -210,11 +214,15 @@ public class MultipleBrezenheimGameMode : GameMode
                     {
                         x1 = UnityEngine.Random.Range(0, 9);
                         y1 = UnityEngine.Random.Range(0, 9);
-                        var lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                        var line = new Line(new Position(x0, y0), new Position(x1, y1));
+                        var lineLength = line.GetLength();
                         if (lineLength > maxLineLength
                         || lineLength <= minLineLength - 1)
                         {
-                            lineLength = geometry.GetLineLength(x0, y0, x1, y1);
+                            var end = line.GetEnd();
+                            end.X = x1;
+                            end.Y = y1;
+                            lineLength = line.GetLength();
                             continue;
                         }
 

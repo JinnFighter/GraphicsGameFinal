@@ -138,44 +138,64 @@ public class BrezenheimGameMode : GameMode
         var maxLengthSum = _maxLengthSum;
         for (var i = 0; i < _linesQuantity; i++)
         {
-            var firstX = UnityEngine.Random.Range(0, 9);
-            var firstY = UnityEngine.Random.Range(0, 9);
+            var x0 = UnityEngine.Random.Range(0, 9);
+            var y0 = UnityEngine.Random.Range(0, 9);
 
-            var secondX = UnityEngine.Random.Range(0, 9);
-            var secondY = UnityEngine.Random.Range(0, 9);
+            var x1 = UnityEngine.Random.Range(0, 9);
+            var y1 = UnityEngine.Random.Range(0, 9);
+
+
+            var line = new Line(new Position(x0, y0), new Position(x1, y1));
+            var lineLength = line.GetLength();
             if (maxLengthSum > 0)
             {
-                if (maxLengthSum - (int)geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength
-                    && maxLengthSum - (int)geometry.GetLineLength(firstX, firstY, secondX, secondY) != 0)
+                if (maxLengthSum - (int)lineLength < _minLineLength
+                    && maxLengthSum - (int)lineLength != 0)
                 {
-                    while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
-               || geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
+                    while (lineLength> _maxLineLength
+               || lineLength < _minLineLength)
                     {
-                        firstX = UnityEngine.Random.Range(0, 9);
-                        firstY = UnityEngine.Random.Range(0, 9);
+                        x0 = UnityEngine.Random.Range(0, 9);
+                        y0 = UnityEngine.Random.Range(0, 9);
 
-                        secondX = UnityEngine.Random.Range(0, 9);
-                        secondY = UnityEngine.Random.Range(0, 9);
+                        x1 = UnityEngine.Random.Range(0, 9);
+                        y1 = UnityEngine.Random.Range(0, 9);
+
+                        var start = line.GetStart();
+                        start.X = x0;
+                        start.Y = y0;
+                        var end = line.GetEnd();
+                        end.X = x1;
+                        end.Y = y1;
+                        lineLength = line.GetLength();
                     }
                 }
 
                 else
                 {
-                    while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > _maxLineLength
-               || geometry.GetLineLength(firstX, firstY, secondX, secondY) < _minLineLength)
+                    while (lineLength > _maxLineLength
+               || lineLength < _minLineLength)
                     {
-                        firstX = UnityEngine.Random.Range(0, 9);
-                        firstY = UnityEngine.Random.Range(0, 9);
+                        x0 = UnityEngine.Random.Range(0, 9);
+                        y0 = UnityEngine.Random.Range(0, 9);
 
-                        secondX = UnityEngine.Random.Range(0, 9);
-                        secondY = UnityEngine.Random.Range(0, 9);
+                        x1 = UnityEngine.Random.Range(0, 9);
+                        y1 = UnityEngine.Random.Range(0, 9);
+
+                        var start = line.GetStart();
+                        start.X = x0;
+                        start.Y = y0;
+                        var end = line.GetEnd();
+                        end.X = x1;
+                        end.Y = y1;
+                        lineLength = line.GetLength();
                     }
                 }
-                maxLengthSum -= (int)geometry.GetLineLength(firstX, firstY, secondX, secondY);
+                maxLengthSum -= (int)lineLength;
             }
-            _lines[0, i] = _gameField.grid[firstY, firstX];
-            _lines[1, i] = _gameField.grid[secondY, secondX];
-            Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out var ds, out var linePoints);
+            _lines[0, i] = _gameField.grid[y0, x0];
+            _lines[1, i] = _gameField.grid[y1, x1];
+            Algorithms.GetBrezenheimLineData(_gameField, x0, y0, x1, y1, out var ds, out var linePoints);
             _Ds[i] = new List<int>();
             _LinePoints[i] = new List<Pixel>();
             for (var j = 0; j < ds.Count; j++)
