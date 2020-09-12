@@ -11,7 +11,6 @@ public class BrezenheimGameMode : GameMode
     private Position _prev_point;
     private int _iteration;
     private int _cur_line;
-    private int _linesCount;
     private GameField _gameField;
     private InputField textField;
 
@@ -20,9 +19,6 @@ public class BrezenheimGameMode : GameMode
         textField = nextTextField;
         _gameField = inputField;
         
-        _Ds = new List<int>[_linesCount];
-        _LinePoints = new List<Position>[_linesCount];
-        _lines = new List<Line>(_linesCount);
 
         GenerateLines();
 
@@ -40,7 +36,7 @@ public class BrezenheimGameMode : GameMode
         if (_prev_point == _last_point)
         {
             _cur_line++;
-            if (_cur_line == _linesCount)
+            if (_cur_line == _lines.Count)
             {
                 Messenger.Broadcast(GameEvents.GAME_OVER);
                 eventReactor.OnGameOver();
@@ -81,7 +77,7 @@ public class BrezenheimGameMode : GameMode
         gameActive = false;
         gameStarted = false;
         _gameField.ClearGrid();
-        for (var i = 0; i < _linesCount; i++)
+        for (var i = 0; i < _Ds.Length; i++)
         {
             _Ds[i].Clear();
         }
@@ -99,31 +95,35 @@ public class BrezenheimGameMode : GameMode
         int minLength;
         int maxLength;
         int maxLengthSum;
+        int linesCount;
         switch (difficulty)
         {
             case 1:
-                _linesCount = 7;
+                linesCount = 7;
                 minLength = 4;
                 maxLength = 8;
                 maxLengthSum = 48;
                 break;
             case 2:
-                _linesCount = 10;
+                linesCount = 10;
                 minLength = 5;
                 maxLength = 10;
                 maxLengthSum = 90;
                 break;
             default:
-                _linesCount = 5;
+                linesCount = 5;
                 minLength = 2;
                 maxLength = 5;
                 maxLengthSum = 20;
                 break;
         }
         _lineGenerator = new RandomLineGenerator(minLength, maxLength, maxLengthSum);
-        _lines = _lineGenerator.Generate(_linesCount);
+        _lines = _lineGenerator.Generate(linesCount);
 
-        foreach(var line in _lines)
+        _Ds = new List<int>[linesCount];
+        _LinePoints = new List<Position>[linesCount];
+
+        foreach (var line in _lines)
         {
             var linePoints = Algorithms.GetBrezenheimLineData(line, out var ds);
             var i = _lines.IndexOf(line);
