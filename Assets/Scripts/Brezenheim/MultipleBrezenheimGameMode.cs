@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class MultipleBrezenheimGameMode : GameMode
 {
-    private Pixel[,] lines;
+    private Line[] lines;
     private int linesQuantity;
-    private List<Pixel>[] linePoints;
+    private List<Position>[] linePoints;
     private List<int>[] ds;
-    private Pixel last_point;
-    private Pixel prev_point;
+    private Position last_point;
+    private Position prev_point;
     private int cur_line;
     private int iteration;
     private int minLineLength;
@@ -46,20 +46,20 @@ public class MultipleBrezenheimGameMode : GameMode
                 maxLineLength = 5;
                 break;
         }
-        lines = new Pixel[2, linesQuantity];
-        linePoints = new List<Pixel>[linesQuantity];
+        lines = new Line[linesQuantity];
+        linePoints = new List<Position>[linesQuantity];
         ds = new List<int>[linesQuantity];
         for (var i = 0; i < linesQuantity; i++)
         {
-            linePoints[i] = new List<Pixel>();
+            linePoints[i] = new List<Position>();
             ds[i] = new List<int>();
         }
 
         GeneratePolygon();
 
         last_point = linePoints[0][linePoints[0].Count - 1];
-        lines[0, 0].setPixelState(true);
-        lines[1, 0].setPixelState(true);
+        _gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
+        _gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
         textField.text = ds[0][0].ToString();
 
         eventReactor = new DefaultReactor(timer, difficulty);
@@ -101,8 +101,8 @@ public class MultipleBrezenheimGameMode : GameMode
                     iteration = 0;
                     _gameField.ClearGrid();
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                    lines[0, cur_line].setPixelState(true);
-                    lines[1, cur_line].setPixelState(true);
+                _gameField.grid[(int)lines[cur_line].GetStart().X, (int)lines[cur_line].GetStart().Y].setPixelState(true);
+                _gameField.grid[(int)lines[cur_line].GetEnd().X, (int)lines[cur_line].GetEnd().Y].setPixelState(true);
                     last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
                     prev_point = null;
                     textField.text = ds[cur_line][iteration].ToString();
@@ -112,7 +112,7 @@ public class MultipleBrezenheimGameMode : GameMode
             {
                 prev_point = linePoints[cur_line][iteration];
 
-                if (invoker == prev_point)
+                if (invoker.X == prev_point.X && invoker.Y == prev_point.Y)
                 {
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                     invoker.setPixelState(true);
@@ -140,8 +140,8 @@ public class MultipleBrezenheimGameMode : GameMode
 
         GeneratePolygon();
         last_point = linePoints[0][linePoints[0].Count - 1];
-        lines[0, 0].setPixelState(true);
-        lines[1, 0].setPixelState(true);
+        _gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
+        _gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
         eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
     }
@@ -179,20 +179,20 @@ public class MultipleBrezenheimGameMode : GameMode
             }
             else
             {
-                x0 = lines[1, i - 1].Y;
-                y0 = lines[1, i - 1].X;
+                x0 = (int)lines[i - 1].GetEnd().Y;
+                y0 = (int)lines[i - 1].GetEnd().X;
                 if (i == linesQuantity - 1)
                 {
-                    x1 = lines[0, 0].Y;
-                    y1 = lines[0, 0].X;
+                    x1 = (int)lines[0].GetStart().Y;
+                    y1 = (int)lines[0].GetStart().X;
 
                     while (true)
                     {
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (HasSegmentsIntersection(lines[0, j], lines[1, j],
-                                _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
+                            if (HasSegmentsIntersection(lines[j].GetStart(), lines[j].GetEnd(),
+                                new Position(y0, x0), new Position(y1, x1)))
                             {
                                 break;
                             }
@@ -224,8 +224,8 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (HasSegmentsIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
-                             _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
+                            if (HasSegmentsIntersection(lines[j].GetStart(), linePoints[j][linePoints[j].Count - 2],
+                             new Position(y0, x0), new Position(y1, x1)));
                             {
                                 break;
                             }
@@ -239,18 +239,17 @@ public class MultipleBrezenheimGameMode : GameMode
                 }
             }
 
-            lines[0, i] = _gameField.grid[y0, x0];
-            lines[1, i] = _gameField.grid[y1, x1];
-            Algorithms.GetBrezenheimLineData(_gameField, x0, y0, x1, y1, out ds[i], out linePoints[i]);
+            lines[i] = new Line(new Position(y0, x0), new Position(y1, x1));
+            Algorithms.GetBrezenheimLineData(new Line(new Position(x0, y0), new Position(x1, y1)), out ds[i], out linePoints[i]);
         }
     }
 
-    private bool HasSegmentsIntersection(Pixel a, Pixel b, Pixel c, Pixel d)
+    private bool HasSegmentsIntersection(Position a, Position b, Position c, Position d)
     {
-        int v1 = (d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X);
-        int v2 = (d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X);
-        int v3 = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
-        int v4 = (b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X);
+        int v1 = (int)((d.X - c.X) * (a.Y - c.Y) - (d.Y - c.Y) * (a.X - c.X));
+        int v2 = (int)((d.X - c.X) * (b.Y - c.Y) - (d.Y - c.Y) * (b.X - c.X));
+        int v3 = (int)((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X));
+        int v4 = (int)((b.X - a.X) * (d.Y - a.Y) - (b.Y - a.Y) * (d.X - a.X));
         return (v1 * v2 < 0) && (v3 * v4 < 0);
     }
 }
