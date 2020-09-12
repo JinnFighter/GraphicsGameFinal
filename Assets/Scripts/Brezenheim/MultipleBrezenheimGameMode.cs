@@ -204,7 +204,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (Algorithms.GetSegmentIntersection(lines[0, j], lines[1, j],
+                            if (geometry.HasSegmentsIntersection(lines[0, j], lines[1, j],
                                 _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
@@ -233,7 +233,7 @@ public class MultipleBrezenheimGameMode : GameMode
                         bool check = false;
                         for (var j = 0; j < i - 1; j++)
                         {
-                            if (Algorithms.GetSegmentIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
+                            if (geometry.HasSegmentsIntersection(lines[0, j], linePoints[j][linePoints[j].Count - 2],
                              _gameField.grid[y0, x0], _gameField.grid[y1, x1]))
                             {
                                 break;
