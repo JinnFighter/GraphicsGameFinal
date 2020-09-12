@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MultipleBrezenheimGameMode : GameMode
@@ -165,6 +164,7 @@ public class MultipleBrezenheimGameMode : GameMode
 
     public void GeneratePolygon()
     {
+        var geometry = new Geometry();
         for (var i = 0; i < linesQuantity; i++)
         {
             int firstX;
@@ -181,8 +181,8 @@ public class MultipleBrezenheimGameMode : GameMode
                 secondX = UnityEngine.Random.Range(0, 9);
                 secondY = UnityEngine.Random.Range(0, 9);
 
-                while (GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
-                    || GetLineLength(firstX, firstY, secondX, secondY) < minLineLength)
+                while (geometry.GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
+                    || geometry.GetLineLength(firstX, firstY, secondX, secondY) < minLineLength)
                 {
                     secondX = UnityEngine.Random.Range(0, 9);
                     secondY = UnityEngine.Random.Range(0, 9);
@@ -220,8 +220,8 @@ public class MultipleBrezenheimGameMode : GameMode
                     {
                         secondX = UnityEngine.Random.Range(0, 9);
                         secondY = UnityEngine.Random.Range(0, 9);
-                        if (GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
-                        || GetLineLength(firstX, firstY, secondX, secondY) <= minLineLength - 1)
+                        if (geometry.GetLineLength(firstX, firstY, secondX, secondY) > maxLineLength
+                        || geometry.GetLineLength(firstX, firstY, secondX, secondY) <= minLineLength - 1)
                         {
                             continue;
                         }
@@ -249,6 +249,4 @@ public class MultipleBrezenheimGameMode : GameMode
             Algorithms.GetBrezenheimLineData(_gameField, firstX, firstY, secondX, secondY, out ds[i], out linePoints[i]);
         }
     }
-
-    private double GetLineLength(int x0, int y0, int x1, int y1) => Math.Sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 }
