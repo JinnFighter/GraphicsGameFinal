@@ -50,12 +50,6 @@ public class BrezenheimGameMode : GameMode
         GenerateLines();
         textField.text = _Ds[0][0].ToString();
 
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
-
         eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);

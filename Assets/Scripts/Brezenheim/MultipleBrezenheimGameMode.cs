@@ -54,11 +54,7 @@ public class MultipleBrezenheimGameMode : GameMode
             linePoints[i] = new List<Pixel>();
             ds[i] = new List<int>();
         }
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
+
         GeneratePolygon();
 
         last_point = linePoints[0][linePoints[0].Count - 1];

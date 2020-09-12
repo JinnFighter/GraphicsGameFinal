@@ -51,12 +51,6 @@ public class BezierGameMode : GameMode
             Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
         }
 
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
-
         eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);

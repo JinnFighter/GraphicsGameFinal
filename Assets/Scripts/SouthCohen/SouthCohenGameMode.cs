@@ -123,11 +123,6 @@ public class SouthCohenGameMode : GameMode
 
         iteration = 0;
         Algorithms.DrawLine(_gameField, lines[0, 0].Y, lines[0, 0].X, lines[1, 0].Y, lines[1, 0].X);
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
-        Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
-        Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
