@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MultipleBrezenheimGameMode : GameMode
 {
     private ILineGenerator _lineGenerator;
-    private Line[] lines;
+    private List<Line> _lines;
     private List<Position>[] linePoints;
     private List<int>[] ds;
     private Position last_point;
@@ -46,7 +46,7 @@ public class MultipleBrezenheimGameMode : GameMode
 
             //if (!timer.Counting) return;
 
-            if (cur_line == lines.Length)
+            if (cur_line == _lines.Count)
             {
                 Messenger.Broadcast(GameEvents.TIMER_STOP);
                 return;
@@ -55,7 +55,7 @@ public class MultipleBrezenheimGameMode : GameMode
             if (prev_point == last_point)
             {
                 cur_line++;
-                if (cur_line == lines.Length)
+                if (cur_line == _lines.Count)
                 {
                     eventReactor.OnGameOver();
                     return;
@@ -65,8 +65,8 @@ public class MultipleBrezenheimGameMode : GameMode
                     iteration = 0;
                     _gameField.ClearGrid();
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                _gameField.grid[(int)lines[cur_line].GetStart().X, (int)lines[cur_line].GetStart().Y].setPixelState(true);
-                _gameField.grid[(int)lines[cur_line].GetEnd().X, (int)lines[cur_line].GetEnd().Y].setPixelState(true);
+                _gameField.grid[(int)_lines[cur_line].GetStart().X, (int)_lines[cur_line].GetStart().Y].setPixelState(true);
+                _gameField.grid[(int)_lines[cur_line].GetEnd().X, (int)_lines[cur_line].GetEnd().Y].setPixelState(true);
                     last_point = linePoints[cur_line][linePoints[cur_line].Count - 1];
                     prev_point = null;
                     textField.text = ds[cur_line][iteration].ToString();
@@ -128,7 +128,7 @@ public class MultipleBrezenheimGameMode : GameMode
                 break;
         }
 
-        lines = new Line[linesCount];
+        _lines = new List<Line>(linesCount);
         _lineGenerator = new PolygonLineGenerator(minLength, maxLength);
         var lns = _lineGenerator.Generate(linesCount);
         linePoints = new List<Position>[linesCount];
@@ -141,13 +141,13 @@ public class MultipleBrezenheimGameMode : GameMode
 
         for (var i = 0; i < linesCount; i++)
         {
-            lines[i] = lns[i];
-            linePoints[i] = Algorithms.GetBrezenheimLineData(lines[i], out var dds);
+            _lines[i] = lns[i];
+            linePoints[i] = Algorithms.GetBrezenheimLineData(_lines[i], out var dds);
             ds[i] = dds;
         }
 
         last_point = linePoints[0][linePoints[0].Count - 1];
-        _gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
-        _gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
+        _gameField.grid[(int)_lines[0].GetStart().X, (int)_lines[0].GetStart().Y].setPixelState(true);
+        _gameField.grid[(int)_lines[0].GetEnd().X, (int)_lines[0].GetEnd().Y].setPixelState(true);
     }
 }
