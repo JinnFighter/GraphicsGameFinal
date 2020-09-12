@@ -6,7 +6,7 @@ public class BezierGameMode : GameMode
 {
     private int minLineLength;
     private int maxLineLength;
-    private List<Pixel> curvePoints;
+    private List<Position> curvePoints;
     private int current;
     private int pointsQuantity;
     private GameField _gameField;
@@ -41,7 +41,7 @@ public class BezierGameMode : GameMode
                 break;
         }
 
-        curvePoints = new List<Pixel>(pointsQuantity);
+        curvePoints = new List<Position>(pointsQuantity);
         GenerateBezierCurve();
         Algorithms.DrawBezier(_gameField, curvePoints);
         current = 0;
@@ -66,7 +66,7 @@ public class BezierGameMode : GameMode
                 return;
             else
             {
-                if (invoker == curvePoints[current])
+                if (invoker.X == curvePoints[current].X && invoker.Y == curvePoints[current].Y)
                 {
                     Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                     current++;
@@ -117,7 +117,7 @@ public class BezierGameMode : GameMode
                 }
             }
 
-            curvePoints.Add(_gameField.grid[y, x]);
+            curvePoints.Add(new Position(y, x));
         }
     }
 

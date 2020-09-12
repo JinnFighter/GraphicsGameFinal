@@ -153,7 +153,7 @@ public class Algorithms : MonoBehaviour
         }
     }
 
-    public static void DrawBezier(GameField field, List<Pixel> curvePoints)
+    public static void DrawBezier(GameField field, List<Position> curvePoints)
     {
         double t, sx, sy, oldx, oldy, ax, ay, tau;
         oldx = curvePoints[0].X;
