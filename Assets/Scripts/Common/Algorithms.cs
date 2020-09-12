@@ -205,14 +205,4 @@ public class Algorithms : MonoBehaviour
             oldy = sy;
         }
     }
-
-    public int Code(Pixel point, Pixel rectLeft, Pixel rectRight)
-    {
-        var code = 0;
-        if (point.X < rectLeft.X) code |= 0x01;//_ _ _ 1;
-        if (point.X > rectRight.X) code |= 0x04;//_ 1 _ _;
-        if (point.Y < rectLeft.Y) code |= 0x02;//_ _ 1 _;
-        if (point.Y > rectRight.Y) code |= 0x08;//1 _ _ _;
-        return code;
-    }
 }
