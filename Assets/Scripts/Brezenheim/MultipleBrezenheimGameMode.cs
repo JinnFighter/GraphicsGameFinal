@@ -32,7 +32,7 @@ public class MultipleBrezenheimGameMode : BrezenheimGameMode
                 break;
         }
 
-        lines = new List<Line>(linesCount);
+        var lines = new List<Line>(linesCount);
         lineGenerator = new PolygonLineGenerator(minLength, maxLength);
         var lns = lineGenerator.Generate(linesCount);
         linePoints = new List<Position>[linesCount];
