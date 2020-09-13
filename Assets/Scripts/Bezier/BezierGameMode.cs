@@ -1,240 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BezierGameMode : GameMode
+﻿public class BezierGameMode : GameMode
 {
-    private int minLineLength;
-    private int maxLineLength;
-    private List<Position> curvePoints;
-    private int current;
-    private int pointsQuantity;
+    private LinesModeData _linesData;
+    private ILineDataGenerator _generator;
+    private ILinePointsGenerator _pointsGenerator;
     private GameField _gameField;
 
     public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField = field;
-        difficulty = _gameField.Difficulty;
-        switch (difficulty)
-        {
-            case 0:
-                pointsQuantity = 3;
-                minLineLength = 3;
-                maxLineLength = 5;
-                break;
-            case 1:
-                pointsQuantity = 5;
-                minLineLength = 4;
-                maxLineLength = 6;
-                break;
-            case 2:
-                pointsQuantity = 7;
-                minLineLength = 5;
-                maxLineLength = 7;
-                break;
-            default:
-                pointsQuantity = 3;
-                minLineLength = 3;
-                maxLineLength = 5;
-                break;
-        }
-
-        curvePoints = new List<Position>(pointsQuantity);
-        GenerateBezierCurve();
-        DrawBezier(_gameField, curvePoints);
-        current = 0;
-
-        for (var i = 0; i < curvePoints.Count; i++)
-        {
-            Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
-        }
+        _linesData = new LinesModeData();
+        _pointsGenerator = new BezierLinePointsGenerator();
+        DoRestartAction();
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!gameActive) return;
-
-        //if (!timer.Counting) return;
-
-        if (current == curvePoints.Count)
+        if (_linesData.IsCurrentLast())
             return;
         else
         {
-            if (invoker.X == curvePoints[current].X && invoker.Y == curvePoints[current].Y)
+            if (invoker.X == _linesData.GetCurrentPoint().X && invoker.Y == _linesData.GetCurrentPoint().Y)
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                current++;
-                if (current == curvePoints.Count)
-                {
+                _linesData.NextPoint();
+                if (_linesData.IsCurrentLast())
                     eventReactor.OnGameOver();
-                }
             }
             else
-            {
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-                Debug.Log("Wrong!");
-            }
         }
-
     }
 
-    public override void Restart()
+    public override void DoRestartAction()
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField.ClearGrid();
-        curvePoints.Clear();
 
-        current = 0;
-        GenerateBezierCurve();
-        DrawBezier(_gameField, curvePoints);
-        current = 0;
-
-        eventReactor.OnRestart();
-        Messenger.Broadcast(GameEvents.START_GAME);
-    }
-
-    public void GenerateBezierCurve()
-    {
-        for (var i = 0; i < pointsQuantity; i++)
+        int pointsCount;
+        int minLength;
+        int maxLength;
+        switch (difficulty)
         {
-            var x = UnityEngine.Random.Range(0, 9);
-            var y = UnityEngine.Random.Range(0, 9);
-            if (i != 0)
-            {
-                while ((Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLineLength
-              || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLineLength))
-
-                {
-                    x = UnityEngine.Random.Range(0, 9);
-                    y = UnityEngine.Random.Range(0, 9);
-                }
-            }
-
-            curvePoints.Add(new Position(y, x));
+            case 1:
+                pointsCount = 5;
+                minLength = 4;
+                maxLength = 6;
+                break;
+            case 2:
+                pointsCount = 7;
+                minLength = 5;
+                maxLength = 7;
+                break;
+            default:
+                pointsCount = 3;
+                minLength = 3;
+                maxLength = 5;
+                break;
         }
-    }
 
-    public void drawBezier()
-    {
-        double t, sx, sy, oldx, oldy, ax, ay, tau;
-        oldx = curvePoints[0].Y;
-        oldy = curvePoints[0].X;
-        var counter = curvePoints.Count;
-        for (t = 0; t <= 0.5; t += 0.005)
-        {
-            sx = curvePoints[0].Y;
-            sy = curvePoints[0].X;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (int i = 1; i < counter; i++)//counter;
-            {
-                tau *= 1 - t;
-                ax = ax * t * (counter - i) / (i * (1 - t));
-                ay = ay * t * (counter - i) / (i * (1 - t));
-                sx += ax * curvePoints[i].Y;
-                sy += ay * curvePoints[i].X;
-            }
-            sx *= tau;
-            sy *= tau;
+        _generator = new BezierLineDataGenerator(pointsCount);
+        _linesData = _generator.GenerateData(minLength, maxLength);
 
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            _gameField.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
-        oldx = curvePoints[counter - 1].Y;
-        oldy = curvePoints[counter - 1].X;
-        for (t = 1.0; t >= 0.5; t -= 0.005)
-        {
-            sx = curvePoints[counter - 1].Y;
-            sy = curvePoints[counter - 1].X;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (var i = counter - 2; i >= 0; i--)
-            {
-                tau *= t;
-                ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx += ax * curvePoints[i].Y;
-                sy += ay * curvePoints[i].X;
-            }
-            sx *= tau;
-            sy *= tau;
-
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            _gameField.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
-    }
-
-    private void DrawBezier(GameField field, List<Position> curvePoints)
-    {
-        double t, sx, sy, oldx, oldy, ax, ay, tau;
-        oldx = curvePoints[0].X;
-        oldy = curvePoints[0].Y;
-        var counter = curvePoints.Count;
-
-        for (t = 0; t <= 0.5; t += 0.005)
-        {
-            sx = curvePoints[0].X;
-            sy = curvePoints[0].Y;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (int i = 1; i < counter; i++)//counter;
-            {
-                tau *= (1 - t);
-                ax = ax * t * (counter - i) / (i * (1 - t));
-                ay = ay * t * (counter - i) / (i * (1 - t));
-                sx += ax * curvePoints[i].X;
-                sy += ay * curvePoints[i].Y;
-            }
-            sx *= tau;
-            sy *= tau;
-
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            field.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
-        oldx = curvePoints[counter - 1].X;
-        oldy = curvePoints[counter - 1].Y;
-        for (t = 1.0; t >= 0.5; t -= 0.005)
-        {
-            sx = curvePoints[counter - 1].X;
-            sy = curvePoints[counter - 1].Y;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (var i = counter - 2; i >= 0; i--)
-            {
-                tau *= t;
-                ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx += ax * curvePoints[i].X;
-                sy += ay * curvePoints[i].Y;
-            }
-            sx *= tau;
-            sy *= tau;
-
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            field.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
+        var points = _pointsGenerator.Generate(_linesData);
+        _gameField.Draw(points);
     }
 }

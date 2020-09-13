@@ -17,7 +17,14 @@
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
     }
 
-    public abstract void CheckAction(Pixel invoker);
+    public void CheckAction(Pixel invoker)
+    {
+        if (!CanCheckAction()) return;
+
+        Check(invoker);
+    }
+
+    public abstract void Check(Pixel invoker);
 
     public void Pause()
     {
@@ -49,7 +56,19 @@
         }
     }
 
-    public abstract void Restart();
+    public void Restart()
+    {
+        gameActive = false;
+        gameStarted = false;
+
+        DoRestartAction();
+
+        eventReactor.OnRestart();
+
+        Messenger.Broadcast(GameEvents.START_GAME);
+    }
+
+    public abstract void DoRestartAction();
 
     protected bool CanCheckAction() => gameActive && eventReactor.CanCheckAction();
 }

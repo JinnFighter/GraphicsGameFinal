@@ -32,32 +32,30 @@ public class MultipleBrezenheimGameMode : BrezenheimGameMode
                 break;
         }
 
-        lines = new List<Line>(linesCount);
+        var lines = new List<Line>(linesCount);
         lineGenerator = new PolygonLineGenerator(minLength, maxLength);
         var lns = lineGenerator.Generate(linesCount);
-        linePoints = new List<Position>[linesCount];
+        linesDatas= new List<LinesModeData>(linesCount);
         ds = new List<int>[linesCount];
         for (var i = 0; i < linesCount; i++)
         {
-            linePoints[i] = new List<Position>();
+            linesDatas[i] = new LinesModeData();
             ds[i] = new List<int>();
         }
 
         for (var i = 0; i < linesCount; i++)
         {
             lines[i] = lns[i];
-            linePoints[i] = Algorithms.GetBrezenheimLineData(lines[i], out var dds);
+            var linesdata = Algorithms.GetBrezenheimLineData(lines[i], out var dds);
+
+            foreach (var ldata in linesdata)
+                linesDatas[i].AddPoint(ldata);
+
             ds[i] = dds;
         }
 
-        lastPoint = linePoints[0][linePoints[0].Count - 1];
+        lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
         gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
         gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
-    }
-
-    protected override void FillPoints()
-    {
-        gameField.grid[(int)lines[curLine].GetStart().X, (int)lines[curLine].GetStart().Y].setPixelState(true);
-        gameField.grid[(int)lines[curLine].GetEnd().X, (int)lines[curLine].GetEnd().Y].setPixelState(true);
     }
 }

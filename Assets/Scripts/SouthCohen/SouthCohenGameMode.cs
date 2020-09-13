@@ -283,12 +283,8 @@ public class SouthCohenGameMode : GameMode
         }
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!gameActive) return;
-
-        //if (!GetComponent<GameplayTimer>().Counting) return;
-
         if (iteration == linesQuantity)
         {
             Messenger.Broadcast(GameEvents.GAME_OVER);
@@ -348,10 +344,8 @@ public class SouthCohenGameMode : GameMode
         }
     }
 
-    public override void Restart()
+    public override void DoRestartAction()
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField.ClearGrid();
         for (var i = 0; i < linesQuantity; i++)
             lineZones[i].Clear();
@@ -368,10 +362,6 @@ public class SouthCohenGameMode : GameMode
 
         var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)), out _);
         _gameField.Draw(linePts);
-
-        eventReactor.OnRestart();
-
-        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     private void Swap<T>(ref T a, ref T b)
