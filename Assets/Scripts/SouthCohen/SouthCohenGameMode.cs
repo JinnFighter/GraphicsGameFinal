@@ -283,12 +283,8 @@ public class SouthCohenGameMode : GameMode
         }
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!gameActive) return;
-
-        //if (!GetComponent<GameplayTimer>().Counting) return;
-
         if (iteration == linesQuantity)
         {
             Messenger.Broadcast(GameEvents.GAME_OVER);

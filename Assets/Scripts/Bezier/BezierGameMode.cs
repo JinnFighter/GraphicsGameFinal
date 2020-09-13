@@ -17,10 +17,8 @@
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!CanCheckAction()) return;
-
         if (_linesData.IsCurrentLast())
             return;
         else

@@ -252,12 +252,8 @@ public class TurtleGameMode : GameMode
         }
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!gameActive) return;
-
-        //if (!timer.Counting) return;
-
         if (finished) return;
 
         //last_action = action;

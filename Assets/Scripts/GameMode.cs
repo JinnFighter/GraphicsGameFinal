@@ -17,7 +17,14 @@
         Messenger.AddListener(GameEvents.RESTART_GAME, Restart);
     }
 
-    public abstract void CheckAction(Pixel invoker);
+    public void CheckAction(Pixel invoker)
+    {
+        if (!CanCheckAction()) return;
+
+        Check(invoker);
+    }
+
+    public abstract void Check(Pixel invoker);
 
     public void Pause()
     {

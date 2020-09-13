@@ -27,10 +27,8 @@ public class BrezenheimGameMode : GameMode
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    public override void CheckAction(Pixel invoker)
+    public override void Check(Pixel invoker)
     {
-        if (!CanCheckAction()) return;
-
         if (prevPoint == lastPoint)
         {
             curLine++;
