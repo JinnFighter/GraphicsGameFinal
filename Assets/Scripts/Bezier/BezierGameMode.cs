@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class BezierGameMode : GameMode
 {
@@ -10,16 +9,9 @@ public class BezierGameMode : GameMode
     public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
     {
         _gameField = field;
-        difficulty = _gameField.Difficulty;
         _linesData = new LinesModeData();
 
         Generate();
-
-        for (var i = 0; i < _linesData.GetPointsCount(); i++)
-        {
-            var point = _linesData.GetPoint(i);
-            Debug.Log("CurvePoint: " + point.X + " " + point.Y);
-        }
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
@@ -28,9 +20,7 @@ public class BezierGameMode : GameMode
 
     public override void CheckAction(Pixel invoker)
     {
-        if (!gameActive) return;
-
-        //if (!timer.Counting) return;
+        if (!CanCheckAction()) return;
 
         if (_linesData.IsCurrentLast())
             return;
@@ -50,7 +40,6 @@ public class BezierGameMode : GameMode
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
             }
         }
-
     }
 
     public override void Restart()
