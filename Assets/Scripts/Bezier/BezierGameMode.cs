@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BezierGameMode : GameMode
 {
-    private List<Position> curvePoints;
-    private int current;
+    private LinesModeData _linesData;
     private GameField _gameField;
 
     public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
@@ -14,12 +13,14 @@ public class BezierGameMode : GameMode
         gameStarted = false;
         _gameField = field;
         difficulty = _gameField.Difficulty;
+        _linesData = new LinesModeData();
 
         Generate();
 
-        for (var i = 0; i < curvePoints.Count; i++)
+        for (var i = 0; i < _linesData.GetPointsCount(); i++)
         {
-            Debug.Log("CurvePoint: " + curvePoints[i].X + " " + curvePoints[i].Y);
+            var point = _linesData.GetPoint(i);
+            Debug.Log("CurvePoint: " + point.X + " " + point.Y);
         }
 
         eventReactor = new DefaultReactor(timer, difficulty);
@@ -33,15 +34,15 @@ public class BezierGameMode : GameMode
 
         //if (!timer.Counting) return;
 
-        if (current == curvePoints.Count)
+        if (_linesData.IsCurrentLast())
             return;
         else
         {
-            if (invoker.X == curvePoints[current].X && invoker.Y == curvePoints[current].Y)
+            if (invoker.X == _linesData.GetCurrentPoint().X && invoker.Y == _linesData.GetCurrentPoint().Y)
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                current++;
-                if (current == curvePoints.Count)
+                _linesData.NextPoint();
+                if (_linesData.IsCurrentLast())
                 {
                     eventReactor.OnGameOver();
                 }
@@ -75,8 +76,9 @@ public class BezierGameMode : GameMode
             var y = UnityEngine.Random.Range(0, 9);
             if (i != 0)
             {
-                while ((Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLength
-              || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLength))
+                var point = _linesData.GetPoint(i - 1);
+                while ((Math.Sqrt((x - point.Y) * (x - point.Y) + (y - point.X) * (y - point.X)) > maxLength
+              || Math.Sqrt((x - point.Y) * (x - point.Y) + (y - point.X) * (y - point.X)) < minLength))
 
                 {
                     x = UnityEngine.Random.Range(0, 9);
@@ -84,7 +86,7 @@ public class BezierGameMode : GameMode
                 }
             }
 
-            curvePoints.Add(new Position(y, x));
+            _linesData.AddPoint(new Position(y, x));
         }
     }
 
@@ -171,9 +173,14 @@ public class BezierGameMode : GameMode
                 break;
         }
 
-        current = 0;
+        _linesData.Clear();
         GenerateBezierCurve(minLength, maxLength, pointsCount);
+        var curvePoints = new List<Position>();
+        for(var i = 0; i < _linesData.GetPointsCount(); i++)
+        {
+            curvePoints.Add(_linesData.GetPoint(i));
+        }
         DrawBezier(_gameField, curvePoints);
-        current = 0;
+        _linesData.ClearCounter();
     }
 }
