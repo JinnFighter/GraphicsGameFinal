@@ -37,16 +37,11 @@
         }
     }
 
-    public override void Restart()
+    public override void DoRestartAction()
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField.ClearGrid();
 
         Generate();
-
-        eventReactor.OnRestart();
-        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     private void Generate()

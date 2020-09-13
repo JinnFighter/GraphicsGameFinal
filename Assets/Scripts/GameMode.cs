@@ -49,7 +49,19 @@
         }
     }
 
-    public abstract void Restart();
+    public void Restart()
+    {
+        gameActive = false;
+        gameStarted = false;
+
+        DoRestartAction();
+
+        eventReactor.OnRestart();
+
+        Messenger.Broadcast(GameEvents.START_GAME);
+    }
+
+    public abstract void DoRestartAction();
 
     protected bool CanCheckAction() => gameActive && eventReactor.CanCheckAction();
 }

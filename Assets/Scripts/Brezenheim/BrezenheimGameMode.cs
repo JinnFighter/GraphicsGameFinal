@@ -70,19 +70,13 @@ public class BrezenheimGameMode : GameMode
         }
     }
 
-    public override void Restart()
+    public override void DoRestartAction()
     {
-        gameActive = false;
-        gameStarted = false;
         gameField.ClearGrid();
 
         curLine = 0;
         iteration = 0;
         GenerateLines();
-        
-
-        eventReactor.OnRestart();
-        Messenger.Broadcast(GameEvents.START_GAME);
     }
 
     protected virtual void GenerateLines()

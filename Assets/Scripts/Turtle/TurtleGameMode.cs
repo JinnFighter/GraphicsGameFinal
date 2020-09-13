@@ -294,10 +294,8 @@ public class TurtleGameMode : GameMode
             Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
     }
 
-    public override void Restart()
+    public override void DoRestartAction()
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField.ClearGrid();
         route = "";
         for (var i = 0; i < pathsQuantity; i++)
@@ -357,8 +355,5 @@ public class TurtleGameMode : GameMode
         turtle.transform.position = turtle_start_pos;
         turtle.transform.rotation = turtle_start_rotation;
         routeInputField.text = paths[iteration];
-        eventReactor.OnRestart();
-
-        Messenger.Broadcast(GameEvents.START_GAME);
     }
 }
