@@ -121,64 +121,6 @@ public class BezierGameMode : GameMode
         }
     }
 
-    public void drawBezier()
-    {
-        double t, sx, sy, oldx, oldy, ax, ay, tau;
-        oldx = curvePoints[0].Y;
-        oldy = curvePoints[0].X;
-        var counter = curvePoints.Count;
-        for (t = 0; t <= 0.5; t += 0.005)
-        {
-            sx = curvePoints[0].Y;
-            sy = curvePoints[0].X;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (int i = 1; i < counter; i++)//counter;
-            {
-                tau *= 1 - t;
-                ax = ax * t * (counter - i) / (i * (1 - t));
-                ay = ay * t * (counter - i) / (i * (1 - t));
-                sx += ax * curvePoints[i].Y;
-                sy += ay * curvePoints[i].X;
-            }
-            sx *= tau;
-            sy *= tau;
-
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            _gameField.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
-        oldx = curvePoints[counter - 1].Y;
-        oldy = curvePoints[counter - 1].X;
-        for (t = 1.0; t >= 0.5; t -= 0.005)
-        {
-            sx = curvePoints[counter - 1].Y;
-            sy = curvePoints[counter - 1].X;
-            ax = 1.0;
-            ay = 1.0;
-            tau = 1.0;
-            for (var i = counter - 2; i >= 0; i--)
-            {
-                tau *= t;
-                ax = ax * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                ay = ay * (1 - t) * (i + 1) / (t * (counter - 1 - i));
-                sx += ax * curvePoints[i].Y;
-                sy += ay * curvePoints[i].X;
-            }
-            sx *= tau;
-            sy *= tau;
-
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            _gameField.Draw(linePts);
-
-            oldx = sx;
-            oldy = sy;
-        }
-    }
-
     private void DrawBezier(GameField field, List<Position> curvePoints)
     {
         double t, sx, sy, oldx, oldy, ax, ay, tau;
