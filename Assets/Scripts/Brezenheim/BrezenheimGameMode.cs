@@ -3,12 +3,11 @@ using UnityEngine.UI;
 
 public class BrezenheimGameMode : GameMode
 {
+    protected List<LinesModeData> linesDatas;
     protected ILineGenerator lineGenerator;
-    protected List<Position>[] linePoints;
     protected List<int>[] ds;
     protected Position lastPoint;
     protected Position prevPoint;
-    protected int iteration;
     protected int curLine;
     protected GameField gameField;
     protected InputField textField;
@@ -17,6 +16,7 @@ public class BrezenheimGameMode : GameMode
     {
         textField = nextTextField;
         gameField = inputField;
+        linesDatas = new List<LinesModeData>(); 
 
         GenerateLines();
 
@@ -32,7 +32,7 @@ public class BrezenheimGameMode : GameMode
         if (prevPoint == lastPoint)
         {
             curLine++;
-            if (curLine == linePoints.Length)
+            if (curLine == linesDatas.Count)
             {
                 Messenger.Broadcast(GameEvents.GAME_OVER);
                 eventReactor.OnGameOver();
@@ -40,28 +40,27 @@ public class BrezenheimGameMode : GameMode
             }
             else
             {
-                iteration = 0;
                 gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                gameField.grid[(int)linePoints[curLine][0].X, (int)linePoints[curLine][0].Y].setPixelState(true);
-                lastPoint = linePoints[curLine][linePoints[curLine].Count - 1];
+                gameField.grid[(int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y].setPixelState(true);
+                lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
                 gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].setPixelState(true);
               
                 prevPoint = null;
-                textField.text = ds[curLine][iteration].ToString();
+                textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
             }
         }
         else
         {
-            prevPoint = linePoints[curLine][iteration];
+            prevPoint = linesDatas[curLine].GetCurrentPoint();
 
             if (invoker.X == prevPoint.X && invoker.Y == prevPoint.Y)
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);
-                iteration++;
-                textField.text = ds[curLine][iteration].ToString();
-                prevPoint = linePoints[curLine][iteration];
+                linesDatas[curLine].NextPoint();
+                textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
+                prevPoint = linesDatas[curLine].GetCurrentPoint();
             }
             else
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
@@ -73,7 +72,6 @@ public class BrezenheimGameMode : GameMode
         gameField.ClearGrid();
 
         curLine = 0;
-        iteration = 0;
         GenerateLines();
     }
 
@@ -108,24 +106,20 @@ public class BrezenheimGameMode : GameMode
         var lines = lineGenerator.Generate(linesCount);
 
         ds = new List<int>[linesCount];
-        linePoints = new List<Position>[linesCount];
+        linesDatas = new List<LinesModeData>(linesCount);
 
         foreach (var line in lines)
         {
             var linePoints = Algorithms.GetBrezenheimLineData(line, out var ds);
             var i = lines.IndexOf(line);
             this.ds[i] = new List<int>();
-            this.linePoints[i] = new List<Position>();
+            linesDatas[i] = new LinesModeData();
             for (var j = 0; j < ds.Count; j++)
-            {
                 this.ds[i].Add(ds[j]);
-            }
             for (var j = 0; j < linePoints.Count; j++)
-            {
-                this.linePoints[i].Add(linePoints[j]);
-            }
+                linesDatas[i].AddPoint(linePoints[j]);
         }
-        lastPoint = linePoints[0][linePoints[0].Count - 1];
+        lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
         prevPoint = null;
         gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
         gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].setPixelState(true);  

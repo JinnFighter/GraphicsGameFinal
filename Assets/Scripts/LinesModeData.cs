@@ -30,4 +30,6 @@ public class LinesModeData
         _linePoints.Clear();
         _currentPoint = 0;
     }
+
+    public int GetCurrentIndex() => _currentPoint;
 }
