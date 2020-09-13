@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class BezierGameMode : GameMode
 {
-    private int minLineLength;
-    private int maxLineLength;
     private List<Position> curvePoints;
     private int current;
-    private int pointsQuantity;
     private GameField _gameField;
 
     public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
@@ -17,34 +14,8 @@ public class BezierGameMode : GameMode
         gameStarted = false;
         _gameField = field;
         difficulty = _gameField.Difficulty;
-        switch (difficulty)
-        {
-            case 0:
-                pointsQuantity = 3;
-                minLineLength = 3;
-                maxLineLength = 5;
-                break;
-            case 1:
-                pointsQuantity = 5;
-                minLineLength = 4;
-                maxLineLength = 6;
-                break;
-            case 2:
-                pointsQuantity = 7;
-                minLineLength = 5;
-                maxLineLength = 7;
-                break;
-            default:
-                pointsQuantity = 3;
-                minLineLength = 3;
-                maxLineLength = 5;
-                break;
-        }
 
-        curvePoints = new List<Position>(pointsQuantity);
-        GenerateBezierCurve();
-        DrawBezier(_gameField, curvePoints);
-        current = 0;
+        Generate();
 
         for (var i = 0; i < curvePoints.Count; i++)
         {
@@ -89,27 +60,23 @@ public class BezierGameMode : GameMode
         gameActive = false;
         gameStarted = false;
         _gameField.ClearGrid();
-        curvePoints.Clear();
 
-        current = 0;
-        GenerateBezierCurve();
-        DrawBezier(_gameField, curvePoints);
-        current = 0;
+        Generate();
 
         eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    public void GenerateBezierCurve()
+    public void GenerateBezierCurve(int minLength, int maxLength, int count)
     {
-        for (var i = 0; i < pointsQuantity; i++)
+        for (var i = 0; i < count; i++)
         {
             var x = UnityEngine.Random.Range(0, 9);
             var y = UnityEngine.Random.Range(0, 9);
             if (i != 0)
             {
-                while ((Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLineLength
-              || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLineLength))
+                while ((Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) > maxLength
+              || Math.Sqrt((x - curvePoints[i - 1].Y) * (x - curvePoints[i - 1].Y) + (y - curvePoints[i - 1].X) * (y - curvePoints[i - 1].X)) < minLength))
 
                 {
                     x = UnityEngine.Random.Range(0, 9);
@@ -178,5 +145,35 @@ public class BezierGameMode : GameMode
             oldx = sx;
             oldy = sy;
         }
+    }
+
+    private void Generate()
+    {
+        int pointsCount;
+        int minLength;
+        int maxLength;
+        switch (difficulty)
+        {
+            case 1:
+                pointsCount = 5;
+                minLength = 4;
+                maxLength = 6;
+                break;
+            case 2:
+                pointsCount = 7;
+                minLength = 5;
+                maxLength = 7;
+                break;
+            default:
+                pointsCount = 3;
+                minLength = 3;
+                maxLength = 5;
+                break;
+        }
+
+        current = 0;
+        GenerateBezierCurve(minLength, maxLength, pointsCount);
+        DrawBezier(_gameField, curvePoints);
+        current = 0;
     }
 }
