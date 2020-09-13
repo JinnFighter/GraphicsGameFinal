@@ -46,7 +46,7 @@ public class BrezenheimGameMode : GameMode
                 iteration = 0;
                 gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                FillPoints();
+                gameField.grid[(int)lines[curLine].GetStart().X, (int)lines[curLine].GetStart().Y].setPixelState(true);
                 lastPoint = linePoints[curLine][linePoints[curLine].Count - 1];
                 gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].setPixelState(true);
               
@@ -84,11 +84,6 @@ public class BrezenheimGameMode : GameMode
 
         eventReactor.OnRestart();
         Messenger.Broadcast(GameEvents.START_GAME);
-    }
-
-    protected virtual void FillPoints()
-    {
-        gameField.grid[(int)lines[curLine].GetStart().X, (int)lines[curLine].GetStart().Y].setPixelState(true);
     }
 
     protected virtual void GenerateLines()

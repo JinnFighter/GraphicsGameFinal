@@ -54,10 +54,4 @@ public class MultipleBrezenheimGameMode : BrezenheimGameMode
         gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
         gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
     }
-
-    protected override void FillPoints()
-    {
-        gameField.grid[(int)lines[curLine].GetStart().X, (int)lines[curLine].GetStart().Y].setPixelState(true);
-        gameField.grid[(int)lines[curLine].GetEnd().X, (int)lines[curLine].GetEnd().Y].setPixelState(true);
-    }
 }
