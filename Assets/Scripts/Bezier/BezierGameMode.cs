@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class BezierGameMode : GameMode
 {
@@ -55,8 +54,9 @@ public class BezierGameMode : GameMode
         Messenger.Broadcast(GameEvents.START_GAME);
     }
 
-    private void DrawBezier(GameField field, List<Position> curvePoints)
+    private void DrawBezier(List<Position> curvePoints)
     {
+        var points = new List<Position>();
         double t, sx, sy, oldx, oldy, ax, ay, tau;
         oldx = curvePoints[0].X;
         oldy = curvePoints[0].Y;
@@ -80,8 +80,7 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            field.Draw(linePts);
+            points.AddRange(Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _));
 
             oldx = sx;
             oldy = sy;
@@ -106,12 +105,13 @@ public class BezierGameMode : GameMode
             sx *= tau;
             sy *= tau;
 
-            var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _);
-            field.Draw(linePts);
+            points.AddRange(Algorithms.GetBrezenheimLineData(new Line(new Position(oldx, oldy), new Position(sx, sy)), out _));
 
             oldx = sx;
             oldy = sy;
         }
+
+        _gameField.Draw(points);
     }
 
     private void Generate()
@@ -141,10 +141,10 @@ public class BezierGameMode : GameMode
         _generator = new BezierLineDataGenerator(pointsCount);
         _linesData = _generator.GenerateData(minLength, maxLength);
         var curvePoints = new List<Position>();
+
         for(var i = 0; i < _linesData.GetPointsCount(); i++)
-        {
             curvePoints.Add(_linesData.GetPoint(i));
-        }
-        DrawBezier(_gameField, curvePoints);
+
+        DrawBezier(curvePoints);
     }
 }
