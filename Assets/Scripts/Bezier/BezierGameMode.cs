@@ -10,7 +10,7 @@
         _gameField = field;
         _linesData = new LinesModeData();
         _pointsGenerator = new BezierLinePointsGenerator();
-        Generate();
+        DoRestartAction();
 
         eventReactor = new DefaultReactor(timer, difficulty);
 
@@ -39,11 +39,6 @@
     {
         _gameField.ClearGrid();
 
-        Generate();
-    }
-
-    private void Generate()
-    {
         int pointsCount;
         int minLength;
         int maxLength;
