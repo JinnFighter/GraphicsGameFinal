@@ -9,8 +9,6 @@ public class BezierGameMode : GameMode
 
     public BezierGameMode(GameplayTimer timer, int difficulty, GameField field) : base(difficulty)
     {
-        gameActive = false;
-        gameStarted = false;
         _gameField = field;
         difficulty = _gameField.Difficulty;
         _linesData = new LinesModeData();
@@ -50,7 +48,6 @@ public class BezierGameMode : GameMode
             else
             {
                 Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
-                Debug.Log("Wrong!");
             }
         }
 
