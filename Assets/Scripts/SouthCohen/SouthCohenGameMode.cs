@@ -173,8 +173,8 @@ public class SouthCohenGameMode : GameMode
         var by = By;
         if (ax > bx)
         {
-            swap(ax, bx);
-            swap(ay, by);
+            Swap(ref ax, ref bx);
+            Swap(ref ay, ref by);
         }
         int[,] matr = new int[2, 2];
 
@@ -274,13 +274,6 @@ public class SouthCohenGameMode : GameMode
     }
 
     private void Swap<T>(ref T a, ref T b)
-    {
-        T c = a;
-        a = b;
-        b = c;
-    }
-
-    private void swap<T>(T a, T b)
     {
         T c = a;
         a = b;
