@@ -207,7 +207,7 @@ public class SouthCohenGameMode : GameMode
 
         foreach (var a in _lineZones[_iteration])
         {
-            if (a == this.Code(invoker.GetPosition(), _borderPoints[0], _borderPoints[1]))
+            if (a == this.Code(invoker.Position, _borderPoints[0], _borderPoints[1]))
             {
                 check = true;
                 c = a;

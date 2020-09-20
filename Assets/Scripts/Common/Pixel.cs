@@ -4,12 +4,9 @@ public class Pixel : MonoBehaviour
 {
     [SerializeField] public GameObject pixel_empty;
 
-    public int X { get; set; }
-    public int Y { get; set; }
+    public Position Position { get; set; }
 
     public void setPixelState(bool state) => pixel_empty.SetActive(!state);
-
-    public Position GetPosition() => new Position(X, Y);
 
     public void OnMouseDown() => Messenger<Pixel>.Broadcast(GameEvents.GAME_CHECK, this);
 }

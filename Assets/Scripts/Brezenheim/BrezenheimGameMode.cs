@@ -54,7 +54,7 @@ public class BrezenheimGameMode : GameMode
         {
             prevPoint = linesDatas[curLine].GetCurrentPoint();
 
-            if (invoker.X == prevPoint.X && invoker.Y == prevPoint.Y)
+            if (invoker.Position.Equals(prevPoint))
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.setPixelState(true);
