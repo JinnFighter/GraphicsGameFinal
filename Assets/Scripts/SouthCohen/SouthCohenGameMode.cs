@@ -5,7 +5,6 @@ using UnityEngine;
 public class SouthCohenGameMode : GameMode
 {
     private Pixel[] borderPoints;
-    private int linesQuantity;
     private List<Line> _lines;
     private int iteration;
     private List<int>[] lineZones;
@@ -24,23 +23,11 @@ public class SouthCohenGameMode : GameMode
         borderPoints = new Pixel[2];
         Vector3 pos;
         Vector3 scale;
+        int linesCount;
         switch (difficulty)
         {
-            case 0:
-                linesQuantity = 5;
-                borderPoints[0] = _gameField.grid[3, 3];
-                borderPoints[1] = _gameField.grid[7, 7];
-                pos = borderPoints[0].transform.position;
-                pos.x += 12.5f;
-                pos.y -= 12.5f;
-                pos.z = border.transform.position.z;
-                border.transform.position = pos;
-                scale = border.transform.localScale;
-                scale.x *= 10;
-                scale.y *= 10;
-                break;
             case 1:
-                linesQuantity = 7;
+                linesCount = 7;
                 borderPoints[0] = _gameField.grid[2, 2];
                 borderPoints[1] = _gameField.grid[8, 8];
                 pos = borderPoints[0].transform.position;
@@ -53,7 +40,7 @@ public class SouthCohenGameMode : GameMode
                 scale.y *= 7.5f;
                 break;
             case 2:
-                linesQuantity = 10;
+                linesCount = 10;
                 borderPoints[0] = _gameField.grid[2, 2];
                 borderPoints[1] = _gameField.grid[11, 11];
                 pos = borderPoints[0].transform.position;
@@ -66,7 +53,7 @@ public class SouthCohenGameMode : GameMode
                 scale.y *= 10;
                 break;
             default:
-                linesQuantity = 5;
+                linesCount = 5;
                 borderPoints[0] = _gameField.grid[3, 3];
                 borderPoints[1] = _gameField.grid[7, 7];
                 pos = borderPoints[0].transform.position;
@@ -83,12 +70,12 @@ public class SouthCohenGameMode : GameMode
         border.transform.localScale = scale;
         gameActive = false;
         gameStarted = false;
-        lineZones = new List<int>[linesQuantity];
-        for (var i = 0; i < linesQuantity; i++)
+        lineZones = new List<int>[linesCount];
+        for (var i = 0; i < linesCount; i++)
         {
             lineZones[i] = new List<int>();
         }
-        _lines = new List<Line>(linesQuantity);
+        _lines = new List<Line>(linesCount);
 
         GenerateLines();
 
@@ -103,7 +90,7 @@ public class SouthCohenGameMode : GameMode
             }
         }
 
-        for (var i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < _lines.Count; i++)
         {
             southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X], 
                 _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
@@ -205,26 +192,30 @@ public class SouthCohenGameMode : GameMode
         int b;
         int minLength;
         int maxLength;
+        int linesCount;
         switch (difficulty)
         {
             case 1:
+                linesCount = 7;
                 maxLength = 10;
                 minLength = 8;
                 b = 14;
                 break;
             case 2:
+                linesCount = 10;
                 maxLength = 11;
                 minLength = 10;
                 b = 19;
                 break;
             default:
+                linesCount = 5;
                 maxLength = 8;
                 minLength = 5;
                 b = 9;
                 break;
         }
 
-        for (var i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < linesCount; i++)
         {
             var firstX = UnityEngine.Random.Range(0, b);
             var firstY = UnityEngine.Random.Range(0, b);
@@ -278,7 +269,7 @@ public class SouthCohenGameMode : GameMode
 
     public override void Check(Pixel invoker)
     {
-        if (iteration == linesQuantity)
+        if (iteration == _lines.Count)
         {
             Messenger.Broadcast(GameEvents.GAME_OVER);
             return;
@@ -306,7 +297,7 @@ public class SouthCohenGameMode : GameMode
             else
                 return;
 
-            if (iteration == linesQuantity)
+            if (iteration == _lines.Count)
             {
                 eventReactor.OnGameOver();
             }
@@ -340,13 +331,13 @@ public class SouthCohenGameMode : GameMode
     public override void DoRestartAction()
     {
         _gameField.ClearGrid();
-        for (var i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < _lines.Count; i++)
             lineZones[i].Clear();
 
         iteration = 0;
         GenerateLines();
 
-        for (var i = 0; i < linesQuantity; i++)
+        for (var i = 0; i < _lines.Count; i++)
         {
             southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X],
                 _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
