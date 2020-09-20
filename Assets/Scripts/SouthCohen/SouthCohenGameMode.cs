@@ -13,8 +13,7 @@ public class SouthCohenGameMode : GameMode
     private int[,] gridCodes;
     private int gridCodesWidth;
     private int gridCodesHeight;
-    private int maxLineLength;
-    private int minLineLength;
+
     private GameField _gameField;
 
     public SouthCohenGameMode(GameplayTimer timer, SpriteRenderer border, GameField field, int difficulty) : base(difficulty)
@@ -29,8 +28,6 @@ public class SouthCohenGameMode : GameMode
         {
             case 0:
                 linesQuantity = 5;
-                maxLineLength = 8;
-                minLineLength = 5;
                 borderPoints[0] = _gameField.grid[3, 3];
                 borderPoints[1] = _gameField.grid[7, 7];
                 pos = borderPoints[0].transform.position;
@@ -44,8 +41,6 @@ public class SouthCohenGameMode : GameMode
                 break;
             case 1:
                 linesQuantity = 7;
-                maxLineLength = 10;
-                minLineLength = 8;
                 borderPoints[0] = _gameField.grid[2, 2];
                 borderPoints[1] = _gameField.grid[8, 8];
                 pos = borderPoints[0].transform.position;
@@ -59,8 +54,6 @@ public class SouthCohenGameMode : GameMode
                 break;
             case 2:
                 linesQuantity = 10;
-                maxLineLength = 11;
-                minLineLength = 10;
                 borderPoints[0] = _gameField.grid[2, 2];
                 borderPoints[1] = _gameField.grid[11, 11];
                 pos = borderPoints[0].transform.position;
@@ -74,8 +67,6 @@ public class SouthCohenGameMode : GameMode
                 break;
             default:
                 linesQuantity = 5;
-                maxLineLength = 8;
-                minLineLength = 5;
                 borderPoints[0] = _gameField.grid[3, 3];
                 borderPoints[1] = _gameField.grid[7, 7];
                 pos = borderPoints[0].transform.position;
@@ -211,18 +202,23 @@ public class SouthCohenGameMode : GameMode
     public void GenerateLines()
     {
         int b;
+        int minLength;
+        int maxLength;
         switch (difficulty)
         {
-            case 0:
-                b = 9;
-                break;
             case 1:
+                maxLength = 10;
+                minLength = 8;
                 b = 14;
                 break;
             case 2:
+                maxLength = 11;
+                minLength = 10;
                 b = 19;
                 break;
             default:
+                maxLength = 8;
+                minLength = 5;
                 b = 9;
                 break;
         }
@@ -235,8 +231,8 @@ public class SouthCohenGameMode : GameMode
             var secondX = UnityEngine.Random.Range(0, b);
             var secondY = UnityEngine.Random.Range(0, b);
 
-            while ((Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLineLength
-              || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLineLength)
+            while ((Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) > maxLength
+              || Math.Sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) * (secondY - firstY)) < minLength)
               || (!CheckIntersection(firstX, firstY, secondX, secondY)))
             {
                 firstX = UnityEngine.Random.Range(0, b);
