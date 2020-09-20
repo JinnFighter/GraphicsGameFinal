@@ -41,7 +41,6 @@ public class SouthCohenGameMode : GameMode
                 scale = border.transform.localScale;
                 scale.x *= 10;
                 scale.y *= 10;
-                border.transform.localScale = scale;
                 break;
             case 1:
                 linesQuantity = 7;
@@ -57,7 +56,6 @@ public class SouthCohenGameMode : GameMode
                 scale = border.transform.localScale;
                 scale.x *= 7.5f;
                 scale.y *= 7.5f;
-                border.transform.localScale = scale;
                 break;
             case 2:
                 linesQuantity = 10;
@@ -73,7 +71,6 @@ public class SouthCohenGameMode : GameMode
                 scale = border.transform.localScale;
                 scale.x *= 10;
                 scale.y *= 10;
-                border.transform.localScale = scale;
                 break;
             default:
                 linesQuantity = 5;
@@ -89,10 +86,10 @@ public class SouthCohenGameMode : GameMode
                 scale = border.transform.localScale;
                 scale.x *= 10;
                 scale.y *= 10;
-                border.transform.localScale = scale;
                 break;
 
         }
+        border.transform.localScale = scale;
         gameActive = false;
         gameStarted = false;
         lineZones = new List<int>[linesQuantity];
