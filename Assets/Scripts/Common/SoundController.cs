@@ -24,42 +24,20 @@ public class SoundController : MonoBehaviour
         Messenger.RemoveListener(GameEvents.GAME_OVER, PlayGameOverClip);
     }
 
-    public void PlayCorrectAnswerClip(int a)
+    public void PlayCorrectAnswerClip(int a) => PlayClip(correctAnswerClip);
+
+    public void PlayWrongAnswerClip() => PlayClip(wrongAnswerClip);
+
+    public void PlayGameOverClip() => PlayClip(gameOverClip);
+
+    public void PlayButtonClickClip() => PlayClip(buttonClickClip);
+
+    public void PlaySelectProfileClip() => PlayClip(selectProfileClip);
+
+    public void PlayClip(AudioClip audioClip)
     {
-        if(source.clip != correctAnswerClip)
-            source.clip = correctAnswerClip;
-
-        source.Play();
-    }
-
-    public void PlayWrongAnswerClip()
-    {
-        if(source.clip != wrongAnswerClip)
-            source.clip = wrongAnswerClip;
-
-        source.Play();
-    }
-
-    public void PlayGameOverClip()
-    {
-        if (source.clip != gameOverClip)
-            source.clip = gameOverClip;
-
-        source.Play();
-    }
-
-    public void PlayButtonClickClip()
-    {
-        if (source.clip != buttonClickClip)
-            source.clip = buttonClickClip;
-
-        source.Play();
-    }
-
-    public void PlaySelectProfileClip()
-    {
-        if (source.clip != selectProfileClip)
-            source.clip = selectProfileClip;
+        if (source.clip != audioClip)
+            source.clip = audioClip;
 
         source.Play();
     }
