@@ -42,9 +42,9 @@ public class BrezenheimGameMode : GameMode
             {
                 gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                gameField.grid[(int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y].setPixelState(true);
+                gameField.grid[(int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y].SetState(true);
                 lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
-                gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].setPixelState(true);
+                gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].SetState(true);
               
                 prevPoint = null;
                 textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
@@ -57,7 +57,7 @@ public class BrezenheimGameMode : GameMode
             if (invoker.Position.Equals(prevPoint))
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                invoker.setPixelState(true);
+                invoker.SetState(true);
                 linesDatas[curLine].NextPoint();
                 textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
@@ -121,8 +121,8 @@ public class BrezenheimGameMode : GameMode
         }
         lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
         prevPoint = null;
-        gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
-        gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].setPixelState(true);  
+        gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].SetState(true);
+        gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].SetState(true);  
     }
 
     ~BrezenheimGameMode()

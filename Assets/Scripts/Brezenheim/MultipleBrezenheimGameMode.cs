@@ -55,7 +55,7 @@ public class MultipleBrezenheimGameMode : BrezenheimGameMode
         }
 
         lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
-        gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].setPixelState(true);
-        gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].setPixelState(true);
+        gameField.grid[(int)lines[0].GetStart().X, (int)lines[0].GetStart().Y].SetState(true);
+        gameField.grid[(int)lines[0].GetEnd().X, (int)lines[0].GetEnd().Y].SetState(true);
     }
 }

@@ -249,8 +249,8 @@ public class SouthCohenGameMode : GameMode
             {
                 if (_gridCodes[i, j] == code)
                 {
-                    if (!_gameField.grid[i, j].pixel_empty.activeSelf)
-                        _gameField.grid[i, j].setPixelState(false);
+                    if (_gameField.grid[i, j].IsActive())
+                        _gameField.grid[i, j].SetState(false);
                 }
             }
         }

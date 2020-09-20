@@ -71,7 +71,7 @@ public class GameField : MonoBehaviour
         {
             for(var j = 0; j < Width; j++)
             {
-                grid[i, j].setPixelState(false);
+                grid[i, j].SetState(false);
             }
         }
     }
@@ -83,7 +83,7 @@ public class GameField : MonoBehaviour
         foreach(var position in positions)
         {
             if (Contains(position))
-                grid[(int)position.X, (int)position.Y].setPixelState(true);
+                grid[(int)position.X, (int)position.Y].SetState(true);
         }
     }
 }
