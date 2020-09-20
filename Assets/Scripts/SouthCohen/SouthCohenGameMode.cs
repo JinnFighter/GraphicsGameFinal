@@ -6,7 +6,7 @@ public class SouthCohenGameMode : GameMode
 {
     private Pixel[] borderPoints;
     private int linesQuantity;
-    private Pixel[,] lines;
+    private List<Line> _lines;
     private int iteration;
     private List<int>[] lineZones;
     private SpriteRenderer border;
@@ -88,7 +88,7 @@ public class SouthCohenGameMode : GameMode
         {
             lineZones[i] = new List<int>();
         }
-        lines = new Pixel[2, linesQuantity];
+        _lines = new List<Line>(linesQuantity);
 
         GenerateLines();
 
@@ -105,13 +105,14 @@ public class SouthCohenGameMode : GameMode
 
         for (var i = 0; i < linesQuantity; i++)
         {
-            southCohen(lines[0, i], lines[1, i],
+            southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X], 
+                _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
            borderPoints[0], borderPoints[1], i);
         }
 
         iteration = 0;
 
-        var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)), out _);
+        var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
         _gameField.Draw(linePts);
 
         eventReactor = new DefaultReactor(timer, difficulty);
@@ -241,8 +242,7 @@ public class SouthCohenGameMode : GameMode
                 secondX = UnityEngine.Random.Range(0, b);
                 secondY = UnityEngine.Random.Range(0, b);
             }
-            lines[0, i] = _gameField.grid[firstY, firstX];
-            lines[1, i] = _gameField.grid[secondY, secondX];
+            _lines[i] = new Line(new Position(firstY, firstX), new Position(secondY, secondX));
         }
     }
 
@@ -314,7 +314,7 @@ public class SouthCohenGameMode : GameMode
             {
                 _gameField.ClearGrid();
 
-                var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, iteration].Y, lines[0, iteration].X), new Position(lines[1, iteration].Y, lines[1, iteration].X)), out _);
+                var linePts = Algorithms.GetBrezenheimLineData(_lines[iteration], out _);
                 _gameField.Draw(linePts);
             }
         }
@@ -348,12 +348,13 @@ public class SouthCohenGameMode : GameMode
 
         for (var i = 0; i < linesQuantity; i++)
         {
-            southCohen(lines[0, i], lines[1, i],
+            southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X],
+                _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
            borderPoints[0], borderPoints[1], i);
         }
         iteration = 0;
 
-        var linePts = Algorithms.GetBrezenheimLineData(new Line(new Position(lines[0, 0].Y, lines[0, 0].X), new Position(lines[1, 0].Y, lines[1, 0].X)), out _);
+        var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
         _gameField.Draw(linePts);
     }
 
