@@ -9,6 +9,8 @@ public class Pixel : MonoBehaviour
 
     public void setPixelState(bool state) => pixel_empty.SetActive(!state);
 
+    public Position GetPosition() => new Position(X, Y);
+
     public void OnMouseDown() => Messenger<Pixel>.Broadcast(GameEvents.GAME_CHECK, this);
 }
 

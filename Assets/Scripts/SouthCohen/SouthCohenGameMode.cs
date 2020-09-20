@@ -91,11 +91,7 @@ public class SouthCohenGameMode : GameMode
         }
 
         for (var i = 0; i < _lines.Count; i++)
-        {
-            southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X], 
-                _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
-           _borderPoints[0], _borderPoints[1], i);
-        }
+            SouthCohen(_lines[i], _borderPoints[0].GetPosition(), _borderPoints[1].GetPosition(), i);
 
         _iteration = 0;
 
@@ -116,16 +112,16 @@ public class SouthCohenGameMode : GameMode
         Messenger.RemoveListener(GameEvents.RESTART_GAME, Restart);
     }
 
-    public void southCohen(Pixel nA, Pixel nB, Pixel rectLeft, Pixel rectRight, int i)
+    public void SouthCohen(Line line, Position left, Position right, int i)
     {
-        var A = nA;
-        var B = nB;
-        var ax = A.X;
-        var ay = A.Y;
-        var bx = B.X;
-        var by = B.Y;
-        var code1 = Code(A, rectLeft, rectRight);
-        var code2 = Code(B, rectLeft, rectRight);
+        var start = line.GetStart();
+        var end = line.GetEnd();
+        var ax = start.X;
+        var ay = start.Y;
+        var bx = end.X;
+        var by = end.Y;
+        var code1 = Code(start, left, right);
+        var code2 = Code(end, left, right);
         var inside = (code1 | code2) == 0;
         var outside = (code1 & code2) != 0;
         while (!inside && !outside)
@@ -141,37 +137,37 @@ public class SouthCohenGameMode : GameMode
 
             if (Convert.ToBoolean(code1 & 0x01))
             {
-                ay += (rectLeft.X - ax) * (by - ay) / (bx - ax);
-                ax = rectLeft.X;
+                ay += (left.X - ax) * (by - ay) / (bx - ax);
+                ax = left.X;
                 if (!_lineZones[i].Contains(code1))
                     _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x02))
             {
-                ax += (rectLeft.Y - ay) * (bx - ax) / (by - ay);
-                ay = rectLeft.Y;
+                ax += (left.Y - ay) * (bx - ax) / (by - ay);
+                ay = left.Y;
                 if (!_lineZones[i].Contains(code1))
                     _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x04))
             {
-                ay += (rectRight.X - ax) * (by - ay) / (bx - ax);
-                ax = rectRight.X;
+                ay += (right.X - ax) * (by - ay) / (bx - ax);
+                ax = right.X;
                 if (!_lineZones[i].Contains(code1))
                     _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x08))
             {
-                ax += (rectRight.Y - ay) * (bx - ax) / (by - ay);
-                ay = rectRight.Y;
+                ax += (right.Y - ay) * (bx - ax) / (by - ay);
+                ay = right.Y;
                 if (!_lineZones[i].Contains(code1))
                     _lineZones[i].Add(code1);
             }
 
-            code1 = Code(_gameField.grid[ax, ay], rectLeft, rectRight);
+            code1 = Code(new Position(ax, ay), left, right);
             inside = (code1 | code2) == 0;
             outside = (code1 & code2) != 0;
         }
@@ -184,6 +180,16 @@ public class SouthCohenGameMode : GameMode
         if (point.X > rectRight.X) code |= 0x04;//_ 1 _ _;
         if (point.Y < rectLeft.Y) code |= 0x02;//_ _ 1 _;
         if (point.Y > rectRight.Y) code |= 0x08;//1 _ _ _;
+        return code;
+    }
+
+    private int Code(Position point, Position topLeft, Position downRight)
+    {
+        var code = 0;
+        if (point.X < topLeft.X) code |= 0x01;//_ _ _ 1;
+        if (point.X > downRight.X) code |= 0x04;//_ 1 _ _;
+        if (point.Y < topLeft.Y) code |= 0x02;//_ _ 1 _;
+        if (point.Y > downRight.Y) code |= 0x08;//1 _ _ _;
         return code;
     }
 
@@ -338,11 +344,7 @@ public class SouthCohenGameMode : GameMode
         GenerateLines();
 
         for (var i = 0; i < _lines.Count; i++)
-        {
-            southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X],
-                _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
-           _borderPoints[0], _borderPoints[1], i);
-        }
+            SouthCohen(_lines[i], _borderPoints[0].GetPosition(), _borderPoints[1].GetPosition(), i);
         _iteration = 0;
 
         var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
