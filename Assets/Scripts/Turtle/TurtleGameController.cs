@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
 using UnityEngine.SceneManagement;
 
 public class TurtleGameController : MonoBehaviour
@@ -14,7 +12,7 @@ public class TurtleGameController : MonoBehaviour
     void Start()
     {
         var gameField = GetComponent<GameField>();
-        _gameMode = new TurtleGameMode(originalPixel, turtle, routeInputField, GetComponent<GameplayTimer>(), gameField, gameField.Difficulty);
+        _gameMode = new TurtleGameMode(turtle, routeInputField, GetComponent<GameplayTimer>(), gameField, gameField.Difficulty);
     }
 
     public void SendStartGameEvent()
