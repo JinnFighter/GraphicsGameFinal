@@ -4,9 +4,9 @@ public class Turtle : MonoBehaviour
 {
     [SerializeField] public Pixel originalPixel;
 
-    private enum Directions { UP, LEFT, DOWN, RIGHT };
+    public enum Direction { UP, LEFT, DOWN, RIGHT };
 
-    public int Look { get; set; }
+    public Direction Look { get; set; }
     public int X { get; set; }
     public int Y { get; set; }
     private readonly int angle = 90;
@@ -18,17 +18,17 @@ public class Turtle : MonoBehaviour
         this.gameObject.transform.Rotate(0, 0, angle);
         switch (Look)
         {
-            case (int)Directions.UP:
-                Look = (int)Directions.LEFT;
+            case Direction.UP:
+                Look = Direction.LEFT;
                 break;
-            case (int)Directions.LEFT:
-                Look = (int)Directions.DOWN;
+            case Direction.LEFT:
+                Look = Direction.DOWN;
                 break;
-            case (int)Directions.DOWN:
-                Look = (int)Directions.RIGHT;
+            case Direction.DOWN:
+                Look = Direction.RIGHT;
                 break;
-            case (int)Directions.RIGHT:
-                Look = (int)Directions.UP;
+            case Direction.RIGHT:
+                Look = Direction.UP;
                 break;
         }
     }
@@ -38,17 +38,17 @@ public class Turtle : MonoBehaviour
         this.gameObject.transform.Rotate(0, 0, -angle);
         switch (Look)
         {
-            case (int)Directions.UP:
-                Look = (int)Directions.RIGHT;
+            case Direction.UP:
+                Look = Direction.RIGHT;
                 break;
-            case (int)Directions.RIGHT:
-                Look = (int)Directions.DOWN;
+            case Direction.RIGHT:
+                Look = Direction.DOWN;
                 break;
-            case (int)Directions.DOWN:
-                Look = (int)Directions.LEFT;
+            case Direction.DOWN:
+                Look = Direction.LEFT;
                 break;
-            case (int)Directions.LEFT:
-                Look = (int)Directions.UP;
+            case Direction.LEFT:
+                Look = Direction.UP;
                 break;
         }
     }
@@ -60,19 +60,19 @@ public class Turtle : MonoBehaviour
         float posY = startPos.y;
         switch (Look)
         {
-            case (int)Directions.UP:
+            case Direction.UP:
                 X--;
                 posY += offsetY;
             break;
-            case (int)Directions.RIGHT:
+            case Direction.RIGHT:
                 Y++;
                 posX += offsetX;
             break;
-            case (int)Directions.DOWN:
+            case Direction.DOWN:
                 X++;
                 posY -= offsetY;
             break;
-            case (int)Directions.LEFT:
+            case Direction.LEFT:
                 Y--;
                 posX -= offsetX;
             break;
