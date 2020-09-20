@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SouthCohenGameMode : GameMode
 {
-    private Pixel[] _borderPoints;
+    private Position[] _borderPoints;
     private List<Line> _lines;
     private int _iteration;
     private List<int>[] _lineZones;
@@ -208,7 +208,7 @@ public class SouthCohenGameMode : GameMode
 
         foreach (var a in _lineZones[_iteration])
         {
-            if (a == this.Code(invoker.GetPosition(), _borderPoints[0].GetPosition(), _borderPoints[1].GetPosition()))
+            if (a == this.Code(invoker.GetPosition(), _borderPoints[0], _borderPoints[1]))
             {
                 check = true;
                 c = a;
@@ -267,7 +267,7 @@ public class SouthCohenGameMode : GameMode
         GenerateLines();
 
         for (var i = 0; i < _lines.Count; i++)
-            SouthCohen(_lines[i], _borderPoints[0].GetPosition(), _borderPoints[1].GetPosition(), i);
+            SouthCohen(_lines[i], _borderPoints[0], _borderPoints[1], i);
         _iteration = 0;
 
         var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
@@ -290,15 +290,15 @@ public class SouthCohenGameMode : GameMode
 
     private void GenerateBorder(int difficulty)
     {
-        _borderPoints = new Pixel[2];
+        _borderPoints = new Position[2];
         Vector3 pos;
         Vector3 scale;
         switch (difficulty)
         {
             case 1:
-                _borderPoints[0] = _gameField.grid[2, 2];
-                _borderPoints[1] = _gameField.grid[8, 8];
-                pos = _borderPoints[0].transform.position;
+                _borderPoints[0] = new Position(2, 2);
+                _borderPoints[1] = new Position(8, 8);
+                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
                 pos.x += 9.5f;
                 pos.y -= 9.5f;
                 pos.z = _border.transform.position.z;
@@ -308,9 +308,9 @@ public class SouthCohenGameMode : GameMode
                 scale.y *= 7.5f;
                 break;
             case 2:
-                _borderPoints[0] = _gameField.grid[2, 2];
-                _borderPoints[1] = _gameField.grid[11, 11];
-                pos = _borderPoints[0].transform.position;
+                _borderPoints[0] = new Position(2, 2);
+                _borderPoints[1] = new Position(11, 11);
+                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
                 pos.x += 14.5f;
                 pos.y -= 14.5f;
                 pos.z = _border.transform.position.z;
@@ -320,9 +320,9 @@ public class SouthCohenGameMode : GameMode
                 scale.y *= 10;
                 break;
             default:
-                _borderPoints[0] = _gameField.grid[3, 3];
-                _borderPoints[1] = _gameField.grid[7, 7];
-                pos = _borderPoints[0].transform.position;
+                _borderPoints[0] = new Position(3, 3);
+                _borderPoints[1] = new Position(7, 7);
+                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
                 pos.x += 12.5f;
                 pos.y -= 12.5f;
                 pos.z = _border.transform.position.z;
@@ -339,6 +339,6 @@ public class SouthCohenGameMode : GameMode
         _gridCodes = new int[_gridCodesHeight, _gridCodesWidth];
         for (var i = 0; i < _gridCodesHeight; i++)
             for (var j = 0; j < _gridCodesWidth; j++)
-                _gridCodes[i, j] = this.Code(new Position(i, j), _borderPoints[0].GetPosition(), _borderPoints[1].GetPosition());
+                _gridCodes[i, j] = this.Code(new Position(i, j), _borderPoints[0], _borderPoints[1]);
     }
 }
