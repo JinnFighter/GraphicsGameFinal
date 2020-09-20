@@ -4,7 +4,7 @@ public class Turtle : MonoBehaviour
 {
     [SerializeField] public Pixel originalPixel;
 
-    private enum directionEnum { UP, LEFT, DOWN, RIGHT };
+    private enum Directions { UP, LEFT, DOWN, RIGHT };
 
     public int Look { get; set; }
     public int X { get; set; }
@@ -13,66 +13,66 @@ public class Turtle : MonoBehaviour
     private readonly float offsetX;
     private readonly float offsetY;
 
-    public void rotateLeft()
+    public void RotateLeft()
     {
         this.gameObject.transform.Rotate(0, 0, angle);
         switch (Look)
         {
-            case (int)directionEnum.UP:
-                Look = (int)directionEnum.LEFT;
+            case (int)Directions.UP:
+                Look = (int)Directions.LEFT;
                 break;
-            case (int)directionEnum.LEFT:
-                Look = (int)directionEnum.DOWN;
+            case (int)Directions.LEFT:
+                Look = (int)Directions.DOWN;
                 break;
-            case (int)directionEnum.DOWN:
-                Look = (int)directionEnum.RIGHT;
+            case (int)Directions.DOWN:
+                Look = (int)Directions.RIGHT;
                 break;
-            case (int)directionEnum.RIGHT:
-                Look = (int)directionEnum.UP;
+            case (int)Directions.RIGHT:
+                Look = (int)Directions.UP;
                 break;
         }
     }
 
-    public void rotateRight()
+    public void RotateRight()
     {
         this.gameObject.transform.Rotate(0, 0, -angle);
         switch (Look)
         {
-            case (int)directionEnum.UP:
-                Look = (int)directionEnum.RIGHT;
+            case (int)Directions.UP:
+                Look = (int)Directions.RIGHT;
                 break;
-            case (int)directionEnum.RIGHT:
-                Look = (int)directionEnum.DOWN;
+            case (int)Directions.RIGHT:
+                Look = (int)Directions.DOWN;
                 break;
-            case (int)directionEnum.DOWN:
-                Look = (int)directionEnum.LEFT;
+            case (int)Directions.DOWN:
+                Look = (int)Directions.LEFT;
                 break;
-            case (int)directionEnum.LEFT:
-                Look = (int)directionEnum.UP;
+            case (int)Directions.LEFT:
+                Look = (int)Directions.UP;
                 break;
         }
     }
 
-    public void moveForward()
+    public void MoveForward()
     {
         Vector3 startPos = this.transform.position;
         float posX = startPos.x;
         float posY = startPos.y;
         switch (Look)
         {
-            case (int)directionEnum.UP:
+            case (int)Directions.UP:
                 X--;
                 posY += offsetY;
             break;
-            case (int)directionEnum.RIGHT:
+            case (int)Directions.RIGHT:
                 Y++;
                 posX += offsetX;
             break;
-            case (int)directionEnum.DOWN:
+            case (int)Directions.DOWN:
                 X++;
                 posY -= offsetY;
             break;
-            case (int)directionEnum.LEFT:
+            case (int)Directions.LEFT:
                 Y--;
                 posX -= offsetX;
             break;

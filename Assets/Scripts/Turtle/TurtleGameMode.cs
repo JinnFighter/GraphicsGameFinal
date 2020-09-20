@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class TurtleGameMode : GameMode
 {
-    private Pixel originalPixel;
-    private Turtle turtle;
-    private InputField routeInputField;
+    private Turtle _turtle;
+    private InputField _routeInputField;
 
     private int pathsQuantity;
     private string[] paths;
@@ -33,11 +32,10 @@ public class TurtleGameMode : GameMode
     private Quaternion turtle_start_rotation;
     private GameField _gameField;
 
-    public TurtleGameMode(Pixel pixel, Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(difficulty)
+    public TurtleGameMode(Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(difficulty)
     {
-        originalPixel = pixel;
-        this.turtle = turtle;
-        routeInputField = inputField;
+        this._turtle = turtle;
+        _routeInputField = inputField;
         _gameField = field;
         difficulty = _gameField.Difficulty;
         switch (difficulty)
@@ -84,7 +82,7 @@ public class TurtleGameMode : GameMode
         generateStringPaths();
 
         Vector3 startPos = turtle_start_pos;
-        routeInputField.text = paths[iteration];
+        _routeInputField.text = paths[iteration];
         Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, CheckAction);
 
         eventReactor = new DefaultReactor(timer, difficulty);
@@ -122,7 +120,7 @@ public class TurtleGameMode : GameMode
 
     public void rotateLeft()
     {
-        turtle.transform.Rotate(0, 0, 90);
+        _turtle.transform.Rotate(0, 0, 90);
         switch (look)
         {
             case (int)directionEnum.UP:
@@ -141,7 +139,7 @@ public class TurtleGameMode : GameMode
     }
     public void rotateRight()
     {
-        turtle.transform.Rotate(0, 0, -90);
+        _turtle.transform.Rotate(0, 0, -90);
         switch (look)
         {
             case (int)directionEnum.UP:
@@ -162,7 +160,7 @@ public class TurtleGameMode : GameMode
     public void moveForward()
     {
         var allowMove = true;
-        var startPos = turtle.transform.position;
+        var startPos = _turtle.transform.position;
         var posX = startPos.x;
         var posY = startPos.y;
         switch (look)
@@ -205,7 +203,7 @@ public class TurtleGameMode : GameMode
                 break;
         }
         if (allowMove)
-            turtle.transform.position = new Vector3(posX, posY, startPos.z);
+            _turtle.transform.position = new Vector3(posX, posY, startPos.z);
     }
 
     void executeMoveSequence()
@@ -228,8 +226,8 @@ public class TurtleGameMode : GameMode
                     break;
             }
         }
-        turtle.transform.position = turtle_start_pos;
-        turtle.transform.rotation = turtle_start_rotation;
+        _turtle.transform.position = turtle_start_pos;
+        _turtle.transform.rotation = turtle_start_rotation;
         look = (int)directionEnum.RIGHT;
         switch (difficulty)
         {
@@ -283,7 +281,7 @@ public class TurtleGameMode : GameMode
                     eventReactor.OnGameOver();
                 }
                 else
-                    routeInputField.text = paths[iteration];
+                    _routeInputField.text = paths[iteration];
             }
         }
         else
@@ -348,8 +346,8 @@ public class TurtleGameMode : GameMode
         last_action = -1;
         finished = false;
         look = (int)directionEnum.RIGHT;
-        turtle.transform.position = turtle_start_pos;
-        turtle.transform.rotation = turtle_start_rotation;
-        routeInputField.text = paths[iteration];
+        _turtle.transform.position = turtle_start_pos;
+        _turtle.transform.rotation = turtle_start_rotation;
+        _routeInputField.text = paths[iteration];
     }
 }
