@@ -290,48 +290,41 @@ public class SouthCohenGameMode : GameMode
 
     private void GenerateBorder(int difficulty)
     {
-        _borderPoints = new Position[2];
+        var borderPoints = new Position[2];
         Vector3 pos;
         Vector3 scale;
+        float posOffset;
+        float scaleMultiplier;
         switch (difficulty)
         {
             case 1:
-                _borderPoints[0] = new Position(2, 2);
-                _borderPoints[1] = new Position(8, 8);
-                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
-                pos.x += 9.5f;
-                pos.y -= 9.5f;
-                pos.z = _border.transform.position.z;
-                _border.transform.position = pos;
-                scale = _border.transform.localScale;
-                scale.x *= 7.5f;
-                scale.y *= 7.5f;
+                borderPoints[0] = new Position(2, 2);
+                borderPoints[1] = new Position(8, 8);
+                posOffset = 9.5f;
+                scaleMultiplier = 7.5f;
                 break;
             case 2:
-                _borderPoints[0] = new Position(2, 2);
-                _borderPoints[1] = new Position(11, 11);
-                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
-                pos.x += 14.5f;
-                pos.y -= 14.5f;
-                pos.z = _border.transform.position.z;
-                _border.transform.position = pos;
-                scale = _border.transform.localScale;
-                scale.x *= 10;
-                scale.y *= 10;
+                borderPoints[0] = new Position(2, 2);
+                borderPoints[1] = new Position(11, 11);
+                posOffset = 14.5f;
+                scaleMultiplier = 10;
                 break;
             default:
-                _borderPoints[0] = new Position(3, 3);
-                _borderPoints[1] = new Position(7, 7);
-                pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
-                pos.x += 12.5f;
-                pos.y -= 12.5f;
-                pos.z = _border.transform.position.z;
-                _border.transform.position = pos;
-                scale = _border.transform.localScale;
-                scale.x *= 10;
-                scale.y *= 10;
+                borderPoints[0] = new Position(3, 3);
+                borderPoints[1] = new Position(7, 7);
+                posOffset = 12.5f;
+                scaleMultiplier = 10;
                 break;
         }
+        _borderPoints = borderPoints;
+        pos = _gameField.grid[(int)_borderPoints[0].X, (int)_borderPoints[0].Y].transform.position;
+        pos.x += posOffset;
+        pos.y -= posOffset;
+        pos.z = _border.transform.position.z;
+        _border.transform.position = pos;
+        scale = _border.transform.localScale;
+        scale.x *= scaleMultiplier;
+        scale.y *= scaleMultiplier;
         _border.transform.localScale = scale;
 
         _gridCodesWidth = _gameField.Width;
