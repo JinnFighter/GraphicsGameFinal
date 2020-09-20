@@ -76,7 +76,7 @@ public class TurtleGameMode : GameMode
         turtle_start_rotation = turtle.transform.rotation;
         cur_action = 0;
         last_action = -1;
-        generateStringPaths();
+        GenerateStringPaths();
 
         Vector3 startPos = turtle_start_pos;
         _routeInputField.text = paths[iteration];
@@ -95,7 +95,7 @@ public class TurtleGameMode : GameMode
         Messenger.RemoveListener(GameEvents.RESTART_GAME, Restart);
     }
 
-    public void generateStringPaths()
+    public void GenerateStringPaths()
     {
         for (var i = 0; i < pathsQuantity; i++)
         {
@@ -109,7 +109,7 @@ public class TurtleGameMode : GameMode
                 route = String.Concat(route, c);
             }
             paths[i] = route;
-            executeMoveSequence();
+            ExecuteMoveSequence();
             route = "";
         }
         iteration = 0;
@@ -119,7 +119,7 @@ public class TurtleGameMode : GameMode
 
     public void RotateRight() => _turtle.RotateRight();
 
-    public void moveForward()
+    public void MoveForward()
     {
         var allowMove = true;
         var startPos = _turtle.transform.position;
@@ -168,14 +168,14 @@ public class TurtleGameMode : GameMode
             _turtle.transform.position = new Vector3(posX, posY, startPos.z);
     }
 
-    void executeMoveSequence()
+    void ExecuteMoveSequence()
     {
         for (var i = 0; i < route.Length; i++)
         {
             switch (route[i])
             {
                 case 'F':
-                    moveForward();
+                    MoveForward();
                     commands_history[iteration].Add((int)commandsEnum.FORWARD);
                     break;
                 case '+':
@@ -221,7 +221,7 @@ public class TurtleGameMode : GameMode
             {
                 case (int)commandsEnum.FORWARD:
                     _gameField.grid[x, y].SetState(true);
-                    moveForward();
+                    MoveForward();
                     break;
                 case (int)commandsEnum.ROTATE_LEFT:
                     RotateLeft();
@@ -279,7 +279,7 @@ public class TurtleGameMode : GameMode
         last_action = -1;
         iteration = 0;
         look = (int)directionEnum.RIGHT;
-        generateStringPaths();
+        GenerateStringPaths();
         switch (difficulty)
         {
             case 0:
