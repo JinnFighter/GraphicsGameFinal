@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SouthCohenGameMode : GameMode
 {
-    private Pixel[] borderPoints;
+    private Pixel[] _borderPoints;
     private List<Line> _lines;
-    private int iteration;
-    private List<int>[] lineZones;
-    private SpriteRenderer border;
-    private int[,] gridCodes;
-    private int gridCodesWidth;
-    private int gridCodesHeight;
+    private int _iteration;
+    private List<int>[] _lineZones;
+    private SpriteRenderer _border;
+    private int[,] _gridCodes;
+    private int _gridCodesWidth;
+    private int _gridCodesHeight;
 
     private GameField _gameField;
 
@@ -19,8 +19,8 @@ public class SouthCohenGameMode : GameMode
     {
         _gameField = field;
         difficulty = _gameField.Difficulty;
-        this.border = border;
-        borderPoints = new Pixel[2];
+        _border = border;
+        _borderPoints = new Pixel[2];
         Vector3 pos;
         Vector3 scale;
         int linesCount;
@@ -28,65 +28,65 @@ public class SouthCohenGameMode : GameMode
         {
             case 1:
                 linesCount = 7;
-                borderPoints[0] = _gameField.grid[2, 2];
-                borderPoints[1] = _gameField.grid[8, 8];
-                pos = borderPoints[0].transform.position;
+                _borderPoints[0] = _gameField.grid[2, 2];
+                _borderPoints[1] = _gameField.grid[8, 8];
+                pos = _borderPoints[0].transform.position;
                 pos.x += 9.5f;
                 pos.y -= 9.5f;
-                pos.z = border.transform.position.z;
-                border.transform.position = pos;
-                scale = border.transform.localScale;
+                pos.z = _border.transform.position.z;
+                _border.transform.position = pos;
+                scale = _border.transform.localScale;
                 scale.x *= 7.5f;
                 scale.y *= 7.5f;
                 break;
             case 2:
                 linesCount = 10;
-                borderPoints[0] = _gameField.grid[2, 2];
-                borderPoints[1] = _gameField.grid[11, 11];
-                pos = borderPoints[0].transform.position;
+                _borderPoints[0] = _gameField.grid[2, 2];
+                _borderPoints[1] = _gameField.grid[11, 11];
+                pos = _borderPoints[0].transform.position;
                 pos.x += 14.5f;
                 pos.y -= 14.5f;
-                pos.z = border.transform.position.z;
-                border.transform.position = pos;
-                scale = border.transform.localScale;
+                pos.z = _border.transform.position.z;
+                _border.transform.position = pos;
+                scale = _border.transform.localScale;
                 scale.x *= 10;
                 scale.y *= 10;
                 break;
             default:
                 linesCount = 5;
-                borderPoints[0] = _gameField.grid[3, 3];
-                borderPoints[1] = _gameField.grid[7, 7];
-                pos = borderPoints[0].transform.position;
+                _borderPoints[0] = _gameField.grid[3, 3];
+                _borderPoints[1] = _gameField.grid[7, 7];
+                pos = _borderPoints[0].transform.position;
                 pos.x += 12.5f;
                 pos.y -= 12.5f;
-                pos.z = border.transform.position.z;
-                border.transform.position = pos;
-                scale = border.transform.localScale;
+                pos.z = _border.transform.position.z;
+                _border.transform.position = pos;
+                scale = _border.transform.localScale;
                 scale.x *= 10;
                 scale.y *= 10;
                 break;
 
         }
-        border.transform.localScale = scale;
+        _border.transform.localScale = scale;
         gameActive = false;
         gameStarted = false;
-        lineZones = new List<int>[linesCount];
+        _lineZones = new List<int>[linesCount];
         for (var i = 0; i < linesCount; i++)
         {
-            lineZones[i] = new List<int>();
+            _lineZones[i] = new List<int>();
         }
         _lines = new List<Line>(linesCount);
 
         GenerateLines();
 
-        gridCodesWidth = _gameField.Width;
-        gridCodesHeight = _gameField.Height;
-        gridCodes = new int[gridCodesHeight, gridCodesWidth];
-        for (var i = 0; i < gridCodesHeight; i++)
+        _gridCodesWidth = _gameField.Width;
+        _gridCodesHeight = _gameField.Height;
+        _gridCodes = new int[_gridCodesHeight, _gridCodesWidth];
+        for (var i = 0; i < _gridCodesHeight; i++)
         {
-            for (var j = 0; j < gridCodesWidth; j++)
+            for (var j = 0; j < _gridCodesWidth; j++)
             {
-                gridCodes[i, j] = this.Code(_gameField.grid[i, j], borderPoints[0], borderPoints[1]);
+                _gridCodes[i, j] = this.Code(_gameField.grid[i, j], _borderPoints[0], _borderPoints[1]);
             }
         }
 
@@ -94,10 +94,10 @@ public class SouthCohenGameMode : GameMode
         {
             southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X], 
                 _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
-           borderPoints[0], borderPoints[1], i);
+           _borderPoints[0], _borderPoints[1], i);
         }
 
-        iteration = 0;
+        _iteration = 0;
 
         var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
         _gameField.Draw(linePts);
@@ -143,32 +143,32 @@ public class SouthCohenGameMode : GameMode
             {
                 ay += (rectLeft.X - ax) * (by - ay) / (bx - ax);
                 ax = rectLeft.X;
-                if (!lineZones[i].Contains(code1))
-                    lineZones[i].Add(code1);
+                if (!_lineZones[i].Contains(code1))
+                    _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x02))
             {
                 ax += (rectLeft.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectLeft.Y;
-                if (!lineZones[i].Contains(code1))
-                    lineZones[i].Add(code1);
+                if (!_lineZones[i].Contains(code1))
+                    _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x04))
             {
                 ay += (rectRight.X - ax) * (by - ay) / (bx - ax);
                 ax = rectRight.X;
-                if (!lineZones[i].Contains(code1))
-                    lineZones[i].Add(code1);
+                if (!_lineZones[i].Contains(code1))
+                    _lineZones[i].Add(code1);
             }
 
             if (Convert.ToBoolean(code1 & 0x08))
             {
                 ax += (rectRight.Y - ay) * (bx - ax) / (by - ay);
                 ay = rectRight.Y;
-                if (!lineZones[i].Contains(code1))
-                    lineZones[i].Add(code1);
+                if (!_lineZones[i].Contains(code1))
+                    _lineZones[i].Add(code1);
             }
 
             code1 = Code(_gameField.grid[ax, ay], rectLeft, rectRight);
@@ -250,10 +250,10 @@ public class SouthCohenGameMode : GameMode
         }
         int[,] matr = new int[2, 2];
 
-        matr[0, 0] = ax.CompareTo(borderPoints[0].X) + ax.CompareTo(borderPoints[1].X);
-        matr[0, 1] = ay.CompareTo(borderPoints[0].Y) + ay.CompareTo(borderPoints[1].Y);
-        matr[1, 0] = bx.CompareTo(borderPoints[0].X) + bx.CompareTo(borderPoints[1].X);
-        matr[1, 1] = by.CompareTo(borderPoints[0].Y) + by.CompareTo(borderPoints[1].Y);
+        matr[0, 0] = ax.CompareTo(_borderPoints[0].X) + ax.CompareTo(_borderPoints[1].X);
+        matr[0, 1] = ay.CompareTo(_borderPoints[0].Y) + ay.CompareTo(_borderPoints[1].Y);
+        matr[1, 0] = bx.CompareTo(_borderPoints[0].X) + bx.CompareTo(_borderPoints[1].X);
+        matr[1, 1] = by.CompareTo(_borderPoints[0].Y) + by.CompareTo(_borderPoints[1].Y);
         int checker = matr[0, 0];
         if ((checker == matr[0, 1]) && (checker == matr[1, 0]) && (checker == matr[1, 1]))
             return false;
@@ -269,7 +269,7 @@ public class SouthCohenGameMode : GameMode
 
     public override void Check(Pixel invoker)
     {
-        if (iteration == _lines.Count)
+        if (_iteration == _lines.Count)
         {
             Messenger.Broadcast(GameEvents.GAME_OVER);
             return;
@@ -277,9 +277,9 @@ public class SouthCohenGameMode : GameMode
         var check = false;
         var c = -1;
 
-        foreach (var a in lineZones[iteration])
+        foreach (var a in _lineZones[_iteration])
         {
-            if (a == this.Code(invoker, borderPoints[0], borderPoints[1]))
+            if (a == this.Code(invoker, _borderPoints[0], _borderPoints[1]))
             {
                 check = true;
                 c = a;
@@ -289,15 +289,15 @@ public class SouthCohenGameMode : GameMode
         if (check)
         {
             ClearZone(c);
-            lineZones[iteration].Remove(c);
+            _lineZones[_iteration].Remove(c);
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
 
-            if (lineZones[iteration].Count == 0)
-                iteration++;
+            if (_lineZones[_iteration].Count == 0)
+                _iteration++;
             else
                 return;
 
-            if (iteration == _lines.Count)
+            if (_iteration == _lines.Count)
             {
                 eventReactor.OnGameOver();
             }
@@ -305,7 +305,7 @@ public class SouthCohenGameMode : GameMode
             {
                 _gameField.ClearGrid();
 
-                var linePts = Algorithms.GetBrezenheimLineData(_lines[iteration], out _);
+                var linePts = Algorithms.GetBrezenheimLineData(_lines[_iteration], out _);
                 _gameField.Draw(linePts);
             }
         }
@@ -315,11 +315,11 @@ public class SouthCohenGameMode : GameMode
 
     public void ClearZone(int code)
     {
-        for (var i = 0; i < gridCodesHeight; i++)
+        for (var i = 0; i < _gridCodesHeight; i++)
         {
-            for (var j = 0; j < gridCodesWidth; j++)
+            for (var j = 0; j < _gridCodesWidth; j++)
             {
-                if (gridCodes[i, j] == code)
+                if (_gridCodes[i, j] == code)
                 {
                     if (!_gameField.grid[i, j].pixel_empty.activeSelf)
                         _gameField.grid[i, j].setPixelState(false);
@@ -332,18 +332,18 @@ public class SouthCohenGameMode : GameMode
     {
         _gameField.ClearGrid();
         for (var i = 0; i < _lines.Count; i++)
-            lineZones[i].Clear();
+            _lineZones[i].Clear();
 
-        iteration = 0;
+        _iteration = 0;
         GenerateLines();
 
         for (var i = 0; i < _lines.Count; i++)
         {
             southCohen(_gameField.grid[(int)_lines[i].GetStart().Y, (int)_lines[i].GetStart().X],
                 _gameField.grid[(int)_lines[i].GetEnd().Y, (int)_lines[i].GetEnd().X],
-           borderPoints[0], borderPoints[1], i);
+           _borderPoints[0], _borderPoints[1], i);
         }
-        iteration = 0;
+        _iteration = 0;
 
         var linePts = Algorithms.GetBrezenheimLineData(_lines[0], out _);
         _gameField.Draw(linePts);
