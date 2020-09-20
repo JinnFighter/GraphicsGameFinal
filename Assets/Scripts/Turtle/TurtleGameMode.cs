@@ -8,19 +8,18 @@ public class TurtleGameMode : GameMode
     private Turtle _turtle;
     private InputField _routeInputField;
 
-    private int pathsQuantity;
     private string[] paths;
     private int pathsLength;
     private string route;
     private int x;
     private int y;
-    private enum directionEnum { UP, LEFT, DOWN, RIGHT };
-    private enum commandsEnum { FORWARD, ROTATE_LEFT, ROTATE_RIGHT };
+    private enum Direction { UP, LEFT, DOWN, RIGHT };
+    private enum Command { FORWARD, ROTATE_LEFT, ROTATE_RIGHT };
     private readonly Dictionary<int, char> commands = new Dictionary<int, char>
     {
-        {(int)commandsEnum.FORWARD, 'F' },
-        {(int)commandsEnum.ROTATE_LEFT, '+' },
-        {(int)commandsEnum.ROTATE_RIGHT, '-' }
+        {(int)Command.FORWARD, 'F' },
+        {(int)Command.ROTATE_LEFT, '+' },
+        {(int)Command.ROTATE_RIGHT, '-' }
     };
     private List<int>[] commands_history;
     private int look;
@@ -36,40 +35,35 @@ public class TurtleGameMode : GameMode
         _turtle = turtle;
         _routeInputField = inputField;
         _gameField = field;
+        int pathsCount;
         switch (difficulty)
         {
-            case 0:
-                pathsQuantity = 5;
-                pathsLength = 5;
-                x = 4;
-                y = 4;
-                break;
             case 1:
-                pathsQuantity = 7;
+                pathsCount = 7;
                 pathsLength = 7;
                 x = 6;
                 y = 6;
                 break;
             case 2:
-                pathsQuantity = 10;
+                pathsCount = 10;
                 pathsLength = 10;
                 x = 7;
                 y = 7;
                 break;
             default:
-                pathsQuantity = 5;
+                pathsCount = 5;
                 pathsLength = 5;
                 x = 4;
                 y = 4;
                 break;
         }
-        paths = new string[pathsQuantity];
+        paths = new string[pathsCount];
         route = "";
-        commands_history = new List<int>[pathsQuantity];
-        for (var i = 0; i < pathsQuantity; i++)
+        commands_history = new List<int>[pathsCount];
+        for (var i = 0; i < pathsCount; i++)
             commands_history[i] = new List<int>();
 
-        look = (int)directionEnum.RIGHT;
+        look = (int)Direction.RIGHT;
         turtle.gameObject.transform.Rotate(0, 0, -90);
         turtle.transform.position = new Vector3(_gameField.grid[x, y].transform.position.x, _gameField.grid[x, y].transform.position.y, turtle.transform.position.z);
         turtle_start_pos = turtle.transform.position;
@@ -97,7 +91,7 @@ public class TurtleGameMode : GameMode
 
     public void GenerateStringPaths()
     {
-        for (var i = 0; i < pathsQuantity; i++)
+        for (var i = 0; i < paths.Length; i++)
         {
             for (var j = 0; j < pathsLength; j++)
             {
@@ -125,7 +119,7 @@ public class TurtleGameMode : GameMode
         var posY = startPos.y;
         switch (look)
         {
-            case (int)directionEnum.UP:
+            case (int)Direction.UP:
                 if (x == 0)
                 {
                     allowMove = false;
@@ -134,7 +128,7 @@ public class TurtleGameMode : GameMode
                 x--;
                 posY += _gameField.OffsetY;
                 break;
-            case (int)directionEnum.RIGHT:
+            case (int)Direction.RIGHT:
                 if (y == _gameField.Width - 1)
                 {
                     allowMove = false;
@@ -143,7 +137,7 @@ public class TurtleGameMode : GameMode
                 y++;
                 posX += _gameField.OffsetX;
                 break;
-            case (int)directionEnum.DOWN:
+            case (int)Direction.DOWN:
                 if (x == _gameField.Height - 1)
                 {
                     allowMove = false;
@@ -152,7 +146,7 @@ public class TurtleGameMode : GameMode
                 x++;
                 posY -= _gameField.OffsetY;
                 break;
-            case (int)directionEnum.LEFT:
+            case (int)Direction.LEFT:
                 if (y == 0)
                 {
                     allowMove = false;
@@ -174,21 +168,21 @@ public class TurtleGameMode : GameMode
             {
                 case 'F':
                     MoveForward();
-                    commands_history[iteration].Add((int)commandsEnum.FORWARD);
+                    commands_history[iteration].Add((int)Command.FORWARD);
                     break;
                 case '+':
                     RotateLeft();
-                    commands_history[iteration].Add((int)commandsEnum.ROTATE_LEFT);
+                    commands_history[iteration].Add((int)Command.ROTATE_LEFT);
                     break;
                 case '-':
                     RotateRight();
-                    commands_history[iteration].Add((int)commandsEnum.ROTATE_RIGHT);
+                    commands_history[iteration].Add((int)Command.ROTATE_RIGHT);
                     break;
             }
         }
         _turtle.transform.position = turtle_start_pos;
         _turtle.transform.rotation = turtle_start_rotation;
-        look = (int)directionEnum.RIGHT;
+        look = (int)Direction.RIGHT;
         switch (difficulty)
         {
             case 0:
@@ -217,14 +211,14 @@ public class TurtleGameMode : GameMode
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
             switch (last_action)
             {
-                case (int)commandsEnum.FORWARD:
+                case (int)Command.FORWARD:
                     _gameField.grid[x, y].SetState(true);
                     MoveForward();
                     break;
-                case (int)commandsEnum.ROTATE_LEFT:
+                case (int)Command.ROTATE_LEFT:
                     RotateLeft();
                     break;
-                case (int)commandsEnum.ROTATE_RIGHT:
+                case (int)Command.ROTATE_RIGHT:
                     RotateRight();
                     break;
             }
@@ -233,7 +227,7 @@ public class TurtleGameMode : GameMode
             {
                 cur_action = 0;
                 iteration++;
-                if (iteration == pathsQuantity)
+                if (iteration == paths.Length)
                 {
                     eventReactor.OnGameOver();
                 }
@@ -249,7 +243,7 @@ public class TurtleGameMode : GameMode
     {
         _gameField.ClearGrid();
         route = "";
-        for (var i = 0; i < pathsQuantity; i++)
+        for (var i = 0; i < paths.Length; i++)
         {
             commands_history[i].Clear();
             paths[i] = "";
@@ -276,7 +270,7 @@ public class TurtleGameMode : GameMode
         cur_action = 0;
         last_action = -1;
         iteration = 0;
-        look = (int)directionEnum.RIGHT;
+        look = (int)Direction.RIGHT;
         GenerateStringPaths();
         switch (difficulty)
         {
@@ -300,7 +294,7 @@ public class TurtleGameMode : GameMode
         iteration = 0;
         cur_action = 0;
         last_action = -1;
-        look = (int)directionEnum.RIGHT;
+        look = (int)Direction.RIGHT;
         _turtle.transform.position = turtle_start_pos;
         _turtle.transform.rotation = turtle_start_rotation;
         _routeInputField.text = paths[iteration];
