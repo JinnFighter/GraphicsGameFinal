@@ -9,7 +9,7 @@ public class TurtleGameMode : GameMode
     private InputField _routeInputField;
 
     private string[] paths;
-    private int pathsLength;
+
     private string route;
     private int x;
     private int y;
@@ -36,23 +36,24 @@ public class TurtleGameMode : GameMode
         _routeInputField = inputField;
         _gameField = field;
         int pathsCount;
+        int pathLength;
         switch (difficulty)
         {
             case 1:
                 pathsCount = 7;
-                pathsLength = 7;
+                pathLength = 7;
                 x = 6;
                 y = 6;
                 break;
             case 2:
                 pathsCount = 10;
-                pathsLength = 10;
+                pathLength = 10;
                 x = 7;
                 y = 7;
                 break;
             default:
                 pathsCount = 5;
-                pathsLength = 5;
+                pathLength = 5;
                 x = 4;
                 y = 4;
                 break;
@@ -70,7 +71,7 @@ public class TurtleGameMode : GameMode
         turtle_start_rotation = turtle.transform.rotation;
         cur_action = 0;
         last_action = -1;
-        GenerateStringPaths();
+        GenerateStringPaths(pathLength);
 
         Vector3 startPos = turtle_start_pos;
         _routeInputField.text = paths[iteration];
@@ -89,11 +90,11 @@ public class TurtleGameMode : GameMode
         Messenger.RemoveListener(GameEvents.RESTART_GAME, Restart);
     }
 
-    public void GenerateStringPaths()
+    public void GenerateStringPaths(int pathLength)
     {
         for (var i = 0; i < paths.Length; i++)
         {
-            for (var j = 0; j < pathsLength; j++)
+            for (var j = 0; j < pathLength; j++)
             {
                 var c = commands[UnityEngine.Random.Range(0, 2)];
                 while (j == 0 && c != commands[0])
@@ -248,49 +249,32 @@ public class TurtleGameMode : GameMode
             commands_history[i].Clear();
             paths[i] = "";
         }
-        switch (difficulty)
-        {
-            case 0:
-                x = 4;
-                y = 4;
-                break;
-            case 1:
-                x = 6;
-                y = 6;
-                break;
-            case 2:
-                x = 7;
-                y = 7;
-                break;
-            default:
-                x = 4;
-                y = 4;
-                break;
-        }
+
         cur_action = 0;
         last_action = -1;
         iteration = 0;
         look = (int)Direction.RIGHT;
-        GenerateStringPaths();
+        int pathLength;
         switch (difficulty)
         {
-            case 0:
-                x = 4;
-                y = 4;
-                break;
             case 1:
                 x = 6;
                 y = 6;
+                pathLength = 7;
                 break;
             case 2:
                 x = 7;
                 y = 7;
+                pathLength = 10;
                 break;
             default:
                 x = 4;
                 y = 4;
+                pathLength = 5;
                 break;
         }
+        GenerateStringPaths(pathLength);
+        
         iteration = 0;
         cur_action = 0;
         last_action = -1;
