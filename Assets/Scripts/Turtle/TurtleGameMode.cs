@@ -9,7 +9,6 @@ public class TurtleGameMode : GameMode
     private InputField _routeInputField;
 
     private string[] paths;
-
     private string route;
     private int x;
     private int y;
@@ -35,43 +34,12 @@ public class TurtleGameMode : GameMode
         _turtle = turtle;
         _routeInputField = inputField;
         _gameField = field;
-        int pathsCount;
-        int pathLength;
-        switch (difficulty)
-        {
-            case 1:
-                pathsCount = 7;
-                pathLength = 7;
-                x = 6;
-                y = 6;
-                break;
-            case 2:
-                pathsCount = 10;
-                pathLength = 10;
-                x = 7;
-                y = 7;
-                break;
-            default:
-                pathsCount = 5;
-                pathLength = 5;
-                x = 4;
-                y = 4;
-                break;
-        }
-        paths = new string[pathsCount];
-        route = "";
-        commands_history = new List<int>[pathsCount];
-        for (var i = 0; i < pathsCount; i++)
-            commands_history[i] = new List<int>();
-
-        look = (int)Direction.RIGHT;
+        
         turtle.gameObject.transform.Rotate(0, 0, -90);
         turtle.transform.position = new Vector3(_gameField.grid[x, y].transform.position.x, _gameField.grid[x, y].transform.position.y, turtle.transform.position.z);
         turtle_start_pos = turtle.transform.position;
         turtle_start_rotation = turtle.transform.rotation;
-        cur_action = 0;
-        last_action = -1;
-        GenerateStringPaths(pathLength);
+        DoRestartAction();
 
         Vector3 startPos = turtle_start_pos;
         _routeInputField.text = paths[iteration];
@@ -255,24 +223,34 @@ public class TurtleGameMode : GameMode
         iteration = 0;
         look = (int)Direction.RIGHT;
         int pathLength;
+        int pathsCount;
         switch (difficulty)
         {
             case 1:
                 x = 6;
                 y = 6;
                 pathLength = 7;
+                pathsCount = 7;
                 break;
             case 2:
                 x = 7;
                 y = 7;
                 pathLength = 10;
+                pathsCount = 10;
                 break;
             default:
                 x = 4;
                 y = 4;
                 pathLength = 5;
+                pathsCount = 5;
                 break;
         }
+
+        paths = new string[pathsCount];
+        route = "";
+        commands_history = new List<int>[pathsCount];
+        for (var i = 0; i < pathsCount; i++)
+            commands_history[i] = new List<int>();
         GenerateStringPaths(pathLength);
         
         iteration = 0;
