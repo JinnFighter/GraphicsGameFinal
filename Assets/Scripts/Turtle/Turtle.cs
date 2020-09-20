@@ -3,6 +3,7 @@
 public class Turtle : MonoBehaviour
 {
     [SerializeField] public Pixel originalPixel;
+    private IDirectionState _directionState;
 
     public enum Direction { UP, LEFT, DOWN, RIGHT };
 
@@ -12,6 +13,8 @@ public class Turtle : MonoBehaviour
     private readonly int angle = 90;
     private readonly float offsetX;
     private readonly float offsetY;
+
+    public void SetDirectionState(IDirectionState directionState) => _directionState = directionState;
 
     public void RotateLeft()
     {
