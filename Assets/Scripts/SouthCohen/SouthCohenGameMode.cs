@@ -18,7 +18,6 @@ public class SouthCohenGameMode : GameMode
     public SouthCohenGameMode(GameplayTimer timer, SpriteRenderer border, GameField field, int difficulty) : base(difficulty)
     {
         _gameField = field;
-        difficulty = _gameField.Difficulty;
         _border = border;
 
         GenerateBorder(difficulty);
