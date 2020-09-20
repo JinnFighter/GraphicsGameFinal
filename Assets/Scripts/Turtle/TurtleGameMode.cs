@@ -99,7 +99,6 @@ public class TurtleGameMode : GameMode
     {
         for (var i = 0; i < pathsQuantity; i++)
         {
-            iteration = i;
             for (var j = 0; j < pathsLength; j++)
             {
                 var c = commands[UnityEngine.Random.Range(0, 2)];
@@ -109,10 +108,9 @@ public class TurtleGameMode : GameMode
                 route = String.Concat(route, c);
             }
             paths[i] = route;
-            ExecuteMoveSequence();
+            ExecuteMoveSequence(i);
             route = "";
         }
-        iteration = 0;
     }
 
     public void RotateLeft() => _turtle.RotateLeft();
@@ -168,7 +166,7 @@ public class TurtleGameMode : GameMode
             _turtle.transform.position = new Vector3(posX, posY, startPos.z);
     }
 
-    void ExecuteMoveSequence()
+    void ExecuteMoveSequence(int iteration)
     {
         for (var i = 0; i < route.Length; i++)
         {
