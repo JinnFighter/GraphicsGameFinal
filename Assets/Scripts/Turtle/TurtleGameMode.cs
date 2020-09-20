@@ -263,7 +263,7 @@ public class TurtleGameMode : GameMode
             switch (last_action)
             {
                 case (int)commandsEnum.FORWARD:
-                    _gameField.grid[x, y].setPixelState(true);
+                    _gameField.grid[x, y].SetState(true);
                     moveForward();
                     break;
                 case (int)commandsEnum.ROTATE_LEFT:

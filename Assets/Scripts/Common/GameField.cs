@@ -53,14 +53,13 @@ public class GameField : MonoBehaviour
                     pixel = originalPixel;
                 else
                 {    
-                    pixel = Instantiate(originalPixel) as Pixel;
+                    pixel = Instantiate(originalPixel);
                     float posX = (OffsetX * j) + startPos.x;
                     float posY = -(OffsetY * i) + startPos.y;
                     pixel.transform.position = new Vector3(posX, posY, startPos.z);
                 }
 
-                pixel.X = i;
-                pixel.Y = j;
+                pixel.Position = new Position(i, j);
                 grid[i,j] = pixel;  
             }
         }
@@ -72,7 +71,7 @@ public class GameField : MonoBehaviour
         {
             for(var j = 0; j < Width; j++)
             {
-                grid[i, j].setPixelState(false);
+                grid[i, j].SetState(false);
             }
         }
     }
@@ -84,7 +83,7 @@ public class GameField : MonoBehaviour
         foreach(var position in positions)
         {
             if (Contains(position))
-                grid[(int)position.X, (int)position.Y].setPixelState(true);
+                grid[(int)position.X, (int)position.Y].SetState(true);
         }
     }
 }

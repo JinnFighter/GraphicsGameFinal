@@ -23,7 +23,7 @@
             return;
         else
         {
-            if (invoker.X == _linesData.GetCurrentPoint().X && invoker.Y == _linesData.GetCurrentPoint().Y)
+            if (invoker.Position.Equals(_linesData.GetCurrentPoint()))
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 _linesData.NextPoint();
