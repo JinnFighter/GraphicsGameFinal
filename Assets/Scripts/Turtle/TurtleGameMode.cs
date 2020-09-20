@@ -25,7 +25,6 @@ public class TurtleGameMode : GameMode
     private List<int>[] commands_history;
     private int look;
     private int cur_action;
-    private bool finished;
     private int last_action;
     private int iteration;
     private Vector3 turtle_start_pos;
@@ -34,10 +33,9 @@ public class TurtleGameMode : GameMode
 
     public TurtleGameMode(Turtle turtle, InputField inputField, GameplayTimer timer, GameField field, int difficulty) : base(difficulty)
     {
-        this._turtle = turtle;
+        _turtle = turtle;
         _routeInputField = inputField;
         _gameField = field;
-        difficulty = _gameField.Difficulty;
         switch (difficulty)
         {
             case 0:
@@ -78,7 +76,6 @@ public class TurtleGameMode : GameMode
         turtle_start_rotation = turtle.transform.rotation;
         cur_action = 0;
         last_action = -1;
-        finished = false;
         generateStringPaths();
 
         Vector3 startPos = turtle_start_pos;
@@ -118,44 +115,9 @@ public class TurtleGameMode : GameMode
         iteration = 0;
     }
 
-    public void rotateLeft()
-    {
-        _turtle.transform.Rotate(0, 0, 90);
-        switch (look)
-        {
-            case (int)directionEnum.UP:
-                look = (int)directionEnum.LEFT;
-                break;
-            case (int)directionEnum.LEFT:
-                look = (int)directionEnum.DOWN;
-                break;
-            case (int)directionEnum.DOWN:
-                look = (int)directionEnum.RIGHT;
-                break;
-            case (int)directionEnum.RIGHT:
-                look = (int)directionEnum.UP;
-                break;
-        }
-    }
-    public void rotateRight()
-    {
-        _turtle.transform.Rotate(0, 0, -90);
-        switch (look)
-        {
-            case (int)directionEnum.UP:
-                look = (int)directionEnum.RIGHT;
-                break;
-            case (int)directionEnum.RIGHT:
-                look = (int)directionEnum.DOWN;
-                break;
-            case (int)directionEnum.DOWN:
-                look = (int)directionEnum.LEFT;
-                break;
-            case (int)directionEnum.LEFT:
-                look = (int)directionEnum.UP;
-                break;
-        }
-    }
+    public void RotateLeft() => _turtle.RotateLeft();
+
+    public void RotateRight() => _turtle.RotateRight();
 
     public void moveForward()
     {
@@ -217,11 +179,11 @@ public class TurtleGameMode : GameMode
                     commands_history[iteration].Add((int)commandsEnum.FORWARD);
                     break;
                 case '+':
-                    rotateLeft();
+                    RotateLeft();
                     commands_history[iteration].Add((int)commandsEnum.ROTATE_LEFT);
                     break;
                 case '-':
-                    rotateRight();
+                    RotateRight();
                     commands_history[iteration].Add((int)commandsEnum.ROTATE_RIGHT);
                     break;
             }
@@ -252,9 +214,6 @@ public class TurtleGameMode : GameMode
 
     public override void Check(Pixel invoker)
     {
-        if (finished) return;
-
-        //last_action = action;
         if (last_action == commands_history[iteration][cur_action])
         {
             Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
@@ -265,10 +224,10 @@ public class TurtleGameMode : GameMode
                     moveForward();
                     break;
                 case (int)commandsEnum.ROTATE_LEFT:
-                    rotateLeft();
+                    RotateLeft();
                     break;
                 case (int)commandsEnum.ROTATE_RIGHT:
-                    rotateRight();
+                    RotateRight();
                     break;
             }
             cur_action++;
@@ -318,7 +277,6 @@ public class TurtleGameMode : GameMode
         }
         cur_action = 0;
         last_action = -1;
-        finished = false;
         iteration = 0;
         look = (int)directionEnum.RIGHT;
         generateStringPaths();
@@ -344,7 +302,6 @@ public class TurtleGameMode : GameMode
         iteration = 0;
         cur_action = 0;
         last_action = -1;
-        finished = false;
         look = (int)directionEnum.RIGHT;
         _turtle.transform.position = turtle_start_pos;
         _turtle.transform.rotation = turtle_start_rotation;
