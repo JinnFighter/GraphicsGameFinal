@@ -2,6 +2,7 @@
 
 public class TimerComponent : MonoBehaviour
 {
+    [SerializeField] private TimerOutput output;
     public float CurrentTime { get; private set; }
     public bool IsCounting { get; private set; }
     public float StartTime { get; set; }
@@ -18,23 +19,27 @@ public class TimerComponent : MonoBehaviour
         if (IsCounting)
         {
             CurrentTime -= Time.deltaTime;
-
             if (CurrentTime <= 0.0000f)
-            {
                 ResetTimer();
 
+            output.DisplayTime(CurrentTime);
+            if (CurrentTime <= 0.0000f)
+            {
                 IsCounting = false;
                 Messenger.Broadcast(GameEvents.TIMER_STOP);
             }
         }
     }
 
-    public void PauseTimer() => IsCounting = false;
+    public void StopTimer() => IsCounting = false;
     public void ResumeTimer() => IsCounting = true;
     public void ResetTimer() => CurrentTime = 0.0000f;
-    public void StartTimer()
+
+    public void Launch()
     {
         CurrentTime = StartTime;
         IsCounting = true;
     }
+
+    public TimerOutput GetOutput() => output;
 }

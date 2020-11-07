@@ -1,5 +1,5 @@
 ﻿public interface IGameState
 {
     void Init();
-    void OnRemove();
+    void OnDelete();
 }
