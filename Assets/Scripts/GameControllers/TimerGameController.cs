@@ -14,6 +14,11 @@ public class TimerGameController : MonoBehaviour
         Messenger.AddListener(GameEvents.TIMER_STOP, NextState);
     }
 
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvents.TIMER_STOP, NextState);
+    }
+
     public void NextState()
     {
         _gameStates[_currentState].OnDelete();
