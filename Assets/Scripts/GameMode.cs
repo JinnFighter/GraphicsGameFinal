@@ -1,14 +1,14 @@
 ﻿public abstract class GameMode
 {
-    protected bool gameActive;
-    protected bool gameStarted;
+    private bool _isGameActive;
+    private bool _hasGameStarted;
     protected int difficulty;
     protected IEventReactor eventReactor;
 
     public GameMode(int inputDifficulty)
     {
-        gameStarted = false;
-        gameActive = false;
+        _hasGameStarted = false;
+        _isGameActive = false;
         difficulty = inputDifficulty;
         Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, CheckAction);
         Messenger.AddListener(GameEvents.TIMER_STOP, ChangeGameState);
@@ -28,38 +28,38 @@
 
     public void Pause()
     {
-        if (gameStarted)
+        if (_hasGameStarted)
         {
-            gameActive = false;
+            _isGameActive = false;
             eventReactor.OnPause();
         }
     }
 
     public void Continue()
     {
-        if (gameStarted)
+        if (_hasGameStarted)
         {
-            gameActive = true;
+            _isGameActive = true;
             eventReactor.OnContinue();
         }
     }
 
     public void ChangeGameState()
     {
-        if (gameStarted)
-            gameActive = false;
+        if (_hasGameStarted)
+            _isGameActive = false;
         else
         {
-            gameActive = true;
-            gameStarted = true;
+            _isGameActive = true;
+            _hasGameStarted = true;
             eventReactor.OnChangeState(difficulty);
         }
     }
 
     public void Restart()
     {
-        gameActive = false;
-        gameStarted = false;
+        _isGameActive = false;
+        _hasGameStarted = false;
 
         DoRestartAction();
 
@@ -70,5 +70,5 @@
 
     public abstract void DoRestartAction();
 
-    protected bool CanCheckAction() => gameActive && eventReactor.CanCheckAction();
+    protected bool CanCheckAction() => _isGameActive && eventReactor.CanCheckAction();
 }
