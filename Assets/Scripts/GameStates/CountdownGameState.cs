@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class CountdownGameState : MonoBehaviour, IGameState
+﻿public class CountdownGameState : GameState
 {
     private TimerComponent _timer;
 
@@ -10,13 +8,13 @@ public class CountdownGameState : MonoBehaviour, IGameState
         _timer.StartTime = 4f;
     }
 
-    public void Init()
+    public override void Init()
     {
         _timer.Launch();
         _timer.GetOutput().gameObject.SetActive(true);
     }
 
-    public void OnDelete()
+    public override void OnDelete()
     {
         _timer.StopTimer();
         _timer.GetOutput().gameObject.SetActive(false);
