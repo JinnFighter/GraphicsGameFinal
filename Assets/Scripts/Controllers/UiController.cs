@@ -4,15 +4,19 @@ public class UiController : Controller
 {
     [SerializeField] private GameObject _settingsPopup;
 
-    public override void Notify(string eventType)
+    void Start()
     {
-        if(eventType == GameEvents.PAUSE_GAME)
-        {
-            _settingsPopup.SetActive(true);
-        }
-        else if(eventType == GameEvents.CONTINUE_GAME)
-        {
-            _settingsPopup.SetActive(false);
-        }
+        actions.Add(GameEvents.PAUSE_GAME, OnPauseEvent);
+        actions.Add(GameEvents.CONTINUE_GAME, OnContinueEvent);
+    }
+
+    private void OnPauseEvent()
+    {
+        _settingsPopup.SetActive(true);
+    }
+
+    private void OnContinueEvent()
+    {
+        _settingsPopup.SetActive(false);
     }
 }

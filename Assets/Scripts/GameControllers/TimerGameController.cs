@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TimerGameController : Controller
@@ -13,6 +12,12 @@ public class TimerGameController : Controller
         _gameStates[_currentState].Init();
         Messenger.AddListener(GameEvents.TIMER_STOP, NextState);
         Messenger.AddListener(GameEvents.GAME_OVER, NextState);
+    }
+
+    void Start()
+    {
+        actions.Add(GameEvents.PAUSE_GAME, OnPauseEvent);
+        actions.Add(GameEvents.CONTINUE_GAME, OnContinueEvent);
     }
 
     void OnDestroy()
@@ -30,17 +35,15 @@ public class TimerGameController : Controller
         _gameStates[_currentState].Init();
     }
 
-    public override void Notify(string eventType)
+    private void OnPauseEvent()
     {
-        if(eventType == GameEvents.PAUSE_GAME)
-        {
-            if (_gameStates[_currentState] is IActivatable activatable)
-                activatable.Deactivate();
-        }
-        else if(eventType == GameEvents.CONTINUE_GAME)
-        {
-            if (_gameStates[_currentState] is IActivatable activatable)
-                activatable.Activate();
-        }
+        if (_gameStates[_currentState] is IActivatable activatable)
+            activatable.Deactivate();
+    }
+
+    private void OnContinueEvent()
+    {
+        if (_gameStates[_currentState] is IActivatable activatable)
+            activatable.Activate();
     }
 }
