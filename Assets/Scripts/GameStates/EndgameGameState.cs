@@ -4,48 +4,47 @@ using UnityEngine.UI;
 
 public class EndgameGameState : GameState
 {
+    [SerializeField] private ScoreKeeper _scoreKeeper;
     [SerializeField] private GameObject endgameScreen;
     [SerializeField] private Text originalText;
-    private List<Text> texts;
+    private List<Text> _texts;
 
     void Awake()
     {
-        texts = new List<Text>();
+        _texts = new List<Text>();
     }
 
     public override void Init()
     {
-        var leaderboard = GetComponent<Leaderboard>();
         var playerName = GetComponent<ProfilesManager>().ActiveProfile.name;
-        var score = GetComponent<ScoreKeeper>().Score;
+        var score = _scoreKeeper.Score;
+        var leaderboard = GetComponent<Leaderboard>();
         leaderboard.AddScore(playerName, score);
+        var firstMember = leaderboard.Container.boardMembers[0];
+        originalText.text = $"{firstMember.name} {firstMember.score}";
 
-        originalText.text = leaderboard.Container.boardMembers[0].name
-            + " " + leaderboard.Container.boardMembers[0].score;
-        if (texts.Count != 0)
+        var boardMembers = leaderboard.Container.boardMembers;
+        for (var i = 0; i < boardMembers.Count - 1; i++)
         {
-            for (var i = 0; i < texts.Count; i++)
-            {
-                texts[i].transform.SetParent(null);
-                Destroy(texts[i]);
-            }
-            texts.Clear();
-        }
-
-        for (var i = 1; i < leaderboard.Container.boardMembers.Count; i++)
-        {
-            playerName = leaderboard.Container.boardMembers[i].name;
-            score = leaderboard.Container.boardMembers[i].score;
             var text = Instantiate(originalText);
-            text.text = playerName + " " + score;
             text.transform.SetParent(originalText.transform.parent);
-            texts.Add(text);
+            _texts.Add(text);
         }
+
+        for(var i = 1; i < boardMembers.Count; i++)
+            _texts[i].text = $"{boardMembers[i].name} {boardMembers[i].score}";
+
         endgameScreen.SetActive(true);
     }
 
     public override void OnDelete()
     {
         endgameScreen.SetActive(false);
+        foreach(var text in _texts)
+        {
+            text.transform.SetParent(null);
+            Destroy(text);
+        }
+        _texts.Clear();
     }
 }

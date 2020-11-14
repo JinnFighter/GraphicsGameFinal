@@ -71,4 +71,6 @@
     public abstract void DoRestartAction();
 
     protected bool CanCheckAction() => _isGameActive && eventReactor.CanCheckAction();
+
+    public void SetGameActive(bool value) => _isGameActive = value;
 }

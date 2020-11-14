@@ -15,7 +15,7 @@ public class RandomLineGenerator : ILineGenerator
 
     public List<Line> Generate(int count)
     {
-        var lines = new List<Line>();
+        var lines = new List<Line>(count);
         var maxLengthSum = _maxLengthSum;
         for (var i = 0; i < count; i++)
         {

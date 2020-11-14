@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerGameController : MonoBehaviour
+public class TimerGameController : Controller
 {
     [SerializeField] private List<GameState> _gameStates;
     private int _currentState;
@@ -28,5 +28,19 @@ public class TimerGameController : MonoBehaviour
         if (_currentState >= _gameStates.Count)
             _currentState = 0;
         _gameStates[_currentState].Init();
+    }
+
+    public override void Notify(string eventType)
+    {
+        if(eventType == GameEvents.PAUSE_GAME)
+        {
+            if (_gameStates[_currentState] is IActivatable activatable)
+                activatable.Deactivate();
+        }
+        else if(eventType == GameEvents.CONTINUE_GAME)
+        {
+            if (_gameStates[_currentState] is IActivatable activatable)
+                activatable.Activate();
+        }
     }
 }
