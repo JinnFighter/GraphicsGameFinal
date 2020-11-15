@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EndgameGameState : GameState
 {
     [SerializeField] private ScoreKeeper _scoreKeeper;
-    [SerializeField] private GameObject endgameScreen;
+    [SerializeField] private GameObject _endgameScreen;
     [SerializeField] private Text originalText;
     private List<Text> _texts;
 
@@ -32,14 +33,14 @@ public class EndgameGameState : GameState
         }
 
         for(var i = 1; i < boardMembers.Count; i++)
-            _texts[i].text = $"{boardMembers[i].name} {boardMembers[i].score}";
-
-        endgameScreen.SetActive(true);
+            _texts[i - 1].text = $"{boardMembers[i].name} {boardMembers[i].score}";
+        
+        _endgameScreen.SetActive(true);
     }
 
     public override void OnDelete()
     {
-        endgameScreen.SetActive(false);
+        _endgameScreen.SetActive(false);
         foreach(var text in _texts)
         {
             text.transform.SetParent(null);

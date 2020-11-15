@@ -9,15 +9,11 @@ public class TimerGameController : Controller
     void Awake()
     {
         _currentState = 0;
-        _gameStates[_currentState].Init();
         Messenger.AddListener(GameEvents.TIMER_STOP, NextState);
         Messenger.AddListener(GameEvents.GAME_OVER, NextState);
-    }
-
-    void Start()
-    {
         actions.Add(GameEvents.PAUSE_GAME, OnPauseEvent);
         actions.Add(GameEvents.CONTINUE_GAME, OnContinueEvent);
+        actions.Add(GameEvents.START_GAME, OnStartEvent);
     }
 
     void OnDestroy()
@@ -46,4 +42,6 @@ public class TimerGameController : Controller
         if (_gameStates[_currentState] is IActivatable activatable)
             activatable.Activate();
     }
+
+    private void OnStartEvent() => _gameStates[_currentState].Init();
 }

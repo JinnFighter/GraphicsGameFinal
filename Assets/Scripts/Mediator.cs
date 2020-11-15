@@ -5,27 +5,14 @@ public class Mediator : MonoBehaviour
 {
     [SerializeField] List<Controller> _controllers;
 
-    void Awake()
+    void Start()
     {
-        Messenger.AddListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.AddListener(GameEvents.CONTINUE_GAME, Continue);
+        Notify(GameEvents.START_GAME);
     }
 
-    void OnDestroy()
-    {
-        Messenger.RemoveListener(GameEvents.PAUSE_GAME, Pause);
-        Messenger.RemoveListener(GameEvents.CONTINUE_GAME, Continue);
-    }
-
-    public void Pause()
+    public void Notify(string eventType)
     {
         foreach (var controller in _controllers)
-            controller.Notify(GameEvents.PAUSE_GAME);
-    }
-
-    public void Continue()
-    {
-        foreach (var controller in _controllers)
-            controller.Notify(GameEvents.CONTINUE_GAME);
+            controller.Notify(eventType);
     }
 }
