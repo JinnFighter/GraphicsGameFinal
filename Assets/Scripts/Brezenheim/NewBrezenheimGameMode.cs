@@ -8,13 +8,13 @@ public class NewBrezenheimGameMode : NewGameMode
     protected Position lastPoint;
     protected Position prevPoint;
     protected int curLine;
-    protected GameField gameField;
+    protected GameFieldController gameField;
 
     public delegate void DChanged(int currentD);
 
     public event DChanged DChangedEvent;
 
-    public NewBrezenheimGameMode(int difficulty, GameField inputField) 
+    public NewBrezenheimGameMode(int difficulty, GameFieldController inputField) 
         : base(difficulty)
     {
         gameField = inputField;
@@ -35,9 +35,9 @@ public class NewBrezenheimGameMode : NewGameMode
             {
                 gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                gameField.grid[(int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y].SetState(true);
+                gameField.SetState((int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y, true);
                 lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
-                gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].SetState(true);
+                gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
 
                 prevPoint = null;
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
@@ -118,7 +118,7 @@ public class NewBrezenheimGameMode : NewGameMode
         lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
         prevPoint = null;
         var startPoint = lines[0].GetStart();
-        gameField.GetPixel((int)startPoint.X, (int)startPoint.Y).SetState(true);
-        gameField.GetPixel((int)lastPoint.X, (int)lastPoint.Y).SetState(true);
+        gameField.SetState((int)startPoint.X, (int)startPoint.Y, true);
+        gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
     }
 }

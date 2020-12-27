@@ -35,11 +35,10 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
                 else
                 {    
                     pixel = Instantiate(_originalPixel);
+                    var transform = pixel.transform;
                     float posX = (offsetX * j) + startPos.x;
                     float posY = -(offsetY * i) + startPos.y;
-                    var transform = pixel.transform;
                     transform.position = new Vector3(posX, posY, startPos.z);
-                    transform.SetParent(this.transform);
                 }
 
                 pixel.Position = new Position(i, j);

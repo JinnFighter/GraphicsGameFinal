@@ -13,7 +13,7 @@ public class BrezenheimGameModeController : GameModeController
 
     void Start()
     {
-        var gameField = GetComponent<GameField>();
+        var gameField = GetComponent<GameFieldController>();
         _mode = new NewBrezenheimGameMode(gameField.Difficulty, gameField);
         _mode.DChangedEvent += OnDChanged;
         _mode.DoRestartAction();
