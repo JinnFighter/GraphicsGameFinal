@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour
 {
     private int streak = 0;
-    [SerializeField] private Text scoreNumber;
 
-    public int Score { get; set; } = 0;
+    public delegate void ScoreChange(int currentScore);
+
+    public event ScoreChange ScoreChangedEvent;
+
+    public int Score { get; private set; } = 0;
 
     void Awake()
     {
@@ -27,7 +29,7 @@ public class ScoreKeeper : MonoBehaviour
         if(streak < 5)
             streak++;
         Score += (int)(points * (1 + 0.1 * streak));
-        scoreNumber.text = Score.ToString();
+        ScoreChangedEvent?.Invoke(Score);
     }
 
     public void ResetStreak() => streak = 0;
@@ -36,6 +38,6 @@ public class ScoreKeeper : MonoBehaviour
     {
         Score = 0;
         streak = 0;
-        scoreNumber.text = Score.ToString();
+        ScoreChangedEvent?.Invoke(Score);
     }
 }
