@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TimePresenter : MonoBehaviour, ITimePresenter
 {
-    [SerializeField] private List<ITextView> _views;
+    [SerializeField] private List<TextView> _views;
     private TimerComponent _timer;
     private TimerFormat _timerFormat;
 
@@ -12,7 +12,17 @@ public class TimePresenter : MonoBehaviour, ITimePresenter
     {
         _timer = GetComponent<TimerComponent>();
         _timerFormat = GetComponent<TimerFormat>();
+        _timer.TimeChange += OnTimeChange;
     }
 
-    public void OnTimeChange(float time) => _timerFormat.GetFormattedTime(time);
+    public void OnTimeChange(float time)
+    {
+        foreach(var view in _views)
+            view.SetText(_timerFormat.GetFormattedTime(time));
+    }
+
+    void OnDestroy()
+    {
+        _timer.TimeChange -= OnTimeChange;
+    }
 }

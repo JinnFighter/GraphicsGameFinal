@@ -2,10 +2,13 @@
 
 public class TimerComponent : MonoBehaviour
 {
-    [SerializeField] private TimerOutput output;
     public float CurrentTime { get; private set; }
     public bool IsCounting { get; private set; }
     public float StartTime { get; set; }
+
+    public delegate void TimeTick(float currentTime);
+
+    public event TimeTick TimeChange;
 
     void Awake()
     {
@@ -22,7 +25,7 @@ public class TimerComponent : MonoBehaviour
             if (CurrentTime <= 0.0000f)
                 ResetTimer();
 
-            output.DisplayTime(CurrentTime);
+            TimeChange?.Invoke(CurrentTime);
             if (CurrentTime <= 0.0000f)
             {
                 IsCounting = false;
@@ -40,6 +43,4 @@ public class TimerComponent : MonoBehaviour
         CurrentTime = StartTime;
         IsCounting = true;
     }
-
-    public TimerOutput GetOutput() => output;
 }

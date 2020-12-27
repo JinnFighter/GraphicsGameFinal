@@ -4,6 +4,7 @@
 public class CountdownGameState : GameState
 {
     private TimerComponent _timer;
+    [SerializeField] private GameObject _timerText;
 
     void Awake()
     {
@@ -15,12 +16,12 @@ public class CountdownGameState : GameState
         _timer.ResetTimer();
         _timer.StartTime = 4f;
         _timer.Launch();
-        _timer.GetOutput().gameObject.SetActive(true);
+        _timerText.gameObject.SetActive(true);
     }
 
     public override void OnDelete()
     {
         _timer.StopTimer();
-        _timer.GetOutput().gameObject.SetActive(false);
+        _timerText.gameObject.SetActive(false);
     }
 }
