@@ -4,8 +4,7 @@ public class TextFieldView : TextView
 {
     private Text _text;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _text = GetComponent<Text>();
     }

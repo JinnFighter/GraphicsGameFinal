@@ -14,10 +14,11 @@ public class BrezenheimGameModeController : GameModeController
     void Start()
     {
         var gameField = GetComponent<GameFieldController>();
+        
         _mode = new NewBrezenheimGameMode(gameField.Difficulty, gameField);
-        _mode.DChangedEvent += OnDChanged;
-        _mode.DoRestartAction();
         GameMode = _mode;
+        _mode.DChangedEvent += OnDChanged;
+        _mode.DoRestartAction();   
     }
 
     public void Check(Pixel invoker) 

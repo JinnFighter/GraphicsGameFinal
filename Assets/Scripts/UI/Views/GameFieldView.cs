@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GameFieldView : MonoBehaviour, IGameFieldView
 {
@@ -20,13 +21,14 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
                 break;
         }
         _grid = new Pixel[height, width];
-        var startPos = _originalPixel.transform.position;
         var boundsSize = _originalPixel.GetComponent<SpriteRenderer>().bounds.size;
-        var offsetX = boundsSize.x;
-        var offsetY = boundsSize.y;
-		for (var i = 0; i < height; i++)
+        var layoutGroup = GetComponent<GridLayoutGroup>();
+        layoutGroup.spacing = new Vector2(boundsSize.x, boundsSize.y);
+        layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        layoutGroup.constraintCount = width;
+		for (var i = 0; i < width; i++)
         {
-            for (var j = 0; j < width; j++)
+            for (var j = 0; j < height; j++)
             {
                 Pixel pixel;
                 
@@ -35,10 +37,7 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
                 else
                 {    
                     pixel = Instantiate(_originalPixel);
-                    var transform = pixel.transform;
-                    float posX = (offsetX * j) + startPos.x;
-                    float posY = -(offsetY * i) + startPos.y;
-                    transform.position = new Vector3(posX, posY, startPos.z);
+                    pixel.transform.SetParent(_originalPixel.transform.parent, false);
                 }
 
                 pixel.Position = new Position(i, j);

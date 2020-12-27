@@ -6,7 +6,7 @@ public class TimedGameplayState : GameState, IActivatable
     private GameModeController _gameModeController;
     private TimerComponent _timer;
 
-    private void Awake()
+    void Awake()
     {
         _timer = GetComponent<TimerComponent>();
         _gameModeController = GetComponent<GameModeController>();
