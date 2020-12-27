@@ -4,7 +4,7 @@ public class NewGameField : MonoBehaviour
 {
     public int Difficulty { get; private set; }
 
-    private Position[,] _grid;
+    private CellData[,] _grid;
 
     void Awake()
     {
@@ -26,6 +26,9 @@ public class NewGameField : MonoBehaviour
                 width = 10;
                 break;
         }
-        _grid = new Position[height, width];
+        _grid = new CellData[height, width];
+        for (var i = 0; i < height; i++)
+            for (var j = 0; j < width; j++)
+                _grid[i, j] = new CellData(new Position(i, j), false);
     }
 }
