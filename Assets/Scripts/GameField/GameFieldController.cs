@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
 public class GameFieldController : MonoBehaviour
-{ 
+{
     [SerializeField] private GameFieldView _view;
     private NewGameField _gameField;
     public int Difficulty { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         Difficulty = PlayerPrefs.GetInt("difficulty");
@@ -22,8 +21,8 @@ public class GameFieldController : MonoBehaviour
 
     public void ClearGrid()
     {
-        for(var i = 0; i < _gameField.GetHeight(); i++)
-            for (var j = 0; j < _gameField.GetWidth(); j++)
+        for (var i = 0; i < _gameField.GetWidth(); i++)
+            for (var j = 0; j < _gameField.GetHeight(); j++)
             {
                 _gameField.GetData(i, j).SetState(false);
                 _view.SetState(i, j, false);

@@ -21,13 +21,13 @@
                 _width = 10;
                 break;
         }
-        _grid = new CellData[_height, _width];
-        for (var i = 0; i < _height; i++)
-            for (var j = 0; j < _width; j++)
+        _grid = new CellData[_width, _height];
+        for (var i = 0; i < _width; i++)
+            for (var j = 0; j < _height; j++)
                 _grid[i, j] = new CellData(new Position(i, j), false);
     }
 
-    public CellData GetData(int x, int y) => _grid[y, x];
+    public CellData GetData(int x, int y) => _grid[x, y];
 
     public int GetWidth() => _width;
 
