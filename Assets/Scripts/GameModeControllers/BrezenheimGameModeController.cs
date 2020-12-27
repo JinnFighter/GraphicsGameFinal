@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BrezenheimGameModeController : GameModeController
 {
-    [SerializeField] private InputField textField;
+    [SerializeField] private List<TextView> _views;
+    private NewBrezenheimGameMode _mode;
 
     void Awake()
     {
@@ -13,7 +14,10 @@ public class BrezenheimGameModeController : GameModeController
     void Start()
     {
         var gameField = GetComponent<GameField>();
-        GameMode = new NewBrezenheimGameMode(gameField.Difficulty, gameField, textField);
+        _mode = new NewBrezenheimGameMode(gameField.Difficulty, gameField);
+        _mode.DChangedEvent += OnDChanged;
+        _mode.DoRestartAction();
+        GameMode = _mode;
     }
 
     public void Check(Pixel invoker) 
@@ -22,8 +26,15 @@ public class BrezenheimGameModeController : GameModeController
             GameMode.Check(invoker);
     }
 
+    public void OnDChanged(int d)
+    {
+        foreach(var view in _views)
+            view.SetText(d.ToString());
+    }
+
     void OnDestroy()
     {
         Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, Check);
+        _mode.DChangedEvent -= OnDChanged;
     }
 }

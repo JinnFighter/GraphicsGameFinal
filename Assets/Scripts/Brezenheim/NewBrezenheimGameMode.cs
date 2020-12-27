@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class NewBrezenheimGameMode : NewGameMode
 {
@@ -10,16 +9,16 @@ public class NewBrezenheimGameMode : NewGameMode
     protected Position prevPoint;
     protected int curLine;
     protected GameField gameField;
-    protected InputField textField;
 
-    public NewBrezenheimGameMode(int difficulty, GameField inputField, InputField nextTextField) 
+    public delegate void DChanged(int currentD);
+
+    public event DChanged DChangedEvent;
+
+    public NewBrezenheimGameMode(int difficulty, GameField inputField) 
         : base(difficulty)
     {
-        textField = nextTextField;
         gameField = inputField;
         linesDatas = new List<LinesModeData>();
-
-        DoRestartAction();
     }
 
     public override void Check(Pixel invoker)
@@ -41,7 +40,7 @@ public class NewBrezenheimGameMode : NewGameMode
                 gameField.grid[(int)lastPoint.X, (int)lastPoint.Y].SetState(true);
 
                 prevPoint = null;
-                textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
+                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
             }
         }
         else
@@ -53,7 +52,7 @@ public class NewBrezenheimGameMode : NewGameMode
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 invoker.SetState(true);
                 linesDatas[curLine].NextPoint();
-                textField.text = ds[curLine][linesDatas[curLine].GetCurrentIndex()].ToString();
+                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
             }
             else
@@ -69,7 +68,7 @@ public class NewBrezenheimGameMode : NewGameMode
 
         GenerateLines();
 
-        textField.text = ds[0][0].ToString();
+        DChangedEvent?.Invoke(ds[0][0]);
     }
 
     protected virtual void GenerateLines()
