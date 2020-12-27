@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TextView : MonoBehaviour, ITextView
+public class TextView : MonoBehaviour, ITextView, IActivatable
 {
     private Text _text;
 
@@ -12,4 +12,10 @@ public class TextView : MonoBehaviour, ITextView
     }
 
     public void SetText(string text) => _text.text = text;
+
+    public bool IsActive() => _text.IsActive();
+
+    public void Activate() => _text.gameObject.SetActive(true);
+
+    public void Deactivate() => _text.gameObject.SetActive(false);
 }
