@@ -5,25 +5,17 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
     [SerializeField] private Pixel _originalPixel;
     private Pixel[,] _grid;
 
-    public void GenerateField(int difficulty)
+    public void GenerateField(int difficulty, int width, int height)
     {
-        int width;
-        int height;
         switch (difficulty)
         {
             case 1:
-                height = 15;
-                width = 15;
                 _originalPixel.transform.localScale = new Vector3(12, 12, 1);
                 break;
             case 2:
-                height = 20;
-                width = 20;
                 _originalPixel.transform.localScale = new Vector3(10, 10, 1);
                 break;
             default:
-                height = 10;
-                width = 10;
                 _originalPixel.transform.localScale = new Vector3(20, 20, 1);
                 break;
         }
