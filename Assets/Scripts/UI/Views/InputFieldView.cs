@@ -4,8 +4,7 @@ public class InputFieldView : TextView
 {
     private InputField _inputField;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _inputField = GetComponent<InputField>();
     }
