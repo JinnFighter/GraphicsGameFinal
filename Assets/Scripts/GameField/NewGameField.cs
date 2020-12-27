@@ -28,5 +28,4 @@ public class NewGameField : MonoBehaviour
         }
         _grid = new Position[height, width];
     }
-
 }
