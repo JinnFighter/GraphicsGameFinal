@@ -47,4 +47,6 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
             }
         }
     }
+
+    public void SetState(int x, int y, bool state) => _grid[x, y].SetState(state);
 }
