@@ -8,8 +8,7 @@ public class ScoreKeeper : MonoBehaviour
 
     public int Score { get; set; } = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Messenger<int>.AddListener(GameEvents.ACTION_RIGHT_ANSWER, AddScore);
         Messenger.AddListener(GameEvents.ACTION_WRONG_ANSWER, ResetStreak);

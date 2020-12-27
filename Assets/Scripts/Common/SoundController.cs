@@ -2,16 +2,17 @@
 
 public class SoundController : MonoBehaviour
 {
-    [SerializeField]private AudioSource source;
     [SerializeField]private AudioClip correctAnswerClip;
     [SerializeField]private AudioClip wrongAnswerClip;
     [SerializeField]private AudioClip gameOverClip;
     [SerializeField]private AudioClip buttonClickClip;
     [SerializeField]private AudioClip selectProfileClip;
+    private AudioSource _source;
 
     // Start is called before the first frame update
     void Start()
     {
+        _source = GetComponent<AudioSource>();
         Messenger<int>.AddListener(GameEvents.ACTION_RIGHT_ANSWER, PlayCorrectAnswerClip);
         Messenger.AddListener(GameEvents.ACTION_WRONG_ANSWER, PlayWrongAnswerClip);
         Messenger.AddListener(GameEvents.GAME_OVER, PlayGameOverClip);
@@ -36,9 +37,9 @@ public class SoundController : MonoBehaviour
 
     public void PlayClip(AudioClip audioClip)
     {
-        if (source.clip != audioClip)
-            source.clip = audioClip;
+        if (_source.clip != audioClip)
+            _source.clip = audioClip;
 
-        source.Play();
+        _source.Play();
     }
 }

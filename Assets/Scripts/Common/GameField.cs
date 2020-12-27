@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameField : MonoBehaviour
 {
@@ -11,17 +12,11 @@ public class GameField : MonoBehaviour
     public int Width { get; set; } = 10;
     public int Difficulty { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Difficulty = PlayerPrefs.GetInt("difficulty");
         switch(Difficulty)
         {
-            case 0:
-                Height = 10;
-                Width = 10;
-                originalPixel.transform.localScale = new Vector3(20, 20, 1);
-                break;
             case 1:
                 Height = 15;
                 Width = 15;
@@ -40,9 +35,9 @@ public class GameField : MonoBehaviour
         }
         grid = new Pixel[Height, Width];
         var startPos = originalPixel.transform.position;
-
-        OffsetX = originalPixel.GetComponent<SpriteRenderer>().bounds.size.x;
-        OffsetY = originalPixel.GetComponent<SpriteRenderer>().bounds.size.y;
+        var boundsSize = originalPixel.GetComponent<SpriteRenderer>().bounds.size;
+        OffsetX = boundsSize.x;
+        OffsetY = boundsSize.y;
 		for (var i = 0; i < Height; i++)
         {
             for (var j = 0; j < Width; j++)
@@ -60,21 +55,18 @@ public class GameField : MonoBehaviour
                 }
 
                 pixel.Position = new Position(i, j);
-                grid[i,j] = pixel;  
+                grid[i, j] = pixel;  
             }
         }
     }
 
     public void ClearGrid()
     {
-        for(var i = 0; i < Height; i++)
-        {
-            for(var j = 0; j < Width; j++)
-            {
-                grid[i, j].SetState(false);
-            }
-        }
+        foreach(var pixel in grid.Cast<Pixel>().Where(px => px.IsActive()))
+            pixel.SetState(false);
     }
+
+    public Pixel GetPixel(int i, int j) => grid[i, j];
 
     public bool Contains(Position position) => position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
 
