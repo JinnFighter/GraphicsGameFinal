@@ -6,11 +6,6 @@ public class BrezenheimGameModeController : GameModeController
     [SerializeField] private List<TextView> _views;
     private NewBrezenheimGameMode _mode;
 
-    void Awake()
-    {
-        Messenger<Pixel>.AddListener(GameEvents.GAME_CHECK, Check);
-    }
-
     void Start()
     {
         var gameField = GetComponent<GameFieldController>();
@@ -21,7 +16,7 @@ public class BrezenheimGameModeController : GameModeController
         _mode.DoRestartAction();   
     }
 
-    public void Check(Pixel invoker) 
+    public override void Check(Pixel invoker) 
     {
         if(GameMode.IsActive())
             GameMode.Check(invoker);
@@ -35,7 +30,6 @@ public class BrezenheimGameModeController : GameModeController
 
     void OnDestroy()
     {
-        Messenger<Pixel>.RemoveListener(GameEvents.GAME_CHECK, Check);
         _mode.DChangedEvent -= OnDChanged;
     }
 }

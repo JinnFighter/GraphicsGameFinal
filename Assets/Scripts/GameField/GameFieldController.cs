@@ -10,7 +10,13 @@ public class GameFieldController : MonoBehaviour
     {
         Difficulty = PlayerPrefs.GetInt("difficulty");
         _gameField = new NewGameField(Difficulty);
+        _view.GameCheckEvent += Check;
         _view.GenerateField(Difficulty, _gameField.GetWidth(), _gameField.GetHeight());
+    }
+
+    private void Check(Pixel invoker)
+    {
+        GetComponent<GameModeController>().Check(invoker);
     }
 
     public void SetState(int x, int y, bool state)
@@ -27,5 +33,10 @@ public class GameFieldController : MonoBehaviour
                 _gameField.GetData(i, j).SetState(false);
                 _view.SetState(i, j, false);
             }
+    }
+
+    void OnDestroy()
+    {
+        _view.GameCheckEvent -= Check;
     }
 }

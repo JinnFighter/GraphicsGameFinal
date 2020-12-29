@@ -12,8 +12,7 @@ public class Pixel : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Messenger<Pixel>.Broadcast(GameEvents.GAME_CHECK, this);
-        SendMessageUpwards("GameCheck", Position, SendMessageOptions.RequireReceiver);
+        SendMessageUpwards("GameCheck", this, SendMessageOptions.RequireReceiver);
     }
 }
 
