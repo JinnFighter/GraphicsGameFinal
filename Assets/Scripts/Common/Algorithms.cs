@@ -9,10 +9,10 @@ public class Algorithms : MonoBehaviour
         var linePoints = new List<Position>();
         var start = line.GetStart();
         var end = line.GetEnd();
-        var x0 = (int)start.Y;
-        var y0 = (int)start.X;
-        var x1 = (int)end.Y;
-        var y1 = (int)end.X;
+        var x0 = (int)start.X;
+        var y0 = (int)start.Y;
+        var x1 = (int)end.X;
+        var y1 = (int)end.Y;
 
         //Изменения координат
         var dx = (x1 > x0) ? (x1 - x0) : (x0 - x1);

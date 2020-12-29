@@ -6,7 +6,7 @@ public class GameFieldController : MonoBehaviour
     private NewGameField _gameField;
     public int Difficulty { get; private set; }
 
-    void Start()
+    void Awake()
     {
         Difficulty = PlayerPrefs.GetInt("difficulty");
         _gameField = new NewGameField(Difficulty);
