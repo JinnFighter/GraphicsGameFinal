@@ -6,6 +6,12 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
     [SerializeField] private Pixel _originalPixel;
     private Pixel[,] _grid;
 
+    public delegate void Check(Position position);
+
+    public event Check GameCheckEvent;
+
+    private void GameCheck(Position position) => GameCheckEvent?.Invoke(position);
+
     public void GenerateField(int difficulty, int width, int height)
     {
         switch (difficulty)
