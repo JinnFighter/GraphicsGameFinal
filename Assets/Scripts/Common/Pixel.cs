@@ -10,7 +10,10 @@ public class Pixel : MonoBehaviour
 
     public void SetState(bool state) => pixel_empty.SetActive(!state);
 
-    public void OnMouseDown() => Messenger<Pixel>.Broadcast(GameEvents.GAME_CHECK, this);
+    public void OnMouseDown()
+    {
+        SendMessageUpwards("GameCheck", this, SendMessageOptions.RequireReceiver);
+    }
 }
 
 
