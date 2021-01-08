@@ -35,11 +35,15 @@ public class NewBrezenheimGameMode : NewGameMode
             {
                 gameField.ClearGrid();
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                gameField.SetState((int)linesDatas[curLine].GetPoint(0).X, (int)linesDatas[curLine].GetPoint(0).Y, true);
+                var points = new List<Position>
+                {
+                    linesDatas[curLine].GetPoint(0),
+                    linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1)
+                };
                 lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
-                gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
 
                 prevPoint = null;
+                gameField.SetPointsState(points, true);
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
             }
         }
@@ -50,7 +54,7 @@ public class NewBrezenheimGameMode : NewGameMode
             if (invoker.Position.Equals(prevPoint))
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                invoker.SetState(true);
+                gameField.SetState((int)invoker.Position.X, (int)invoker.Position.Y, true);
                 linesDatas[curLine].NextPoint();
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
@@ -109,10 +113,8 @@ public class NewBrezenheimGameMode : NewGameMode
             var linePoints = Algorithms.GetBrezenheimLineData(lines[i], out var coeffs);
             ds[i] = new List<int>();
             linesDatas.Add(new LinesModeData());
-            for (var j = 0; j < coeffs.Count; j++)
-                ds[i].Add(coeffs[j]);
-            for (var j = 0; j < linePoints.Count; j++)
-                linesDatas[i].AddPoint(linePoints[j]);
+            ds[i].AddRange(coeffs);
+            linesDatas[i].AddRange(linePoints);
         }
 
         lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
@@ -121,4 +123,8 @@ public class NewBrezenheimGameMode : NewGameMode
         gameField.SetState((int)startPoint.X, (int)startPoint.Y, true);
         gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
     }
+
+    public int GetLinesCount() => linesDatas.Count;
+
+    public int GetCurrentLine() => curLine;
 }
