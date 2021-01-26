@@ -13,7 +13,7 @@ public class BrezenheimGameModeController : GameModeController
         _mode = new NewBrezenheimGameMode(gameField.Difficulty, gameField);
         GameMode = _mode;
         _mode.DChangedEvent += OnDChanged;
-        _mode.DoRestartAction();   
+        _mode.DoRestartAction();
     }
 
     public override void Check(Pixel invoker) 

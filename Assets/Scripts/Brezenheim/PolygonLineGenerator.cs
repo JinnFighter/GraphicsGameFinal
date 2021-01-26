@@ -68,7 +68,6 @@ public class PolygonLineGenerator : ILineGenerator
                             var end = line.GetEnd();
                             end.X = x1;
                             end.Y = y1;
-                            lineLength = line.GetLength();
                             continue;
                         }
 
@@ -76,7 +75,7 @@ public class PolygonLineGenerator : ILineGenerator
                         for (var j = 0; j < i - 1; j++)
                         {
                             if (HasSegmentsIntersection(lines[j].GetStart(), linePoints[j][linePoints[j].Count - 2],
-                             new Position(y0, x0), new Position(y1, x1))) ;
+                             new Position(y0, x0), new Position(y1, x1)))
                             {
                                 break;
                             }

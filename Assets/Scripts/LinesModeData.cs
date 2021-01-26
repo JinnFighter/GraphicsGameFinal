@@ -15,6 +15,8 @@ public class LinesModeData
 
     public void AddPoint(Position point) => _linePoints.Add(point);
 
+    public void AddRange(IEnumerable<Position> points) => _linePoints.AddRange(points);
+
     public Position GetPoint(int index) => _linePoints[index];
 
     public int GetPointsCount() => _linePoints.Count;
