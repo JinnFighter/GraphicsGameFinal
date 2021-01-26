@@ -54,7 +54,7 @@ public class NewBrezenheimGameMode : NewGameMode
             if (invoker.Position.Equals(prevPoint))
             {
                 Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
-                gameField.SetState((int)invoker.Position.X, (int)invoker.Position.Y, true);
+                gameField.SetPointsState(new List<Position> { invoker.Position }, true);
                 linesDatas[curLine].NextPoint();
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
