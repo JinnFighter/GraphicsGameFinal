@@ -29,13 +29,11 @@ public class NewBrezenheimGameMode : NewGameMode
             curLine++;
             if (curLine == linesDatas.Count)
             {
-                Messenger.Broadcast(GameEvents.GAME_OVER);
                 res = GameEvents.GAME_OVER;
             }
             else
             {
                 gameField.ClearGrid();
-                Messenger.Broadcast(GameEvents.ACTION_RIGHT_ANSWER);
                 res = GameEvents.ACTION_RIGHT_ANSWER;
                 var points = new List<Position>
                 {
@@ -55,7 +53,6 @@ public class NewBrezenheimGameMode : NewGameMode
 
             if (invoker.Position.Equals(prevPoint))
             {
-                Messenger.Broadcast(GameEvents.ACTION_RIGHT_ANSWER);
                 res = GameEvents.ACTION_RIGHT_ANSWER;
                 gameField.SetPointsState(new List<Position> { invoker.Position }, true);
                 linesDatas[curLine].NextPoint();
@@ -63,10 +60,7 @@ public class NewBrezenheimGameMode : NewGameMode
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
             }
             else
-            {
-                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
                 res = GameEvents.ACTION_WRONG_ANSWER;
-            }  
         }
 
         return res;
