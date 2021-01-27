@@ -1,23 +1,13 @@
-using UnityEngine;
-
-public class ScoreController : MonoBehaviour
+public class ScoreController : Controller
 {
-    [SerializeField] private GameEventManagerController gameEventManagerController;
     private ScoreKeeper scoreKeeper;
     
     // Start is called before the first frame update
     void Start()
     {
         scoreKeeper = GetComponent<ScoreKeeper>();
-        gameEventManagerController.CorrectAnswerEvent += scoreKeeper.AddScore;
-        gameEventManagerController.WrongAnswerEvent += scoreKeeper.ResetStreak;
-        gameEventManagerController.RestartGameEvent += scoreKeeper.OnRestartGameEvent;
-    }
-
-    void OnDestroy()
-    {
-        gameEventManagerController.CorrectAnswerEvent -= scoreKeeper.AddScore;
-        gameEventManagerController.WrongAnswerEvent -= scoreKeeper.ResetStreak;
-        gameEventManagerController.RestartGameEvent -= scoreKeeper.OnRestartGameEvent;
+        actions.Add(GameEvents.ACTION_RIGHT_ANSWER, scoreKeeper.AddScore);
+        actions.Add(GameEvents.ACTION_WRONG_ANSWER, scoreKeeper.ResetStreak);
+        actions.Add(GameEvents.RESTART_GAME, scoreKeeper.OnRestartGameEvent);
     }
 }
