@@ -21,20 +21,16 @@ public class NewBrezenheimGameMode : NewGameMode
         linesDatas = new List<LinesModeData>();
     }
 
-    public override void Check(Pixel invoker)
+    public override string Check(Pixel invoker)
     {
         if (prevPoint == lastPoint)
         {
             curLine++;
             if (curLine == linesDatas.Count)
-            {
-                Messenger.Broadcast(GameEvents.GAME_OVER);
-                return;
-            }
+                return GameEvents.GAME_OVER;
             else
             {
                 gameField.ClearGrid();
-                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 var points = new List<Position>
                 {
                     linesDatas[curLine].GetPoint(0),
@@ -45,6 +41,7 @@ public class NewBrezenheimGameMode : NewGameMode
                 prevPoint = null;
                 gameField.SetPointsState(points, true);
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
+                return GameEvents.ACTION_RIGHT_ANSWER;
             }
         }
         else
@@ -53,14 +50,14 @@ public class NewBrezenheimGameMode : NewGameMode
 
             if (invoker.Position.Equals(prevPoint))
             {
-                Messenger<int>.Broadcast(GameEvents.ACTION_RIGHT_ANSWER, 100);
                 gameField.SetPointsState(new List<Position> { invoker.Position }, true);
                 linesDatas[curLine].NextPoint();
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
+                return GameEvents.ACTION_RIGHT_ANSWER;
             }
             else
-                Messenger.Broadcast(GameEvents.ACTION_WRONG_ANSWER);
+                return GameEvents.ACTION_WRONG_ANSWER;
         }
     }
 

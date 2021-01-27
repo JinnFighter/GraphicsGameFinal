@@ -19,7 +19,11 @@ public class BrezenheimGameModeController : GameModeController
     public override void Check(Pixel invoker) 
     {
         if(GameMode.IsActive())
-            GameMode.Check(invoker);
+        {
+            var eventType = GameMode.Check(invoker);
+            Messenger.Broadcast(eventType);
+        }
+            
     }
 
     public void OnDChanged(int d)
