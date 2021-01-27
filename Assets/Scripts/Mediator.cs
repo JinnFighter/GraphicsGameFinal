@@ -7,8 +7,6 @@ public class Mediator : MonoBehaviour
 
     void Awake()
     {
-        Messenger.AddListener(GameEvents.ACTION_RIGHT_ANSWER, OnCorrectAnswer);
-        Messenger.AddListener(GameEvents.ACTION_WRONG_ANSWER, OnWrongAnswer);
         Messenger.AddListener(GameEvents.GAME_OVER, OnGameOver);
     }
 
@@ -19,8 +17,6 @@ public class Mediator : MonoBehaviour
 
     void OnDestroy()
     {
-        Messenger.RemoveListener(GameEvents.ACTION_RIGHT_ANSWER, OnCorrectAnswer);
-        Messenger.RemoveListener(GameEvents.ACTION_WRONG_ANSWER, OnWrongAnswer);
         Messenger.RemoveListener(GameEvents.GAME_OVER, OnGameOver);
     }
 
@@ -29,10 +25,6 @@ public class Mediator : MonoBehaviour
         foreach (var controller in _controllers)
             controller.Notify(eventType);
     }
-
-    private void OnCorrectAnswer() => Notify(GameEvents.ACTION_RIGHT_ANSWER);
-
-    private void OnWrongAnswer() => Notify(GameEvents.ACTION_WRONG_ANSWER);
 
     private void OnGameOver() => Notify(GameEvents.GAME_OVER);
 }

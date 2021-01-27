@@ -14,6 +14,10 @@
       <Score>2130</Score>
     </Player>
     <Player>
+      <Name>Jinn</Name>
+      <Score>2090</Score>
+    </Player>
+    <Player>
       <Name>Alex</Name>
       <Score>2050</Score>
     </Player>
@@ -24,10 +28,6 @@
     <Player>
       <Name>Jinn</Name>
       <Score>1960</Score>
-    </Player>
-    <Player>
-      <Name>Kenobi</Name>
-      <Score>1940</Score>
     </Player>
   </Results>
 </LeaderboardCollection>
