@@ -23,7 +23,6 @@ public class BrezenheimGameModeController : GameModeController
         {
             var eventType = GameMode.Check(invoker);
             _eventManagerController.HandleEvent(eventType);
-            Messenger.Broadcast(eventType);
         }
             
     }
