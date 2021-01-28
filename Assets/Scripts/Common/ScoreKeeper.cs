@@ -10,20 +10,6 @@ public class ScoreKeeper : MonoBehaviour
 
     public int Score { get; private set; } = 0;
 
-    void Awake()
-    {
-        Messenger.AddListener(GameEvents.ACTION_RIGHT_ANSWER, AddScore);
-        Messenger.AddListener(GameEvents.ACTION_WRONG_ANSWER, ResetStreak);
-        Messenger.AddListener(GameEvents.RESTART_GAME, OnRestartGameEvent);
-    }
-
-    void OnDestroy()
-    {
-        Messenger.RemoveListener(GameEvents.ACTION_RIGHT_ANSWER, AddScore);
-        Messenger.RemoveListener(GameEvents.ACTION_WRONG_ANSWER, ResetStreak);
-        Messenger.RemoveListener(GameEvents.RESTART_GAME, OnRestartGameEvent);
-    }
-
     public void AddScore()
     {
         if(streak < 5)
