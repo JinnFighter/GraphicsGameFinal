@@ -10,10 +10,6 @@ public class TimerComponent : MonoBehaviour
 
     public event TimeTick TimeChange;
 
-    public delegate void TimerEnd();
-
-    public event TimerEnd TimerEndEvent;
-
     void Awake()
     {
         StartTime = 4f;
@@ -33,7 +29,6 @@ public class TimerComponent : MonoBehaviour
             if (CurrentTime <= 0.0000f)
             {
                 IsCounting = false;
-                TimerEndEvent?.Invoke();
                 Messenger.Broadcast(GameEvents.TIMER_STOP);
             }
         }
