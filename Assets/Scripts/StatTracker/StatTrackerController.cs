@@ -9,4 +9,8 @@ public class StatTrackerController : Controller
         actions.Add(GameEvents.ACTION_WRONG_ANSWER, _roundStatsData.AddWrongAnswer);
         actions.Add(GameEvents.RESTART_GAME, _roundStatsData.Reset);
     }
+
+    public RoundStatsData GetData() => _roundStatsData;
+
+    public void ResetData() => _roundStatsData.Reset();
 }
