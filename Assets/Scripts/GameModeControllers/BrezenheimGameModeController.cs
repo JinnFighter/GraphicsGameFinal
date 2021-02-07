@@ -23,8 +23,8 @@ public class BrezenheimGameModeController : GameModeController
         {
             var eventType = GameMode.Check(invoker);
             _eventManagerController.HandleEvent(eventType);
+            OnGameModeEvent(eventType);
         }
-            
     }
 
     public void OnDChanged(int d)

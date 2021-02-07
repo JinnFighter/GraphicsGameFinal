@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameOverPresenter : MonoBehaviour
@@ -12,7 +13,8 @@ public class GameOverPresenter : MonoBehaviour
         var wrongCount = data.GetWrongAnswersCount();
         _correctAnswersView.SetText(correctCount.ToString());
         _wrongAnswersView.SetText(wrongCount.ToString());
-        var ratio = wrongCount == 0 ? 0 : correctCount / wrongCount * 100;
+        float sum = correctCount + wrongCount;
+        var ratio = wrongCount == 0 ? 0 : (int)(Math.Abs(correctCount / sum) * 100);
         _percentsView.SetText(ratio.ToString() + "%");
     }
 }
