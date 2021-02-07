@@ -25,7 +25,7 @@ public class CountdownGameplayState : GameplayState
     {
         _timer.StopTimer();
         _timerText.Deactivate();
-        _timer.TimerEndEvent += NextState;
+        _timer.TimerEndEvent -= NextState;
     }
 
     private void NextState() => _statesContainer.NextState();
