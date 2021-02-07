@@ -20,4 +20,10 @@ public abstract class GameplayState : MonoBehaviour, IPausable
         foreach (IPausable pausable in _controllers.Where(controller => controller is IPausable))
             pausable.Unpause();
     }
+
+    public void Notify(string eventType)
+    {
+        foreach (var controller in _controllers)
+            controller.Notify(eventType);
+    }
 }
