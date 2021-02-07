@@ -7,17 +7,17 @@ public class Mediator : MonoBehaviour
 
     void Awake()
     {
-        Messenger.AddListener(GameEvents.GAME_OVER, OnGameOver);
+        //Messenger.AddListener(GameEvents.GAME_OVER, OnGameOver);
     }
 
     void Start()
     {
-        Notify(GameEvents.START_GAME);
+        //Notify(GameEvents.START_GAME);
     }
 
     void OnDestroy()
     {
-        Messenger.RemoveListener(GameEvents.GAME_OVER, OnGameOver);
+        //Messenger.RemoveListener(GameEvents.GAME_OVER, OnGameOver);
     }
 
     public void Notify(string eventType)
