@@ -14,6 +14,7 @@ public class TimedModeGameplayState : GameModeGameplayState
 
     public override void Init()
     {
+        _gameModeController.GameEventGenerated += Notify;
         _gameModeController.GameMode.SetGameActive(true);
         float time;
         switch (_gameModeController.GameMode.GetDifficulty())
@@ -38,6 +39,7 @@ public class TimedModeGameplayState : GameModeGameplayState
         _timer.StopTimer();
         _timer.TimerEndEvent -= NextState;
         _gameModeController.GameMode.SetGameActive(false);
+        _gameModeController.GameEventGenerated -= Notify;
     }
 
     public bool IsActive() => _gameModeController.GameMode.IsActive();
