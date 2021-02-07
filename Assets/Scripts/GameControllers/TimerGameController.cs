@@ -9,7 +9,7 @@ public class TimerGameController : Controller
     void Awake()
     {
         _currentState = 0;
-        Messenger.AddListener(GameEvents.TIMER_STOP, NextState);
+        //Messenger.AddListener(GameEvents.TIMER_STOP, NextState);
         actions.Add(GameEvents.PAUSE_GAME, OnPauseEvent);
         actions.Add(GameEvents.CONTINUE_GAME, OnContinueEvent);
         actions.Add(GameEvents.START_GAME, OnStartEvent);
@@ -18,7 +18,7 @@ public class TimerGameController : Controller
 
     void OnDestroy()
     {
-        Messenger.RemoveListener(GameEvents.TIMER_STOP, NextState);
+        //Messenger.RemoveListener(GameEvents.TIMER_STOP, NextState);
     }
 
     public void NextState()

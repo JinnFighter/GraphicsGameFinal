@@ -11,6 +11,11 @@ public class StatesContainer : MonoBehaviour, IPausable
         _currentState = 0;
     }
 
+    void Start()
+    {
+        _gameStates[_currentState].Init();
+    }
+
     public void NextState()
     {
         _gameStates[_currentState].OnDelete();

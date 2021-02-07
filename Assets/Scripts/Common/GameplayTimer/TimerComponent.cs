@@ -34,7 +34,6 @@ public class TimerComponent : MonoBehaviour
             {
                 IsCounting = false;
                 TimerEndEvent?.Invoke();
-                Messenger.Broadcast(GameEvents.TIMER_STOP);
             }
         }
     }
