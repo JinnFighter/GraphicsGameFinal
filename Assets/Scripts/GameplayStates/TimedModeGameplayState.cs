@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimedModeGameplayState : GameModeGameplayState
 {
+    [SerializeField] private StatesContainer _statesContainer;
     private GameModeController _gameModeController;
     private TimerComponent _timer;
 
@@ -11,12 +10,6 @@ public class TimedModeGameplayState : GameModeGameplayState
     {
         _timer = GetComponent<TimerComponent>();
         _gameModeController = GetComponent<GameModeController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public override void Init()
@@ -36,14 +29,18 @@ public class TimedModeGameplayState : GameModeGameplayState
                 break;
         }
         _timer.StartTime = time;
+        _timer.TimerEndEvent += NextState;
         _timer.Launch();
     }
 
     public override void OnDelete()
     {
         _timer.StopTimer();
+        _timer.TimerEndEvent -= NextState;
         _gameModeController.GameMode.SetGameActive(false);
     }
 
     public bool IsActive() => _gameModeController.GameMode.IsActive();
+
+    private void NextState() => _statesContainer.NextState();
 }
