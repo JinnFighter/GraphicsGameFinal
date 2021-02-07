@@ -10,7 +10,9 @@ public class StatTrackerController : Controller, IPausable
         _roundStatsData = new RoundStatsData();
         actions.Add(GameEvents.ACTION_RIGHT_ANSWER, _roundStatsData.AddCorrentAnswer);
         actions.Add(GameEvents.ACTION_WRONG_ANSWER, _roundStatsData.AddWrongAnswer);
-        actions.Add(GameEvents.RESTART_GAME, _roundStatsData.Reset);
+        actions.Add(GameEvents.RESTART_GAME, ResetData);
+        actions.Add(GameEvents.START_GAME, OnStartGameEvent);
+        actions.Add(GameEvents.GAME_OVER, OnGameOverEvent);
     }
 
     public RoundStatsData GetData() => _roundStatsData;
@@ -31,5 +33,13 @@ public class StatTrackerController : Controller, IPausable
     void OnDestroy()
     {
         _stopwatch.TimeChange -= OnStopwatchTick;
+    }
+
+    private void OnGameOverEvent() => _stopwatch.Stop();
+
+    private void OnStartGameEvent()
+    {
+        ResetData();
+        _stopwatch.Resume();
     }
 }

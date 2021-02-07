@@ -32,6 +32,7 @@ public class TimedModeGameplayState : GameModeGameplayState
         _timer.StartTime = time;
         _timer.TimerEndEvent += NextState;
         _timer.Launch();
+        Notify(GameEvents.START_GAME);
     }
 
     public override void OnDelete()
