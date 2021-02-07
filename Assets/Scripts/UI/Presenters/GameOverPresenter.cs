@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameOverPresenter : MonoBehaviour
 {
+    [SerializeField] private TextView _timeElapsedView;
     [SerializeField] private TextView _correctAnswersView;
     [SerializeField] private TextView _wrongAnswersView;
     [SerializeField] private TextView _percentsView;
@@ -16,5 +17,8 @@ public class GameOverPresenter : MonoBehaviour
         float sum = correctCount + wrongCount;
         var ratio = wrongCount == 0 ? 0 : (int)(Math.Abs(correctCount / sum) * 100);
         _percentsView.SetText(ratio.ToString() + "%");
+
+        var timeSpent = data.GetTimeSpent();
+        _timeElapsedView.SetText(GetComponent<TimerFormat>().GetFormattedTime(timeSpent));
     }
 }
