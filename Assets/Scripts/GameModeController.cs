@@ -6,7 +6,13 @@ public abstract class GameModeController : MonoBehaviour
 
     public abstract void Check(Pixel invoker);
 
-    public delegate void GameEvent(string eventType);
+    public delegate void GameModeEvent(string eventType);
 
-    public event GameEvent GameEventGenerated;
+    public event GameModeEvent GameEventGenerated;
+
+    protected virtual void OnGameModeEvent(string eventType)
+    {
+        GameModeEvent handler = GameEventGenerated;
+        handler?.Invoke(eventType);
+    }
 }
