@@ -53,4 +53,16 @@ public class TimedModeGameplayState : GameModeGameplayState
     public bool IsActive() => _gameModeController.GameMode.IsActive();
 
     private void NextState() => _statesContainer.NextState();
+
+    protected override void OnPauseAction()
+    {
+        _timer.StopTimer();
+        _gameModeController.GameMode.SetGameActive(false);
+    }
+
+    protected override void OnUnpauseAction()
+    {
+        _timer.ResumeTimer();
+        _gameModeController.GameMode.SetGameActive(true);
+    }
 }

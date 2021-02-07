@@ -9,14 +9,21 @@ public abstract class GameplayState : MonoBehaviour, IPausable
     public abstract void OnDelete();
     public abstract void Init();
 
+
+    protected abstract void OnPauseAction();
+
+    protected abstract void OnUnpauseAction();
+
     public void Pause()
     {
+        OnPauseAction();
         foreach (IPausable pausable in _controllers.Where(controller => controller is IPausable))
             pausable.Pause();
     }
 
     public void Unpause()
     {
+        OnUnpauseAction();
         foreach (IPausable pausable in _controllers.Where(controller => controller is IPausable))
             pausable.Unpause();
     }

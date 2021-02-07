@@ -29,4 +29,8 @@ public class CountdownGameplayState : GameplayState
     }
 
     private void NextState() => _statesContainer.NextState();
+
+    protected override void OnPauseAction() => _timer.StopTimer();
+
+    protected override void OnUnpauseAction() => _timer.ResumeTimer();
 }

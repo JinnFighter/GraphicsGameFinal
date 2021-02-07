@@ -16,4 +16,14 @@ public class EndgameGameplayState : GameplayState
         _endgameScreen.gameObject.SetActive(false);
         _statTracker.ResetData();
     }
+
+    protected override void OnPauseAction()
+    {
+        
+    }
+
+    protected override void OnUnpauseAction()
+    {
+
+    }
 }
