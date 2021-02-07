@@ -3,8 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(TimerComponent))]
 public class CountdownGameplayState : GameplayState
 {
-    private TimerComponent _timer;
+    [SerializeField] private StatesContainer _statesContainer;
     [SerializeField] private TextView _timerText;
+    private TimerComponent _timer;
 
     void Awake()
     {
@@ -15,6 +16,7 @@ public class CountdownGameplayState : GameplayState
     {
         _timer.ResetTimer();
         _timer.StartTime = 4f;
+        _timer.TimerEndEvent += NextState;
         _timer.Launch();
         _timerText.Activate();
     }
@@ -23,5 +25,8 @@ public class CountdownGameplayState : GameplayState
     {
         _timer.StopTimer();
         _timerText.Deactivate();
+        _timer.TimerEndEvent += NextState;
     }
+
+    private void NextState() => _statesContainer.NextState();
 }
