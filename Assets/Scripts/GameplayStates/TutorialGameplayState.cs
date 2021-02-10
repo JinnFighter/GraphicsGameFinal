@@ -30,7 +30,7 @@ public class TutorialGameplayState : GameplayState
     private bool IsFirstTimePlaying()
     {
         var prefId = _profilesManager.ActiveProfile.name + "_" + SceneManager.GetActiveScene().name + "_first_visit";
-        var visitState = PlayerPrefs.GetInt(prefId);
+        var visitState =  PlayerPrefs.HasKey(prefId) ? PlayerPrefs.GetInt(prefId) : 1;
         if(visitState == 1)
         {
             PlayerPrefs.SetInt(prefId, 0);
