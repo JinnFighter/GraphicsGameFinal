@@ -5,12 +5,10 @@ public class BrezenheimGameModeController : GameModeController
 {
     [SerializeField] private List<TextView> _views;
     private NewBrezenheimGameMode _mode;
-    private EventManagerController _eventManagerController;
 
     void Start()
     {
         var gameField = GetComponent<GameFieldController>();
-        _eventManagerController = GetComponent<EventManagerController>();
         _mode = new NewBrezenheimGameMode(gameField.Difficulty, gameField);
         GameMode = _mode;
         _mode.DChangedEvent += OnDChanged;
@@ -22,7 +20,6 @@ public class BrezenheimGameModeController : GameModeController
         if(GameMode.IsActive())
         {
             var eventType = GameMode.Check(invoker);
-            _eventManagerController.HandleEvent(eventType);
             OnGameModeEvent(eventType);
         }
     }
