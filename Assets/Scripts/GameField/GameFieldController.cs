@@ -14,7 +14,7 @@ public class GameFieldController : MonoBehaviour
         _view.GenerateField(Difficulty, _gameField.GetWidth(), _gameField.GetHeight());
     }
 
-    private void Check(Pixel invoker)
+    private void Check(Position invoker)
     {
         GetComponent<GameModeController>().Check(invoker);
     }

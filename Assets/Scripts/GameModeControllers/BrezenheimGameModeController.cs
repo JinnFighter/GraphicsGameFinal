@@ -15,7 +15,7 @@ public class BrezenheimGameModeController : GameModeController
         _mode.DoRestartAction();
     }
 
-    public override void Check(Pixel invoker) 
+    public override void Check(Position invoker) 
     {
         if(GameMode.IsActive())
         {

@@ -6,11 +6,11 @@ public class GameFieldView : MonoBehaviour, IGameFieldView
     [SerializeField] private Pixel _originalPixel;
     private Pixel[,] _grid;
 
-    public delegate void Check(Pixel invoker);
+    public delegate void Check(Position invoker);
 
     public event Check GameCheckEvent;
 
-    public void GameCheck(Pixel invoker) => GameCheckEvent?.Invoke(invoker);
+    public void GameCheck(Position invoker) => GameCheckEvent?.Invoke(invoker);
 
     public void GenerateField(int difficulty, int width, int height)
     {

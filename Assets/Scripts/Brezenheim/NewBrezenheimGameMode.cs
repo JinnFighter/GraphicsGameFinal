@@ -21,7 +21,7 @@ public class NewBrezenheimGameMode : NewGameMode
         linesDatas = new List<LinesModeData>();
     }
 
-    public override string Check(Pixel invoker)
+    public override string Check(Position invoker)
     {
         var actions = new List<IGameFieldAction>();
         if (prevPoint == lastPoint)
@@ -51,9 +51,9 @@ public class NewBrezenheimGameMode : NewGameMode
         {
             prevPoint = linesDatas[curLine].GetCurrentPoint();
 
-            if (invoker.Position.Equals(prevPoint))
+            if (invoker.Equals(prevPoint))
             {
-                actions.Add(new FillGameFieldAction(new List<Position> { invoker.Position }));
+                actions.Add(new FillGameFieldAction(new List<Position> { invoker }));
                 linesDatas[curLine].NextPoint();
                 foreach (var action in actions)
                     action.DoAction(gameField);
