@@ -68,7 +68,7 @@ public class NewBrezenheimGameMode : NewGameMode
 
     public override void DoRestartAction()
     {
-        gameField.ClearGrid();
+        new ClearGameFieldAction().DoAction(gameField);
 
         curLine = 0;
 
