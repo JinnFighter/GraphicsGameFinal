@@ -1,4 +1,4 @@
 public interface IGameFieldAction
 {
-    void DoAction(NewGameField gameField);
+    void DoAction(GameFieldController gameField);
 }
