@@ -24,46 +24,46 @@ public class NewBrezenheimGameMode : NewGameMode
     public override string Check(Position invoker)
     {
         var actions = new List<IGameFieldAction>();
-        if (prevPoint == lastPoint)
+        var eventType = "";
+
+        if (curLine >= linesDatas.Count)
+            return GameEvents.GAME_OVER;
+
+        var lineData = linesDatas[curLine];
+        if (invoker.Equals(lineData.GetCurrentPoint()))
         {
-            curLine++;
-            if (curLine == linesDatas.Count)
-                return GameEvents.GAME_OVER;
-            else
+            if (lineData.GetCurrentIndex() == lineData.GetPointsCount() - 1)
             {
-                actions.Add(new ClearGameFieldAction());
-                var points = new List<Position>
+                curLine++;
+                if (curLine >= linesDatas.Count)
+                    return GameEvents.GAME_OVER;
+                else
                 {
-                    linesDatas[curLine].GetPoint(0),
-                    linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1)
-                };
-                lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
+                    actions.Add(new ClearGameFieldAction());
 
-                prevPoint = null;
-                actions.Add(new FillGameFieldAction(points));
-                foreach (var action in actions)
-                    action.DoAction(gameField);
-                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
-                return GameEvents.ACTION_RIGHT_ANSWER;
+                    actions.Add(new FillGameFieldAction(new List<Position>
+                    {
+                        linesDatas[curLine].GetPoint(0),
+                        linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1)
+                    }));
+                }
             }
-        }
-        else
-        {
-            prevPoint = linesDatas[curLine].GetCurrentPoint();
-
-            if (invoker.Equals(prevPoint))
+            else
             {
                 actions.Add(new FillGameFieldAction(new List<Position> { invoker }));
                 linesDatas[curLine].NextPoint();
-                foreach (var action in actions)
-                    action.DoAction(gameField);
-                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
-                prevPoint = linesDatas[curLine].GetCurrentPoint();
-                return GameEvents.ACTION_RIGHT_ANSWER;
             }
-            else
-                return GameEvents.ACTION_WRONG_ANSWER;
+
+            DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
+            eventType = GameEvents.ACTION_RIGHT_ANSWER;
         }
+        else
+            eventType = GameEvents.ACTION_WRONG_ANSWER;
+
+        foreach (var action in actions)
+            action.DoAction(gameField);
+
+        return eventType;
     }
 
     public override void DoRestartAction()
