@@ -23,6 +23,7 @@ public class NewBrezenheimGameMode : NewGameMode
 
     public override string Check(Pixel invoker)
     {
+        var actions = new List<IGameFieldAction>();
         if (prevPoint == lastPoint)
         {
             curLine++;
@@ -30,7 +31,7 @@ public class NewBrezenheimGameMode : NewGameMode
                 return GameEvents.GAME_OVER;
             else
             {
-                gameField.ClearGrid();
+                actions.Add(new ClearGameFieldAction());
                 var points = new List<Position>
                 {
                     linesDatas[curLine].GetPoint(0),
@@ -39,7 +40,9 @@ public class NewBrezenheimGameMode : NewGameMode
                 lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
 
                 prevPoint = null;
-                gameField.SetPointsState(points, true);
+                actions.Add(new FillGameFieldAction(points));
+                foreach (var action in actions)
+                    action.DoAction(gameField);
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 return GameEvents.ACTION_RIGHT_ANSWER;
             }
@@ -50,8 +53,10 @@ public class NewBrezenheimGameMode : NewGameMode
 
             if (invoker.Position.Equals(prevPoint))
             {
-                gameField.SetPointsState(new List<Position> { invoker.Position }, true);
+                actions.Add(new FillGameFieldAction(new List<Position> { invoker.Position }));
                 linesDatas[curLine].NextPoint();
+                foreach (var action in actions)
+                    action.DoAction(gameField);
                 DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
                 prevPoint = linesDatas[curLine].GetCurrentPoint();
                 return GameEvents.ACTION_RIGHT_ANSWER;
