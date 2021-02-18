@@ -5,8 +5,6 @@ public class NewBrezenheimGameMode : NewGameMode
     protected List<LinesModeData> linesDatas;
     protected ILineGenerator lineGenerator;
     protected List<int>[] ds;
-    protected Position lastPoint;
-    protected Position prevPoint;
     protected int curLine;
     protected GameFieldController gameField;
 
@@ -119,11 +117,7 @@ public class NewBrezenheimGameMode : NewGameMode
             linesDatas[i].AddRange(linePoints);
         }
 
-        lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
-        prevPoint = null;
-        var startPoint = lines[0].GetStart();
-
-        var action = new FillGameFieldAction(new List<Position> { startPoint, lastPoint });
+        var action = new FillGameFieldAction(new List<Position> { lines[0].GetStart(), linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1 )});
         action.DoAction(gameField);
     }
 
