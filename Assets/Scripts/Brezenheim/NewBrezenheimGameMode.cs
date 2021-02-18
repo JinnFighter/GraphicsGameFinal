@@ -122,8 +122,9 @@ public class NewBrezenheimGameMode : NewGameMode
         lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
         prevPoint = null;
         var startPoint = lines[0].GetStart();
-        gameField.SetState((int)startPoint.X, (int)startPoint.Y, true);
-        gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
+
+        var action = new FillGameFieldAction(new List<Position> { startPoint, lastPoint });
+        action.DoAction(gameField);
     }
 
     public int GetLinesCount() => linesDatas.Count;
