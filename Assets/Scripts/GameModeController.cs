@@ -4,7 +4,7 @@ public abstract class GameModeController : MonoBehaviour
 {
     public NewGameMode GameMode { get; protected set; }
 
-    public abstract void Check(Pixel invoker);
+    public abstract void Check(Position invoker);
 
     public delegate void GameModeEvent(string eventType);
 

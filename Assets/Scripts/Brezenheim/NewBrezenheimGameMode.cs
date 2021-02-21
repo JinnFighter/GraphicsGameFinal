@@ -5,8 +5,6 @@ public class NewBrezenheimGameMode : NewGameMode
     protected List<LinesModeData> linesDatas;
     protected ILineGenerator lineGenerator;
     protected List<int>[] ds;
-    protected Position lastPoint;
-    protected Position prevPoint;
     protected int curLine;
     protected GameFieldController gameField;
 
@@ -21,49 +19,54 @@ public class NewBrezenheimGameMode : NewGameMode
         linesDatas = new List<LinesModeData>();
     }
 
-    public override string Check(Pixel invoker)
+    public override string Check(Position invoker)
     {
-        if (prevPoint == lastPoint)
+        var actions = new List<IGameFieldAction>();
+        var eventType = "";
+
+        if (curLine >= linesDatas.Count)
+            return GameEvents.GAME_OVER;
+
+        var lineData = linesDatas[curLine];
+        if (invoker.Equals(lineData.GetCurrentPoint()))
         {
-            curLine++;
-            if (curLine == linesDatas.Count)
-                return GameEvents.GAME_OVER;
+            if (lineData.GetCurrentIndex() == lineData.GetPointsCount() - 1)
+            {
+                curLine++;
+                if (curLine >= linesDatas.Count)
+                    return GameEvents.GAME_OVER;
+                else
+                {
+                    actions.Add(new ClearGameFieldAction());
+
+                    actions.Add(new FillGameFieldAction(new List<Position>
+                    {
+                        linesDatas[curLine].GetPoint(0),
+                        linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1)
+                    }));
+                }
+            }
             else
             {
-                gameField.ClearGrid();
-                var points = new List<Position>
-                {
-                    linesDatas[curLine].GetPoint(0),
-                    linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1)
-                };
-                lastPoint = linesDatas[curLine].GetPoint(linesDatas[curLine].GetPointsCount() - 1);
-
-                prevPoint = null;
-                gameField.SetPointsState(points, true);
-                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
-                return GameEvents.ACTION_RIGHT_ANSWER;
+                actions.Add(new FillGameFieldAction(new List<Position> { invoker }));
+                linesDatas[curLine].NextPoint();
             }
+
+            DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
+            eventType = GameEvents.ACTION_RIGHT_ANSWER;
         }
         else
-        {
-            prevPoint = linesDatas[curLine].GetCurrentPoint();
+            eventType = GameEvents.ACTION_WRONG_ANSWER;
 
-            if (invoker.Position.Equals(prevPoint))
-            {
-                gameField.SetPointsState(new List<Position> { invoker.Position }, true);
-                linesDatas[curLine].NextPoint();
-                DChangedEvent?.Invoke(ds[curLine][linesDatas[curLine].GetCurrentIndex()]);
-                prevPoint = linesDatas[curLine].GetCurrentPoint();
-                return GameEvents.ACTION_RIGHT_ANSWER;
-            }
-            else
-                return GameEvents.ACTION_WRONG_ANSWER;
-        }
+        foreach (var action in actions)
+            action.DoAction(gameField);
+
+        return eventType;
     }
 
     public override void DoRestartAction()
     {
-        gameField.ClearGrid();
+        new ClearGameFieldAction().DoAction(gameField);
 
         curLine = 0;
 
@@ -114,11 +117,8 @@ public class NewBrezenheimGameMode : NewGameMode
             linesDatas[i].AddRange(linePoints);
         }
 
-        lastPoint = linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1);
-        prevPoint = null;
-        var startPoint = lines[0].GetStart();
-        gameField.SetState((int)startPoint.X, (int)startPoint.Y, true);
-        gameField.SetState((int)lastPoint.X, (int)lastPoint.Y, true);
+        var action = new FillGameFieldAction(new List<Position> { lines[0].GetStart(), linesDatas[0].GetPoint(linesDatas[0].GetPointsCount() - 1 )});
+        action.DoAction(gameField);
     }
 
     public int GetLinesCount() => linesDatas.Count;

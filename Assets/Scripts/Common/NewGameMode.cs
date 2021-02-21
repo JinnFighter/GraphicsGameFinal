@@ -9,7 +9,7 @@
         _isGameActive = false;
     }
 
-    public abstract string Check(Pixel invoker);
+    public abstract string Check(Position invoker);
     public abstract void DoRestartAction();
     public void SetGameActive(bool value) => _isGameActive = value;
     public bool IsActive() => _isGameActive;

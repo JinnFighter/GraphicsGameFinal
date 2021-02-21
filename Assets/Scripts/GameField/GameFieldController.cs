@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameFieldController : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class GameFieldController : MonoBehaviour
         _view.GenerateField(Difficulty, _gameField.GetWidth(), _gameField.GetHeight());
     }
 
-    private void Check(Pixel invoker)
+    private void Check(Position invoker)
     {
         GetComponent<GameModeController>().Check(invoker);
     }
@@ -24,15 +23,6 @@ public class GameFieldController : MonoBehaviour
     {
         _gameField.GetData(x, y).SetState(state);
         _view.SetState(x, y, state);
-    }
-
-    public void SetPointsState(IEnumerable<Position> points, bool state)
-    {
-        foreach(var point in points)
-        {
-            _gameField.GetData((int)point.X, (int)point.Y).SetState(state);
-            _view.SetState((int)point.X, (int)point.Y, state);
-        }
     }
 
     public void ClearGrid()
