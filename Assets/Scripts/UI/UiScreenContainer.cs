@@ -12,9 +12,13 @@ public class UiScreenContainer : MonoBehaviour
 
     public void Push(GameObject screen)
     {
-        _uiScreens.Push(screen);
-        screen.SetActive(true);
+        if(!_uiScreens.Contains(screen))
+        {
+            _uiScreens.Push(screen);
+            screen.SetActive(true);
+        }
     }
+           
 
     public void Pop()
     {
