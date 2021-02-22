@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MainController : MonoBehaviour, IPausable
 {
+    [SerializeField] private UiScreenContainer _uiScreenContainer;
     [SerializeField] private StatesContainer _statesContainer;
     [SerializeField] List<Controller> _controllers;
 
@@ -10,6 +11,22 @@ public class MainController : MonoBehaviour, IPausable
     void Start()
     {
         _statesContainer.OnStartEvent();
+    }
+
+
+    public void Push(GameObject uiScreen)
+    {
+        if (_uiScreenContainer.GetCount() == 0)
+            _statesContainer.Pause();
+
+        _uiScreenContainer.Push(uiScreen);
+    }
+
+    public void Pop()
+    {
+        _uiScreenContainer.Pop();
+        if (_uiScreenContainer.GetCount() == 0)
+            _statesContainer.Unpause();
     }
 
     public void Pause()
