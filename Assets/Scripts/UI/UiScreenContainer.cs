@@ -25,4 +25,6 @@ public class UiScreenContainer : MonoBehaviour
         var screen = _uiScreens.Pop();
         screen.SetActive(false);
     }
+
+    public int GetCount() => _uiScreens.Count;
 }
