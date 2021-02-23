@@ -35,11 +35,5 @@ public class SoundController : MonoBehaviour
 
     public void PlaySelectProfileClip() => PlayClip(selectProfileClip);
 
-    public void PlayClip(AudioClip audioClip)
-    {
-        if (_source.clip != audioClip)
-            _source.clip = audioClip;
-
-        _source.Play();
-    }
+    public void PlayClip(AudioClip audioClip) => _source.PlayOneShot(audioClip);
 }
