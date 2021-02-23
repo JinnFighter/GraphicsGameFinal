@@ -66,4 +66,11 @@ public class TimedModeGameplayState : GameModeGameplayState
         _timer.ResumeTimer();
         _gameModeController.GameMode.SetGameActive(true);
     }
+
+    public void OnRestart()
+    {
+        _gameModeController.GameMode.DoRestartAction();
+        _timer.ResetTimer();
+        Notify(GameEvents.RESTART_GAME);
+    }
 }

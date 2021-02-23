@@ -2,7 +2,15 @@
 
 public class TimerComponent : MonoBehaviour
 {
-    public float CurrentTime { get; private set; }
+    private float _currentTime;
+
+    public float CurrentTime { get => _currentTime;
+        private set
+        {
+            _currentTime = value;
+            TimeChange?.Invoke(_currentTime);
+        }
+    }
     public bool IsCounting { get; private set; }
     public float StartTime { get; set; }
 
@@ -29,7 +37,6 @@ public class TimerComponent : MonoBehaviour
             if (CurrentTime <= 0.0000f)
                 ResetTimer();
 
-            TimeChange?.Invoke(CurrentTime);
             if (CurrentTime <= 0.0000f)
             {
                 IsCounting = false;

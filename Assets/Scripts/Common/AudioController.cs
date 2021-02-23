@@ -24,11 +24,5 @@ public class AudioController : Controller
 
     private void PlayGameOverClip() => PlayClip(_gameOverClip);
 
-    public void PlayClip(AudioClip audioClip)
-    {
-        if (_source.clip != audioClip)
-            _source.clip = audioClip;
-
-        _source.Play();
-    }
+    public void PlayClip(AudioClip audioClip) => _source.PlayOneShot(audioClip);
 }
