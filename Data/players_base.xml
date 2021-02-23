@@ -2,7 +2,7 @@
 <PlayersCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Players>
     <Player name="Jinn">
-      <Active>false</Active>
+      <Active>true</Active>
     </Player>
     <Player name="do">
       <Active>false</Active>
@@ -11,7 +11,10 @@
       <Active>false</Active>
     </Player>
     <Player name="grr">
-      <Active>true</Active>
+      <Active>false</Active>
+    </Player>
+    <Player name="grdd">
+      <Active>false</Active>
     </Player>
   </Players>
 </PlayersCollection>
