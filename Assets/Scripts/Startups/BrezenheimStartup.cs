@@ -19,7 +19,7 @@ namespace Pixelgrid {
 #endif
             _systems
                 // register your systems here, for example:
-                // .Add (new TestSystem1 ())
+                 .Add (new SetDifficultySystem())
                 // .Add (new TestSystem2 ())
                 
                 // register one-frame components (order is important), for example:
