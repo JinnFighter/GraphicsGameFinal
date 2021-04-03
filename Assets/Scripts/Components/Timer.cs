@@ -1,5 +1,7 @@
-namespace Pixelgrid {
-    public struct Timer {
+namespace Pixelgrid 
+{
+    public struct Timer 
+    {
         public float currentTime;
     }
 }
