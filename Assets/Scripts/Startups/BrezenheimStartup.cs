@@ -27,7 +27,7 @@ namespace Pixelgrid {
                 // .OneFrame<TestComponent2> ()
                 
                 // inject service instances here (order doesn't important), for example:
-                // .Inject (new CameraService ())
+                .Inject(difficultyConfiguration)
                 // .Inject (new NavMeshSupport ())
                 .Init ();
         }
