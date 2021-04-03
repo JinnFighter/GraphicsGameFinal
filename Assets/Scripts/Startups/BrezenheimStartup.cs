@@ -6,6 +6,8 @@ namespace Pixelgrid {
         EcsWorld _world;
         EcsSystems _systems;
 
+        public DifficultyConfiguration difficultyConfiguration;
+
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
             
@@ -17,7 +19,7 @@ namespace Pixelgrid {
 #endif
             _systems
                 // register your systems here, for example:
-                // .Add (new TestSystem1 ())
+                 .Add (new SetDifficultySystem())
                 // .Add (new TestSystem2 ())
                 
                 // register one-frame components (order is important), for example:
@@ -25,7 +27,7 @@ namespace Pixelgrid {
                 // .OneFrame<TestComponent2> ()
                 
                 // inject service instances here (order doesn't important), for example:
-                // .Inject (new CameraService ())
+                .Inject(difficultyConfiguration)
                 // .Inject (new NavMeshSupport ())
                 .Init ();
         }
