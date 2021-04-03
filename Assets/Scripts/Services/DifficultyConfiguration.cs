@@ -4,6 +4,6 @@ namespace Pixelgrid
 {
     public class DifficultyConfiguration : ScriptableObject
     {
-        public int Difficulty = 1;
+        public int Difficulty = 0;
     }
 }
