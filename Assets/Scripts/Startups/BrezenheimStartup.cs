@@ -6,6 +6,8 @@ namespace Pixelgrid {
         EcsWorld _world;
         EcsSystems _systems;
 
+        public DifficultyConfiguration difficultyConfiguration;
+
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
             
