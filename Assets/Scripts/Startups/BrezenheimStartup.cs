@@ -21,6 +21,7 @@ namespace Pixelgrid {
                 // register your systems here, for example:
                  .Add (new SetDifficultySystem())
                  .Add(new UpdateTimersSystem())
+                 .Add(new UpdateStopwatchesSystem())
                 // .Add (new TestSystem2 ())
                 
                 // register one-frame components (order is important), for example:
