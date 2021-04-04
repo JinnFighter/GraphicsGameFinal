@@ -1,7 +1,9 @@
+using UnityEngine;
+
 namespace Pixelgrid 
 {
     struct PixelRef 
     {
-        public Pixel pixel;
+        public GameObject pixel;
     }
 }
