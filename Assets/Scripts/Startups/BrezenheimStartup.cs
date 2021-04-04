@@ -1,8 +1,11 @@
 using Leopotam.Ecs;
+using Leopotam.Ecs.Ui.Systems;
 using UnityEngine;
 
 namespace Pixelgrid {
     sealed class BrezenheimStartup : MonoBehaviour {
+
+        [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
         EcsSystems _systems;
 
@@ -33,6 +36,7 @@ namespace Pixelgrid {
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
+                .InjectUi(_ecsUiEmitter)
                 .Init ();
         }
 
