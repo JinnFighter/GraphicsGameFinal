@@ -1,0 +1,7 @@
+namespace Pixelgrid 
+{
+    struct PixelComponent 
+    {
+
+    }
+}
