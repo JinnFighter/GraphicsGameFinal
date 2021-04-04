@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 namespace Pixelgrid
 {   
-    [CreateAssetMenu]
-    public class GameFieldConfiguration : ScriptableObject
+    public class GameFieldConfiguration : MonoBehaviour
     {
         public int fieldSize = 10;
         public GameObject pixel;
