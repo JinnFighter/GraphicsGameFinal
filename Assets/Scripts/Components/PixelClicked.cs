@@ -1,6 +1,0 @@
-namespace Pixelgrid 
-{
-    struct PixelClicked 
-    {
-    }
-}
