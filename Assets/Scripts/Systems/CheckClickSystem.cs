@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
-using UnityEngine;
 
 namespace Pixelgrid 
 {
@@ -13,7 +12,10 @@ namespace Pixelgrid
             foreach (var index in _filter)
             {
                 ref EcsUiClickEvent data = ref _filter.Get1(index);
-                Debug.Log("Im clicked!", data.Sender);
+                var sender = data.Sender;
+                var pixel = sender.GetComponent<GridPixel>();
+                if(pixel)
+                    pixel.entity.Get<PixelClickedEvent>();
             }
         }
     }
