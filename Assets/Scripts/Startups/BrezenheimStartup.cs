@@ -27,11 +27,12 @@ namespace Pixelgrid {
                  .Add(new GenerateGameFieldSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
+                 .Add(new CheckClickSystem())
                  .InjectUi(_ecsUiEmitter)
                 // .Add (new TestSystem2 ())
 
                 // register one-frame components (order is important), for example:
-                // .OneFrame<TestComponent1> ()
+                 .OneFrame<PixelClickedEvent>()
                 // .OneFrame<TestComponent2> ()
 
                 // inject service instances here (order doesn't important), for example:
