@@ -11,6 +11,7 @@ namespace Pixelgrid {
 
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
+        public SpritesContainer spritesContainer;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -23,7 +24,7 @@ namespace Pixelgrid {
 #endif
             _systems
                 // register your systems here, for example:
-                 .Add (new SetDifficultySystem())
+                 .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
@@ -38,6 +39,7 @@ namespace Pixelgrid {
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
+                .Inject(spritesContainer)
                 .Init ();
         }
 
