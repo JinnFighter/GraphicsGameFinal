@@ -29,6 +29,7 @@ namespace Pixelgrid {
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckClickSystem())
+                 .Add(new UpdatePixelSystem())
                  .InjectUi(_ecsUiEmitter)
                 // .Add (new TestSystem2 ())
 
