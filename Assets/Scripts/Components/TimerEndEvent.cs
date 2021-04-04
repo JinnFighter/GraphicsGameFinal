@@ -1,7 +1,8 @@
+using Leopotam.Ecs;
+
 namespace Pixelgrid 
 {
-    public struct TimerEndEvent 
+    public struct TimerEndEvent : IEcsIgnoreInFilter
     {
-
     }
 }
