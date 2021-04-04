@@ -58,6 +58,7 @@ namespace Pixelgrid
                     position.position = new Vector2Int(i, j);
                     ref var pixelRef = ref entity.Get<PixelRef>();
                     pixelRef.pixel = pixel;
+                    pixel.GetComponent<GridPixel>().entity = entity;
                 }
             }
         }
