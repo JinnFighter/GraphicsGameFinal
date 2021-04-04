@@ -1,7 +1,8 @@
+using Leopotam.Ecs;
+
 namespace Pixelgrid 
 {
-    struct PixelComponent 
+    struct PixelComponent : IEcsIgnoreInFilter
     {
-
     }
 }
