@@ -43,10 +43,12 @@ namespace Pixelgrid
 
             grid.cellSize = cellSize;
 
-            for(var i = 0; i < fieldSize; i++)
+           
+            for (var i = 0; i < fieldSize; i++)
             {
                 for(var j = 0; j < fieldSize; j++)
                 {
+
                     var pixel = Object.Instantiate(pixelPrefab);
                     pixel.transform.SetParent(grid.transform);
 
