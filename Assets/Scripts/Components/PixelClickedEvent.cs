@@ -1,6 +1,8 @@
+using Leopotam.Ecs;
+
 namespace Pixelgrid 
 {
-    public struct PixelClickedEvent 
+    public struct PixelClickedEvent : IEcsIgnoreInFilter 
     {
     }
 }
