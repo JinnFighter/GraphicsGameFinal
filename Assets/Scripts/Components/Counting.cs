@@ -1,6 +1,8 @@
+using Leopotam.Ecs;
+
 namespace Pixelgrid 
 {
-    public struct Counting
+    public struct Counting : IEcsIgnoreInFilter
     {
 
     }
