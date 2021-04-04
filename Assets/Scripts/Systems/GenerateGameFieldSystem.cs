@@ -6,6 +6,7 @@ namespace Pixelgrid
 {
     public sealed class GenerateGameFieldSystem : IEcsInitSystem 
     {
+        private EcsWorld _world;
         private DifficultyConfiguration _difficultyConfiguration;
         private GameFieldConfiguration _gameFieldConfiguration;
 
@@ -48,6 +49,13 @@ namespace Pixelgrid
                 {
                     var pixel = Object.Instantiate(pixelPrefab);
                     pixel.transform.SetParent(grid.transform);
+
+                    var entity = _world.NewEntity();
+                    entity.Get<PixelComponent>();
+                    ref var position = ref entity.Get<PixelPosition>();
+                    position.position = new Vector2Int(i, j);
+                    ref var pixelRef = ref entity.Get<PixelRef>();
+                    pixelRef.pixel = pixel;
                 }
             }
         }
