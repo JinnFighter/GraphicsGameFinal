@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using Leopotam.Ecs.Ui.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ namespace Pixelgrid
 
                     var pixel = Object.Instantiate(pixelPrefab);
                     pixel.transform.SetParent(grid.transform);
+                    pixel.AddComponent<EcsUiClickAction>();
 
                     var entity = _world.NewEntity();
                     entity.Get<PixelComponent>();
