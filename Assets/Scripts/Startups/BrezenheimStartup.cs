@@ -42,6 +42,7 @@ namespace Pixelgrid {
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<TimerEndEvent>()
+                 .OneFrame<GameOverEvent>()
                 // .OneFrame<TestComponent2> ()
 
                 // inject service instances here (order doesn't important), for example:
