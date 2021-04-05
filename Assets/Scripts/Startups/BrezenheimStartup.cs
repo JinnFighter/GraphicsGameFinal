@@ -12,6 +12,7 @@ namespace Pixelgrid {
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
+        public TimersContainer timersContainer;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -42,6 +43,7 @@ namespace Pixelgrid {
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
                 .Inject(spritesContainer)
+                .Inject(timersContainer)
                 .Init ();
         }
 
