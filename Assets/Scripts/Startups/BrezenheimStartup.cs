@@ -29,6 +29,8 @@ namespace Pixelgrid {
                  .Add(new GenerateGameFieldSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
+                 .Add(new StartGameSystem())
+                 .Add(new LaunchGameplayTimerSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckClickSystem())
@@ -38,6 +40,7 @@ namespace Pixelgrid {
 
                 // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
+                 .OneFrame<StartGameEvent>()
                 // .OneFrame<TestComponent2> ()
 
                 // inject service instances here (order doesn't important), for example:
