@@ -27,6 +27,7 @@ namespace Pixelgrid
             {
                 ref var timer = ref _filter.Get1(index);
                 timer.startTime = startTime;
+                timer.currentTime = startTime;
             }
         }
     }

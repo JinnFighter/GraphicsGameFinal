@@ -1,7 +1,8 @@
+using Leopotam.Ecs;
+
 namespace Pixelgrid 
 {
-    public struct GameplayTimerComponent 
+    public struct GameplayTimerComponent : IEcsIgnoreInFilter 
     {
-
     }
 }
