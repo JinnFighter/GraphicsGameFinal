@@ -33,6 +33,7 @@ namespace Pixelgrid {
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
+                 .Add(new GameOverOnTimerEndSystem())
                  .Add(new CheckClickSystem())
                  .Add(new UpdatePixelSystem())
                  .InjectUi(_ecsUiEmitter)
