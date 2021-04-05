@@ -4,15 +4,18 @@ namespace Pixelgrid
 {
     public sealed class GameOverOnTimerEndSystem : IEcsRunSystem 
     {
-        private EcsWorld _world;
+        private EcsFilter<GameplayEventReceiver> _eventReceiversFilter;
         private EcsFilter<GameplayTimerComponent, TimerEndEvent> _filter;
 
         void IEcsRunSystem.Run() 
         {
             if(!_filter.IsEmpty())
             {
-                var entity = _world.NewEntity();
-                entity.Get<GameOverEvent>();
+                foreach(var index in _eventReceiversFilter)
+                {
+                    var entity = _eventReceiversFilter.GetEntity(index);
+                    entity.Get<GameOverEvent>();
+                }
             }
         }
     }
