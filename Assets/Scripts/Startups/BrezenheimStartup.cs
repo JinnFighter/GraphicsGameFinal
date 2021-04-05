@@ -25,6 +25,7 @@ namespace Pixelgrid {
 #endif
             _systems
                 // register your systems here, for example:
+                 .Add(new CreateGameplayEventReceiverSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
                  .Add(new GenerateTimersSystem())
