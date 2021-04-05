@@ -12,7 +12,7 @@ namespace Pixelgrid
         {
             foreach(var index in _filter)
             {
-                var timerData = _filter.Get1(index);
+                ref var timerData = ref _filter.Get1(index);
                 var currentTime = timerData.currentTime -= Time.deltaTime;
 
                 if (currentTime <= 0.000f)
