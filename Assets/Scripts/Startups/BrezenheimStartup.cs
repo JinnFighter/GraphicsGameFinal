@@ -33,6 +33,7 @@ namespace Pixelgrid {
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
+                 .Add(new GameOverOnTimerEndSystem())
                  .Add(new CheckClickSystem())
                  .Add(new UpdatePixelSystem())
                  .InjectUi(_ecsUiEmitter)
@@ -41,6 +42,8 @@ namespace Pixelgrid {
                 // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<TimerEndEvent>()
+                 .OneFrame<GameOverEvent>()
                 // .OneFrame<TestComponent2> ()
 
                 // inject service instances here (order doesn't important), for example:
