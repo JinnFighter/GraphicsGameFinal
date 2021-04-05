@@ -4,13 +4,15 @@ namespace Pixelgrid
 {
     public sealed class StartGameSystem : IEcsInitSystem 
     {
-        // auto-injected fields.
-        readonly EcsWorld _world;
+        private EcsFilter<GameplayEventReceiver> _filter;
         
         public void Init() 
         {
-            var entity = _world.NewEntity();
-            entity.Get<StartGameEvent>();
+            foreach(var index in _filter)
+            {
+                var entity = _filter.GetEntity(index);
+                entity.Get<StartGameEvent>();
+            }
         }
     }
 }
