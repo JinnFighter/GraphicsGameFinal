@@ -11,7 +11,7 @@ namespace Pixelgrid
         {
             foreach(var index in _filter)
             {
-                var stopwatch = _filter.Get1(index);
+                ref var stopwatch = ref _filter.Get1(index);
                 stopwatch.currentTime += Time.deltaTime;
             }
         }

@@ -29,17 +29,19 @@ namespace Pixelgrid {
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
                  .Add(new GenerateTimersSystem())
+                 .Add(new CreateStatDataTrackerSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
                  .Add(new LaunchGameplayTimerSystem())
+                 .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
+                 .Add(new UpdateStatDataSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new CheckClickSystem())
                  .Add(new UpdatePixelSystem())
                  .InjectUi(_ecsUiEmitter)
-                // .Add (new TestSystem2 ())
 
                 // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
@@ -48,7 +50,6 @@ namespace Pixelgrid {
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<GameOverEvent>()
-                // .OneFrame<TestComponent2> ()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
