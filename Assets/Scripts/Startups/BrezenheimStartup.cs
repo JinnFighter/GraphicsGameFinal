@@ -45,6 +45,8 @@ namespace Pixelgrid {
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<TimerEndEvent>()
+                 .OneFrame<CorrectAnswerEvent>()
+                 .OneFrame<WrongAnswerEvent>()
                  .OneFrame<GameOverEvent>()
                 // .OneFrame<TestComponent2> ()
 
