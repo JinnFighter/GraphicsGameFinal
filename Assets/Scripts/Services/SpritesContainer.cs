@@ -7,5 +7,6 @@ namespace Pixelgrid
     {
         public Sprite EmptySprite;
         public Sprite FilledSprite;
+        public Sprite LineEndSprite;
     }
 }
