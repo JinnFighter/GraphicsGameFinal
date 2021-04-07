@@ -16,12 +16,15 @@ namespace Pixelgrid
             {
                 var entity = _gameModeDataFilter.GetEntity(index);
                 ref var lineData = ref entity.Get<LineData>();
+                ref var dData = ref entity.Get<Brezenheim_D_Data>();
                 var lines = _lineDataGenerator.GenerateData(2, 5, 5).ToList();
                 var lineDatas = new List<List<Vector2Int>>();
+                var dDatas = new List<List<int>>();
 
                 foreach(var line in lines)
                 {
-                    lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out _));
+                    lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
+                    dDatas.Add(ds);
                 }
                 lineData.LinePoints = lineDatas;
                 lineData.CurrentPoint = 0;
