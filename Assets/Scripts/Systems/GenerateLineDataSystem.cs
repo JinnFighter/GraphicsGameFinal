@@ -26,6 +26,7 @@ namespace Pixelgrid
                     lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
                     dDatas.Add(ds);
                 }
+                dData.Indexes = dDatas;
                 lineData.LinePoints = lineDatas;
                 lineData.CurrentPoint = 0;
                 lineData.CurrentLine = 0;
