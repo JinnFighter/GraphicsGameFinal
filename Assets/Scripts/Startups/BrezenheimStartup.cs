@@ -56,6 +56,7 @@ namespace Pixelgrid {
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
+                 .OneFrame<ClearGridEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
