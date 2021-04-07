@@ -1,5 +1,7 @@
 using Leopotam.Ecs;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Pixelgrid 
 {
@@ -14,8 +16,16 @@ namespace Pixelgrid
             {
                 var entity = _gameModeDataFilter.GetEntity(index);
                 ref var lineData = ref entity.Get<LineData>();
-                lineData.LinePoints = _lineDataGenerator.GenerateData(2, 5, 5).ToList();
+                var lines = _lineDataGenerator.GenerateData(2, 5, 5).ToList();
+                var lineDatas = new List<List<Vector2Int>>();
+
+                foreach(var line in lines)
+                {
+                    lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out _));
+                }
+                lineData.LinePoints = lineDatas;
                 lineData.CurrentPoint = 0;
+                lineData.CurrentLine = 0;
             }
         }
     }

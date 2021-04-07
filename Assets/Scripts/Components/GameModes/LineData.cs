@@ -5,7 +5,8 @@ namespace Pixelgrid
 {
     public struct LineData 
     {
-        public List<(Vector2Int, Vector2Int)> LinePoints;
+        public List<List<Vector2Int>> LinePoints;
         public int CurrentPoint;
+        public int CurrentLine;
     }
 }
