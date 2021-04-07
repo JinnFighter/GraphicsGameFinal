@@ -13,10 +13,10 @@ namespace Pixelgrid {
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
+        public LinesGenerator LinesGenerator;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
-            
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
 #if UNITY_EDITOR
@@ -31,7 +31,7 @@ namespace Pixelgrid {
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
-                 .Add(new GenerateLineDataSystem(new RandomLinesGenerator(3)))
+                 .Add(new GenerateLineDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())                
                  .Add(new LaunchGameplayTimerSystem())
@@ -59,6 +59,7 @@ namespace Pixelgrid {
                 .Inject(gameFieldConfiguration)
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
+                .Inject(LinesGenerator)
                 .Init ();
         }
 

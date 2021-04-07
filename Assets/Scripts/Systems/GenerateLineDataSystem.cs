@@ -6,13 +6,7 @@ namespace Pixelgrid
     public sealed class GenerateLineDataSystem : IEcsInitSystem 
     {
         private EcsFilter<GameModeData> _gameModeDataFilter;
-
-        private ILinesDataGenerator _lineDataGenerator;
-
-        public GenerateLineDataSystem(ILinesDataGenerator dataGenerator)
-        {
-            _lineDataGenerator = dataGenerator;
-        }
+        private LinesGenerator _lineDataGenerator;
 
         public void Init() 
         {
@@ -20,7 +14,7 @@ namespace Pixelgrid
             {
                 var entity = _gameModeDataFilter.GetEntity(index);
                 ref var lineData = ref entity.Get<LineData>();
-                lineData.LinePoints = _lineDataGenerator.GenerateData(1, 2, 1).ToList();
+                lineData.LinePoints = _lineDataGenerator.GenerateData(2, 5, 5).ToList();
                 lineData.CurrentPoint = 0;
             }
         }
