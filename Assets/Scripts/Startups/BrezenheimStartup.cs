@@ -41,6 +41,7 @@ namespace Pixelgrid {
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new UpdateStatDataSystem())
+                 .Add(new UpdateGameFieldPixelsSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new UpdatePixelSystem())
@@ -54,6 +55,7 @@ namespace Pixelgrid {
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
+                 .OneFrame<LineDrawData>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
