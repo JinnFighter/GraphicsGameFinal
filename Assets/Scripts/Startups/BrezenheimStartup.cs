@@ -34,6 +34,7 @@ namespace Pixelgrid {
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
                  .Add(new GenerateLineDataSystem())
+                 .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
                  .Add(new DrawFirstLineSystem())
