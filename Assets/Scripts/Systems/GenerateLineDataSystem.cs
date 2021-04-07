@@ -20,7 +20,7 @@ namespace Pixelgrid
             {
                 var entity = _gameModeDataFilter.GetEntity(index);
                 ref var lineData = ref entity.Get<LineData>();
-                lineData.LinePoints = _lineDataGenerator.GenerateData(1, 2).ToList();
+                lineData.LinePoints = _lineDataGenerator.GenerateData(1, 2, 1).ToList();
                 lineData.CurrentPoint = 0;
             }
         }

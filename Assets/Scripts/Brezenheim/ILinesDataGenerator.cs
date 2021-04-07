@@ -5,6 +5,6 @@ namespace Pixelgrid
 {
     public interface ILinesDataGenerator
     {
-        IEnumerable<Vector2Int> GenerateData(int minLength, int maxLength);
+        IEnumerable<(Vector2Int, Vector2Int)> GenerateData(int minLength, int maxLength, int count);
     }
 }
