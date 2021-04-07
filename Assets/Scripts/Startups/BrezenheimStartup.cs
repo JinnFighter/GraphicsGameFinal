@@ -47,6 +47,7 @@ namespace Pixelgrid {
                  .Add(new UpdateGameFieldPixelsSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
+                 .Add(new DisableGameplayTimerOnGameOverSystem())
                  .InjectUi(_ecsUiEmitter)
 
                 // register one-frame components (order is important), for example:
