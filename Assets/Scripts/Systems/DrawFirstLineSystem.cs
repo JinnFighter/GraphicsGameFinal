@@ -20,7 +20,7 @@ namespace Pixelgrid
                 drawData.drawData = new List<(Vector2Int, Sprite)>
                 {
                     (data.LinePoints[data.CurrentLine][0], _spritesContainer.FilledSprite),
-                    (data.LinePoints[data.CurrentLine][data.LinePoints[data.CurrentLine].Count - 1], _spritesContainer.FilledSprite)
+                    (data.LinePoints[data.CurrentLine][data.LinePoints[data.CurrentLine].Count - 1], _spritesContainer.LineEndSprite)
                 };
             }
         }

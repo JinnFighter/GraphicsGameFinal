@@ -47,7 +47,7 @@ namespace Pixelgrid
                             drawData.drawData = new List<(Vector2Int, Sprite)>
                             {
                                 (lineDatas[lineDataComponent.CurrentLine][0], _spritesContainer.FilledSprite),
-                                (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _spritesContainer.FilledSprite)
+                                (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _spritesContainer.LineEndSprite)
                             };
                         }
                     }
