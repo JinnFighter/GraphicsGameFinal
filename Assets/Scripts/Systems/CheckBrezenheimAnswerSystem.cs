@@ -46,7 +46,7 @@ namespace Pixelgrid
                             ref var drawData = ref eventReceiver.Get<LineDrawData>();
                             drawData.drawData = new List<(Vector2Int, Sprite)>
                             {
-                                (lineDatas[lineDataComponent.CurrentLine][0], _spritesContainer.FilledSprite),
+                                (lineDatas[lineDataComponent.CurrentLine][0], _spritesContainer.LineBeginningSprite),
                                 (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _spritesContainer.LineEndSprite)
                             };
                         }
