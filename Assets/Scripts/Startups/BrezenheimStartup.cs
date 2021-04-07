@@ -14,6 +14,7 @@ namespace Pixelgrid {
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
+        public BrezenheimDataContainer BrezenheimDataContainer;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -67,6 +68,7 @@ namespace Pixelgrid {
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
+                .Inject(BrezenheimDataContainer)
                 .Init ();
         }
 
