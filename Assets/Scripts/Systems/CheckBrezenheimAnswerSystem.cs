@@ -7,13 +7,14 @@ namespace Pixelgrid
     public sealed class CheckBrezenheimAnswerSystem : IEcsRunSystem 
     {
         private EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter;
-        private EcsFilter<GameModeData, LineData> _gameModeDataFilter;
+        private EcsFilter<GameModeData, LineData, Brezenheim_D_Data> _gameModeDataFilter;
         private EcsFilter<GameplayEventReceiver> _eventReceiverFilter;
         private SpritesContainer _spritesContainer;
 
         void IEcsRunSystem.Run() 
         {
             ref var lineDataComponent = ref _gameModeDataFilter.Get2(0);
+            var dData = _gameModeDataFilter.Get3(0);
             var lineDatas = lineDataComponent.LinePoints;
             var eventReceiver = _eventReceiverFilter.GetEntity(0);
 
@@ -61,6 +62,8 @@ namespace Pixelgrid
                     }
 
                     eventReceiver.Get<CorrectAnswerEvent>();
+                    ref var updateDEvent = ref eventReceiver.Get<UpdateDIndexEvent>();
+                    updateDEvent.index = dData.Indexes[lineDataComponent.CurrentLine][lineDataComponent.CurrentPoint];
                 }
 
                 else

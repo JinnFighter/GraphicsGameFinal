@@ -14,6 +14,7 @@ namespace Pixelgrid {
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
+        public BrezenheimDataContainer BrezenheimDataContainer;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -33,6 +34,7 @@ namespace Pixelgrid {
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
                  .Add(new GenerateLineDataSystem())
+                 .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
                  .Add(new DrawFirstLineSystem())
@@ -42,6 +44,7 @@ namespace Pixelgrid {
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckClickSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
+                 .Add(new UpdateDDataSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -60,6 +63,7 @@ namespace Pixelgrid {
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
+                 .OneFrame<UpdateDIndexEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
@@ -67,6 +71,7 @@ namespace Pixelgrid {
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
+                .Inject(BrezenheimDataContainer)
                 .Init ();
         }
 
