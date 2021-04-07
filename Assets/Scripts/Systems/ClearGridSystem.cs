@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -17,7 +16,7 @@ namespace Pixelgrid
                 foreach(var index in _pixelsFilter)
                 {
                     ref var pixelRef = ref _pixelsFilter.Get2(index);
-                    pixelRef.pixel.GetComponent<Image>().sprite = emptySprite;
+                    pixelRef.pixel.GetComponent<GridPixel>().UpdateSprite(emptySprite);
                 }
             }
         }
