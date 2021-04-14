@@ -5,14 +5,23 @@ using UnityEngine;
 
 namespace Pixelgrid 
 {
-    public sealed class GenerateLineDataSystem : IEcsInitSystem 
+    public sealed class GenerateLineDataSystem : IEcsInitSystem, IEcsRunSystem 
     {
         private EcsFilter<GameModeData> _gameModeDataFilter;
         private LinesGenerator _lineDataGenerator;
+        private EcsFilter<RestartGameEvent> _restartEventFilter;
 
-        public void Init() 
+        public void Init() => DoInternalAction();
+
+        public void Run()
         {
-            foreach(var index in _gameModeDataFilter)
+            if (!_restartEventFilter.IsEmpty())
+                DoInternalAction();
+        }
+
+        private void DoInternalAction()
+        {
+            foreach (var index in _gameModeDataFilter)
             {
                 var entity = _gameModeDataFilter.GetEntity(index);
                 ref var lineData = ref entity.Get<LineData>();
@@ -21,7 +30,7 @@ namespace Pixelgrid
                 var lineDatas = new List<List<Vector2Int>>();
                 var dDatas = new List<List<int>>();
 
-                foreach(var line in lines)
+                foreach (var line in lines)
                 {
                     lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
                     dDatas.Add(ds);
