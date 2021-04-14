@@ -38,6 +38,7 @@ namespace Pixelgrid {
                  .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
+                 .Add(new ResetStopwatchTimeSystem())
                  .Add(new DrawFirstLineSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
