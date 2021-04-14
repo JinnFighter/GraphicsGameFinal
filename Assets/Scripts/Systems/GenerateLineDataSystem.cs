@@ -5,21 +5,13 @@ using UnityEngine;
 
 namespace Pixelgrid 
 {
-    public sealed class GenerateLineDataSystem : IEcsInitSystem, IEcsRunSystem 
+    public sealed class GenerateLineDataSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
     {
         private EcsFilter<GameModeData> _gameModeDataFilter;
         private LinesGenerator _lineDataGenerator;
         private EcsFilter<RestartGameEvent> _restartEventFilter;
 
-        public void Init() => DoInternalAction();
-
-        public void Run()
-        {
-            if (!_restartEventFilter.IsEmpty())
-                DoInternalAction();
-        }
-
-        private void DoInternalAction()
+        public void Execute()
         {
             foreach (var index in _gameModeDataFilter)
             {
@@ -40,6 +32,14 @@ namespace Pixelgrid
                 lineData.CurrentPoint = 0;
                 lineData.CurrentLine = 0;
             }
+        }
+
+        public void Init() => Execute();
+
+        public void Run()
+        {
+            if (!_restartEventFilter.IsEmpty())
+                Execute();
         }
     }
 }
