@@ -6,12 +6,11 @@ namespace Pixelgrid
     public sealed class UpdateStopwatchesSystem : IEcsRunSystem 
     {
         private EcsFilter<Stopwatch, Counting> _filter;
-        private EcsFilter<GameplayEventReceiver> _pauseFilter;
+        private GameState _gameState;
 
         void IEcsRunSystem.Run() 
         {
-            var eventReceiver = _pauseFilter.GetEntity(0);
-            if (!eventReceiver.Has<PauseEvent>())
+            if (!_gameState.IsPaused)
             {
                 foreach (var index in _filter)
                 {
