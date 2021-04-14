@@ -2,12 +2,13 @@ using Leopotam.Ecs;
 
 namespace Pixelgrid 
 {
-    public sealed class SetGameplayTimerStartTimeSystem : IEcsInitSystem 
+    public sealed class SetGameplayTimerStartTimeSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
     {
         private DifficultyConfiguration _difficultyConfiguration;
         private EcsFilter<Timer, GameplayTimerComponent> _filter;
+        private EcsFilter<RestartGameEvent> _restartEventFilter;
 
-        public void Init() 
+        public void Execute()
         {
             var difficulty = _difficultyConfiguration.Difficulty;
             float startTime;
@@ -29,6 +30,14 @@ namespace Pixelgrid
                 timer.startTime = startTime;
                 timer.currentTime = startTime;
             }
+        }
+
+        public void Init() => Execute();
+
+        public void Run()
+        {
+            if (!_restartEventFilter.IsEmpty())
+                Execute();
         }
     }
 }
