@@ -42,6 +42,7 @@ namespace Pixelgrid {
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
+                 .Add(new CheckPauseClickSystem())
                  .Add(new CheckClickSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
                  .Add(new UpdateDDataSystem())
