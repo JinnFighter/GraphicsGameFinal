@@ -9,7 +9,7 @@ namespace Pixelgrid
 
         public void Run()
         {
-            if(_restartEventFilter.IsEmpty())
+            if(!_restartEventFilter.IsEmpty())
             {
                 foreach(var index in _filter)
                 {

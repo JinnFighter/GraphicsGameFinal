@@ -16,6 +16,7 @@ namespace Pixelgrid {
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
         public GameState GameState;
+        public EndgameScreenPresenter EndgamePresenter;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -39,6 +40,7 @@ namespace Pixelgrid {
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
                  .Add(new ResetStopwatchTimeSystem())
+                 .Add(new ResetStatTrackerSystem())
                  .Add(new DrawFirstLineSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
@@ -54,6 +56,7 @@ namespace Pixelgrid {
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
+                 .Add(new ShowEndgameScreenSystem())
                  .InjectUi(_ecsUiEmitter)
 
                 // register one-frame components (order is important), for example:
@@ -76,6 +79,7 @@ namespace Pixelgrid {
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
                 .Inject(GameState)
+                .Inject(EndgamePresenter)
                 .Init ();
         }
 
