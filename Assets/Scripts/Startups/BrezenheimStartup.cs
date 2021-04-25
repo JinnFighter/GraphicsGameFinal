@@ -47,6 +47,7 @@ namespace Pixelgrid {
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckPauseClickSystem())
+                 .Add(new CheckRestartClickSystem())
                  .Add(new CheckClickSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
                  .Add(new UpdateDDataSystem())
