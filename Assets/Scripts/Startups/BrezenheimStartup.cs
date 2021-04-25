@@ -16,6 +16,7 @@ namespace Pixelgrid {
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
         public GameState GameState;
+        public EndgameScreenPresenter EndgamePresenter;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -77,6 +78,7 @@ namespace Pixelgrid {
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
                 .Inject(GameState)
+                .Inject(EndgamePresenter)
                 .Init ();
         }
 
