@@ -1,8 +1,5 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Pixelgrid
 {
