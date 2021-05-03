@@ -28,6 +28,10 @@ namespace Pixelgrid {
 #endif
             _systems
                 // register your systems here, for example:
+                 .Add(new CheckPauseClickSystem())
+                 .Add(new CheckRestartClickSystem())
+
+                 //InitSystems go here:
                  .Add(new CreateGameplayEventReceiverSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
@@ -39,8 +43,7 @@ namespace Pixelgrid {
                  .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new StartGameSystem())
-                 .Add(new CheckPauseClickSystem())
-                 .Add(new CheckRestartClickSystem())
+                 //The rest of the systems go here:
                  .Add(new CheckClickSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
