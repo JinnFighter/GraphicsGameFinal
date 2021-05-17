@@ -4,18 +4,19 @@ using UnityEngine;
 
 namespace Pixelgrid 
 {
-    public sealed class DrawFirstLineSystem : IEcsInitSystem 
+    public sealed class DrawFirstLineSystem : IEcsRunSystem
     {
         private EcsFilter<StartGameEvent> _filter;
         private EcsFilter<GameModeData, LineData> _dataFilter;
         private SpritesContainer _spritesContainer;
 
-        public void Init() 
+        public void Run()
         {
-            if(!_filter.IsEmpty())
+            if (!_filter.IsEmpty())
             {
                 var entity = _filter.GetEntity(0);
                 var data = _dataFilter.Get2(0);
+                entity.Get<ClearGridEvent>();
                 ref var drawData = ref entity.Get<LineDrawData>();
                 drawData.drawData = new List<(Vector2Int, Sprite)>
                 {
