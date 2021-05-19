@@ -35,6 +35,7 @@ namespace Pixelgrid {
                  .Add(new CreateGameplayEventReceiverSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
+                 .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
