@@ -16,6 +16,7 @@ namespace Pixelgrid {
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
         public SoundsContainer SoundsContainer;
+        public AudioPlayer AudioPlayer;
         public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -88,6 +89,7 @@ namespace Pixelgrid {
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
                 .Inject(SoundsContainer)
+                .Inject(AudioPlayer)
                 .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
