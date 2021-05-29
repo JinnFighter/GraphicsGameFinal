@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 
 namespace Pixelgrid 
 {
-    public sealed class SetGameplayTimerStartTimeSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
+    public sealed class SetGameplayTimerStartTimeSystem : IEcsRunSystem, ICommand 
     {
         private DifficultyConfiguration _difficultyConfiguration;
         private EcsFilter<Timer, GameplayTimerComponent> _filter;
@@ -31,8 +31,6 @@ namespace Pixelgrid
                 timer.currentTime = startTime;
             }
         }
-
-        public void Init() => Execute();
 
         public void Run()
         {
