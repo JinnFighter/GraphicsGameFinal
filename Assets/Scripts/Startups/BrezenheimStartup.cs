@@ -20,6 +20,7 @@ namespace Pixelgrid {
         public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
+        public ProgressBar ProgressBar;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -44,12 +45,14 @@ namespace Pixelgrid {
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
+                 .Add(new CreateProgressBarSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new GenerateLineDataSystem())
                  .Add(new GenerateDDataSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
@@ -64,6 +67,7 @@ namespace Pixelgrid {
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
+                 .Add(new UpdateProgressBarSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
@@ -98,6 +102,7 @@ namespace Pixelgrid {
                 .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
+                .Inject(ProgressBar)
                 .Init ();
         }
 
