@@ -5,7 +5,7 @@ namespace Pixelgrid
         protected static readonly I18n _instance = new I18n();
 
         // Customize your languages here
-        protected static string[] locales = new string[] 
+        new protected static string[] locales = new string[] 
         {
             "en-US",
             "ru-RU"

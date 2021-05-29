@@ -25,6 +25,7 @@ namespace Pixelgrid {
         void Start ()
         {
             var i18n = I18n.Instance;
+            I18n.SetLocale("ru-RU");
             // void can be switched to IEnumerator for support coroutines.
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
