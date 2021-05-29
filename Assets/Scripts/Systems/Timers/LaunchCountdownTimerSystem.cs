@@ -4,6 +4,7 @@ namespace Pixelgrid
 {
     public sealed class LaunchCountdownTimerSystem : IEcsRunSystem
     {
+        private CountdownScreenPresenter _countdownPresenter;
         private EcsFilter<RestartGameEvent> _filter;
         private EcsFilter<Timer, CountdownTimer> _countdownTimerFilter;
 
@@ -11,6 +12,8 @@ namespace Pixelgrid
         {
             if(!_filter.IsEmpty())
             {
+                _countdownPresenter.gameObject.SetActive(true);
+
                  foreach(var index in _countdownTimerFilter)
                 {
                     var entity = _countdownTimerFilter.GetEntity(index);
