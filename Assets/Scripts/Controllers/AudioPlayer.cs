@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Pixelgrid
@@ -7,11 +9,20 @@ namespace Pixelgrid
     {
         private AudioSource _source;
 
+        private Queue<AudioClip> _clipQueue;
+
         void Awake()
         {
             _source = GetComponent<AudioSource>();
+            _clipQueue = new Queue<AudioClip>();
         }
 
-        public void PlayClip(AudioClip audioClip) => _source.PlayOneShot(audioClip);
+        public void EnqueueClip(AudioClip audioClip) => _clipQueue.Enqueue(audioClip);
+        
+        public void PlayClips()
+        {
+            while (_clipQueue.Any())
+                _source.PlayOneShot(_clipQueue.Dequeue());
+        }
     }
 }
