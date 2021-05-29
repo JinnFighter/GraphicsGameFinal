@@ -20,6 +20,7 @@ namespace Pixelgrid {
         public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
+        public ProgressBar ProgressBar;
 
         void Start () {
             // void can be switched to IEnumerator for support coroutines.
@@ -98,6 +99,7 @@ namespace Pixelgrid {
                 .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
+                .Inject(ProgressBar)
                 .Init ();
         }
 
