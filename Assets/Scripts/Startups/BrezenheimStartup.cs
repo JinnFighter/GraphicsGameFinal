@@ -50,6 +50,7 @@ namespace Pixelgrid {
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
                  .Add(new CreateProgressBarSystem())
+                 .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem())
