@@ -22,7 +22,9 @@ namespace Pixelgrid {
         public EndgameScreenPresenter EndgamePresenter;
         public ProgressBar ProgressBar;
 
-        void Start () {
+        void Start ()
+        {
+            var i18n = I18n.Instance;
             // void can be switched to IEnumerator for support coroutines.
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
@@ -103,6 +105,7 @@ namespace Pixelgrid {
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
                 .Inject(ProgressBar)
+                .Inject(i18n)
                 .Init ();
         }
 
