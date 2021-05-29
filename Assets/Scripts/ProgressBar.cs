@@ -7,28 +7,18 @@ namespace Pixelgrid
     {
         private Slider _slider;
 
-        public float FillSpeed = 0.75f;
-
-        private float _targetProgress = 0;
+        public float FillAmount;
 
         void Awake()
         {
             _slider = GetComponent<Slider>();
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public void SetProgress(int value)
         {
-            IncrementProgress(60);
+            _slider.value = value;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (_slider.value < _targetProgress)
-                _slider.value += FillSpeed * Time.deltaTime;
-        }
-
-        public void IncrementProgress(int value) => _slider.value = value;
+        public void IncrementProgress() => _slider.value += FillAmount;
     }
 }
