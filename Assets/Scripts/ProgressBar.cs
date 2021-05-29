@@ -7,22 +7,18 @@ namespace Pixelgrid
     {
         private Slider _slider;
 
-        public Color Color { get => _slider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color; set => _slider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color = value; }
+        private Image _sliderFiller;
 
-        public float CurrentValue { get => _slider.value; }
+        public Color Color { get => _sliderFiller.color; set => _sliderFiller.color = value; }
+
+        public float CurrentValue { get => _slider.value; set => _slider.value = value; }
 
         public float MaxValue { get => _slider.maxValue; set => _slider.maxValue = value; }
 
         void Awake()
         {
             _slider = GetComponent<Slider>();
+            _sliderFiller = _slider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>();
         }
-
-        public void SetProgress(int value)
-        {
-            _slider.value = value;
-        }
-
-        public void IncrementProgress() => _slider.value++;
     }
 }

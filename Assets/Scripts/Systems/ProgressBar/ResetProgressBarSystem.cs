@@ -18,8 +18,8 @@ namespace Pixelgrid {
                     ref var progressBarComponent = ref _progressBarFilter.Get1(index);
                     var progressBar = progressBarComponent.ProgressBar;
                     progressBar.MaxValue = lineData.LinePoints.Sum(linePoint => linePoint.Count);
-                    progressBar.SetProgress(0);
-                    progressBar.Color = UnityEngine.Color.red;
+                    progressBar.CurrentValue = 0;
+                    progressBar.Color = UnityEngine.Color.grey;
                 }
             }
         }

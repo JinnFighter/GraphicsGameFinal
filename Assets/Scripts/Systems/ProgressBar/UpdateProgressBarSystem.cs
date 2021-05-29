@@ -16,16 +16,19 @@ namespace Pixelgrid
                 {
                     ref var progressBarComponent = ref _progressBarFilter.Get1(index);
                     var progressBar = progressBarComponent.ProgressBar;
-                    progressBar.IncrementProgress();
+                    progressBar.CurrentValue++;
                     var percentage = progressBar.CurrentValue / progressBar.MaxValue * 100;
                     Color color;
+                    if (percentage < 61)
+                        color = Color.gray;
+                    else
                     if (percentage < 71)
                         color = Color.red;
                     else
-                        if (percentage < 91)
-                            color = Color.yellow;
-                                else
-                                    color = Color.green;
+                    if (percentage < 91)
+                        color = Color.yellow;
+                    else
+                        color = Color.green;
 
                     progressBar.Color = color;
                 }
