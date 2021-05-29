@@ -7,7 +7,7 @@ namespace Pixelgrid
     {
         private Slider _slider;
 
-        public float FillAmount;
+        public float MaxValue { get => _slider.maxValue; set => _slider.maxValue = value; }
 
         void Awake()
         {
@@ -19,6 +19,6 @@ namespace Pixelgrid
             _slider.value = value;
         }
 
-        public void IncrementProgress() => _slider.value += FillAmount;
+        public void IncrementProgress() => _slider.value++;
     }
 }
