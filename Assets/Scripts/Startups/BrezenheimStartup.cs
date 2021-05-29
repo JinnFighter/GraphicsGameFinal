@@ -27,7 +27,7 @@ namespace Pixelgrid {
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_systems);
 #endif
             _systems
-                // register your systems here, for example:
+                 // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
                  .Add(new CheckRestartClickSystem())
 
@@ -42,18 +42,19 @@ namespace Pixelgrid {
                  .Add(new SelectMaxLineLengthSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
+                 .Add(new UpdateTimersSystem())
+                 .Add(new UpdateStopwatchesSystem())
                  .Add(new GenerateLineDataSystem())
                  .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new DrawFirstLineSystem())
-                 .Add(new StartGameSystem())
+                 .Add(new LaunchCountdownTimerSystem())
+                 .Add(new StartGameOnCountdownTimerEndSystem())
                  .Add(new CheckClickSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
-                 .Add(new UpdateTimersSystem())
-                 .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
                  .Add(new UpdateDDataSystem())
                  .Add(new UpdateStatDataSystem())
