@@ -7,7 +7,7 @@ namespace Pixelgrid
         private EcsFilter<Timer, CountdownTimer, TimerEndEvent> _timerFilter;
         private EcsFilter<GameplayEventReceiver> _eventReceiverFilter;
 
-        void IEcsRunSystem.Run () 
+        void IEcsRunSystem.Run() 
         {
             if (!_timerFilter.IsEmpty())
                 foreach (var index in _eventReceiverFilter)
