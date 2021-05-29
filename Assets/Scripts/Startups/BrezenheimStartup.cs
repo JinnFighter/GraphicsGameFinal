@@ -84,7 +84,6 @@ namespace Pixelgrid {
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
                  .OneFrame<UpdateDIndexEvent>()
-                 .OneFrame<AudioClipComponent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(difficultyConfiguration)
