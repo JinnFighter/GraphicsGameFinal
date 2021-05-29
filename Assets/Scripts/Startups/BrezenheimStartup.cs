@@ -16,6 +16,7 @@ namespace Pixelgrid {
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
         public GameState GameState;
+        public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
 
         void Start () {
@@ -27,7 +28,7 @@ namespace Pixelgrid {
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_systems);
 #endif
             _systems
-                // register your systems here, for example:
+                 // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
                  .Add(new CheckRestartClickSystem())
 
@@ -35,23 +36,26 @@ namespace Pixelgrid {
                  .Add(new CreateGameplayEventReceiverSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
+                 .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
+                 .Add(new LaunchGameplayLoopSystem())
+                 //The rest of the systems go here:
+                 .Add(new UpdateTimersSystem())
+                 .Add(new UpdateStopwatchesSystem())
                  .Add(new GenerateLineDataSystem())
                  .Add(new GenerateDDataSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
-                 .Add(new StartGameSystem())
-                 //The rest of the systems go here:
-                 .Add(new CheckClickSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new DrawFirstLineSystem())
+                 .Add(new LaunchCountdownTimerSystem())
+                 .Add(new StartGameOnCountdownTimerEndSystem())
+                 .Add(new CheckClickSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
-                 .Add(new UpdateTimersSystem())
-                 .Add(new UpdateStopwatchesSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
                  .Add(new UpdateDDataSystem())
                  .Add(new UpdateStatDataSystem())
@@ -83,6 +87,7 @@ namespace Pixelgrid {
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
                 .Inject(GameState)
+                .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
                 .Init ();
         }

@@ -1,7 +1,8 @@
 using Leopotam.Ecs;
 
-namespace Pixelgrid {
-    public sealed class GenerateDDataSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
+namespace Pixelgrid 
+{
+    public sealed class GenerateDDataSystem : IEcsRunSystem, ICommand 
     {
         private EcsFilter<GameModeData> _filter;
         private BrezenheimDataContainer _brezenheimDataContainer;
@@ -16,8 +17,6 @@ namespace Pixelgrid {
                 dData.Text = _brezenheimDataContainer.DText.gameObject;
             }
         }
-
-        public void Init() => Execute(); 
 
         public void Run()
         {

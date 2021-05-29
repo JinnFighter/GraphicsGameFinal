@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Pixelgrid 
 {
-    public sealed class GenerateLineDataSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
+    public sealed class GenerateLineDataSystem : IEcsRunSystem, ICommand 
     {
         private EcsFilter<GameModeData> _gameModeDataFilter;
         private LinesGenerator _lineDataGenerator;
@@ -33,8 +33,6 @@ namespace Pixelgrid
                 lineData.CurrentLine = 0;
             }
         }
-
-        public void Init() => Execute();
 
         public void Run()
         {

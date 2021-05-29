@@ -6,7 +6,7 @@ namespace Pixelgrid
 {
     public sealed class DrawFirstLineSystem : IEcsRunSystem
     {
-        private EcsFilter<StartGameEvent> _filter;
+        private EcsFilter<RestartGameEvent> _filter;
         private EcsFilter<GameModeData, LineData> _dataFilter;
         private SpritesContainer _spritesContainer;
 
