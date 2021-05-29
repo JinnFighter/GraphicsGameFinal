@@ -10,7 +10,6 @@ namespace Pixelgrid
         void Awake()
         {
             _source = GetComponent<AudioSource>();
-
         }
 
         public void PlayClip(AudioClip audioClip) => _source.PlayOneShot(audioClip);
