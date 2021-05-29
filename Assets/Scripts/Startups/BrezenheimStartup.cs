@@ -15,6 +15,8 @@ namespace Pixelgrid {
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
+        public SoundsContainer SoundsContainer;
+        public AudioPlayer AudioPlayer;
         public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -65,6 +67,10 @@ namespace Pixelgrid {
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
+                 .Add(new EnqueueCorrectAnswerAudioClipSystem())
+                 .Add(new EnqueueWrongAnswerAudioClipSystem())
+                 .Add(new EnqueueGameOverAudioClipSystem())
+                 .Add(new PlayAudioClipSystem())
                  .InjectUi(_ecsUiEmitter)
 
                 // register one-frame components (order is important), for example:
@@ -86,6 +92,8 @@ namespace Pixelgrid {
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
+                .Inject(SoundsContainer)
+                .Inject(AudioPlayer)
                 .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
