@@ -16,7 +16,9 @@ namespace Pixelgrid {
                 foreach(var index in _progressBarFilter)
                 {
                     ref var progressBarComponent = ref _progressBarFilter.Get1(index);
-                    progressBarComponent.ProgressBar.FillAmount = (float)lineData.LinePoints.Sum(linePoint => linePoint.Count) / 100;
+                    var progressBar = progressBarComponent.ProgressBar;
+                    progressBar.FillAmount = (float)lineData.LinePoints.Sum(linePoint => linePoint.Count) / 100;
+                    progressBar.SetProgress(0);
                 }
             }
         }
