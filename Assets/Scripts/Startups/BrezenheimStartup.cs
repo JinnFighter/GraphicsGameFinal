@@ -35,6 +35,7 @@ namespace Pixelgrid {
                  .Add(new CheckRestartClickSystem())
 
                  //InitSystems go here:
+                 .Add(new LoadPlayerSystem())
                  .Add(new CreateGameplayEventReceiverSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new GenerateGameFieldSystem())
