@@ -9,6 +9,7 @@ namespace Pixelgrid {
         EcsWorld _world;
         EcsSystems _systems;
 
+        public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
@@ -20,9 +21,13 @@ namespace Pixelgrid {
         public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
+        public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
 
-        void Start () {
+        void Start ()
+        {
+            var i18n = I18n.Instance;
+            I18n.SetLocale("ru-RU");
             // void can be switched to IEnumerator for support coroutines.
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
@@ -46,6 +51,7 @@ namespace Pixelgrid {
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new SelectMaxLineLengthSystem())
                  .Add(new CreateProgressBarSystem())
+                 .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem())
@@ -91,6 +97,7 @@ namespace Pixelgrid {
                  .OneFrame<UpdateDIndexEvent>()
 
                 // inject service instances here (order doesn't important), for example:
+                .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
                 .Inject(spritesContainer)
@@ -102,7 +109,9 @@ namespace Pixelgrid {
                 .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
+                .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
+                .Inject(i18n)
                 .Init ();
         }
 
