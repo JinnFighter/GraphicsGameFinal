@@ -67,6 +67,10 @@ namespace Pixelgrid {
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
+                 .Add(new EnqueueCorrectAnswerAudioClipSystem())
+                 .Add(new EnqueueWrongAnswerAudioClipSystem())
+                 .Add(new EnqueueGameOverAudioClipSystem())
+                 .Add(new PlayAudioClipSystem())
                  .InjectUi(_ecsUiEmitter)
 
                 // register one-frame components (order is important), for example:
