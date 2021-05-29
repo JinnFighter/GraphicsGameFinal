@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using System.Linq;
+using UnityEngine;
 
 namespace Pixelgrid {
     public sealed class ResetProgressBarSystem : IEcsRunSystem 
@@ -19,7 +20,7 @@ namespace Pixelgrid {
                     var progressBar = progressBarComponent.ProgressBar;
                     progressBar.MaxValue = lineData.LinePoints.Sum(linePoint => linePoint.Count);
                     progressBar.CurrentValue = 0;
-                    progressBar.Color = UnityEngine.Color.grey;
+                    progressBar.Color = Color.gray;
                 }
             }
         }
