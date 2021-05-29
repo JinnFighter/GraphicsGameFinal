@@ -9,6 +9,7 @@ namespace Pixelgrid {
         EcsWorld _world;
         EcsSystems _systems;
 
+        public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
@@ -96,6 +97,7 @@ namespace Pixelgrid {
                  .OneFrame<UpdateDIndexEvent>()
 
                 // inject service instances here (order doesn't important), for example:
+                .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
                 .Inject(spritesContainer)
