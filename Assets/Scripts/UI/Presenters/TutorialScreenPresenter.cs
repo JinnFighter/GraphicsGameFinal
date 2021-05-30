@@ -8,5 +8,7 @@ namespace Pixelgrid
         [SerializeField] private Text _text;
 
         public void SetText(string text) => _text.text = text;
+
+        public void SwitchActive() => gameObject.SetActive(!gameObject.activeSelf);
     }
 }
