@@ -20,15 +20,15 @@ namespace Pixelgrid
                     var percentage = progressBar.CurrentValue / progressBar.MaxValue * 100;
                     Color color;
                     if (percentage < 61)
-                        color = Color.gray;
+                        color = new Color32(220, 221, 225, 255);
                     else
                     if (percentage < 71)
-                        color = Color.red;
+                        color = new Color32(194, 54, 22, 255);
                     else
                     if (percentage < 91)
-                        color = Color.yellow;
+                        color = new Color32(251, 197, 49, 255);
                     else
-                        color = Color.green;
+                        color = new Color32(68, 189, 50, 255);
 
                     progressBar.Color = color;
                 }
