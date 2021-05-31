@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Pixelgrid
 {   
@@ -7,6 +6,6 @@ namespace Pixelgrid
     {
         public int fieldSize = 10;
         public GameObject pixel;
-        public GridLayoutGroup grid;
+        public FlexibleGridLayout grid;
     }
 }

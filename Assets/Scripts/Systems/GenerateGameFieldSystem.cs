@@ -32,24 +32,15 @@ namespace Pixelgrid
 
             _gameFieldConfiguration.fieldSize = fieldSize;
             var grid = _gameFieldConfiguration.grid;
-
-            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            grid.constraintCount = fieldSize;
+            grid.rows = fieldSize;
+            grid.columns = fieldSize;
 
             var pixelPrefab = _gameFieldConfiguration.pixel;
 
-            var cellSize = pixelPrefab.GetComponent<Image>().sprite.rect.size;
-            cellSize.x += 8;
-            cellSize.y += 8;
-
-            grid.cellSize = cellSize;
-
-           
             for (var i = 0; i < fieldSize; i++)
             {
                 for(var j = 0; j < fieldSize; j++)
                 {
-
                     var pixel = Object.Instantiate(pixelPrefab);
                     pixel.transform.SetParent(grid.transform);
                     pixel.AddComponent<EcsUiClickAction>();
