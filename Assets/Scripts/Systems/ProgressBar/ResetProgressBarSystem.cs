@@ -20,7 +20,7 @@ namespace Pixelgrid {
                     var progressBar = progressBarComponent.ProgressBar;
                     progressBar.MaxValue = lineData.LinePoints.Sum(linePoint => linePoint.Count);
                     progressBar.CurrentValue = 0;
-                    progressBar.Color = Color.gray;
+                    progressBar.Color = new Color32(220, 221, 225, 255);
                 }
             }
         }
