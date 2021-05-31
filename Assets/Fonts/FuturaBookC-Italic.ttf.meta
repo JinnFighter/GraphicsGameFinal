@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 32359b6ef2663ae46b3575cbd7920fb4
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - FuturaBookC
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4974dbbccc8475f4ab8fce7341cb389b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

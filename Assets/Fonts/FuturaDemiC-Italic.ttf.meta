@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 45d6bf3f6bdfefb48be14a41a54876b5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - FuturaDemiC
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a4e0b0dd133af9a4989f5aa3f679f36d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
