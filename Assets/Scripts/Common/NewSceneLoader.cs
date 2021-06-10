@@ -7,12 +7,10 @@ namespace Pixelgrid
     public class NewSceneLoader : MonoBehaviour
     {
         [SerializeField] private GameObject _loadingImageObject;
-        [SerializeField] private Animation _loadingAnim;
 
         IEnumerator LoadSceneRoutine(string name)
         {
             _loadingImageObject.SetActive(true);
-            _loadingAnim.Play("loadingPixels");
             _ = SceneManager.GetActiveScene().name;
             var sceneLoader = SceneManager.LoadSceneAsync(name);
             sceneLoader.allowSceneActivation = false;
@@ -20,7 +18,6 @@ namespace Pixelgrid
             {
                 if (sceneLoader.progress == 0.9f)
                 {
-                    _loadingAnim.Stop("loadingPixels");
                     sceneLoader.allowSceneActivation = true;
                 }
                 yield return null;
