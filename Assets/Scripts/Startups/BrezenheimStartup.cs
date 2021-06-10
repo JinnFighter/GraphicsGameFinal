@@ -23,6 +23,7 @@ namespace Pixelgrid {
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
+        public UiScreenContainer ScreenContainer;
 
         void Start ()
         {
@@ -111,6 +112,7 @@ namespace Pixelgrid {
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
+                .Inject(ScreenContainer)
                 .Inject(i18n)
                 .Init ();
         }
