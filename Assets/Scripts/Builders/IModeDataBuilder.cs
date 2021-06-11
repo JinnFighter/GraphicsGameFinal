@@ -2,8 +2,8 @@ namespace Pixelgrid
 {
     public interface IModeDataBuilder
     {
-        void Reset();
-        void SetName(int modeName);
-        void SetDifficulty();
+        void ResetObject();
+        void SetName(string modeName);
+        void SetDifficulty(int difficulty);
     }
 }
