@@ -13,7 +13,7 @@ namespace Pixelgrid
             {
                 var entity = _filter.GetEntity(index);
                 ref var turtlePathComponent = ref entity.Get<TurtlePath>();
-                turtlePathComponent.Path = new List<char>();
+                turtlePathComponent.Path = new List<List<char>>();
             }
         }
     }

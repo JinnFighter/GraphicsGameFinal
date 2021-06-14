@@ -4,6 +4,6 @@ namespace Pixelgrid
 {
     public struct TurtlePath 
     {
-        public List<char> Path;
+        public List<List<char>> Path;
     }
 }
