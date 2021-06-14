@@ -11,7 +11,8 @@ namespace Pixelgrid
         public void Init() 
         {
             var entity = _world.NewEntity();
-            entity.Get<TurtleComponent>();
+            ref var turtleComponent = ref entity.Get<TurtleComponent>();
+            turtleComponent.DirectionState = new RightDirectionState();
             ref var positionComponent = ref entity.Get<PixelPosition>();
             positionComponent.position = new Vector2Int(0, 0);
         }
