@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,18 +31,6 @@ public class MenuControls : MonoBehaviour
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
     }
 
-    public void ColorPickerButtonPressed()
-    {
-
-    }
-
-    public void BrezenheimButtonPressed()
-    {
-
-    }
-
-    public void ExitPressed() => Application.Quit();
-
     public void LoadProfiles(GameObject panel)
     {
         if(loadedProfiles) return;
@@ -52,9 +41,10 @@ public class MenuControls : MonoBehaviour
             {
                 var btn = Instantiate(template) as GameObject;
                 btn.GetComponentInChildren<Text>().text = profile.name;
-                btn.transform.parent = panel.transform;
-                btn.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
-                btn.GetComponent<Button>().onClick.AddListener(
+                btn.transform.SetParent(panel.transform);
+                var buttonComponent = btn.GetComponent<Button>();
+                buttonComponent.onClick = new Button.ButtonClickedEvent();
+                buttonComponent.onClick.AddListener(
                  () => { SetActiveProfile(profile.name); }
                 );
                 btn.transform.localScale = template.transform.localScale;
@@ -68,23 +58,13 @@ public class MenuControls : MonoBehaviour
 
     public void SetActiveProfile(string profileName)
     {
-        foreach (var profile in pfManager.Container.profiles)
-        {
-            if(profile.active)
-            {
+        foreach (var profile in pfManager.Container.profiles.Where(profile => profile.active))
                 profile.active = false;
-                break;
-            }
-        }
 
-        foreach (var profile in pfManager.Container.profiles)
+        foreach (var profile in pfManager.Container.profiles.Where(profile => profile.name == profileName))
         {
-            if (profile.name == profileName)
-            {
                 profile.active = true;
                 pfManager.ActiveProfile = profile;
-                break;
-            }
         }
 
         pfManager.Container.Save(ProfilesManager.path);
