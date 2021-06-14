@@ -1,5 +1,7 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -7,6 +9,7 @@ namespace Pixelgrid
     {
         private EcsFilter<TurtlePath> _filter;
         private EcsFilter<RestartGameEvent> _restartEventFilter;
+        private Text _pathText;
 
         private List<char> _commands = new List<char>{ 'F', '+', '-' };
 
@@ -32,6 +35,7 @@ namespace Pixelgrid
 
                         paths.Add(route);
                     }
+                    _pathText.text = string.Join("", paths[0]);
                 }
             }
         }
