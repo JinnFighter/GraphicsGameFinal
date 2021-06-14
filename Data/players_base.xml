@@ -4,19 +4,7 @@
     <Player name="Jinn">
       <Active>false</Active>
     </Player>
-    <Player name="do">
-      <Active>false</Active>
-    </Player>
-    <Player name="du">
-      <Active>false</Active>
-    </Player>
-    <Player name="grr">
-      <Active>false</Active>
-    </Player>
-    <Player name="grdd">
-      <Active>false</Active>
-    </Player>
-    <Player name="123">
+    <Player name="3">
       <Active>true</Active>
     </Player>
   </Players>

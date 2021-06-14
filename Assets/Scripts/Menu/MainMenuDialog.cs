@@ -9,6 +9,11 @@ namespace Pixelgrid
         [SerializeField] private GameObject _settingsPanel;
         [SerializeField] private GameObject _loginPanel;
 
+        void Start()
+        {
+            _menuMediator.PushPanel(gameObject);
+        }
+
         public void Notify(string eventType)
         {
            switch(eventType)
