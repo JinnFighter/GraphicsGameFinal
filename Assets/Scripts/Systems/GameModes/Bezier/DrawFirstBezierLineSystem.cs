@@ -28,7 +28,7 @@ namespace Pixelgrid
                     else
                         drawList.Add((data.Points[i], _spritesContainer.FilledSprite));
                 }
-                drawData.drawData = new List<(Vector2Int, Sprite)>();
+                drawData.drawData = drawList;
             }
         }
     }
