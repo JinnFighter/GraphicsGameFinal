@@ -7,6 +7,7 @@ namespace Pixelgrid
     {
         [SerializeField] private ModeDataBuilder _modeDataBuilder;
         [SerializeField] private SoundController _soundController;
+        [SerializeField] private UiScreenContainer _uiScreenContainer;
         private NewSceneLoader _sceneLoader;
 
         void Start()
@@ -23,6 +24,23 @@ namespace Pixelgrid
         public void Click()
         {
             _soundController.PlayButtonClickClip();
+        }
+
+        public void PopPanel()
+        {
+            _uiScreenContainer.Top().SetActive(false);
+            _uiScreenContainer.Pop();
+            if (_uiScreenContainer.GetCount() > 0)
+                _uiScreenContainer.Top().SetActive(true);
+        }
+
+        public void PushPanel(GameObject panel)
+        {
+            if (_uiScreenContainer.GetCount() > 0)
+                _uiScreenContainer.Top().SetActive(false);
+            
+            panel.SetActive(true);
+            _uiScreenContainer.Push(panel);
         }
     }
 }

@@ -27,4 +27,6 @@ public class UiScreenContainer : MonoBehaviour
     }
 
     public int GetCount() => _uiScreens.Count;
+
+    public GameObject Top() => _uiScreens.Peek();
 }
