@@ -2,8 +2,9 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using UnityEngine;
 
-namespace Pixelgrid {
-    sealed class BrezenheimStartup : MonoBehaviour 
+namespace Pixelgrid
+{
+    sealed class BezierStartup : MonoBehaviour
     {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
@@ -14,8 +15,7 @@ namespace Pixelgrid {
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
-        public LinesGenerator LinesGenerator;
-        public BrezenheimDataContainer BrezenheimDataContainer;
+        public BezierLinesGenerator LinesGenerator;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
         public GameState GameState;
@@ -25,16 +25,16 @@ namespace Pixelgrid {
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
 
-        void Start ()
+        void Start()
         {
             var i18n = I18n.Instance;
             I18n.SetLocale("ru-RU");
             // void can be switched to IEnumerator for support coroutines.
-            _world = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _world = new EcsWorld();
+            _systems = new EcsSystems(_world);
 #if UNITY_EDITOR
-            Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create (_world);
-            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_systems);
+            Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
             _systems
                  // register your systems here, for example:
@@ -50,27 +50,24 @@ namespace Pixelgrid {
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
-                 .Add(new SelectMaxLineLengthSystem())
                  .Add(new CreateProgressBarSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
-                 .Add(new GenerateLineDataSystem())
-                 .Add(new GenerateDDataSystem())
-                 .Add(new ResetProgressBarSystem())
+                 .Add(new GenerateBezierDataSystem())
+                 .Add(new ResetBezierProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
-                 .Add(new DrawFirstLineSystem())
+                 .Add(new DrawFirstBezierLineSystem())
                  .Add(new LaunchCountdownTimerSystem())
                  .Add(new StartGameOnCountdownTimerEndSystem())
                  .Add(new CheckClickSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
-                 .Add(new CheckBrezenheimAnswerSystem())
-                 .Add(new UpdateDDataSystem())
+                 .Add(new CheckBezierAnswerSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -85,7 +82,7 @@ namespace Pixelgrid {
                  .Add(new PlayAudioClipSystem())
                  .InjectUi(_ecsUiEmitter)
 
-                // register one-frame components (order is important), for example:
+                 // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<TimerEndEvent>()
@@ -104,7 +101,6 @@ namespace Pixelgrid {
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
-                .Inject(BrezenheimDataContainer)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
                 .Inject(GameState)
@@ -114,18 +110,21 @@ namespace Pixelgrid {
                 .Inject(ProgressBar)
                 .Inject(ScreenContainer)
                 .Inject(i18n)
-                .Init ();
+                .Init();
         }
 
-        void Update () {
-            _systems?.Run ();
+        void Update()
+        {
+            _systems?.Run();
         }
 
-        void OnDestroy () {
-            if (_systems != null) {
-                _systems.Destroy ();
+        void OnDestroy()
+        {
+            if (_systems != null)
+            {
+                _systems.Destroy();
                 _systems = null;
-                _world.Destroy ();
+                _world.Destroy();
                 _world = null;
             }
         }
