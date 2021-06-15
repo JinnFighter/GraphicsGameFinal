@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pixelgrid 
@@ -6,11 +7,14 @@ namespace Pixelgrid
     public sealed class ResetTurtlePositionSystem : IEcsRunSystem 
     {
         private EcsFilter<TurtleComponent, PixelPosition> _filter;
+        private EcsFilter<GameplayEventReceiver> _eventReceiverFilter;
         private DifficultyConfiguration _difficultyConfiguration;
         private TurtleConfiguration _turtleConfiguration;
+        private TurtleSpritesContainer _turtleSpritesContainer;
 
         void IEcsRunSystem.Run() 
         {
+            var eventReceiver = _eventReceiverFilter.GetEntity(0);
             foreach (var index in _filter)
             {
                 ref var positionComponent = ref _filter.Get2(index);
@@ -42,6 +46,13 @@ namespace Pixelgrid
 
                 _turtleConfiguration.PathLength = pathLength;
                 _turtleConfiguration.PathsCount = pathsCount;
+
+                eventReceiver.Get<ClearGridEvent>();
+                ref var drawData = ref eventReceiver.Get<LineDrawData>();
+                drawData.drawData = new List<(Vector2Int, Sprite)>
+                {
+                    (position, _turtleSpritesContainer.TurtleRight)
+                };
             }
         }
     }
