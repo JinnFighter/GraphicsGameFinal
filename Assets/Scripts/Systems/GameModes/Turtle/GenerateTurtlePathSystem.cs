@@ -43,6 +43,9 @@ namespace Pixelgrid
                         paths.Add(route);
                     }
                     _pathText.text = string.Join("", paths[0]);
+
+                    turtlePath.CurrentPath = 0;
+                    turtlePath.CurrentSymbol = 0;
                 }
             }
         }
