@@ -9,6 +9,8 @@ namespace Pixelgrid
         private EcsFilter<RestartGameEvent> _filter;
         private EcsFilter<ColorPickerData, ColorContainer> _dataFilter;
 
+        private ImageHolderContainer _imageHolderContainer;
+
         void IEcsRunSystem.Run() 
         {
             if(!_filter.IsEmpty())
@@ -25,6 +27,9 @@ namespace Pixelgrid
 
                     data.Colors = colors; 
                     data.CurrentColor = 0;
+
+                    _imageHolderContainer.QuestionHolder.color = data.Colors[0];
+                    _imageHolderContainer.AnswerHolder.color = Color.white;
                 }
             }
         }
