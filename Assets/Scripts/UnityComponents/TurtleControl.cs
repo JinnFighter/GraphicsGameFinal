@@ -4,6 +4,6 @@ namespace Pixelgrid
 {
     public class TurtleControl : MonoBehaviour
     {
-        [SerializeField] private char _commandSymbol;
+        public char CommandSymbol;
     }
 }
