@@ -7,7 +7,7 @@ namespace Pixelgrid
     public sealed class ResetColorsDataSystem : IEcsRunSystem 
     {
         private EcsFilter<RestartGameEvent> _filter;
-        private EcsFilter<ColorPickerData, ColorContainer> _dataFilter;
+        private EcsFilter<ColorContainer, ColorPickerData> _dataFilter;
 
         private ImageHolderContainer _imageHolderContainer;
 
@@ -17,8 +17,8 @@ namespace Pixelgrid
             {
                 foreach(var index in _dataFilter)
                 {
-                    ref var data = ref _dataFilter.Get1(index);
-                    var colorContainer = _dataFilter.Get2(index);
+                    var colorContainer = _dataFilter.Get1(index);
+                    ref var data = ref _dataFilter.Get2(index);
                     var generatedColors = colorContainer.Colors;
                     var colors = new List<Color32>();
 

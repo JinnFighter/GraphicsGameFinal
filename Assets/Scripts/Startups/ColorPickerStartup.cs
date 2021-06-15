@@ -16,7 +16,6 @@ namespace Pixelgrid
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
         public GameState GameState;
-        public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
@@ -56,6 +55,7 @@ namespace Pixelgrid
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
+                 .Add(new OnSliderValueChangeSystem())
                  .Add(new CheckColorPickerClickSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckColorPickerAnswerSystem())
@@ -85,7 +85,6 @@ namespace Pixelgrid
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
                 .Inject(GameState)
-                .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
