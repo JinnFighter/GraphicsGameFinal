@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -10,6 +11,7 @@ namespace Pixelgrid
         private EcsFilter<ColorContainer, ColorPickerData> _dataFilter;
 
         private ImageHolderContainer _imageHolderContainer;
+        private Slider _slider;
 
         void IEcsRunSystem.Run() 
         {
@@ -32,7 +34,7 @@ namespace Pixelgrid
                         else
                         {
                             var nextColor = data.Colors[data.CurrentColor];
-                            var answerColor = new Color(nextColor.r, nextColor.g, 0);
+                            var answerColor = new Color(nextColor.r, nextColor.g, _slider.value);
                             _imageHolderContainer.QuestionHolder.color = nextColor;
                             _imageHolderContainer.AnswerHolder.color = answerColor;
                         }    

@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pixelgrid
 {
@@ -20,6 +21,7 @@ namespace Pixelgrid
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
+        public Slider Slider;
 
         void Start()
         {
@@ -89,6 +91,7 @@ namespace Pixelgrid
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
                 .Inject(ScreenContainer)
+                .Inject(Slider)
                 .Inject(i18n)
                 .Init();
         }
