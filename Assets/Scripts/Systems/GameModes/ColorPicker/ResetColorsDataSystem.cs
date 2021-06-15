@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -10,6 +11,7 @@ namespace Pixelgrid
         private EcsFilter<ColorContainer, ColorPickerData> _dataFilter;
 
         private ImageHolderContainer _imageHolderContainer;
+        private Slider _slider;
 
         void IEcsRunSystem.Run() 
         {
@@ -30,7 +32,7 @@ namespace Pixelgrid
 
                     var defaultColor = data.Colors[0];
                     _imageHolderContainer.QuestionHolder.color = defaultColor;
-                    var answerColor = new Color(defaultColor.r, defaultColor.g, 0);
+                    var answerColor = new Color(defaultColor.r, defaultColor.g, _slider.value);
                     _imageHolderContainer.AnswerHolder.color = defaultColor;
                     _imageHolderContainer.AnswerHolder.color = answerColor;
                 }
