@@ -82,10 +82,10 @@ namespace Pixelgrid
                         currentPosition = tempPosition;
                         break;
                     case '+':
-                        _direction = _direction.RotateLeft();
+                        _direction = _direction.RotateLeft(out _);
                         break;
                     case '-':
-                        _direction = _direction.RotateRight();
+                        _direction = _direction.RotateRight(out _);
                         break;
                     default:
                         return false;
