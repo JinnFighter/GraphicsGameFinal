@@ -5,7 +5,7 @@ namespace Pixelgrid
 {
     public struct ColorPickerData 
     {
-        public List<Color32> Colours;
-        public int CurrentColour;
+        public List<Color32> Colors;
+        public int CurrentColor;
     }
 }
