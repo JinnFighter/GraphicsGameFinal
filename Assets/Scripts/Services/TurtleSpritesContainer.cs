@@ -4,6 +4,9 @@ namespace Pixelgrid
 {
     public class TurtleSpritesContainer : MonoBehaviour
     {
-        public GameObject Turtle;
+        public Sprite TurtleUp;
+        public Sprite TurtleDown;
+        public Sprite TurtleLeft;
+        public Sprite TurtleRight;
     }
 }
