@@ -72,7 +72,7 @@ namespace Pixelgrid
                  .Add(new CheckTurtleClickSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
-                 .Add(new CheckTurtleClickSystem())
+                 .Add(new CheckTurtleAnswerSystem())
                  .Add(new UpdateTurtleSpritesSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())

@@ -10,8 +10,8 @@ namespace Pixelgrid
         private EcsFilter<GameplayEventReceiver, TurtleCommand> _filter;
         private EcsFilter<TurtleComponent, PixelPosition> _turtleFilter;
 
-
         private TurtleSpritesContainer _turtleSpritesContainer;
+        private GameFieldConfiguration GameFieldConfiguration;
         private SpritesContainer _spritesContainer;
 
         void IEcsRunSystem.Run()
@@ -31,9 +31,12 @@ namespace Pixelgrid
                     {
                         case 'F':
                             var nextPosition = turtle.DirectionState.Move(turtlePosition.position);
-                            drawData.Add((turtlePosition.position, _spritesContainer.EmptySprite));
-                            drawData.Add((nextPosition, turtle.CurrentSprite));
-                            turtlePosition.position = nextPosition;
+                            if(GameFieldConfiguration.IsWithinField(nextPosition))
+                            {
+                                drawData.Add((turtlePosition.position, _spritesContainer.EmptySprite));
+                                drawData.Add((nextPosition, turtle.CurrentSprite));
+                                turtlePosition.position = nextPosition;
+                            }
                             break;
                         case '+':
                             turtle.DirectionState = turtle.DirectionState.RotateLeft(out direction);

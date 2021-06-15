@@ -27,20 +27,10 @@ namespace Pixelgrid
                     var paths = turtlePath.Path;
                     paths.Clear();
 
-                    var originalPositionComponent = _turtleFilter.Get2(0);
-                    var originalPosition = originalPositionComponent.position;
-                    var currentPosition = new Vector2Int(originalPosition.x, originalPosition.y);
-
                     _direction = new RightDirectionState();
                     for (var i = 0; i < _turtleConfiguration.PathsCount; i++)
                     {
-                        List<char> route;
-                        do
-                        {
-                            route = GeneratePath();
-                        }
-                        while (!CanMove(currentPosition, route, out currentPosition));
-                        paths.Add(route);
+                        paths.Add(GeneratePath());
                     }
                     _pathText.text = string.Join("", paths[0]);
 
