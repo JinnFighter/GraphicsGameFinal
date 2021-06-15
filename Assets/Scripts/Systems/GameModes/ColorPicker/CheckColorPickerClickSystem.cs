@@ -26,9 +26,7 @@ namespace Pixelgrid
                         {
                             var entity = _eventReceiverFilter.GetEntity(eventIndex);
                             ref var chosenColor = ref entity.Get<ColorChosenEvent>();
-                            chosenColor.R = Convert.ToByte(color.r);
-                            chosenColor.G = Convert.ToByte(color.g);
-                            chosenColor.B = Convert.ToByte(color.b);
+                            chosenColor.Color = color;
                         }
                     }
                 }

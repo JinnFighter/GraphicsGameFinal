@@ -18,7 +18,7 @@ namespace Pixelgrid
             {
                 var entity = _eventFilter.GetEntity(index);
                 var colorData = entity.Get<ColorChosenEvent>();
-                if(Math.Abs(colorData.B - Convert.ToByte(questionColor.b)) < 5)
+                if(Math.Abs(colorData.Color.b - questionColor.b) < 0.02f)
                 {
                     entity.Get<CorrectAnswerEvent>();
                     foreach(var dataIndex in _dataFilter)
