@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using System;
+using UnityEngine;
 
 namespace Pixelgrid 
 {
@@ -17,7 +18,7 @@ namespace Pixelgrid
             {
                 var entity = _eventFilter.GetEntity(index);
                 var colorData = entity.Get<ColorChosenEvent>();
-                if(Math.Abs(colorData.B - questionColor.b) < 5)
+                if(Math.Abs(colorData.B - Convert.ToByte(questionColor.b)) < 5)
                 {
                     entity.Get<CorrectAnswerEvent>();
                     foreach(var dataIndex in _dataFilter)
@@ -29,9 +30,13 @@ namespace Pixelgrid
                         if(data.CurrentColor >= data.ColorCount)
                             entity.Get<GameOverEvent>();
                         else
-                            _imageHolderContainer.QuestionHolder.color = data.Colors[data.CurrentColor];
+                        {
+                            var nextColor = data.Colors[data.CurrentColor];
+                            var answerColor = new Color(nextColor.r, nextColor.g, 0);
+                            _imageHolderContainer.QuestionHolder.color = nextColor;
+                            _imageHolderContainer.AnswerHolder.color = answerColor;
+                        }    
                     }
-
                 }
                 else
                     entity.Get<WrongAnswerEvent>();

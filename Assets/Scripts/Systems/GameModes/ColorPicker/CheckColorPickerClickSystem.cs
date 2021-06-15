@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
+using System;
 
 namespace Pixelgrid 
 {
@@ -25,9 +26,9 @@ namespace Pixelgrid
                         {
                             var entity = _eventReceiverFilter.GetEntity(eventIndex);
                             ref var chosenColor = ref entity.Get<ColorChosenEvent>();
-                            chosenColor.R = byte.Parse(color.r.ToString());
-                            chosenColor.G = byte.Parse(color.g.ToString());
-                            chosenColor.B = byte.Parse(color.b.ToString());
+                            chosenColor.R = Convert.ToByte(color.r);
+                            chosenColor.G = Convert.ToByte(color.g);
+                            chosenColor.B = Convert.ToByte(color.b);
                         }
                     }
                 }

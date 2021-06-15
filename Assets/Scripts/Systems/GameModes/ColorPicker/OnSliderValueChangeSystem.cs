@@ -21,6 +21,7 @@ namespace Pixelgrid
                     {
                         var color = _imageHolderContainer.AnswerHolder.color;
                         color.b = data.Value;
+                        _imageHolderContainer.AnswerHolder.color = color;
                     }
                 }
             }

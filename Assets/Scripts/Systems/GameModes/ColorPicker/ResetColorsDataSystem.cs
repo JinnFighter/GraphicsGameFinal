@@ -28,8 +28,11 @@ namespace Pixelgrid
                     data.Colors = colors; 
                     data.CurrentColor = 0;
 
-                    _imageHolderContainer.QuestionHolder.color = data.Colors[0];
-                    _imageHolderContainer.AnswerHolder.color = Color.white;
+                    var defaultColor = data.Colors[0];
+                    _imageHolderContainer.QuestionHolder.color = defaultColor;
+                    var answerColor = new Color(defaultColor.r, defaultColor.g, 0);
+                    _imageHolderContainer.AnswerHolder.color = defaultColor;
+                    _imageHolderContainer.AnswerHolder.color = answerColor;
                 }
             }
         }
