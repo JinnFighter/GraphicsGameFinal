@@ -7,5 +7,6 @@ namespace Pixelgrid
     {
         public List<Color32> Colors;
         public int CurrentColor;
+        public int ColorCount;
     }
 }
