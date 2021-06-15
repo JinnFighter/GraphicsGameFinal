@@ -53,6 +53,9 @@ namespace Pixelgrid
                 {
                     (position, _turtleSpritesContainer.TurtleRight)
                 };
+
+                ref var turtle = ref _filter.Get1(index);
+                turtle.CurrentSprite = _turtleSpritesContainer.TurtleRight;
             }
         }
     }
