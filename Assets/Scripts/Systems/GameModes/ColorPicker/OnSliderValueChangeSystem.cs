@@ -17,7 +17,7 @@ namespace Pixelgrid
                 {
                     ref EcsUiSliderChangeEvent data = ref _filter.Get1(index);
                     var sender = data.Sender;
-                    if(sender.CompareTag("ColorCheckButton"))
+                    if(sender.CompareTag("ColorSlider"))
                     {
                         var color = _imageHolderContainer.AnswerHolder.color;
                         color.b = data.Value;
