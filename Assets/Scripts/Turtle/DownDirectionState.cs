@@ -23,4 +23,10 @@ public class DownDirectionState : IDirectionState
 
         turtle.gameObject.transform.position = new Vector3(posX, posY, startPos.z);
     }
+
+    public Vector2Int Move(Vector2Int position) => new Vector2Int(position.x + 1, position.y);
+
+    public IDirectionState RotateLeft() => new RightDirectionState();
+
+    public IDirectionState RotateRight() => new LeftDirectionState();
 }
