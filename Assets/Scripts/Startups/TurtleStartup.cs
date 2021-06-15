@@ -1,10 +1,11 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pixelgrid
 {
-    sealed class BezierStartup : MonoBehaviour
+    sealed class TurtleStartup : MonoBehaviour
     {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
@@ -14,8 +15,9 @@ namespace Pixelgrid
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
         public SpritesContainer spritesContainer;
+        public TurtleSpritesContainer TurtleSpritesContainer;
         public TimersContainer timersContainer;
-        public BezierLinesGenerator LinesGenerator;
+        public TurtleConfiguration TurtleConfiguration;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
         public GameState GameState;
@@ -24,6 +26,7 @@ namespace Pixelgrid
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
+        public Text PathText;
 
         void Start()
         {
@@ -52,22 +55,25 @@ namespace Pixelgrid
                  .Add(new CreateGameModeDataContainerSystem())
                  .Add(new CreateProgressBarSystem())
                  .Add(new LoadTutorialMessageSystem())
+                 .Add(new CreateTurtleSystem())
+                 .Add(new CreateTurtlePathSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem())
                  .Add(new UpdateStopwatchesSystem())
-                 .Add(new GenerateBezierDataSystem())
-                 .Add(new ResetBezierProgressBarSystem())
+                 .Add(new GenerateTurtlePathSystem())
+                 .Add(new ResetTurtleProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
-                 .Add(new DrawFirstBezierLineSystem())
+                 .Add(new ResetTurtlePositionSystem())
                  .Add(new LaunchCountdownTimerSystem())
                  .Add(new StartGameOnCountdownTimerEndSystem())
-                 .Add(new CheckClickSystem())
+                 .Add(new CheckTurtleClickSystem())
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
-                 .Add(new CheckBezierAnswerSystem())
+                 .Add(new CheckTurtleAnswerSystem())
+                 .Add(new UpdateTurtleSpritesSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -83,7 +89,7 @@ namespace Pixelgrid
                  .InjectUi(_ecsUiEmitter)
 
                  // register one-frame components (order is important), for example:
-                 .OneFrame<PixelClickedEvent>()
+                 .OneFrame<TurtleCommand>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()
@@ -97,9 +103,10 @@ namespace Pixelgrid
                 .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
+                .Inject(TurtleConfiguration)
                 .Inject(spritesContainer)
+                .Inject(TurtleSpritesContainer)
                 .Inject(timersContainer)
-                .Inject(LinesGenerator)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
                 .Inject(GameState)
@@ -108,6 +115,7 @@ namespace Pixelgrid
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
                 .Inject(ScreenContainer)
+                .Inject(PathText)
                 .Inject(i18n)
                 .Init();
         }
