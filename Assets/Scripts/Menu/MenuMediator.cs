@@ -2,17 +2,17 @@ using UnityEngine;
 
 namespace Pixelgrid
 {
-    [RequireComponent(typeof(NewSceneLoader))]
+    [RequireComponent(typeof(SceneLoader))]
     public class MenuMediator : MonoBehaviour
     {
         [SerializeField] private ModeDataBuilder _modeDataBuilder;
         [SerializeField] private SoundController _soundController;
         [SerializeField] private UiScreenContainer _uiScreenContainer;
-        private NewSceneLoader _sceneLoader;
+        private SceneLoader _sceneLoader;
 
         void Start()
         {
-            _sceneLoader = GetComponent<NewSceneLoader>();
+            _sceneLoader = GetComponent<SceneLoader>();
         }
 
         public void LoadLevel()
