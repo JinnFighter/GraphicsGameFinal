@@ -2,14 +2,14 @@ using Leopotam.Ecs;
 
 namespace Pixelgrid 
 {
-    public sealed class StartGameSystem : IEcsInitSystem, IEcsRunSystem, ICommand 
+    public sealed class StartGameSystem : IEcsInitSystem, IEcsRunSystem 
     {
         private EcsFilter<GameplayEventReceiver> _filter;
         private EcsFilter<RestartGameEvent> _restartEventFilter;
 
         public void Init() => Execute();
 
-        public void Execute()
+        private void Execute()
         {
             foreach (var index in _filter)
             {
