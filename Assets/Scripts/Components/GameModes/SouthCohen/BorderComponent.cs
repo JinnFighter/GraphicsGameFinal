@@ -4,7 +4,7 @@ namespace Pixelgrid
 {
     public struct BorderComponent 
     {
-        public Vector2Int TopLeftCorner;
-        public Vector2Int DownRightCorner;
+        public Vector2Int LeftCorner;
+        public Vector2Int RightCorner;
     }
 }
