@@ -19,13 +19,14 @@ public class MenuControls : MonoBehaviour
     {
         loadedProfiles = false;
         profileButtons = new List<GameObject>();
-        //template = new GameObject();
         pfManager = GetComponent<ProfilesManager>();
+        
         if(pfManager.Container.profiles.Count == 0)
         {
-            noProfilesText.gameObject.SetActive(true);
-            loginPage.gameObject.SetActive(true);
-            this.gameObject.SetActive(false);
+            var profile = new PlayerProfile { active = true, name = "Jinn" };
+            pfManager.Container.profiles.Add(profile);
+            pfManager.ActiveProfile = profile;
+            pfManager.Container.Save(ProfilesManager.path);
         }
         if(pfManager.ActiveProfile != null)
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
