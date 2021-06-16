@@ -12,17 +12,7 @@ public class SoundController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _source = GetComponent<AudioSource>();
-        Messenger<int>.AddListener(GameEvents.ACTION_RIGHT_ANSWER, PlayCorrectAnswerClip);
-        Messenger.AddListener(GameEvents.ACTION_WRONG_ANSWER, PlayWrongAnswerClip);
-        Messenger.AddListener(GameEvents.GAME_OVER, PlayGameOverClip);
-    }
-
-    void OnDestroy()
-    {
-        Messenger<int>.RemoveListener(GameEvents.ACTION_RIGHT_ANSWER, PlayCorrectAnswerClip);
-        Messenger.RemoveListener(GameEvents.ACTION_WRONG_ANSWER, PlayWrongAnswerClip);
-        Messenger.RemoveListener(GameEvents.GAME_OVER, PlayGameOverClip);
+        _source = GetComponent<AudioSource>();;
     }
 
     public void PlayCorrectAnswerClip(int a) => PlayClip(correctAnswerClip);
