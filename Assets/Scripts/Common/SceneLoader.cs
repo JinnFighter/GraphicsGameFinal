@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Pixelgrid
 {
-    public class NewSceneLoader : MonoBehaviour
+    public class SceneLoader : MonoBehaviour
     {
         [SerializeField] private GameObject _loadingImageObject;
 
