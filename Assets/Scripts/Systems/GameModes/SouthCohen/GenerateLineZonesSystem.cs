@@ -89,6 +89,8 @@ namespace Pixelgrid
                             outside = (code1 & code2) != 0;
                         }
                     }
+
+                    zonesData.Zones = zones;
                 }
             }
         }
