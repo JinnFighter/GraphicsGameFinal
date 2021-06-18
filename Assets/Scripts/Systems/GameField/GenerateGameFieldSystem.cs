@@ -32,8 +32,6 @@ namespace Pixelgrid
 
             _gameFieldConfiguration.fieldSize = fieldSize;
             var grid = _gameFieldConfiguration.grid;
-            grid.rows = fieldSize;
-            grid.columns = fieldSize;
 
             var pixelPrefab = _gameFieldConfiguration.pixel;
 
