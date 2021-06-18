@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -32,6 +33,16 @@ namespace Pixelgrid
                     ref var timer = ref _filter.Get1(index);
                     timer.startTime = startTime;
                     timer.currentTime = startTime;
+
+                    var entity = _filter.GetEntity(index);
+                    if(entity.Has<TimerRef>())
+                    {
+                        ref var timerRef = ref entity.Get<TimerRef>();
+                        var timerGameObject = timerRef.timer;
+                        var timerText = timerGameObject.GetComponent<Text>();
+                        var timerFormat = timerGameObject.GetComponent<TimerFormat>();
+                        timerText.text = timerFormat.GetFormattedTime(timer.currentTime);
+                    }
                 }
             }
         }
