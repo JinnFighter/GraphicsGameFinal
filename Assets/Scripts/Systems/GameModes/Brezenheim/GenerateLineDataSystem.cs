@@ -10,6 +10,7 @@ namespace Pixelgrid
         private EcsFilter<GameModeData> _gameModeDataFilter;
         private LinesGenerator _lineDataGenerator;
         private EcsFilter<RestartGameEvent> _restartEventFilter;
+        private DifficultyConfiguration _difficultyConfiguration;
 
         public void Run()
         {
@@ -20,7 +21,30 @@ namespace Pixelgrid
                     var entity = _gameModeDataFilter.GetEntity(index);
                     ref var lineData = ref entity.Get<LineData>();
                     ref var dData = ref entity.Get<Brezenheim_D_Data>();
-                    var lines = _lineDataGenerator.GenerateData(2, 5, 5).ToList();
+                    int minLength;
+                    int maxLength;
+                    int linesCount;
+
+                    switch(_difficultyConfiguration.Difficulty)
+                    {
+                        case 1:
+                            minLength = 4;
+                            maxLength = 8;
+                            linesCount = 7;
+                            break;
+                        case 2:
+                            minLength = 5;
+                            maxLength = 10;
+                            linesCount = 10;
+                            break;
+                        default:
+                            minLength = 2;
+                            maxLength = 5;
+                            linesCount = 5;
+                            break;
+                    }
+
+                    var lines = _lineDataGenerator.GenerateData(minLength, maxLength, linesCount).ToList();
                     var lineDatas = new List<List<Vector2Int>>();
                     var dDatas = new List<List<int>>();
 
