@@ -16,7 +16,7 @@ namespace Pixelgrid
                 foreach(var index in _filter)
                 {
                     ref var textRef = ref _filter.Get2(index);
-                    textRef.Text.GetComponent<Text>().text = indexEvent.index >= 0 ? "-" : "+";
+                    textRef.Text.GetComponent<Text>().text = indexEvent.index > 0 ? "-" : "+";
                 }
             }
         }

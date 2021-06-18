@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -17,6 +18,7 @@ namespace Pixelgrid
                     var entity = _filter.GetEntity(index);
                     ref var dData = ref entity.Get<TextRef>();
                     dData.Text = _brezenheimDataContainer.DText.gameObject;
+                    dData.Text.GetComponent<Text>().text = "?";
                 }
             }
         }
