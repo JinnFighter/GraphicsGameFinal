@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,14 +26,14 @@ namespace Pixelgrid
                     var colors = new List<Color32>();
 
                     for(var i = 0; i < data.ColorCount; i++)
-                        colors.Add(generatedColors[Random.Range(0, generatedColors.Count)]);
+                        colors.Add(generatedColors[UnityEngine.Random.Range(0, generatedColors.Count)]);
 
                     data.Colors = colors; 
                     data.CurrentColor = 0;
 
                     var defaultColor = data.Colors[0];
                     _imageHolderContainer.QuestionHolder.color = defaultColor;
-                    var answerColor = new Color(defaultColor.r, defaultColor.g, _slider.value);
+                    var answerColor = new Color32(defaultColor.r, defaultColor.g, Convert.ToByte(_slider.value), 255);
                     _imageHolderContainer.AnswerHolder.color = defaultColor;
                     _imageHolderContainer.AnswerHolder.color = answerColor;
                 }
