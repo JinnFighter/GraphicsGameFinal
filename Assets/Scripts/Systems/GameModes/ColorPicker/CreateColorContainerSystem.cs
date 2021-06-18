@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +15,22 @@ namespace Pixelgrid {
             {
                 var entity = _filter.GetEntity(index);
                 ref var colorContainer = ref entity.Get<ColorContainer>();
-                colorContainer.Colors = new List<Color32> { Color.black, Color.blue, Color.cyan, Color.green, Color.white, Color.yellow };
+                var colors = new List<Color32>();
+                for (var i = 0; i < 6; i++)
+                {
+                    colors.Add(new Color32
+                    {
+                        r = GetColorComponentValue(),
+                        g = GetColorComponentValue(),
+                        b = GetColorComponentValue(),
+                        a = 255
+                    });
+                }
+
+                colorContainer.Colors = colors;
             }
         }
+
+        private byte GetColorComponentValue() => Convert.ToByte(UnityEngine.Random.Range(0, 255));
     }
 }

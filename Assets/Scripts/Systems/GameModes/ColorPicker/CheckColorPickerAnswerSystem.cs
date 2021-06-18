@@ -20,7 +20,7 @@ namespace Pixelgrid
             {
                 var entity = _eventFilter.GetEntity(index);
                 var colorData = entity.Get<ColorChosenEvent>();
-                if(Math.Abs(colorData.Color.b - questionColor.b) < 0.02f)
+                if(Math.Abs(colorData.Color.b - questionColor.b) < 0.2f)
                 {
                     entity.Get<CorrectAnswerEvent>();
                     foreach(var dataIndex in _dataFilter)
@@ -34,7 +34,7 @@ namespace Pixelgrid
                         else
                         {
                             var nextColor = data.Colors[data.CurrentColor];
-                            var answerColor = new Color(nextColor.r, nextColor.g, _slider.value);
+                            var answerColor = new Color32(nextColor.r, nextColor.g, Convert.ToByte(_slider.value), 255);
                             _imageHolderContainer.QuestionHolder.color = nextColor;
                             _imageHolderContainer.AnswerHolder.color = answerColor;
                         }    
