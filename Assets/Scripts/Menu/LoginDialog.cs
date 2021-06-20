@@ -14,6 +14,7 @@ namespace Pixelgrid
         [SerializeField] private Text _noProfilesText;
         [SerializeField] private MenuMediator _menuMediator;
         [SerializeField] private MainMenuDialog _mainMenuDialog;
+        [SerializeField] private Button _backButton;
 
         private List<GameObject> _profileButtons;
 
@@ -42,9 +43,13 @@ namespace Pixelgrid
                             _profileButtons.Add(btn);
                             btn.SetActive(true);
                         }
+                        _backButton.gameObject.SetActive(true);
                     }
                     else
+                    {
                         _noProfilesText.gameObject.SetActive(true);
+                        _backButton.gameObject.SetActive(false);
+                    }    
                     break;
                 case "UnloadProfiles":
                     foreach (var obj in _profileButtons)
