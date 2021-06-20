@@ -13,23 +13,22 @@ public class MenuControls : MonoBehaviour
     [SerializeField] private GameObject loginPage;
     [SerializeField] private GameObject createProfilePage;
     [SerializeField] private Button loginButton;
+    [SerializeField] private UiScreenContainer _uiScreenContainer;
 
     // Start is called before the first frame update
     void Start()
     {
-        loadedProfiles = false;
+        /*loadedProfiles = false;
         profileButtons = new List<GameObject>();
         pfManager = GetComponent<ProfilesManager>();
         
         if(pfManager.Container.profiles.Count == 0)
         {
-            var profile = new PlayerProfile { active = true, name = "Jinn" };
-            pfManager.Container.profiles.Add(profile);
-            pfManager.ActiveProfile = profile;
-            pfManager.Container.Save(ProfilesManager.path);
+            createProfilePage.SetActive(true);
         }
         if(pfManager.ActiveProfile != null)
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
+        _uiScreenContainer.Push(this.gameObject);*/
     }
 
     public void LoadProfiles(GameObject panel)
@@ -74,39 +73,12 @@ public class MenuControls : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
-    public void SubmitNewProfile(InputField field)
+    public void SubmitNewProfile()
     {
-        if(field.text == "")
-            Debug.Log("Enter name!");
-        else
-        { 
-            foreach (var profile in pfManager.Container.profiles)
-            {
-                if(profile.name == field.text) return;
-            }
-
-            var p = new PlayerProfile(field.text, false);
-            pfManager.Container.profiles.Add(p);
-            SetActiveProfile(field.text);
-            pfManager.Container.Save(ProfilesManager.path);
-
-            foreach (var profile in pfManager.Container.profiles)
-                Debug.Log(profile.name);
-
             loginButton.GetComponentInChildren<Text>().text = pfManager.ActiveProfile.name;
-
             foreach (var obj in profileButtons)
                 Destroy(obj);
 
             profileButtons.Clear();
-
-            if(noProfilesText.gameObject.activeSelf)
-                noProfilesText.gameObject.SetActive(false);
-
-            loadedProfiles = false;
-            loginPage.gameObject.SetActive(false);
-            createProfilePage.gameObject.SetActive(false);
-            this.gameObject.SetActive(true);
-        }
     }
 }

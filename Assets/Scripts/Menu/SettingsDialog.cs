@@ -5,6 +5,7 @@ namespace Pixelgrid
 {
     public class SettingsDialog : MonoBehaviour, IMenuDialog
     {
+        [SerializeField] private GameObject _panel;
         [SerializeField] private Toggle _fullscreenToggle;
 
         void Start()
@@ -25,5 +26,7 @@ namespace Pixelgrid
                     break;
             }
         }
+
+        public GameObject GetPanel() => _panel;
     }
 }

@@ -7,48 +7,49 @@ namespace Pixelgrid
 {
     public class LoginDialog : MonoBehaviour, IMenuDialog
     {
+        [SerializeField] private GameObject _panel;
         [SerializeField] private ProfilesManager _profilesManager;
         [SerializeField] private GameObject _buttonTemplate;
         [SerializeField] private GameObject _loginPanel;
         [SerializeField] private Text _noProfilesText;
-        [SerializeField] private MainMenuDialog _mainMenuDialog;
+        [SerializeField] private MenuMediator _menuMediator;
 
-        private List<GameObject> profileButtons;
+        private List<GameObject> _profileButtons;
 
-        void Start()
-        {
-            profileButtons = new List<GameObject>();
-        }
+        public GameObject GetPanel() => _panel;
 
         public void Notify(string eventType)
         {
             switch (eventType)
             {
                 case "LoadProfiles":
+                    if (_profileButtons == null)
+                        _profileButtons = new List<GameObject>();
                     if (_profilesManager.Container.profiles.Count > 0)
                     {
                         foreach (var profile in _profilesManager.Container.profiles)
                         {
                             var btn = Instantiate(_buttonTemplate) as GameObject;
-                            btn.GetComponentInChildren<Text>().text = profile.name;
+                            var textComponent = btn.GetComponentInChildren<Text>();
+                            textComponent.text = profile.name;
                             btn.transform.SetParent(_loginPanel.transform);
                             var buttonComponent = btn.GetComponent<Button>();
-                            buttonComponent.onClick = new Button.ButtonClickedEvent();
                             buttonComponent.onClick.AddListener(
-                             () => { SetActiveProfile(profile.name); }
+                             () => { this.SetActiveProfile(textComponent.text); }
                             );
                             btn.transform.localScale = _buttonTemplate.transform.localScale;
-                            profileButtons.Add(btn);
+                            _profileButtons.Add(btn);
+                            btn.SetActive(true);
                         }
                     }
                     else
                         _noProfilesText.gameObject.SetActive(true);
                     break;
                 case "UnloadProfiles":
-                    foreach (var obj in profileButtons)
+                    foreach (var obj in _profileButtons)
                         Destroy(obj);
 
-                    profileButtons.Clear();
+                    _profileButtons.Clear();
                     break;
                 default:
                     break;
@@ -61,16 +62,14 @@ namespace Pixelgrid
             var container = _profilesManager.Container;
             var profile = container.profiles.First(profile => profile.name == profileName);
 
-            if (_profilesManager.ActiveProfile != null)
-                _profilesManager.ActiveProfile.active = false;
-            else
-                foreach (var prof in _profilesManager.Container.profiles.Where(profile => profile.active))
-                    prof.active = false;
+            profile.active = true;
+            _profilesManager.ActiveProfile = profile;
 
+            _profilesManager.Save();
 
-            _profilesManager.Container.Save(ProfilesManager.path);
+            while (_menuMediator.GetPanelCount() > 1)
+                _menuMediator.PopPanel();
             Notify("UnloadProfiles");
-            _mainMenuDialog.Notify("LoginComplete");
         }
     }
 }

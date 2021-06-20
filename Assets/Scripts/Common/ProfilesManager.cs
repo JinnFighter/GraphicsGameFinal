@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class ProfilesManager : MonoBehaviour
 {
@@ -7,15 +8,26 @@ public class ProfilesManager : MonoBehaviour
     public PlayerProfile ActiveProfile { get; set; }
     public PlayerProfilesContainer Container { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+    public void Load()
     {
-       Container = PlayerProfilesContainer.Load(path);
+        Container = PlayerProfilesContainer.Load(path);
 
-        foreach (var profile in Container.profiles)
+        if(Container.profiles.Any(profile => profile.active))
         {
-            if(profile.active)
-                ActiveProfile = profile;
+            ActiveProfile = Container.profiles.First(profile => profile.active);
+            ExcludeAllOtherActiveProfiles();
         }
+    }
+
+    public void Save()
+    {
+        ExcludeAllOtherActiveProfiles();
+        Container.Save(path);
+    }
+
+    private void ExcludeAllOtherActiveProfiles()
+    {
+        foreach (var profile in Container.profiles.Where(profile => profile.active && profile.name!= ActiveProfile.name))
+            profile.active = false;
     }
 }
