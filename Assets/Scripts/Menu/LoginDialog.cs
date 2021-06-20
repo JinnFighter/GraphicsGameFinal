@@ -13,6 +13,7 @@ namespace Pixelgrid
         [SerializeField] private GameObject _loginPanel;
         [SerializeField] private Text _noProfilesText;
         [SerializeField] private MenuMediator _menuMediator;
+        [SerializeField] private MainMenuDialog _mainMenuDialog;
 
         private List<GameObject> _profileButtons;
 
@@ -66,10 +67,12 @@ namespace Pixelgrid
             _profilesManager.ActiveProfile = profile;
 
             _profilesManager.Save();
+            _profilesManager.Load();
 
             while (_menuMediator.GetPanelCount() > 1)
                 _menuMediator.PopPanel();
             Notify("UnloadProfiles");
+            _mainMenuDialog.Notify("LoginComplete");
         }
     }
 }
