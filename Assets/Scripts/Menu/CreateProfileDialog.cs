@@ -24,6 +24,7 @@ namespace Pixelgrid
                         return;
 
                     var profile = new PlayerProfile { name = playerName, active = true };
+                    _profilesManager.Container.profiles.Add(profile);
                     
                     _profilesManager.ActiveProfile = profile;
                     _profilesManager.Save();

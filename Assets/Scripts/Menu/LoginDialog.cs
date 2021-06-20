@@ -67,7 +67,6 @@ namespace Pixelgrid
             _profilesManager.ActiveProfile = profile;
 
             _profilesManager.Save();
-            _profilesManager.Load();
 
             while (_menuMediator.GetPanelCount() > 1)
                 _menuMediator.PopPanel();
