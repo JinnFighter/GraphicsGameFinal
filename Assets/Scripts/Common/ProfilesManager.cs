@@ -18,8 +18,6 @@ public class ProfilesManager : MonoBehaviour
         {
             using (XmlWriter writer = XmlWriter.Create(path))
             {
-                var text = "<?xml version=\"1.0\"?><PlayersCollection xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><Players></Players></PlayersCollection>".ToArray();
-
                 writer.WriteStartElement("PlayersCollection");
                 writer.WriteStartElement("Players");
                 writer.WriteEndElement();
