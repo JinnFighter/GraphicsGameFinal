@@ -52,6 +52,9 @@ namespace Pixelgrid
 
                     _profileButtons.Clear();
                     break;
+                case "RemoveNoProfilesText":
+                    _noProfilesText.gameObject.SetActive(false);
+                    break;
                 default:
                     break;
             }
