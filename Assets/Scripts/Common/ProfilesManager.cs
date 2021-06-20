@@ -6,7 +6,7 @@ using UnityEngine;
 public class ProfilesManager : MonoBehaviour
 {
     private string _dataPath = Path.Combine("Data");
-    public static string path = Path.Combine("Data", "players_base.xml");
+    private string _path = Path.Combine("Data", "players_base.xml");
 
     public PlayerProfile ActiveProfile { get; set; }
     public PlayerProfilesContainer Container { get; set; }
@@ -15,9 +15,9 @@ public class ProfilesManager : MonoBehaviour
     {
         if (!Directory.Exists(_dataPath))
             Directory.CreateDirectory(_dataPath);
-        if (!File.Exists(path))
+        if (!File.Exists(_path))
         {
-            using (XmlWriter writer = XmlWriter.Create(path))
+            using (XmlWriter writer = XmlWriter.Create(_path))
             {
                 writer.WriteStartElement("PlayersCollection");
                 writer.WriteStartElement("Players");
@@ -26,7 +26,7 @@ public class ProfilesManager : MonoBehaviour
                 writer.Close();
             }; 
         }
-        Container = PlayerProfilesContainer.Load(path);
+        Container = PlayerProfilesContainer.Load(_path);
 
         if(Container.profiles.Any(profile => profile.active))
         {
@@ -38,7 +38,7 @@ public class ProfilesManager : MonoBehaviour
     public void Save()
     {
         ExcludeAllOtherActiveProfiles();
-        Container.Save(path);
+        Container.Save(_path);
     }
 
     private void ExcludeAllOtherActiveProfiles()
