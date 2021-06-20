@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ProfilesManager : MonoBehaviour
 {
+    private string _dataPath = Path.Combine("Data");
     public static string path = Path.Combine("Data", "players_base.xml");
 
     public PlayerProfile ActiveProfile { get; set; }
@@ -12,8 +13,8 @@ public class ProfilesManager : MonoBehaviour
 
     public void Load()
     {
-        if (!Directory.Exists("Data"))
-            Directory.CreateDirectory("Data");
+        if (!Directory.Exists(_dataPath))
+            Directory.CreateDirectory(_dataPath);
         if (!File.Exists(path))
         {
             using (XmlWriter writer = XmlWriter.Create(path))
