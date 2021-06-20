@@ -42,5 +42,7 @@ namespace Pixelgrid
             panel.SetActive(true);
             _uiScreenContainer.Push(panel);
         }
+
+        public int GetPanelCount() => _uiScreenContainer.GetCount();
     }
 }
