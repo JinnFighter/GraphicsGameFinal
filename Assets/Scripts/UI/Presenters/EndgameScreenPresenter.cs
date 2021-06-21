@@ -17,7 +17,7 @@ namespace Pixelgrid
             _correctAnswersView.SetText(correctCount.ToString());
             _wrongAnswersView.SetText(wrongCount.ToString());
             float sum = correctCount + wrongCount;
-            var ratio = wrongCount == 0 ? 0 : (int)(Math.Abs(correctCount / sum) * 100);
+            var ratio = wrongCount == 0 ? correctCount == 0 ? 0 : 100 : (int)(Math.Abs(correctCount / sum) * 100);
             _percentsView.SetText(ratio.ToString() + "%");
 
             var timeSpent = data.TimeSpent;
