@@ -38,8 +38,8 @@ namespace Pixelgrid
                             linesCount = 10;
                             break;
                         default:
-                            minLength = 2;
-                            maxLength = 5;
+                            minLength = 3;
+                            maxLength = 6;
                             linesCount = 5;
                             break;
                     }
