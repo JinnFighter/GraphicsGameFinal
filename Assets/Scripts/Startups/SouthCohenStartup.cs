@@ -81,7 +81,6 @@ namespace Pixelgrid
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
-                 .Add(new SendStatDataToServerSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
