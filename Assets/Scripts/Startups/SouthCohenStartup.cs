@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pixelgrid
@@ -18,7 +19,6 @@ namespace Pixelgrid
         public SouthCohenLinesGenerator LinesGenerator;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
-        public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
@@ -38,6 +38,13 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
+            var pausableSystems = new List<string> 
+            {
+                "UpdateTimers",
+                "UpdateStopwatches",
+                "CheckClick"
+            };
+
             _systems
                  // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
@@ -58,8 +65,8 @@ namespace Pixelgrid
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
-                 .Add(new UpdateTimersSystem())
-                 .Add(new UpdateStopwatchesSystem())
+                 .Add(new UpdateTimersSystem(), "UpdateTimers")
+                 .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateSouthCohenLinesSystem())
                  .Add(new GenerateLineZonesSystem())
                  .Add(new ResetSouthCohenProgressBarSystem())
@@ -69,7 +76,7 @@ namespace Pixelgrid
                  .Add(new DrawFirstSouthCohenLineSystem())
                  .Add(new LaunchCountdownTimerSystem())
                  .Add(new StartGameOnCountdownTimerEndSystem())
-                 .Add(new CheckClickSystem())
+                 .Add(new CheckClickSystem(), "CheckClick")
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckSouthCohenAnswerSystem())
@@ -81,6 +88,8 @@ namespace Pixelgrid
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
+                 .Add(new PauseSystem(_systems, pausableSystems))
+                 .Add(new UnpauseSystem(_systems, pausableSystems))
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
@@ -97,6 +106,8 @@ namespace Pixelgrid
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
+                 .OneFrame<PauseEvent>()
+                 .OneFrame<UnpauseEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)
@@ -109,7 +120,6 @@ namespace Pixelgrid
                 .Inject(Border)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
-                .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)

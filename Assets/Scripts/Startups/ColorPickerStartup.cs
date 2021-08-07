@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,6 @@ namespace Pixelgrid
         public ImageHolderContainer ImageHolderContainer;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
-        public GameState GameState;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
@@ -34,6 +34,13 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
+            var pausableSystems = new List<string> 
+            {
+                "UpdateStopwatches",
+                "OnSliderValueChange",
+                "CheckColorPickerClick"
+            };
+
             _systems
                  // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
@@ -51,14 +58,14 @@ namespace Pixelgrid
                  .Add(new CreateColorDataSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
-                 .Add(new UpdateStopwatchesSystem())
+                 .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new ResetColorsDataSystem())
                  .Add(new ResetColorPickerProgressBarSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
-                 .Add(new OnSliderValueChangeSystem())
-                 .Add(new CheckColorPickerClickSystem())
+                 .Add(new OnSliderValueChangeSystem(), "OnSliderValueChange")
+                 .Add(new CheckColorPickerClickSystem(), "CheckColorPickerClick")
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckColorPickerAnswerSystem())
                  .Add(new UpdateStatDataSystem())
@@ -66,6 +73,8 @@ namespace Pixelgrid
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
+                 .Add(new PauseSystem(_systems, pausableSystems))
+                 .Add(new UnpauseSystem(_systems, pausableSystems))
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
@@ -79,6 +88,8 @@ namespace Pixelgrid
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
+                 .OneFrame<PauseEvent>()
+                 .OneFrame<UnpauseEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)
@@ -86,7 +97,6 @@ namespace Pixelgrid
                 .Inject(ImageHolderContainer)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
-                .Inject(GameState)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
