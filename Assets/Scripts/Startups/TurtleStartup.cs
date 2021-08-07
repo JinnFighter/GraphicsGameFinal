@@ -44,7 +44,8 @@ namespace Pixelgrid
             var pausableSystems = new List<string> 
             {
                 "UpdateTimers",
-                "UpdateStopwatches"
+                "UpdateStopwatches",
+                "CheckTurtleClick"
             };
             _systems
                  // register your systems here, for example:
@@ -76,7 +77,7 @@ namespace Pixelgrid
                  .Add(new ResetTurtlePositionSystem())
                  .Add(new LaunchCountdownTimerSystem())
                  .Add(new StartGameOnCountdownTimerEndSystem())
-                 .Add(new CheckTurtleClickSystem())
+                 .Add(new CheckTurtleClickSystem(), "CheckTurtleClick")
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckTurtleAnswerSystem())
