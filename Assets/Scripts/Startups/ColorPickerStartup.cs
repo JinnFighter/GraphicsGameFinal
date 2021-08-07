@@ -38,6 +38,7 @@ namespace Pixelgrid
             var pausableSystems = new List<string> 
             {
                 "UpdateStopwatches",
+                "OnSliderValueChange",
                 "CheckColorPickerClick"
             };
 
@@ -64,7 +65,7 @@ namespace Pixelgrid
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
-                 .Add(new OnSliderValueChangeSystem())
+                 .Add(new OnSliderValueChangeSystem(), "OnSliderValueChange")
                  .Add(new CheckColorPickerClickSystem(), "CheckColorPickerClick")
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckColorPickerAnswerSystem())
