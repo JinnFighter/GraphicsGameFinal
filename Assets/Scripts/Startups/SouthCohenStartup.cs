@@ -19,7 +19,6 @@ namespace Pixelgrid
         public SouthCohenLinesGenerator LinesGenerator;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
-        public GameState GameState;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
@@ -121,7 +120,6 @@ namespace Pixelgrid
                 .Inject(Border)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
-                .Inject(GameState)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)

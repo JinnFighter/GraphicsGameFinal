@@ -17,7 +17,6 @@ namespace Pixelgrid
         public ImageHolderContainer ImageHolderContainer;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
-        public GameState GameState;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
@@ -98,7 +97,6 @@ namespace Pixelgrid
                 .Inject(ImageHolderContainer)
                 .Inject(SoundsContainer)
                 .Inject(AudioPlayer)
-                .Inject(GameState)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)
                 .Inject(ProgressBar)
