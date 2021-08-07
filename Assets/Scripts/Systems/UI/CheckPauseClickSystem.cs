@@ -5,7 +5,9 @@ namespace Pixelgrid
 {
     public sealed class CheckPauseClickSystem : IEcsRunSystem 
     {
-        private EcsFilter<EcsUiClickEvent> _filter;
+        private readonly EcsFilter<EcsUiClickEvent> _filter = null;
+        private readonly EcsFilter<Paused> _pausedFilter = null;
+
         private GameState _gameState;
         private UiScreenContainer _screenContainer;
 
@@ -13,9 +15,29 @@ namespace Pixelgrid
         {
             foreach (var index in _filter)
             {
-                ref EcsUiClickEvent data = ref _filter.Get1(index);
+                var data = _filter.Get1(index);
                 if (data.Sender.CompareTag("PauseButton"))
-                    _gameState.IsPaused = _screenContainer.GetCount() > 0 ? true : false;   
+                {
+                    _gameState.IsPaused = _screenContainer.GetCount() > 0 ? true : false;
+
+                    var entity = _filter.GetEntity(index);
+
+                    ///countainer > 0 == pausedFilter is Empty
+                    ///container > 0 and pausedFilter is not empty -> already paused
+                    ///container <=0 and pausedFilter is empty -> already unpaused
+
+                    var hasActiveScreens = _screenContainer.GetCount() > 0;
+                    var hasPauseComponent = _pausedFilter.IsEmpty();
+                    
+                    var canCreateEvent = hasActiveScreens == hasPauseComponent;  //Pause if has screens and doesn't have Paused component, Unpause if has no screens and has Paused component
+
+                    if(canCreateEvent)
+                    {
+                        if(hasActiveScreens)
+                            entity.Get<PauseEvent>();
+                        else
+                            entity.Get<UnpauseEvent>();
+                    }
             }
         }
     }
