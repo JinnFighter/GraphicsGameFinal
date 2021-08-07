@@ -41,7 +41,10 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
 
-            var pausableSystems = new List<string>();
+            var pausableSystems = new List<string> 
+            {
+                "UpdateTimers"
+            };
             _systems
                  // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
@@ -62,7 +65,7 @@ namespace Pixelgrid
                  .Add(new CreateTurtlePathSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
-                 .Add(new UpdateTimersSystem())
+                 .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new GenerateTurtlePathSystem())
                  .Add(new ResetTurtleProgressBarSystem())

@@ -28,16 +28,17 @@ namespace Pixelgrid
 
                     var hasActiveScreens = _screenContainer.GetCount() > 0;
                     var hasPauseComponent = _pausedFilter.IsEmpty();
-                    
+
                     var canCreateEvent = hasActiveScreens == hasPauseComponent;  //Pause if has screens and doesn't have Paused component, Unpause if has no screens and has Paused component
 
-                    if(canCreateEvent)
+                    if (canCreateEvent)
                     {
-                        if(hasActiveScreens)
+                        if (hasActiveScreens)
                             entity.Get<PauseEvent>();
                         else
                             entity.Get<UnpauseEvent>();
                     }
+                }
             }
         }
     }

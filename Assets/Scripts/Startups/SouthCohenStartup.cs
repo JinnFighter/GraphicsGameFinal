@@ -39,7 +39,10 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
-            var pausableSystems = new List<string>();
+            var pausableSystems = new List<string> 
+            {
+                "UpdateTimers"
+            };
 
             _systems
                  // register your systems here, for example:
@@ -61,7 +64,7 @@ namespace Pixelgrid
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
-                 .Add(new UpdateTimersSystem())
+                 .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem())
                  .Add(new GenerateSouthCohenLinesSystem())
                  .Add(new GenerateLineZonesSystem())
