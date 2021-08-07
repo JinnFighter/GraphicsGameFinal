@@ -79,6 +79,7 @@ namespace Pixelgrid
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
+                 .OneFrame<PauseEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)

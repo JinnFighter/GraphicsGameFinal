@@ -98,6 +98,7 @@ namespace Pixelgrid
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
+                 .OneFrame<PauseEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)
