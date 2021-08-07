@@ -39,7 +39,8 @@ namespace Pixelgrid
 #endif
             var pausableSystems = new List<string> 
             {
-                "UpdateTimers"
+                "UpdateTimers",
+                "UpdateStopwatches"
             };
 
             _systems
@@ -61,7 +62,7 @@ namespace Pixelgrid
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
-                 .Add(new UpdateStopwatchesSystem())
+                 .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateBezierDataSystem())
                  .Add(new ResetBezierProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())

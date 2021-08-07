@@ -43,7 +43,8 @@ namespace Pixelgrid
 
             var pausableSystems = new List<string> 
             {
-                "UpdateTimers"
+                "UpdateTimers",
+                "UpdateStopwatches"
             };
             _systems
                  // register your systems here, for example:
@@ -66,7 +67,7 @@ namespace Pixelgrid
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
-                 .Add(new UpdateStopwatchesSystem())
+                 .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateTurtlePathSystem())
                  .Add(new ResetTurtleProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
