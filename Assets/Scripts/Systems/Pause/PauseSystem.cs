@@ -22,6 +22,9 @@ namespace Pixelgrid
             {
                 foreach (var systemName in _pausableSystemsNames)
                     _systems.SetRunSystemState(_systems.GetNamedRunSystem(systemName), false);
+
+                var entity = _filter.GetEntity(0);
+                entity.Get<Paused>();
             }
         }
     }
