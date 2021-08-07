@@ -6,6 +6,7 @@ namespace Pixelgrid
     public sealed class UnpauseSystem : IEcsRunSystem
     {
         private readonly EcsFilter<PauseEvent> _filter = null;
+        private readonly EcsFilter<Paused> _pausedFilter = null;
 
         private readonly EcsSystems _systems;
         private readonly IEnumerable<string> _pausableSystemsNames;
@@ -22,6 +23,12 @@ namespace Pixelgrid
             {
                 foreach (var systemName in _pausableSystemsNames)
                     _systems.SetRunSystemState(_systems.GetNamedRunSystem(systemName), true);
+
+                foreach (var index in _pausedFilter)
+                {
+                    var entity = _pausedFilter.GetEntity(index);
+                    entity.Del<Paused>();
+                }
             }
         }
     }
