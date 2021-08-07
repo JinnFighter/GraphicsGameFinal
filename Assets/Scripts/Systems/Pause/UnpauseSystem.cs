@@ -5,7 +5,7 @@ namespace Pixelgrid
 {
     public sealed class UnpauseSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<PauseEvent> _filter = null;
+        private readonly EcsFilter<UnpauseEvent> _filter = null;
         private readonly EcsFilter<Paused> _pausedFilter = null;
 
         private readonly EcsSystems _systems;
