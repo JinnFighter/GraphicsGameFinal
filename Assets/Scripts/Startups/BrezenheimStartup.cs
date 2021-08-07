@@ -40,7 +40,8 @@ namespace Pixelgrid {
             var pausableSystems = new List<string> 
             {
                 "UpdateTimers",
-                "UpdateStopwatches"
+                "UpdateStopwatches",
+                "CheckClick"
             };
 
             _systems
@@ -73,7 +74,7 @@ namespace Pixelgrid {
                  .Add(new DrawFirstLineSystem())
                  .Add(new LaunchCountdownTimerSystem())
                  .Add(new StartGameOnCountdownTimerEndSystem())
-                 .Add(new CheckClickSystem())
+                 .Add(new CheckClickSystem(), "CheckClick")
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
