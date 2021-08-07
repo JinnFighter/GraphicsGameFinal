@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,8 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
+
+            var pausableSystems = new List<string>();
             _systems
                  // register your systems here, for example:
                  .Add(new CheckPauseClickSystem())
@@ -82,6 +85,8 @@ namespace Pixelgrid
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
+                 .Add(new PauseSystem(_systems, pausableSystems))
+                 .Add(new UnpauseSystem(_systems, pausableSystems))
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
