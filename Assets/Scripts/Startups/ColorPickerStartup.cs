@@ -75,6 +75,7 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
@@ -86,10 +87,12 @@ namespace Pixelgrid
                  .OneFrame<StartGameEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
+                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)

@@ -1,10 +1,11 @@
 using Leopotam.Ecs;
+using UnityEngine.UI;
 
 namespace Pixelgrid {
     public sealed class GenerateCountdownTimersSystem : IEcsInitSystem 
     {
-        private readonly EcsWorld _world;
-        private readonly TimersContainer _timersContainer;
+        private readonly EcsWorld _world = null;
+        private readonly TimersContainer _timersContainer = null;
 
         public void Init()
         {
@@ -12,7 +13,9 @@ namespace Pixelgrid {
             timerEntity.Get<Timer>();
             timerEntity.Get<CountdownTimer>();
             ref var timerRef = ref timerEntity.Get<TimerRef>();
-            timerRef.timer = _timersContainer.CountdownTimer;
+            timerRef.TimerFormat = _timersContainer.CountdownTimer.GetComponent<TimerFormat>();
+            ref var textRef = ref timerEntity.Get<TextRef>();
+            textRef.Text = _timersContainer.CountdownTimer.GetComponent<Text>();
         }
     }
 }

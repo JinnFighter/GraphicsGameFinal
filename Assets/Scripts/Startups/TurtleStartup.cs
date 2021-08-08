@@ -91,6 +91,8 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UpdateTimerTextSystem())
+                 .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
@@ -100,6 +102,7 @@ namespace Pixelgrid
                  // register one-frame components (order is important), for example:
                  .OneFrame<TurtleCommand>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
@@ -109,6 +112,7 @@ namespace Pixelgrid
                  .OneFrame<ClearGridEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)

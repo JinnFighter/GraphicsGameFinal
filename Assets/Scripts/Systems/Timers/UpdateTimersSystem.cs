@@ -1,17 +1,18 @@
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
     public sealed class UpdateTimersSystem : IEcsRunSystem 
     {
-        private EcsFilter<Timer, Counting, TimerRef> _filter;
+        private EcsFilter<Timer, Counting> _filter = null;
 
-        void IEcsRunSystem.Run () 
+        void IEcsRunSystem.Run() 
         {
             foreach (var index in _filter)
             {
+                var entity = _filter.GetEntity(index);
+
                 ref var timerData = ref _filter.Get1(index);
                 var currentTime = timerData.currentTime -= Time.deltaTime;
 
@@ -20,14 +21,11 @@ namespace Pixelgrid
 
                 timerData.currentTime = currentTime;
 
-                var timerRef = _filter.Get3(index);
-                var timerGameObject = timerRef.timer;
-                var timerText = timerGameObject.GetComponent<Text>();
-                var timerFormat = timerGameObject.GetComponent<TimerFormat>();
-                timerText.text = timerFormat.GetFormattedTime(currentTime);
+                ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
+                timeChangeEvent.CurrentTime = timerData.currentTime;
+
                 if (timerData.currentTime <= 0.0000f)
                 {
-                    var entity = _filter.GetEntity(index);
                     entity.Del<Counting>();
                     entity.Get<TimerEndEvent>();
                 }

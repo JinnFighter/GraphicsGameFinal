@@ -1,18 +1,17 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
     public sealed class GenerateTurtlePathSystem : IEcsRunSystem 
     {
-        private EcsFilter<TurtlePath> _filter;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<TurtleComponent, PixelPosition> _turtleFilter;
-        private TurtleConfiguration _turtleConfiguration;
-        private GameFieldConfiguration _gameFieldConfiguration;
-        private Text _pathText;
+        private EcsFilter<TurtlePath> _filter = null;
+        private EcsFilter<RestartGameEvent> _restartEventFilter = null;
+
+        private TurtleConfiguration _turtleConfiguration = null;
+        private GameFieldConfiguration _gameFieldConfiguration = null;
+
         private IDirectionState _direction;
 
         private List<char> _commands = new List<char>{ 'F', '+', '-' };
@@ -28,11 +27,13 @@ namespace Pixelgrid
                     paths.Clear();
 
                     _direction = new RightDirectionState();
+
                     for (var i = 0; i < _turtleConfiguration.PathsCount; i++)
-                    {
                         paths.Add(GeneratePath());
-                    }
-                    _pathText.text = string.Join("", paths[0]);
+
+                    var entity = _filter.GetEntity(index);
+                    ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
+                    updateTextEvent.Text = string.Join("", paths[0]);
 
                     turtlePath.CurrentPath = 0;
                     turtlePath.CurrentSymbol = 0;

@@ -1,13 +1,12 @@
 using Leopotam.Ecs;
-using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
     public sealed class SetGameplayTimerStartTimeSystem : IEcsRunSystem 
     {
         private DifficultyConfiguration _difficultyConfiguration;
-        private EcsFilter<Timer, GameplayTimerComponent> _filter;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
+        private EcsFilter<Timer, GameplayTimerComponent> _filter = null;
+        private EcsFilter<RestartGameEvent> _restartEventFilter = null;
 
         public void Run()
         {
@@ -35,14 +34,8 @@ namespace Pixelgrid
                     timer.currentTime = startTime;
 
                     var entity = _filter.GetEntity(index);
-                    if(entity.Has<TimerRef>())
-                    {
-                        ref var timerRef = ref entity.Get<TimerRef>();
-                        var timerGameObject = timerRef.timer;
-                        var timerText = timerGameObject.GetComponent<Text>();
-                        var timerFormat = timerGameObject.GetComponent<TimerFormat>();
-                        timerText.text = timerFormat.GetFormattedTime(timer.currentTime);
-                    }
+                    ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
+                    timeChangeEvent.CurrentTime = timer.currentTime;
                 }
             }
         }
