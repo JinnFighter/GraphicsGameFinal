@@ -5,8 +5,8 @@ namespace Pixelgrid
 {
     public sealed class GenerateTimersSystem : IEcsInitSystem 
     {
-        private readonly EcsWorld _world;
-        private readonly TimersContainer _timersContainer;
+        private readonly EcsWorld _world = null;
+        private readonly TimersContainer _timersContainer = null;
         
         public void Init() 
         {
