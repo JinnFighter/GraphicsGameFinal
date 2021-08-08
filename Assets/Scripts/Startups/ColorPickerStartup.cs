@@ -87,6 +87,7 @@ namespace Pixelgrid
                  .OneFrame<StartGameEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
+                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<PauseEvent>()

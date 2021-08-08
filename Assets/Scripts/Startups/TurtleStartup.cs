@@ -101,6 +101,7 @@ namespace Pixelgrid
                  // register one-frame components (order is important), for example:
                  .OneFrame<TurtleCommand>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
