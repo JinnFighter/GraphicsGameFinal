@@ -4,9 +4,9 @@ namespace Pixelgrid
 {
     public sealed class CheckTurtleAnswerSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameplayEventReceiver, TurtleCommand> _filter;
-        private EcsFilter<TurtlePath> _turtlePathFilter;
-        private EcsFilter<TurtleComponent, PixelPosition> _turtleFilter;
+        private EcsFilter<GameplayEventReceiver, TurtleCommand> _filter = null;
+        private EcsFilter<TurtlePath> _turtlePathFilter = null;
+        private EcsFilter<TurtleComponent, PixelPosition> _turtleFilter = null;
 
         void IEcsRunSystem.Run()
         { 
