@@ -107,6 +107,7 @@ namespace Pixelgrid
                  .OneFrame<UpdateDIndexEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)
