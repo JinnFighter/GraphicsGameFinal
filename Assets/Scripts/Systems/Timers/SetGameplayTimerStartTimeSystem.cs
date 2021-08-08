@@ -34,12 +34,8 @@ namespace Pixelgrid
                     timer.currentTime = startTime;
 
                     var entity = _filter.GetEntity(index);
-                    if(entity.Has<TimerRef>() && entity.Has<TextRef>())
-                    {
-                        ref var timerRef = ref entity.Get<TimerRef>();
-                        ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
-                        updateTextEvent.Text = timerRef.TimerFormat.GetFormattedTime(timer.currentTime);
-                    }
+                    ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
+                    timeChangeEvent.CurrentTime = timer.currentTime;
                 }
             }
         }
