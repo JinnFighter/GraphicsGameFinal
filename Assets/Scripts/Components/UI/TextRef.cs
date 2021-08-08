@@ -1,9 +1,9 @@
-using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
     public struct TextRef 
     {
-        public GameObject Text;
+        public Text Text;
     }
 }
