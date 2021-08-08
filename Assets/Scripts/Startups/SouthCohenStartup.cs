@@ -66,7 +66,6 @@ namespace Pixelgrid
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
-                 .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateSouthCohenLinesSystem())
                  .Add(new GenerateLineZonesSystem())
@@ -91,6 +90,7 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
