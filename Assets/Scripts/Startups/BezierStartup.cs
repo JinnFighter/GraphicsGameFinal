@@ -85,6 +85,7 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
