@@ -5,9 +5,11 @@ namespace Pixelgrid
 {
     public sealed class GenerateDDataSystem : IEcsRunSystem
     {
-        private EcsFilter<GameModeData> _filter;
-        private BrezenheimDataContainer _brezenheimDataContainer;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<GameModeData> _filter = null;
+
+        private BrezenheimDataContainer _brezenheimDataContainer = null;
+        
 
         public void Run()
         {
@@ -18,7 +20,8 @@ namespace Pixelgrid
                     var entity = _filter.GetEntity(index);
                     ref var dData = ref entity.Get<TextRef>();
                     dData.Text = _brezenheimDataContainer.DText.gameObject.GetComponent<Text>();
-                    dData.Text.text = "?";
+                    ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
+                    updateTextEvent.Text = "?";
                 }
             }
         }
