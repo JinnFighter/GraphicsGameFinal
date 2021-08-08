@@ -5,9 +5,9 @@ namespace Pixelgrid
 {
     public sealed class UpdateTimersSystem : IEcsRunSystem 
     {
-        private EcsFilter<Timer, Counting, TimerRef, TextRef> _filter = null;
+        private EcsFilter<Timer, Counting> _filter = null;
 
-        void IEcsRunSystem.Run () 
+        void IEcsRunSystem.Run() 
         {
             foreach (var index in _filter)
             {
@@ -21,15 +21,14 @@ namespace Pixelgrid
 
                 timerData.currentTime = currentTime;
 
+                ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
+                timeChangeEvent.CurrentTime = timerData.currentTime;
+
                 if (timerData.currentTime <= 0.0000f)
                 {
                     entity.Del<Counting>();
                     entity.Get<TimerEndEvent>();
                 }
-
-                var timerFormat = _filter.Get3(index);
-                ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
-                updateTextEvent.Text = timerFormat.TimerFormat.GetFormattedTime(currentTime); 
             }
         }
     }
