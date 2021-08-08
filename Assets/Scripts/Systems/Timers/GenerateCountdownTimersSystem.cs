@@ -13,7 +13,7 @@ namespace Pixelgrid {
             timerEntity.Get<Timer>();
             timerEntity.Get<CountdownTimer>();
             ref var timerRef = ref timerEntity.Get<TimerRef>();
-            timerRef.timer = _timersContainer.CountdownTimer;
+            timerRef.TimerFormat = _timersContainer.CountdownTimer.GetComponent<TimerFormat>();
             ref var textRef = ref timerEntity.Get<TextRef>();
             textRef.Text = _timersContainer.CountdownTimer.GetComponent<Text>();
         }

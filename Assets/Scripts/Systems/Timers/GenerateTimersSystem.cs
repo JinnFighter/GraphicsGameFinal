@@ -14,7 +14,7 @@ namespace Pixelgrid
             timerEntity.Get<Timer>();
             timerEntity.Get<GameplayTimerComponent>();
             ref var timerRef = ref timerEntity.Get<TimerRef>();
-            timerRef.timer = _timersContainer.gameplayTimer;
+            timerRef.TimerFormat = _timersContainer.gameplayTimer.GetComponent<TimerFormat>();
             ref var textRef = ref timerEntity.Get<TextRef>();
             textRef.Text = _timersContainer.gameplayTimer.GetComponent<Text>();
         }
