@@ -67,6 +67,7 @@ namespace Pixelgrid
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
+                 .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateTurtlePathSystem())
                  .Add(new ResetTurtleProgressBarSystem())
