@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine.UI;
 
 namespace Pixelgrid 
 {
@@ -14,6 +15,8 @@ namespace Pixelgrid
             timerEntity.Get<GameplayTimerComponent>();
             ref var timerRef = ref timerEntity.Get<TimerRef>();
             timerRef.timer = _timersContainer.gameplayTimer;
+            ref var textRef = ref timerEntity.Get<TextRef>();
+            textRef.Text = _timersContainer.gameplayTimer.GetComponent<Text>();
         }
     }
 }
