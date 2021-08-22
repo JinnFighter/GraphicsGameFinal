@@ -1,4 +1,4 @@
-name: GameCI Template 🎮
+name: CI Pipeline
 
 on: push
 
@@ -7,13 +7,12 @@ env:
 
 jobs:
   testRunner:
-    name: Test in ${{ matrix.testMode }} ✨
+    name: Testing in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         testMode:
-          #- EditMode
           - PlayMode
     steps:
       - name: Checkout code
@@ -56,7 +55,7 @@ jobs:
 
   buildWebGL:
     needs: testRunner
-    name: Build for WebGL 🖥️
+    name: Build for WebGL
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -98,7 +97,7 @@ jobs:
 
   buildWindows:
     needs: testRunner
-    name: Build for Windows 🖥️
+    name: Build for Windows
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -140,7 +139,7 @@ jobs:
 
 #  buildAndroid:
 #    needs: testRunner
-#    name: Build for Android 📱
+#    name: Build for Android
 #    runs-on: ubuntu-latest
 #    strategy:
 #      fail-fast: false
@@ -183,7 +182,7 @@ jobs:
 
 #  deployPages:
 #    needs: buildWebGL
-#    name: Deploy to Github Pages 🚀
+#    name: Deploy to Github Pages
 #    runs-on: ubuntu-latest
 #    steps:
 #      - name: Checkout code
@@ -194,7 +193,7 @@ jobs:
 #          name: build-WebGL
 #          path: build
 
-#      - name: Deploy 🚀
+#      - name: Deploy
 #        uses: JamesIves/github-pages-deploy-action@4.1.4
 #        with:
 #          branch: gh-pages
