@@ -1,20 +1,20 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
+using UnityEngine.EventSystems;
 
 namespace Pixelgrid 
 {
     public sealed class CheckClickSystem : IEcsRunSystem 
     {
-        private EcsFilter<EcsUiClickEvent> _filter = null;
-
+        private readonly EcsFilter<EcsUiClickEvent> _filter = null;
+        
         void IEcsRunSystem.Run() 
         {
             foreach (var index in _filter)
             {
-                ref EcsUiClickEvent data = ref _filter.Get1(index);
+                ref var data = ref _filter.Get1(index);
                 var sender = data.Sender;
-                var pixel = sender.GetComponent<GridPixel>();
-                if (pixel)
+                if (data.Button == PointerEventData.InputButton.Left && sender.TryGetComponent<GridPixel>(out var pixel))
                     pixel.entity.Get<PixelClickedEvent>();
             }
         }

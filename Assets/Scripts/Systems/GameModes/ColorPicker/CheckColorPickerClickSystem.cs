@@ -1,22 +1,23 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
+using UnityEngine.EventSystems;
 
 namespace Pixelgrid 
 {
     public sealed class CheckColorPickerClickSystem : IEcsRunSystem 
     {
-        private EcsFilter<EcsUiClickEvent> _filter = null;
-        private EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
+        private readonly EcsFilter<EcsUiClickEvent> _filter = null;
+        private readonly EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
 
-        private ImageHolderContainer _imageHolderContainer;
+        private readonly ImageHolderContainer _imageHolderContainer;
 
         void IEcsRunSystem.Run()
         {
             foreach (var index in _filter)
             {
-                ref EcsUiClickEvent data = ref _filter.Get1(index);
+                ref var data = ref _filter.Get1(index);
                 var sender = data.Sender;
-                if (sender.CompareTag("ColorCheckButton"))
+                if (data.Button == PointerEventData.InputButton.Left && sender.CompareTag("ColorCheckButton"))
                 {
                     var color = _imageHolderContainer.AnswerHolder.color;
                     foreach (var eventIndex in _eventReceiverFilter)
