@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
+using UnityEngine.EventSystems;
 
 namespace Pixelgrid 
 {
@@ -8,14 +9,14 @@ namespace Pixelgrid
         private readonly EcsFilter<EcsUiClickEvent> _filter = null;
         private readonly EcsFilter<Paused> _pausedFilter = null;
 
-        private UiScreenContainer _screenContainer;
+        private readonly UiScreenContainer _screenContainer;
 
         public void Run()
         {
             foreach (var index in _filter)
             {
                 var data = _filter.Get1(index);
-                if (data.Sender.CompareTag("PauseButton"))
+                if (data.Button == PointerEventData.InputButton.Left && data.Sender.CompareTag("PauseButton"))
                 {
                     var entity = _filter.GetEntity(index);
 
