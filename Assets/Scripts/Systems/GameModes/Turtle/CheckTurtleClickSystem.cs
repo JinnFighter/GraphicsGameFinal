@@ -1,21 +1,23 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
+using UnityEngine.EventSystems;
 
 namespace Pixelgrid 
 {
     public sealed class CheckTurtleClickSystem : IEcsRunSystem 
     {
-        private EcsFilter<EcsUiClickEvent> _filter = null;
-        private EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
+        private readonly EcsFilter<EcsUiClickEvent> _filter = null;
+        private readonly EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
 
         void IEcsRunSystem.Run()
         {
             foreach (var index in _filter)
             {
-                ref EcsUiClickEvent data = ref _filter.Get1(index);
+                ref var data = ref _filter.Get1(index);
                 var sender = data.Sender;
-                var turtleControl = sender.GetComponent<TurtleControl>();
-                if (turtleControl)
+                
+                if (data.Button == PointerEventData.InputButton.Left &&
+                    sender.TryGetComponent<TurtleControl>(out var turtleControl))
                 {
                     foreach (var eventReceiverIndex in _eventReceiverFilter)
                     {
