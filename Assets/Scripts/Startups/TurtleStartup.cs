@@ -51,9 +51,7 @@ namespace Pixelgrid
             });
             
             _systems
-                 // register your systems here, for example:
-                 .Add(new CheckPauseClickSystem())
-                 .Add(new CheckRestartClickSystem())
+                 // register your systems here:
 
                  //InitSystems go here:
                  .Add(new LoadPlayerSystem())
@@ -70,6 +68,8 @@ namespace Pixelgrid
                  .Add(new CreateTurtlePathSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
+                 .Add(new CheckPauseClickSystem())
+                 .Add(new CheckRestartClickSystem())
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateTurtlePathSystem())
