@@ -98,7 +98,7 @@ namespace Pixelgrid
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
-                 .Add(new PauseSystem(_systems, pausableSystems))
+                 .Add(new PauseSystem())
                  .Add(new UnpauseSystem(_systems, pausableSystems))
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
