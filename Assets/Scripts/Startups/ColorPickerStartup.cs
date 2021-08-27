@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Pixelgrid.Systems.Execution;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,12 +35,15 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
-            var pausableSystems = new List<string> 
+
+            var systemNamesContainer = new SystemNamesContainer();
+            var systemNames = systemNamesContainer.Systems;
+            systemNames.Add("Pausable", new List<string> 
             {
                 "UpdateStopwatches",
                 "OnSliderValueChange",
                 "CheckColorPickerClick"
-            };
+            });
 
             _systems
                  // register your systems here, for example:
@@ -73,8 +77,10 @@ namespace Pixelgrid
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
-                 .Add(new PauseSystem(_systems, pausableSystems))
-                 .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new PauseSystem())
+                 .Add(new UnpauseSystem())
+                 .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
+                 .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -92,6 +98,8 @@ namespace Pixelgrid
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<DisableSystemTypeEvent>()
+                 .OneFrame<EnableSystemTypeEvent>()
                  .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:
