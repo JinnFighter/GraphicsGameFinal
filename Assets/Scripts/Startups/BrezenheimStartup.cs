@@ -36,6 +36,16 @@ namespace Pixelgrid {
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create (_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_systems);
 #endif
+
+            var systemNamesContainer = new SystemNamesContainer();
+            var systemNames = systemNamesContainer.Systems;
+            systemNames.Add("Pausable", new List<string> 
+            {
+                "UpdateTimers",
+                "UpdateStopwatches",
+                "CheckClick"
+            });
+            
             var pausableSystems = new List<string> 
             {
                 "UpdateTimers",
