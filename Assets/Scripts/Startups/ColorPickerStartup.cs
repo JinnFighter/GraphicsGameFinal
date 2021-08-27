@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Pixelgrid.Systems.Execution;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,15 @@ namespace Pixelgrid
                 "OnSliderValueChange",
                 "CheckColorPickerClick"
             };
+            
+            var systemNamesContainer = new SystemNamesContainer();
+            var systemNames = systemNamesContainer.Systems;
+            systemNames.Add("Pausable", new List<string> 
+            {
+                "UpdateStopwatches",
+                "OnSliderValueChange",
+                "CheckColorPickerClick"
+            });
 
             _systems
                  // register your systems here, for example:
@@ -75,6 +85,8 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
+                 .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -92,6 +104,8 @@ namespace Pixelgrid
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<DisableSystemTypeEvent>()
+                 .OneFrame<EnableSystemTypeEvent>()
                  .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:

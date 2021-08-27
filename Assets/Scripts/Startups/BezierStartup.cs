@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Pixelgrid.Systems.Execution;
 using UnityEngine;
 
 namespace Pixelgrid
@@ -42,6 +43,15 @@ namespace Pixelgrid
                 "UpdateStopwatches",
                 "CheckClick"
             };
+            
+            var systemNamesContainer = new SystemNamesContainer();
+            var systemNames = systemNamesContainer.Systems;
+            systemNames.Add("Pausable", new List<string> 
+            {
+                "UpdateTimers",
+                "UpdateStopwatches",
+                "CheckClick"
+            });
 
             _systems
                  // register your systems here, for example:
@@ -85,6 +95,8 @@ namespace Pixelgrid
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem(_systems, pausableSystems))
                  .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
+                 .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateUiTextSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
@@ -106,6 +118,8 @@ namespace Pixelgrid
                  .OneFrame<ClearGridEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
+                 .OneFrame<DisableSystemTypeEvent>()
+                 .OneFrame<EnableSystemTypeEvent>()
                  .OneFrame<UpdateTextEvent>()
 
                 // inject service instances here (order doesn't important), for example:
