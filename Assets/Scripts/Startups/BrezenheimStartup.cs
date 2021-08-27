@@ -46,13 +46,6 @@ namespace Pixelgrid {
                 "UpdateStopwatches",
                 "CheckClick"
             });
-            
-            var pausableSystems = new List<string> 
-            {
-                "UpdateTimers",
-                "UpdateStopwatches",
-                "CheckClick"
-            };
 
             _systems
                  // register your systems here, for example:
@@ -98,7 +91,7 @@ namespace Pixelgrid {
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem())
-                 .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UnpauseSystem())
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateTimerTextSystem())

@@ -40,13 +40,6 @@ namespace Pixelgrid
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
             Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
-
-            var pausableSystems = new List<string> 
-            {
-                "UpdateTimers",
-                "UpdateStopwatches",
-                "CheckTurtleClick"
-            };
             
             var systemNamesContainer = new SystemNamesContainer();
             var systemNames = systemNamesContainer.Systems;
@@ -101,7 +94,7 @@ namespace Pixelgrid
                  .Add(new DisableGameplayTimerOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem())
-                 .Add(new UnpauseSystem(_systems, pausableSystems))
+                 .Add(new UnpauseSystem())
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateTimerTextSystem())
