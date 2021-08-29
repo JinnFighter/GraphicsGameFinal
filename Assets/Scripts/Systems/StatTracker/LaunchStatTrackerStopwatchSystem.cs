@@ -4,8 +4,8 @@ namespace Pixelgrid
 {
     public sealed class LaunchStatTrackerStopwatchSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameplayEventReceiver, StartGameEvent> _startFilter;
-        private EcsFilter<Stopwatch, StatTrackerStopwatch> _statTrackerFilter;
+        private readonly EcsFilter<StartGameEvent> _startFilter = null;
+        private readonly EcsFilter<Stopwatch, StatTrackerStopwatch> _statTrackerFilter = null;
 
         void IEcsRunSystem.Run() 
         {
