@@ -7,10 +7,11 @@ namespace Pixelgrid
 {
     public sealed class GenerateLineDataSystem : IEcsRunSystem
     {
-        private EcsFilter<GameModeData> _gameModeDataFilter;
-        private LinesGenerator _lineDataGenerator;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private DifficultyConfiguration _difficultyConfiguration;
+        private readonly EcsFilter<GameModeData> _gameModeDataFilter = null;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        
+        private readonly LinesGenerator _lineDataGenerator = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
 
         public void Run()
         {
@@ -57,6 +58,9 @@ namespace Pixelgrid
                     lineData.LinePoints = lineDatas;
                     lineData.CurrentPoint = 0;
                     lineData.CurrentLine = 0;
+
+                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                    dataGeneratedEvent.DataCount = lineData.LinePoints.Sum(linePoint => linePoint.Count);
                 }
             }
         }

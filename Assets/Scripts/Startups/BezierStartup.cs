@@ -66,7 +66,7 @@ namespace Pixelgrid
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateBezierDataSystem())
-                 .Add(new ResetBezierProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
@@ -100,6 +100,7 @@ namespace Pixelgrid
                  // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<GameModeDataGeneratedEvent>()
                  .OneFrame<TimeChangeEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()

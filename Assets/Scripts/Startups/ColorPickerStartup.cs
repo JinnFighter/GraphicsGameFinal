@@ -62,7 +62,7 @@ namespace Pixelgrid
                  .Add(new CheckRestartClickSystem())
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new ResetColorsDataSystem())
-                 .Add(new ResetColorPickerProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
@@ -89,6 +89,7 @@ namespace Pixelgrid
                  // register one-frame components (order is important), for example:
                  .OneFrame<ColorChosenEvent>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<GameModeDataGeneratedEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<TimeChangeEvent>()

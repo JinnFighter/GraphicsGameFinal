@@ -8,11 +8,11 @@ namespace Pixelgrid
 {
     public sealed class ResetColorsDataSystem : IEcsRunSystem 
     {
-        private EcsFilter<RestartGameEvent> _filter;
-        private EcsFilter<ColorContainer, ColorPickerData> _dataFilter;
+        private readonly EcsFilter<RestartGameEvent> _filter = null;
+        private readonly EcsFilter<ColorContainer, ColorPickerData> _dataFilter = null;
 
-        private ImageHolderContainer _imageHolderContainer;
-        private Slider _slider;
+        private readonly ImageHolderContainer _imageHolderContainer = null;
+        private readonly Slider _slider = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -36,6 +36,10 @@ namespace Pixelgrid
                     var answerColor = new Color32(defaultColor.r, defaultColor.g, Convert.ToByte(_slider.value), 255);
                     _imageHolderContainer.AnswerHolder.color = defaultColor;
                     _imageHolderContainer.AnswerHolder.color = answerColor;
+
+                    var entity = _filter.GetEntity(index);
+                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                    dataGeneratedEvent.DataCount = data.ColorCount;
                 }
             }
         }
