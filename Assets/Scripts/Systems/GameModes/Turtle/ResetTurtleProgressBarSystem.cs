@@ -5,9 +5,9 @@ namespace Pixelgrid
 {
     public sealed class ResetTurtleProgressBarSystem : IEcsRunSystem 
     {
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<ProgressBarComponent> _progressBarFilter;
-        private EcsFilter<TurtlePath> _turtlePathFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<ProgressBarComponent> _progressBarFilter = null;
+        private readonly EcsFilter<TurtlePath> _turtlePathFilter = null;
 
         void IEcsRunSystem.Run()
         {
