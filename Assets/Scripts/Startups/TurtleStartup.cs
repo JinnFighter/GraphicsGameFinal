@@ -61,7 +61,6 @@ namespace Pixelgrid
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
                  .Add(new CreateGameModeDataContainerSystem())
-                 .Add(new CreateProgressBarSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new CreateTurtleSystem())
                  .Add(new CreateTurtlePathSystem())
