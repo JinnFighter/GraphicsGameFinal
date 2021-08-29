@@ -21,6 +21,9 @@ namespace Pixelgrid
 
                     lineData.Points = lines;
                     lineData.CurrentPoint = 0;
+
+                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                    dataGeneratedEvent.DataCount = lineData.Points.Count;
                 }
             }
         }
