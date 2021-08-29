@@ -4,19 +4,18 @@ namespace Pixelgrid
 {
     public sealed class CheckTurtleAnswerSystem : IEcsRunSystem 
     {
-        private readonly EcsFilter<TurtleCommand> _filter = null;
-        private readonly EcsFilter<TurtlePath> _turtlePathFilter = null;
+        private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition, TurtleCommand> _filter = null;
 
         void IEcsRunSystem.Run()
         { 
             foreach(var index in _filter)
             {
-                ref var turtlePath = ref _turtlePathFilter.Get1(0);
-                var turtlePathEntity = _turtlePathFilter.GetEntity(0);
+                var turtlePathEntity = _filter.GetEntity(index);
+                ref var turtlePath = ref _filter.Get2(index);
                 var path = turtlePath.Path;
                 var gameplayEventReceiver = _filter.GetEntity(index);
 
-                var turtleCommand = _filter.Get1(index);
+                var turtleCommand = _filter.Get4(index);
                 var symbol = turtleCommand.CommandSymbol;
                 if(symbol == path[turtlePath.CurrentPath][turtlePath.CurrentSymbol])
                 {
