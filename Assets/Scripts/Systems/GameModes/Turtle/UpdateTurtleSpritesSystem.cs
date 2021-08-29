@@ -7,12 +7,12 @@ namespace Pixelgrid
 {
     public sealed class UpdateTurtleSpritesSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameplayEventReceiver, TurtleCommand> _filter;
-        private EcsFilter<TurtleComponent, PixelPosition> _turtleFilter;
+        private readonly EcsFilter<TurtleCommand> _filter = null;
+        private readonly EcsFilter<TurtleComponent, PixelPosition> _turtleFilter = null;
 
-        private TurtleSpritesContainer _turtleSpritesContainer;
-        private GameFieldConfiguration GameFieldConfiguration;
-        private SpritesContainer _spritesContainer;
+        private readonly TurtleSpritesContainer _turtleSpritesContainer = null;
+        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
+        private readonly SpritesContainer _spritesContainer = null;
 
         void IEcsRunSystem.Run()
         {
@@ -31,7 +31,7 @@ namespace Pixelgrid
                     {
                         case 'F':
                             var nextPosition = turtle.DirectionState.Move(turtlePosition.position);
-                            if(GameFieldConfiguration.IsWithinField(nextPosition))
+                            if(_gameFieldConfiguration.IsWithinField(nextPosition))
                             {
                                 drawData.Add((turtlePosition.position, _spritesContainer.EmptySprite));
                                 drawData.Add((nextPosition, turtle.CurrentSprite));
@@ -47,8 +47,6 @@ namespace Pixelgrid
                             turtle.DirectionState = turtle.DirectionState.RotateRight(out direction);
                             turtle.CurrentSprite = _turtleSpritesContainer.GetSprite(direction);
                             drawData.Add((turtlePosition.position, turtle.CurrentSprite));
-                            break;
-                        default:
                             break;
                     }
 
