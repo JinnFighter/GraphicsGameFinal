@@ -4,9 +4,9 @@ namespace Pixelgrid
 {
     public sealed class UpdateStatDataSystem : IEcsRunSystem 
     {
-        private EcsFilter<StatData, Stopwatch, StatTrackerStopwatch> _statDataFilter;
-        private EcsFilter<GameplayEventReceiver, CorrectAnswerEvent> _correctAnswerFilter;
-        private EcsFilter<GameplayEventReceiver, WrongAnswerEvent> _wrongAnswerFilter;
+        private readonly EcsFilter<StatData, Stopwatch, StatTrackerStopwatch> _statDataFilter = null;
+        private readonly EcsFilter<CorrectAnswerEvent> _correctAnswerFilter = null;
+        private readonly EcsFilter<WrongAnswerEvent> _wrongAnswerFilter = null;
 
         void IEcsRunSystem.Run() 
         {
