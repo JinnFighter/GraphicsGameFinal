@@ -4,21 +4,20 @@ namespace Pixelgrid
 {
     public sealed class ResetColorPickerProgressBarSystem : IEcsRunSystem 
     {
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<ProgressBarComponent> _progressBarFilter;
-        private EcsFilter<ColorPickerData> _colorPickerFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<ColorPickerData> _colorPickerFilter = null;
+
+        private readonly ProgressBar _progressBar = null;
 
         void IEcsRunSystem.Run()
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                ref var colorPickerData = ref _colorPickerFilter.Get1(0);
-                foreach (var index in _progressBarFilter)
+                foreach (var index in _colorPickerFilter)
                 {
-                    ref var progressBarComponent = ref _progressBarFilter.Get1(index);
-                    var progressBar = progressBarComponent.ProgressBar;
-                    progressBar.MaxValue = colorPickerData.ColorCount;
-                    progressBar.CurrentValue = 0;
+                    var colorPickerData = _colorPickerFilter.Get1(index);
+                    _progressBar.MaxValue = colorPickerData.ColorCount;
+                    _progressBar.CurrentValue = 0;
                 }
             }
         }
