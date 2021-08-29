@@ -4,15 +4,12 @@ namespace Pixelgrid
 {
     public sealed class LaunchGameplayLoopSystem : IEcsInitSystem
     {
-        private EcsFilter<GameplayEventReceiver> _filter;
+        private readonly EcsWorld _world = null;
 
         public void Init()
         {
-            foreach(var index in _filter)
-            {
-                var entity = _filter.GetEntity(index);
-                entity.Get<RestartGameEvent>();
-            }
+            var entity = _world.NewEntity();
+            entity.Get<RestartGameEvent>();
         }
     }
 }

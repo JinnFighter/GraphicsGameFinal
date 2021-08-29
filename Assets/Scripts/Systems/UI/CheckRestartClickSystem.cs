@@ -7,7 +7,6 @@ namespace Pixelgrid
     public class CheckRestartClickSystem : IEcsRunSystem
     {
         private readonly EcsFilter<EcsUiClickEvent> _filter = null;
-        private readonly EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
 
         public void Run()
         {
@@ -16,11 +15,8 @@ namespace Pixelgrid
                 ref var data = ref _filter.Get1(index);
                 if (data.Button == PointerEventData.InputButton.Left && data.Sender.CompareTag("RestartButton"))
                 {
-                    foreach(var eventFilterIndex in _eventReceiverFilter)
-                    {
-                        var entity = _eventReceiverFilter.GetEntity(eventFilterIndex);
-                        entity.Get<RestartGameEvent>();
-                    }
+                    var entity = _filter.GetEntity(index);
+                    entity.Get<RestartGameEvent>();
                 }
             }
         }

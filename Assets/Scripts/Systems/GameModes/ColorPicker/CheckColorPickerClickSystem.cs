@@ -7,9 +7,8 @@ namespace Pixelgrid
     public sealed class CheckColorPickerClickSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<EcsUiClickEvent> _filter = null;
-        private readonly EcsFilter<GameplayEventReceiver> _eventReceiverFilter = null;
 
-        private readonly ImageHolderContainer _imageHolderContainer;
+        private readonly ImageHolderContainer _imageHolderContainer = null;
 
         void IEcsRunSystem.Run()
         {
@@ -20,12 +19,9 @@ namespace Pixelgrid
                 if (data.Button == PointerEventData.InputButton.Left && sender.CompareTag("ColorCheckButton"))
                 {
                     var color = _imageHolderContainer.AnswerHolder.color;
-                    foreach (var eventIndex in _eventReceiverFilter)
-                    {
-                        var entity = _eventReceiverFilter.GetEntity(eventIndex);
-                        ref var chosenColor = ref entity.Get<ColorChosenEvent>();
-                        chosenColor.Color = color;
-                    }
+                    var entity = _filter.GetEntity(index);
+                    ref var chosenColor = ref entity.Get<ColorChosenEvent>();
+                    chosenColor.Color = color;
                 }
             }
         }

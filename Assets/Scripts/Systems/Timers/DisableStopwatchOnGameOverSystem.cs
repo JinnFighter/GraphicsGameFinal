@@ -4,12 +4,12 @@ namespace Pixelgrid
 {
     public sealed class DisableStopwatchOnGameOverSystem : IEcsRunSystem 
     {
-        private EcsFilter<Stopwatch, Counting> _stopwatchFilter;
-        private EcsFilter<GameplayEventReceiver, GameOverEvent> _eventReceiversFilter;
+        private readonly EcsFilter<Stopwatch, Counting> _stopwatchFilter = null;
+        private readonly EcsFilter<GameOverEvent> _gameOverEventFilter = null;
 
         void IEcsRunSystem.Run() 
         {
-            if(!_eventReceiversFilter.IsEmpty())
+            if(!_gameOverEventFilter.IsEmpty())
             {
                 foreach(var index in _stopwatchFilter)
                 {
