@@ -7,9 +7,8 @@ namespace Pixelgrid
 {
     public sealed class GenerateLineZonesSystem : IEcsRunSystem 
     {
-        private EcsFilter<LineData, SouthCohenData> _gameModeDataFilter;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<BorderComponent> _borderFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<LineData, SouthCohenData, BorderComponent> _gameModeDataFilter = null;
 
         private CodeReceiver _codeReceiver;
 
@@ -17,11 +16,11 @@ namespace Pixelgrid
         {
             if(!_restartEventFilter.IsEmpty())
             {
-                var border = _borderFilter.Get1(0);
-                var left = border.LeftCorner;
-                var right = border.RightCorner;
                 foreach(var index in _gameModeDataFilter)
                 {
+                    var border = _gameModeDataFilter.Get3(index);
+                    var left = border.LeftCorner;
+                    var right = border.RightCorner;
                     var lineData = _gameModeDataFilter.Get1(index);
                     ref var zonesData = ref _gameModeDataFilter.Get2(index);
                     var zones = new List<List<int>>();
@@ -47,47 +46,39 @@ namespace Pixelgrid
                             {
                                 Swap(ref ax, ref bx);
                                 Swap(ref ay, ref by);
-                                int c = code1;
-                                code1 = code2;
-                                code2 = c;
+                                Swap(ref code1,  ref code2);
                             }
 
                             if (Convert.ToBoolean(code1 & 0x01))
                             {
                                 ay += (left.x - ax) * (by - ay) / (bx - ax);
                                 ax = left.x;
-                                if (!zones[i].Contains(code1))
-                                    zones[i].Add(code1);
                             }
 
                             if (Convert.ToBoolean(code1 & 0x02))
                             {
                                 ax += (left.y - ay) * (bx - ax) / (by - ay);
                                 ay = left.y;
-                                if (!zones[i].Contains(code1))
-                                    zones[i].Add(code1);
                             }
 
                             if (Convert.ToBoolean(code1 & 0x04))
                             {
                                 ay += (right.x - ax) * (by - ay) / (bx - ax);
                                 ax = right.x;
-                                if (!zones[i].Contains(code1))
-                                    zones[i].Add(code1);
                             }
 
                             if (Convert.ToBoolean(code1 & 0x08))
                             {
                                 ax += (right.y - ay) * (bx - ax) / (by - ay);
                                 ay = right.y;
-                                if (!zones[i].Contains(code1))
-                                    zones[i].Add(code1);
                             }
 
                             code1 = _codeReceiver.GetCode(new UnityEngine.Vector2Int(ax, ay), left, right);
                             inside = (code1 | code2) == 0;
                             outside = (code1 & code2) != 0;
                         }
+                        if(!outside && ! zones[i].Contains(code1))
+                            zones[i].Add(code1);
                     }
 
                     zonesData.Zones = zones;
@@ -98,11 +89,6 @@ namespace Pixelgrid
             }
         }
 
-        private void Swap<T>(ref T a, ref T b)
-        {
-            T c = a;
-            a = b;
-            b = c;
-        }
+        private void Swap<T>(ref T a, ref T b) => (a, b) = (b, a);
     }
 }
