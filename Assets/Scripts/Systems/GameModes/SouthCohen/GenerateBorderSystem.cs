@@ -6,11 +6,11 @@ namespace Pixelgrid
 {
     public sealed class GenerateBorderSystem : IEcsInitSystem 
     {
-        private EcsFilter<GameModeData> _filter;
-        private EcsFilter<PixelComponent, PixelPosition, PixelRef> _pixelFilter;
+        private readonly EcsFilter<SouthCohenData> _filter = null;
+        private readonly EcsFilter<PixelComponent, PixelPosition, PixelRef> _pixelFilter = null;
 
-        private DifficultyConfiguration _difficultyConfiguration;
-        private GameObject _border;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly GameObject _border = null;
 
         public void Init() 
         {
