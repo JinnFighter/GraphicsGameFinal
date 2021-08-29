@@ -6,15 +6,15 @@ namespace Pixelgrid
 {
     public sealed class GenerateTurtlePathSystem : IEcsRunSystem 
     {
-        private EcsFilter<TurtlePath> _filter = null;
-        private EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<TurtlePath> _filter = null;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
 
-        private TurtleConfiguration _turtleConfiguration = null;
-        private GameFieldConfiguration _gameFieldConfiguration = null;
+        private readonly TurtleConfiguration _turtleConfiguration = null;
+        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
 
         private IDirectionState _direction;
 
-        private List<char> _commands = new List<char>{ 'F', '+', '-' };
+        private readonly List<char> _commands = new List<char>{ 'F', '+', '-' };
 
         void IEcsRunSystem.Run() 
         {
