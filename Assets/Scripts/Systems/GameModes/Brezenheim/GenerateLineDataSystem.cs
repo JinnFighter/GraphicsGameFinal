@@ -7,7 +7,7 @@ namespace Pixelgrid
 {
     public sealed class GenerateLineDataSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<GameModeData> _gameModeDataFilter = null;
+        private readonly EcsFilter<LineData> _gameModeDataFilter = null;
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
         
         private readonly LinesGenerator _lineDataGenerator = null;
