@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Pixelgrid 
@@ -37,6 +38,9 @@ namespace Pixelgrid
 
                     turtlePath.CurrentPath = 0;
                     turtlePath.CurrentSymbol = 0;
+
+                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                    dataGeneratedEvent.DataCount = turtlePath.Path.Sum(path => path.Count);
                 }
             }
         }
