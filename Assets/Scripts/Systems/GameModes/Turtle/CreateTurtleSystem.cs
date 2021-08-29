@@ -5,16 +5,18 @@ namespace Pixelgrid
 {
     public sealed class CreateTurtleSystem : IEcsInitSystem 
     {
-        // auto-injected fields.
-        readonly EcsWorld _world = null;
-        
+        private readonly EcsFilter<GameModeData> _filter = null;
+
         public void Init() 
         {
-            var entity = _world.NewEntity();
-            ref var turtleComponent = ref entity.Get<TurtleComponent>();
-            turtleComponent.DirectionState = new RightDirectionState();
-            ref var positionComponent = ref entity.Get<PixelPosition>();
-            positionComponent.position = new Vector2Int(0, 0);
+            foreach (var index in _filter)
+            {
+                var entity = _filter.GetEntity(index);
+                ref var turtleComponent = ref entity.Get<TurtleComponent>();
+                turtleComponent.DirectionState = new RightDirectionState();
+                ref var positionComponent = ref entity.Get<PixelPosition>();
+                positionComponent.position = new Vector2Int(0, 0);
+            }
         }
     }
 }
