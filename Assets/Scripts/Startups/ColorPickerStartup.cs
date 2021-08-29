@@ -62,7 +62,7 @@ namespace Pixelgrid
                  .Add(new CheckRestartClickSystem())
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new ResetColorsDataSystem())
-                 .Add(new ResetColorPickerProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
