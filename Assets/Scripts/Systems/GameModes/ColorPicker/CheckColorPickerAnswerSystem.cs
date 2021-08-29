@@ -7,11 +7,11 @@ namespace Pixelgrid
 {
     public sealed class CheckColorPickerAnswerSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameplayEventReceiver, ColorChosenEvent> _eventFilter;
-        private EcsFilter<ColorContainer, ColorPickerData> _dataFilter;
+        private readonly EcsFilter<ColorChosenEvent> _eventFilter = null;
+        private readonly EcsFilter<ColorPickerData> _dataFilter = null;
 
-        private ImageHolderContainer _imageHolderContainer;
-        private Slider _slider;
+        private readonly ImageHolderContainer _imageHolderContainer = null;
+        private readonly Slider _slider = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -25,8 +25,7 @@ namespace Pixelgrid
                     entity.Get<CorrectAnswerEvent>();
                     foreach(var dataIndex in _dataFilter)
                     {
-                        ref var colorContainer = ref _dataFilter.Get1(dataIndex);
-                        ref var data = ref _dataFilter.Get2(dataIndex);
+                        ref var data = ref _dataFilter.Get1(dataIndex);
 
                         data.CurrentColor++;
                         if(data.CurrentColor >= data.ColorCount)
