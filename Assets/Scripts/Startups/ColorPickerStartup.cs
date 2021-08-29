@@ -89,6 +89,7 @@ namespace Pixelgrid
                  // register one-frame components (order is important), for example:
                  .OneFrame<ColorChosenEvent>()
                  .OneFrame<StartGameEvent>()
+                 .OneFrame<GameModeDataGeneratedEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
                  .OneFrame<TimeChangeEvent>()
