@@ -7,12 +7,12 @@ namespace Pixelgrid
 {
     public sealed class GenerateSouthCohenLinesSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameModeData> _gameModeDataFilter;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<BorderComponent> _borderFilter;
+        private readonly EcsFilter<SouthCohenData> _gameModeDataFilter = null;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<BorderComponent> _borderFilter = null;
 
-        private SouthCohenLinesGenerator _lineDataGenerator;
-        private DifficultyConfiguration _difficultyConfiguration;
+        private readonly SouthCohenLinesGenerator _lineDataGenerator = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
 
         public void Run()
         {

@@ -8,7 +8,7 @@ namespace Pixelgrid
     public sealed class CheckSouthCohenAnswerSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter = null;
-        private readonly EcsFilter<GameModeData, LineData, SouthCohenData> _gameModeDataFilter = null;
+        private readonly EcsFilter<LineData, SouthCohenData> _gameModeDataFilter = null;
         private readonly EcsFilter<BorderComponent> _borderFilter = null;
         private readonly EcsFilter<PixelComponent, PixelPosition> _pixelFilter = null;
 
@@ -21,8 +21,8 @@ namespace Pixelgrid
             foreach(var index in _pixelsClickedFilter)
             {
                 var eventReceiver = _gameModeDataFilter.GetEntity(0);
-                ref var lineData = ref _gameModeDataFilter.Get2(0);
-                ref var zonesData = ref _gameModeDataFilter.Get3(0);
+                ref var lineData = ref _gameModeDataFilter.Get1(0);
+                ref var zonesData = ref _gameModeDataFilter.Get2(0);
 
                 if (lineData.CurrentLine == lineData.LinePoints.Count)
                     eventReceiver.Get<GameOverEvent>();

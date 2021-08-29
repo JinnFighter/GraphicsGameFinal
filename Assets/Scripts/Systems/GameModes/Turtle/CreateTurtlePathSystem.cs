@@ -6,7 +6,7 @@ namespace Pixelgrid
 {
     public sealed class CreateTurtlePathSystem : IEcsInitSystem 
     {
-        private readonly EcsFilter<GameModeData> _filter = null;
+        private readonly EcsFilter<TurtleComponent> _filter = null;
 
         private readonly Text _pathText = null;
 

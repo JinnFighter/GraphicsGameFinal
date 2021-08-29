@@ -5,7 +5,7 @@ namespace Pixelgrid
 {
     public sealed class UpdateDDataSystem : IEcsRunSystem 
     {
-        private readonly EcsFilter<GameModeData, TextRef> _filter = null;
+        private readonly EcsFilter<Brezenheim_D_Data, TextRef> _filter = null;
         private readonly EcsFilter<UpdateDIndexEvent> _eventFilter = null;
 
         void IEcsRunSystem.Run() 

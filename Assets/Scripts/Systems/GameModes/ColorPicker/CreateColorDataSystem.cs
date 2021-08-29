@@ -4,7 +4,7 @@ namespace Pixelgrid
 {
     public sealed class CreateColorDataSystem : IEcsInitSystem 
     {
-        private readonly EcsFilter<GameModeData> _filter;
+        private readonly EcsFilter<ColorContainer> _filter;
 
         private readonly DifficultyConfiguration _difficultyConfiguration;
 
