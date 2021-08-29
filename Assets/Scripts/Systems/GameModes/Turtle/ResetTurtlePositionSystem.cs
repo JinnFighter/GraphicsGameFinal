@@ -6,18 +6,17 @@ namespace Pixelgrid
 {
     public sealed class ResetTurtlePositionSystem : IEcsRunSystem 
     {
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<TurtleComponent, PixelPosition> _filter;
-        private EcsFilter<GameplayEventReceiver> _eventReceiverFilter;
-        private DifficultyConfiguration _difficultyConfiguration;
-        private TurtleConfiguration _turtleConfiguration;
-        private TurtleSpritesContainer _turtleSpritesContainer;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<TurtleComponent, PixelPosition> _filter = null;
+
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly TurtleConfiguration _turtleConfiguration = null;
+        private readonly TurtleSpritesContainer _turtleSpritesContainer = null;
 
         void IEcsRunSystem.Run() 
         {
             if(!_restartEventFilter.IsEmpty())
             {
-                var eventReceiver = _eventReceiverFilter.GetEntity(0);
                 foreach (var index in _filter)
                 {
                     ref var positionComponent = ref _filter.Get2(index);
@@ -49,9 +48,10 @@ namespace Pixelgrid
 
                     _turtleConfiguration.PathLength = pathLength;
                     _turtleConfiguration.PathsCount = pathsCount;
-
-                    eventReceiver.Get<ClearGridEvent>();
-                    ref var drawData = ref eventReceiver.Get<LineDrawData>();
+                    
+                    var entity = _filter.GetEntity(index);
+                    entity.Get<ClearGridEvent>();
+                    ref var drawData = ref entity.Get<LineDrawData>();
                     drawData.drawData = new List<(Vector2Int, Sprite)>
                 {
                     (position, _turtleSpritesContainer.TurtleRight)
