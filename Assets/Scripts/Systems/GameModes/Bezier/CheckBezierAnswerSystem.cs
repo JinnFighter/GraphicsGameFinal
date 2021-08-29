@@ -4,15 +4,14 @@ namespace Pixelgrid
 {
     public sealed class CheckBezierAnswerSystem : IEcsRunSystem 
     {
-        private EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter;
-        private EcsFilter<GameModeData, BezierLineData> _gameModeDataFilter;
-        private EcsFilter<GameplayEventReceiver> _eventReceiverFilter;
+        private readonly EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter = null;
+        private readonly EcsFilter<GameModeData, BezierLineData> _gameModeDataFilter = null;
 
         void IEcsRunSystem.Run()
         {
             ref var lineDataComponent = ref _gameModeDataFilter.Get2(0);
             var lineDatas = lineDataComponent.Points;
-            var eventReceiver = _eventReceiverFilter.GetEntity(0);
+            var eventReceiver = _gameModeDataFilter.GetEntity(0);
             foreach (var pixelIndex in _pixelsClickedFilter)
             {
                 var positionComponent = _pixelsClickedFilter.Get1(pixelIndex);
