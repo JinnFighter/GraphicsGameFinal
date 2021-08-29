@@ -66,7 +66,7 @@ namespace Pixelgrid
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateBezierDataSystem())
-                 .Add(new ResetBezierProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
