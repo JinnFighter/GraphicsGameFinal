@@ -91,6 +91,9 @@ namespace Pixelgrid
                     }
 
                     zonesData.Zones = zones;
+                    var entity = _gameModeDataFilter.GetEntity(index);
+                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                    dataGeneratedEvent.DataCount = zonesData.Zones.Sum(zonePart => zonePart.Count);
                 }
             }
         }
