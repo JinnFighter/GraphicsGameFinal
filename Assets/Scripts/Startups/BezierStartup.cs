@@ -57,7 +57,6 @@ namespace Pixelgrid
                  .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
-                 .Add(new CreateGameModeDataContainerSystem())
                  .Add(new CreateBezierDataSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())

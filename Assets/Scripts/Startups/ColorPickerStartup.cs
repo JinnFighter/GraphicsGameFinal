@@ -52,7 +52,6 @@ namespace Pixelgrid
                  .Add(new LoadPlayerSystem())
                  .Add(new SetDifficultySystem())
                  .Add(new CreateStatDataTrackerSystem())
-                 .Add(new CreateGameModeDataContainerSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new CreateColorContainerSystem())
                  .Add(new CreateColorDataSystem())
