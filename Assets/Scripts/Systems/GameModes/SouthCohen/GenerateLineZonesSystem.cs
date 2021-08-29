@@ -7,9 +7,8 @@ namespace Pixelgrid
 {
     public sealed class GenerateLineZonesSystem : IEcsRunSystem 
     {
-        private EcsFilter<LineData, SouthCohenData> _gameModeDataFilter;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
-        private EcsFilter<BorderComponent> _borderFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsFilter<LineData, SouthCohenData, BorderComponent> _gameModeDataFilter = null;
 
         private CodeReceiver _codeReceiver;
 
@@ -17,11 +16,11 @@ namespace Pixelgrid
         {
             if(!_restartEventFilter.IsEmpty())
             {
-                var border = _borderFilter.Get1(0);
-                var left = border.LeftCorner;
-                var right = border.RightCorner;
                 foreach(var index in _gameModeDataFilter)
                 {
+                    var border = _gameModeDataFilter.Get3(index);
+                    var left = border.LeftCorner;
+                    var right = border.RightCorner;
                     var lineData = _gameModeDataFilter.Get1(index);
                     ref var zonesData = ref _gameModeDataFilter.Get2(index);
                     var zones = new List<List<int>>();
@@ -98,11 +97,6 @@ namespace Pixelgrid
             }
         }
 
-        private void Swap<T>(ref T a, ref T b)
-        {
-            T c = a;
-            a = b;
-            b = c;
-        }
+        private void Swap<T>(ref T a, ref T b) => (a, b) = (b, a);
     }
 }
