@@ -4,12 +4,12 @@ namespace Pixelgrid
 {
     public sealed class DisableGameplayTimerOnGameOverSystem : IEcsRunSystem 
     {
-        private EcsFilter<GameplayTimerComponent, Counting> _timerFilter;
-        private EcsFilter<GameplayEventReceiver, GameOverEvent> _eventReceiversFilter;
+        private readonly EcsFilter<GameplayTimerComponent, Counting> _timerFilter = null;
+        private readonly EcsFilter<GameOverEvent> _gameOverEventFilter = null;
 
         void IEcsRunSystem.Run() 
         {
-            if(!_eventReceiversFilter.IsEmpty())
+            if(!_gameOverEventFilter.IsEmpty())
             {
                 foreach(var index in _timerFilter)
                 {
