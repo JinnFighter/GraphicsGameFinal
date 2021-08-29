@@ -2,17 +2,14 @@ using Leopotam.Ecs;
 
 namespace Pixelgrid 
 {
-    public sealed class CreateSouthCohenDataSystem : IEcsInitSystem 
+    public sealed class CreateSouthCohenDataSystem : IEcsInitSystem
     {
-        private EcsFilter<GameModeData> _filter;
+        private readonly EcsWorld _world = null;
 
         public void Init() 
         {
-            foreach(var index in _filter)
-            {
-                var entity = _filter.GetEntity(index);
-                entity.Get<SouthCohenData>();
-            }
+            var entity = _world.NewEntity();
+            entity.Get<SouthCohenData>();
         }
     }
 }
