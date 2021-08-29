@@ -6,10 +6,9 @@ namespace Pixelgrid
     public sealed class GenerateDDataSystem : IEcsRunSystem
     {
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
-        private readonly EcsFilter<GameModeData> _filter = null;
+        private readonly EcsFilter<Brezenheim_D_Data> _filter = null;
 
-        private BrezenheimDataContainer _brezenheimDataContainer = null;
-        
+        private readonly BrezenheimDataContainer _brezenheimDataContainer = null;
 
         public void Run()
         {
