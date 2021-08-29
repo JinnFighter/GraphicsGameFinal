@@ -71,7 +71,7 @@ namespace Pixelgrid
                  .Add(new UpdateTimersSystem(), "UpdateTimers")
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateTurtlePathSystem())
-                 .Add(new ResetTurtleProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
