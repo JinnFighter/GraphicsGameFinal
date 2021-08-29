@@ -71,7 +71,7 @@ namespace Pixelgrid
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateSouthCohenLinesSystem())
                  .Add(new GenerateLineZonesSystem())
-                 .Add(new ResetSouthCohenProgressBarSystem())
+                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
