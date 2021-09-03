@@ -1,9 +1,13 @@
 {
     "name": "Tests",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "GameAssembly"
+        "GameAssembly",
+        "Leopotam.Ecs",
+        "Leopotam.Ecs.Ui",
+        "Leopotam.Ecs.UnityIntegration"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
