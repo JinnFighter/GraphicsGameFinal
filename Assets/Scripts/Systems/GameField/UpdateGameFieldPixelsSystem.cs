@@ -4,8 +4,8 @@ namespace Pixelgrid
 {
     public sealed class UpdateGameFieldPixelsSystem : IEcsRunSystem 
     {
-        private EcsFilter<PixelComponent, PixelPosition, PixelRef> _pixelsFilter;
-        private EcsFilter<LineDrawData> _drawDataFilter;
+        private readonly EcsFilter<PixelComponent, PixelPosition, PixelRef, ImageRef> _pixelsFilter = null;
+        private readonly EcsFilter<LineDrawData> _drawDataFilter = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -15,12 +15,13 @@ namespace Pixelgrid
                 var data = drawData.drawData;
                 foreach(var pixelIndex in _pixelsFilter)
                 {
-                    foreach(var item in data)
+                    foreach(var (vector2Int, sprite) in data)
                     {
-                        if(item.Item1 == _pixelsFilter.Get2(pixelIndex).position)
+                        if(vector2Int == _pixelsFilter.Get2(pixelIndex).position)
                         {
-                            ref var pixelRef = ref _pixelsFilter.Get3(pixelIndex);
-                            pixelRef.pixel.GetComponent<GridPixel>().UpdateSprite(item.Item2);
+                            var entity = _pixelsFilter.GetEntity(pixelIndex);
+                            ref var updateSpriteEvent = ref entity.Get<UpdateSpriteImageEvent>();
+                            updateSpriteEvent.Sprite = sprite;
                         }
                     }
                 }
