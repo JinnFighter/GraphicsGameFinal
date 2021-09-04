@@ -39,8 +39,7 @@ namespace Pixelgrid
             {
                 for(var j = 0; j < fieldSize; j++)
                 {
-                    var pixel = Object.Instantiate(pixelPrefab);
-                    pixel.transform.SetParent(grid.transform);
+                    var pixel = Object.Instantiate(pixelPrefab, grid.transform, true);
                     pixel.AddComponent<EcsUiClickAction>();
 
                     var entity = _world.NewEntity();

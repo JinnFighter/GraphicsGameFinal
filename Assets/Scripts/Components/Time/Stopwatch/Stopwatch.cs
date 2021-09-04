@@ -1,6 +1,6 @@
 namespace Pixelgrid 
 {
-    struct Stopwatch 
+    public struct Stopwatch 
     {
         public float currentTime;
     }
