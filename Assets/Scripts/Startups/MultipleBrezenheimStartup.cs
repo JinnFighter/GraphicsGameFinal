@@ -119,6 +119,7 @@ namespace Pixelgrid
                  .OneFrame<DisableSystemTypeEvent>()
                  .OneFrame<EnableSystemTypeEvent>()
                  .OneFrame<UpdateTextEvent>()
+                 .OneFrame<UpdateSpriteImageEvent>()
 
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameModeConfiguration)
