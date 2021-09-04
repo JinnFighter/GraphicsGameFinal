@@ -49,6 +49,8 @@ namespace Pixelgrid
                     ref var pixelRef = ref entity.Get<PixelRef>();
                     pixelRef.pixel = pixel;
                     pixel.GetComponent<GridPixel>().entity = entity;
+                    ref var imageRef = ref entity.Get<ImageRef>();
+                    imageRef.Image = pixel.GetComponent<Image>();
                 }
             }
         }
