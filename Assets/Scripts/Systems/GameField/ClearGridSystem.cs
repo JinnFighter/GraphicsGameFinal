@@ -2,11 +2,11 @@ using Leopotam.Ecs;
 
 namespace Pixelgrid 
 {
-    sealed class ClearGridSystem : IEcsRunSystem 
+    public sealed class ClearGridSystem : IEcsRunSystem 
     {
-        private EcsFilter<ClearGridEvent> _clearGridEventFilter;
-        private EcsFilter<PixelComponent, PixelRef> _pixelsFilter;
-        private SpritesContainer _spritesContainer;
+        private readonly EcsFilter<ClearGridEvent> _clearGridEventFilter = null;
+        private readonly EcsFilter<PixelComponent, ImageRef> _pixelsFilter = null;
+        private readonly SpritesContainer _spritesContainer = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -15,8 +15,9 @@ namespace Pixelgrid
                 var emptySprite = _spritesContainer.EmptySprite;
                 foreach(var index in _pixelsFilter)
                 {
-                    ref var pixelRef = ref _pixelsFilter.Get2(index);
-                    pixelRef.pixel.GetComponent<GridPixel>().UpdateSprite(emptySprite);
+                    var entity = _pixelsFilter.GetEntity(index);
+                    ref var updateSpriteEvent = ref entity.Get<UpdateSpriteImageEvent>();
+                    updateSpriteEvent.Sprite = emptySprite;
                 }
             }
         }
