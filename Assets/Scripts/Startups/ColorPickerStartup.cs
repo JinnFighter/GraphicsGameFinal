@@ -79,6 +79,7 @@ namespace Pixelgrid
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new UpdateUiTextSystem())
+                 .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
                  .Add(new EnqueueGameOverAudioClipSystem())
