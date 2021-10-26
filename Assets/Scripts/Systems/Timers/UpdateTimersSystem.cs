@@ -1,11 +1,12 @@
 using Leopotam.Ecs;
+using Pixelgrid.Components.Time.Timer;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.Timers 
 {
     public sealed class UpdateTimersSystem : IEcsRunSystem 
     {
-        private EcsFilter<Timer, Counting> _filter = null;
+        private readonly EcsFilter<Timer, Counting> _filter = null;
 
         void IEcsRunSystem.Run() 
         {
