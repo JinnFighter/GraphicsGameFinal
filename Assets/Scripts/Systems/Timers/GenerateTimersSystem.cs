@@ -1,7 +1,10 @@
 using Leopotam.Ecs;
-using UnityEngine.UI;
+using Pixelgrid.Components.Time.Timer;
+using Pixelgrid.UI.Models;
+using Pixelgrid.UI.Presenters;
+using Pixelgrid.UI.Views;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.Timers 
 {
     public sealed class GenerateTimersSystem : IEcsInitSystem 
     {
@@ -11,12 +14,12 @@ namespace Pixelgrid
         public void Init() 
         {
             var timerEntity = _world.NewEntity();
-            timerEntity.Get<Timer>();
+            ref var timer = ref timerEntity.Get<Timer>();
             timerEntity.Get<GameplayTimerComponent>();
-            ref var timerRef = ref timerEntity.Get<TimerRef>();
-            timerRef.TimerFormat = _timersContainer.gameplayTimer.GetComponent<TimerFormat>();
-            ref var textRef = ref timerEntity.Get<TextRef>();
-            textRef.Text = _timersContainer.gameplayTimer.GetComponent<Text>();
+            var timerModel = new TimerModel();
+            timer.TimeChangeEvent += timerModel.UpdateTime;
+
+            var presenter = new TimerPresenter(timerModel, _timersContainer.gameplayTimer.GetComponent<TimerView>());
         }
     }
 }

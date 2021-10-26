@@ -2,6 +2,7 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Pixelgrid.Systems.Execution;
+using Pixelgrid.Systems.Timers;
 using UnityEngine;
 
 namespace Pixelgrid
@@ -93,7 +94,6 @@ namespace Pixelgrid
                  .Add(new UnpauseSystem())
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
-                 .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateUiTextSystem())
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
