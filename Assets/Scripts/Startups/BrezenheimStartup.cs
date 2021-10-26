@@ -93,7 +93,6 @@ namespace Pixelgrid {
                  .Add(new UnpauseSystem())
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
-                 .Add(new UpdateTimerTextSystem())
                  .Add(new UpdateUiTextSystem())
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
