@@ -1,4 +1,5 @@
 using System;
+using Configurations.Script;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -7,36 +8,17 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
     public sealed class GenerateBorderSystem : IEcsInitSystem 
     {
         private readonly EcsFilter<PixelComponent, PixelPosition, PixelRef> _pixelFilter = null;
-        private readonly EcsWorld _world = null;
 
+        private readonly SouthCohenConfigs _southCohenConfigs = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly GameObject _border = null;
 
         public void Init()
         {
-            var entity = _world.NewEntity();
-            ref var border = ref entity.Get<BorderComponent>();
-            Vector2Int leftCorner;
-            Vector2Int rightCorner;
             float posOffset;
-            switch (_difficultyConfiguration.Difficulty)
-            {
-                case 1:
-                    leftCorner = new Vector2Int(2, 2);
-                    rightCorner = new Vector2Int(8, 8);
-                    break;
-                case 2:
-                    leftCorner = new Vector2Int(2, 2);
-                    rightCorner = new Vector2Int(11, 11);
-                    break;
-                default:
-                    leftCorner = new Vector2Int(3, 3);
-                    rightCorner = new Vector2Int(7, 7);
-                    break;
-            }
 
-            border.LeftCorner = leftCorner;
-            border.RightCorner = rightCorner;
+            var leftCorner = _southCohenConfigs[_difficultyConfiguration.Difficulty].BorderLeftCorner;
+            var rightCorner = _southCohenConfigs[_difficultyConfiguration.Difficulty].BorderRightCorner;
 
             foreach(var pixelIndex in _pixelFilter)
             {

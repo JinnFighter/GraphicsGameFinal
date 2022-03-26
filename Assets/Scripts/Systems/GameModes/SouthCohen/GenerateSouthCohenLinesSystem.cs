@@ -8,7 +8,6 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
     public sealed class GenerateSouthCohenLinesSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
-        private readonly EcsFilter<BorderComponent> _borderFilter = null;
 
         private readonly SouthCohenLinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
@@ -19,9 +18,8 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                var border = _borderFilter.Get1(0);
                 var config = _configs[_difficultyConfiguration.Difficulty];
-                var lines = _lineDataGenerator.GenerateData(config.MinLength, config.MaxLength, config.MaxCoordinate, config.LinesCount, border.LeftCorner, border.RightCorner).ToList();
+                var lines = _lineDataGenerator.GenerateData(config.MinLength, config.MaxLength, config.MaxCoordinate, config.LinesCount, config.BorderLeftCorner, config.BorderRightCorner).ToList();
                 _lineDataModel.LinePoints.Clear();
 
                 foreach(var line in lines)
