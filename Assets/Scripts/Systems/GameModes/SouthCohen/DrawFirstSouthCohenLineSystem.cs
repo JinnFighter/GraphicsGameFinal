@@ -1,14 +1,15 @@
-using Leopotam.Ecs;
 using System.Linq;
+using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Sprites;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.SouthCohen 
 {
     public sealed class DrawFirstSouthCohenLineSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<RestartGameEvent> _filter = null;
         private readonly EcsFilter<LineData, SouthCohenData> _dataFilter = null;
         
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         public void Run()
         {
@@ -21,7 +22,7 @@ namespace Pixelgrid
                     entity.Get<ClearGridEvent>();
                     ref var drawDataComponent = ref entity.Get<LineDrawData>();
                     var drawingData = 
-                        data.LinePoints[0].Select(point => (point, _spritesContainer.FilledSprite)).ToList();
+                        data.LinePoints[0].Select(point => (point, _pixelSpritesContent.FilledSprite)).ToList();
 
                     drawDataComponent.drawData = drawingData;
                 }

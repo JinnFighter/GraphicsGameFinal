@@ -14,7 +14,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
         private readonly TurtleSpritesContent _turtleSpritesContent = null;
         private readonly GameFieldConfigs _gameFieldConfigs = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         void IEcsRunSystem.Run()
         {
@@ -33,7 +33,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                         var nextPosition = turtle.DirectionState.Move(turtlePosition.position);
                         if(nextPosition.x >= 0 && nextPosition.x < fieldSize && nextPosition.y >= 0 && nextPosition.y < fieldSize)
                         {
-                            drawData.Add((turtlePosition.position, _spritesContainer.EmptySprite));
+                            drawData.Add((turtlePosition.position, _pixelSpritesContent.EmptySprite));
                             drawData.Add((nextPosition, turtle.CurrentSprite));
                             turtlePosition.position = nextPosition;
                         }

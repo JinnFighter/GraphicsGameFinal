@@ -6,6 +6,7 @@ using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
+using Pixelgrid.Systems.GameModes.SouthCohen;
 using Pixelgrid.Systems.Timers;
 using UnityEngine;
 
@@ -21,7 +22,6 @@ namespace Pixelgrid.Startups
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public FlexibleGridLayout Grid;
-        public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public SouthCohenLinesGenerator LinesGenerator;
         public AudioPlayer AudioPlayer;
@@ -131,11 +131,11 @@ namespace Pixelgrid.Startups
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
                  .Inject(Grid)
-                 .Inject(spritesContainer)
                  .Inject(timersContainer)
                  .Inject(LinesGenerator)
                  .Inject(CodeReceiver)
                  .Inject(Border)
+                 .Inject(GameContent.SpritesContent.PixelSpritesContent)
                  .Inject(GameContent.PrefabsContent)
                  .Inject(GameContent.AudioContent)
                  .Inject(AudioPlayer)

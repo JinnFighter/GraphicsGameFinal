@@ -6,5 +6,6 @@ namespace Pixelgrid.ScriptableObjects.Sprites
     public class SpritesContent : ScriptableObject
     {
         [field: SerializeField] public TurtleSpritesContent TurtleSpritesContent { get; private set; }
+        [field: SerializeField] public PixelSpritesContent PixelSpritesContent { get; private set; }
     }
 }

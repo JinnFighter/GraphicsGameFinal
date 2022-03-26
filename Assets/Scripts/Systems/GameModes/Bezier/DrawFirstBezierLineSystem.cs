@@ -1,15 +1,16 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
+using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Bezier 
 {
     public sealed class DrawFirstBezierLineSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<RestartGameEvent> _filter = null;
         private readonly EcsFilter<BezierLineData> _dataFilter = null;
         
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         public void Run()
         {
@@ -24,12 +25,16 @@ namespace Pixelgrid
                     var drawList = new List<(Vector2Int, Sprite)>();
                     for(var i = 0; i < data.Points.Count; i++)
                     {
+                        Sprite sprite;
+                        
                         if(i == 0)
-                            drawList.Add((data.Points[i], _spritesContainer.LineBeginningSprite));
+                            sprite = _pixelSpritesContent.LineBeginningSprite;
                         else if(i == data.Points.Count - 1)
-                            drawList.Add((data.Points[i], _spritesContainer.LineEndSprite));
+                            sprite = _pixelSpritesContent.LineEndSprite;
                         else
-                            drawList.Add((data.Points[i], _spritesContainer.FilledSprite));
+                            sprite =  _pixelSpritesContent.FilledSprite;
+                        
+                        drawList.Add((data.Points[i], sprite));
                     }
                     drawData.drawData = drawList;
                 }

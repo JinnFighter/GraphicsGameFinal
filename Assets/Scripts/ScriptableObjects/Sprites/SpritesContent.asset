@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TurtleSpritesContent>k__BackingField: {fileID: 11400000, guid: bf1c81560ca28a842b7bd6a5e8001431,
     type: 2}
+  <PixelSpritesContent>k__BackingField: {fileID: 11400000, guid: 4e2741a8e309dbc4e9af09029ceaf8d0,
+    type: 2}

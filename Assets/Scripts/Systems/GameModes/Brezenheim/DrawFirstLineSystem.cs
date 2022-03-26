@@ -1,15 +1,16 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
+using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Brezenheim 
 {
     public sealed class DrawFirstLineSystem : IEcsRunSystem
     {
         private readonly EcsFilter<RestartGameEvent> _filter = null;
         private readonly EcsFilter<LineData> _dataFilter = null;
         
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         public void Run()
         {
@@ -23,8 +24,8 @@ namespace Pixelgrid
                     ref var drawData = ref entity.Get<LineDrawData>();
                     drawData.drawData = new List<(Vector2Int, Sprite)>
                     {
-                        (data.LinePoints[data.CurrentLine][0], _spritesContainer.LineBeginningSprite),
-                        (data.LinePoints[data.CurrentLine][data.LinePoints[data.CurrentLine].Count - 1], _spritesContainer.LineEndSprite)
+                        (data.LinePoints[data.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
+                        (data.LinePoints[data.CurrentLine][data.LinePoints[data.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
                     };
                 }
             }

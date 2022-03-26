@@ -1,15 +1,16 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
+using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Brezenheim 
 {
     public sealed class CheckBrezenheimAnswerSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter = null;
         private readonly EcsFilter<LineData, Brezenheim_D_Data> _gameModeDataFilter = null;
 
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -46,8 +47,8 @@ namespace Pixelgrid
                             ref var drawData = ref eventReceiver.Get<LineDrawData>();
                             drawData.drawData = new List<(Vector2Int, Sprite)>
                             {
-                                (lineDatas[lineDataComponent.CurrentLine][0], _spritesContainer.LineBeginningSprite),
-                                (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _spritesContainer.LineEndSprite)
+                                (lineDatas[lineDataComponent.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
+                                (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
                             };
                         }
                     }
@@ -56,7 +57,7 @@ namespace Pixelgrid
                         ref var drawData = ref eventReceiver.Get<LineDrawData>();
                         drawData.drawData = new List<(Vector2Int, Sprite)>
                         {
-                            (position, _spritesContainer.FilledSprite)
+                            (position, _pixelSpritesContent.FilledSprite)
                         };
                         lineDataComponent.CurrentPoint++;
                     }

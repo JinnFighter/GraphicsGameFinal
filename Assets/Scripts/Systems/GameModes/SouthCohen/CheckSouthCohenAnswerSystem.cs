@@ -1,9 +1,10 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
 using System.Linq;
+using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.SouthCohen 
 {
     public sealed class CheckSouthCohenAnswerSystem : IEcsRunSystem 
     {
@@ -13,7 +14,7 @@ namespace Pixelgrid
         private readonly EcsFilter<PixelComponent, PixelPosition> _pixelFilter = null;
 
         private readonly CodeReceiver _codeReceiver = null;
-        private readonly SpritesContainer _spritesContainer = null;
+        private readonly PixelSpritesContent _pixelSpritesContent = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -40,7 +41,7 @@ namespace Pixelgrid
                         {
                             var pixelPosition = _pixelFilter.Get2(pixelIndex);
                             if(_codeReceiver.GetCode(pixelPosition.position, border.LeftCorner, border.RightCorner) == code)
-                                drawData.Add((pixelPosition.position, _spritesContainer.EmptySprite));
+                                drawData.Add((pixelPosition.position, _pixelSpritesContent.EmptySprite));
                         }
                         if (!zonesData.Zones[lineData.CurrentLine].Any())
                         {
@@ -53,7 +54,7 @@ namespace Pixelgrid
                                 eventReceiver.Get<ClearGridEvent>();
                                 
                                 foreach(var point in lineData.LinePoints[lineData.CurrentLine])
-                                    drawData.Add((point, _spritesContainer.FilledSprite));
+                                    drawData.Add((point, _pixelSpritesContent.FilledSprite));
 
                                 ref var lineDrawData = ref eventReceiver.Get<LineDrawData>();
                                 lineDrawData.drawData = drawData;

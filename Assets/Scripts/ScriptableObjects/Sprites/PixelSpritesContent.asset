@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829208b564ca1a84cb8e112ce54748c0, type: 3}
+  m_Name: PixelSpritesContent
+  m_EditorClassIdentifier: 
+  <EmptySprite>k__BackingField: {fileID: 21300000, guid: f037984dec326ef4d9b902e58c10102f,
+    type: 3}
+  <FilledSprite>k__BackingField: {fileID: 21300000, guid: dd0ba78c7f33be44aa0ee34fb6b7fdb4,
+    type: 3}
+  <LineBeginningSprite>k__BackingField: {fileID: 21300000, guid: 41f8ccc16c3b18b4fa4d76f0e82072c2,
+    type: 3}
+  <LineEndSprite>k__BackingField: {fileID: 21300000, guid: d72804407be775b44bd1c4a71eebbe8f,
+    type: 3}

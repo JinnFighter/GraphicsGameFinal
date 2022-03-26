@@ -23,7 +23,6 @@ namespace Pixelgrid {
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public FlexibleGridLayout Grid;
-        public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
@@ -129,26 +128,26 @@ namespace Pixelgrid {
                  .OneFrame<UpdateTextEvent>()
                  .OneFrame<UpdateSpriteImageEvent>()
 
-                // inject service instances here (order doesn't important), for example:
-                .Inject(GameFieldConfigs)
-                .Inject(GameModeConfiguration)
-                .Inject(BrezenheimConfigs)
-                .Inject(difficultyConfiguration)
-                .Inject(Grid)
-                .Inject(spritesContainer)
-                .Inject(timersContainer)
-                .Inject(LinesGenerator)
-                .Inject(BrezenheimDataContainer)
-                .Inject(GameContent.PrefabsContent)
-                .Inject(GameContent.AudioContent)
-                .Inject(AudioPlayer)
-                .Inject(CountdownPresenter)
-                .Inject(EndgamePresenter)
-                .Inject(TutorialPresenter)
-                .Inject(ProgressBar)
-                .Inject(ScreenContainer)
+                 // inject service instances here (order doesn't important), for example:
+                 .Inject(GameFieldConfigs)
+                 .Inject(GameModeConfiguration)
+                 .Inject(BrezenheimConfigs)
+                 .Inject(difficultyConfiguration)
+                 .Inject(Grid)
+                 .Inject(timersContainer)
+                 .Inject(LinesGenerator)
+                 .Inject(BrezenheimDataContainer)
+                 .Inject(GameContent.SpritesContent.PixelSpritesContent)
+                 .Inject(GameContent.PrefabsContent)
+                 .Inject(GameContent.AudioContent)
+                 .Inject(AudioPlayer)
+                 .Inject(CountdownPresenter)
+                 .Inject(EndgamePresenter)
+                 .Inject(TutorialPresenter)
+                 .Inject(ProgressBar)
+                 .Inject(ScreenContainer)
                  .Inject(i18n)
-                .Init ();
+                 .Init ();
         }
 
         void Update () {
