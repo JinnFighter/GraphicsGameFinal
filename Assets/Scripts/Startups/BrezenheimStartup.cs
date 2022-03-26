@@ -3,6 +3,7 @@ using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
@@ -17,6 +18,8 @@ namespace Pixelgrid {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
         EcsSystems _systems;
+
+        private BrezenheimIndexModel _brezenheimIndexModel;
 
         public GameFieldConfigs GameFieldConfigs;
         public BrezenheimConfigs BrezenheimConfigs;
@@ -54,6 +57,7 @@ namespace Pixelgrid {
                 "UpdateStopwatches",
                 "CheckClick"
             });
+            _brezenheimIndexModel = new BrezenheimIndexModel();
 
             _systems
                  // register your systems here:
@@ -129,6 +133,7 @@ namespace Pixelgrid {
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
+                 .Inject(_brezenheimIndexModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)
