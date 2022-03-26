@@ -1,26 +1,17 @@
+using Configurations.Script;
 using Leopotam.Ecs;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Brezenheim 
 {
     public sealed class SelectMaxLineLengthSystem : IEcsInitSystem 
     {
-        private RandomLinesGenerator _generator;
-        private DifficultyConfiguration _difficultyConfiguration;
+        private readonly RandomLinesGenerator _generator = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly BrezenheimConfigs _brezenheimConfigs = null;
         
-        public void Init() 
+        public void Init()
         {
-            switch(_difficultyConfiguration.Difficulty)
-            {
-                case 1:
-                    _generator.MaxLengthSum = 48;
-                    break;
-                case 2:
-                    _generator.MaxLengthSum = 90;
-                    break;
-                default:
-                    _generator.MaxLengthSum = 20;
-                    break;
-            }
+            _generator.MaxLengthSum = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty].MaxLengthSum;
         }
     }
 }
