@@ -16,3 +16,5 @@ MonoBehaviour:
   <MaxLength>k__BackingField: 10
   <LinesCount>k__BackingField: 7
   <MaxCoordinate>k__BackingField: 14
+  <BorderLeftCorner>k__BackingField: {x: 2, y: 2}
+  <BorderRightCorner>k__BackingField: {x: 8, y: 8}
