@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c4f84b5470a7447bc1457f8792b4b9, type: 3}
+  m_Name: AudioContent
+  m_EditorClassIdentifier: 
+  <GameOverClip>k__BackingField: {fileID: 8300000, guid: 032a071827a75b147b77d257afaa650e,
+    type: 3}
+  <CorrectAnswerClip>k__BackingField: {fileID: 8300000, guid: 9e2b5736135244e44b59f8aa6b7c4572,
+    type: 3}
+  <WrongAnswerClip>k__BackingField: {fileID: 8300000, guid: 3eeadd8c8436eb842b25a9bda9357dc6,
+    type: 3}
