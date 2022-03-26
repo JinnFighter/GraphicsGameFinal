@@ -23,7 +23,7 @@ namespace Pixelgrid.Startups
         public GameModeConfiguration GameModeConfiguration;
         public BrezenheimConfigs BrezenheimConfigs;
         public DifficultyConfiguration difficultyConfiguration;
-        public GameFieldConfiguration gameFieldConfiguration;
+        public FlexibleGridLayout Grid;
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
@@ -134,7 +134,7 @@ namespace Pixelgrid.Startups
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)
                  .Inject(difficultyConfiguration)
-                 .Inject(gameFieldConfiguration)
+                 .Inject(Grid)
                  .Inject(spritesContainer)
                  .Inject(timersContainer)
                  .Inject(LinesGenerator)

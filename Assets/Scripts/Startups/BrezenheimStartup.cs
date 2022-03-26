@@ -22,7 +22,7 @@ namespace Pixelgrid {
         public BrezenheimConfigs BrezenheimConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
-        public GameFieldConfiguration gameFieldConfiguration;
+        public FlexibleGridLayout Grid;
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
@@ -134,7 +134,7 @@ namespace Pixelgrid {
                 .Inject(GameModeConfiguration)
                 .Inject(BrezenheimConfigs)
                 .Inject(difficultyConfiguration)
-                .Inject(gameFieldConfiguration)
+                .Inject(Grid)
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)

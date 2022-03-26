@@ -20,7 +20,7 @@ namespace Pixelgrid
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
-        public GameFieldConfiguration gameFieldConfiguration;
+        public FlexibleGridLayout Grid;
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public BezierLinesGenerator LinesGenerator;
@@ -127,7 +127,7 @@ namespace Pixelgrid
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
-                 .Inject(gameFieldConfiguration)
+                 .Inject(Grid)
                  .Inject(spritesContainer)
                  .Inject(timersContainer)
                  .Inject(LinesGenerator)

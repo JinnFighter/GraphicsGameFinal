@@ -11,7 +11,7 @@ namespace Pixelgrid.Systems.GameField
     {
         private readonly EcsWorld _world = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
-        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
+        private readonly FlexibleGridLayout _grid = null;
         private readonly GameFieldConfigs _gameFieldConfigs = null;
         private readonly PrefabsContent _prefabsContent = null;
 
@@ -20,14 +20,12 @@ namespace Pixelgrid.Systems.GameField
             var difficulty = _difficultyConfiguration.Difficulty;
 
             int fieldSize = _gameFieldConfigs.Configs[difficulty].FieldSize;
-            
-            var grid = _gameFieldConfiguration.grid;
 
             for (var i = 0; i < fieldSize; i++)
             {
                 for(var j = 0; j < fieldSize; j++)
                 {
-                    var pixel = Object.Instantiate(_prefabsContent.Pixel, grid.transform, true);
+                    var pixel = Object.Instantiate(_prefabsContent.Pixel, _grid.transform, true);
                     pixel.AddComponent<EcsUiClickAction>();
 
                     var entity = _world.NewEntity();

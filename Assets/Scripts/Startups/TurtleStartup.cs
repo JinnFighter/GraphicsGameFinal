@@ -23,7 +23,7 @@ namespace Pixelgrid.Startups
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
-        public GameFieldConfiguration gameFieldConfiguration;
+        public FlexibleGridLayout Grid;
         public SpritesContainer spritesContainer;
         public TurtleSpritesContainer TurtleSpritesContainer;
         public TimersContainer timersContainer;
@@ -134,7 +134,7 @@ namespace Pixelgrid.Startups
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
-                 .Inject(gameFieldConfiguration)
+                 .Inject(Grid)
                  .Inject(TurtleConfiguration)
                  .Inject(TurtleConfigs)
                  .Inject(spritesContainer)
