@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
@@ -19,6 +20,7 @@ namespace Pixelgrid.Startups
 
         private ColorPickerModels _colorPickerModels;
 
+        public ColorPickerConfigs ColorPickerConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public ImageHolderContainer ImageHolderContainer;
@@ -113,6 +115,7 @@ namespace Pixelgrid.Startups
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_colorPickerModels.ColorPickerDataModel)
                  .Inject(_colorPickerModels.ColorContainerModel)
+                 .Inject(ColorPickerConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
                  .Inject(ImageHolderContainer)

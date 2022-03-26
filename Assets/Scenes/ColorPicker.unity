@@ -554,6 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ecsUiEmitter: {fileID: 1766571257}
+  ColorPickerConfigs: {fileID: 11400000, guid: 6eaf8ed5c1212e249bf8dd690310b332, type: 2}
   GameModeConfiguration: {fileID: 1169787239}
   difficultyConfiguration: {fileID: 11400000, guid: 0ac8155fd33ab7c4fb3d091c97c6246e,
     type: 2}
