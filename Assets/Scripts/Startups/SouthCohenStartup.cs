@@ -20,7 +20,7 @@ namespace Pixelgrid.Startups
         EcsWorld _world;
         EcsSystems _systems;
 
-        private LineDataModel _lineDataModel;
+        private SouthCohenModels _southCohenModels;
 
         public SouthCohenConfigs SouthCohenConfigs;
         public GameFieldConfigs GameFieldConfigs;
@@ -60,7 +60,7 @@ namespace Pixelgrid.Startups
                 "CheckClick"
             });
 
-            _lineDataModel = new LineDataModel();
+            _southCohenModels = new SouthCohenModels();
 
             _systems
                  // register your systems here:
@@ -134,7 +134,8 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
-                 .Inject(_lineDataModel)
+                 .Inject(_southCohenModels.LineDataModel)
+                 .Inject(_southCohenModels.SouthCohenDataModel)
                  .Inject(SouthCohenConfigs)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
