@@ -1,20 +1,23 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
 using System.Linq;
+using Leopotam.Ecs;
+using Pixelgrid.Configurations.Script;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Turtle 
 {
     public sealed class UpdateTurtleSpritesSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition, TurtleCommand, CorrectAnswerEvent> _filter = null;
 
         private readonly TurtleSpritesContainer _turtleSpritesContainer = null;
-        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
+        private readonly GameFieldConfigs _gameFieldConfigs = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly SpritesContainer _spritesContainer = null;
 
         void IEcsRunSystem.Run()
         {
+            var fieldSize = _gameFieldConfigs.Configs[_difficultyConfiguration.Difficulty].FieldSize;
             foreach(var index in _filter)
             {
                 ref var turtle = ref _filter.Get1(index);
@@ -27,7 +30,7 @@ namespace Pixelgrid
                 {
                     case 'F':
                         var nextPosition = turtle.DirectionState.Move(turtlePosition.position);
-                        if(_gameFieldConfiguration.IsWithinField(nextPosition))
+                        if(nextPosition.x >= 0 && nextPosition.x < fieldSize && nextPosition.y >= 0 && nextPosition.y < fieldSize)
                         {
                             drawData.Add((turtlePosition.position, _spritesContainer.EmptySprite));
                             drawData.Add((nextPosition, turtle.CurrentSprite));

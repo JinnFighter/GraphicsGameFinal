@@ -11,7 +11,6 @@ namespace Pixelgrid
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
 
         private readonly TurtleConfiguration _turtleConfiguration = null;
-        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
 
         private IDirectionState _direction;
 
@@ -60,7 +59,7 @@ namespace Pixelgrid
             return route;
         }
 
-        bool CanMove(Vector2Int position, List<char> route, out Vector2Int currentPosition)
+        bool CanMove(Vector2Int position, List<char> route, out Vector2Int currentPosition, int fieldSize)
         {
             currentPosition = new Vector2Int(position.x,  position.y);
             foreach (var symbol in route)
@@ -69,8 +68,8 @@ namespace Pixelgrid
                 {
                     case 'F':
                         var tempPosition = _direction.Move(currentPosition);
-                        if (tempPosition.x < 0 || tempPosition.x >= _gameFieldConfiguration.fieldSize ||
-                            tempPosition.y < 0 || tempPosition.y >= _gameFieldConfiguration.fieldSize)
+                        if (tempPosition.x < 0 || tempPosition.x >= fieldSize ||
+                            tempPosition.y < 0 || tempPosition.y >= fieldSize)
                         {
                             return false;
                         }
