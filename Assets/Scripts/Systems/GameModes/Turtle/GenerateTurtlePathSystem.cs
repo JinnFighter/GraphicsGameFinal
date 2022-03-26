@@ -17,7 +17,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
 
         private IDirectionState _direction;
 
-        private readonly List<char> _commands = new List<char>{ 'F', '+', '-' };
+        private readonly List<char> _commands = new List<char>{ TurtleModeConfig.ForwardSymbol, TurtleModeConfig.TurnLeftSymbol, TurtleModeConfig.TurnRightSymbol };
 
         private readonly TurtlePathModel _turtlePathModel = null;
 
@@ -67,7 +67,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
             {
                 switch(symbol)
                 {
-                    case 'F':
+                    case TurtleModeConfig.ForwardSymbol:
                         var tempPosition = _direction.Move(currentPosition);
                         if (tempPosition.x < 0 || tempPosition.x >= fieldSize ||
                             tempPosition.y < 0 || tempPosition.y >= fieldSize)
@@ -76,10 +76,10 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                         }
                         currentPosition = tempPosition;
                         break;
-                    case '+':
+                    case TurtleModeConfig.TurnLeftSymbol:
                         _direction = _direction.RotateLeft(out _);
                         break;
-                    case '-':
+                    case TurtleModeConfig.TurnRightSymbol:
                         _direction = _direction.RotateRight(out _);
                         break;
                     default:

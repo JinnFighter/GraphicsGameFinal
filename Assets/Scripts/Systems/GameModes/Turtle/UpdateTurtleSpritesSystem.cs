@@ -29,7 +29,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
 
                 switch (command.CommandSymbol)
                 {
-                    case 'F':
+                    case TurtleModeConfig.ForwardSymbol:
                         var nextPosition = turtle.DirectionState.Move(turtlePosition.position);
                         if(nextPosition.x >= 0 && nextPosition.x < fieldSize && nextPosition.y >= 0 && nextPosition.y < fieldSize)
                         {
@@ -38,12 +38,12 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                             turtlePosition.position = nextPosition;
                         }
                         break;
-                    case '+':
+                    case TurtleModeConfig.TurnLeftSymbol:
                         turtle.DirectionState = turtle.DirectionState.RotateLeft(out direction);
                         turtle.CurrentSprite = _turtleSpritesContent[direction];
                         drawData.Add((turtlePosition.position, turtle.CurrentSprite));
                         break;
-                    case '-':
+                    case TurtleModeConfig.TurnRightSymbol:
                         turtle.DirectionState = turtle.DirectionState.RotateRight(out direction);
                         turtle.CurrentSprite = _turtleSpritesContent[direction];
                         drawData.Add((turtlePosition.position, turtle.CurrentSprite));
