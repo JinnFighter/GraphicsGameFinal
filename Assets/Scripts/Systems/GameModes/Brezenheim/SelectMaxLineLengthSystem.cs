@@ -11,7 +11,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         
         public void Init()
         {
-            _generator.MaxLengthSum = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty].MaxLengthSum;
+            _generator.MaxLengthSum = _brezenheimConfigs[_difficultyConfiguration.Difficulty].MaxLengthSum;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
+                var config = _brezenheimConfigs[_difficultyConfiguration.Difficulty];
                     
                 var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
                 _lineDataModel.Indexes.Clear();

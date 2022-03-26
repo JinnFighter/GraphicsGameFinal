@@ -7,6 +7,7 @@ namespace Configurations.Script
     public class BrezenheimConfigs : ScriptableObject
     {
         [field: SerializeField] public List<BrezenheimConfig> Configs { get; private set; }
+        public BrezenheimConfig this[int difficulty] => Configs[difficulty];
     }
 
     [CreateAssetMenu(fileName = "BrezenheimConfig", menuName = "Configs/BrezenheimConfig")]
