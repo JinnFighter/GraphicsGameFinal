@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Configurations.Script;
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 using UnityEngine;
 
 namespace Pixelgrid.Systems.GameModes.Brezenheim 
@@ -14,6 +15,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         private readonly LinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly BrezenheimConfigs _brezenheimConfigs = null;
+        private readonly BrezenheimDataModel _brezenheimDataModel = null;
 
         public void Run()
         {
@@ -23,19 +25,17 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                 {
                     var entity = _gameModeDataFilter.GetEntity(index);
                     ref var lineData = ref entity.Get<LineData>();
-                    ref var dData = ref entity.Get<Brezenheim_D_Data>();
                     var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
                     
                     var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
                     var lineDatas = new List<List<Vector2Int>>();
-                    var dDatas = new List<List<int>>();
+                    _brezenheimDataModel.Indexes.Clear();
 
                     foreach (var line in lines)
                     {
                         lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
-                        dDatas.Add(ds);
+                        _brezenheimDataModel.Indexes.Add(ds);
                     }
-                    dData.Indexes = dDatas;
                     lineData.LinePoints = lineDatas;
                     lineData.CurrentPoint = 0;
                     lineData.CurrentLine = 0;

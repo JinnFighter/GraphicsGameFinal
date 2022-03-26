@@ -4,6 +4,6 @@ namespace Pixelgrid.DataModels
 {
     public class BrezenheimDataModel
     {
-        public List<List<int>> Indexes = new List<List<int>>();
+        public readonly List<List<int>> Indexes = new List<List<int>>();
     }
 }

@@ -9,15 +9,15 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
     public sealed class CheckBrezenheimAnswerSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter = null;
-        private readonly EcsFilter<LineData, Brezenheim_D_Data> _gameModeDataFilter = null;
+        private readonly EcsFilter<LineData> _gameModeDataFilter = null;
 
         private readonly PixelSpritesContent _pixelSpritesContent = null;
         private readonly BrezenheimIndexModel _brezenheimIndexModel = null;
+        private readonly BrezenheimDataModel _brezenheimDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
             ref var lineDataComponent = ref _gameModeDataFilter.Get1(0);
-            var dData = _gameModeDataFilter.Get2(0);
             var lineDatas = lineDataComponent.LinePoints;
             var eventReceiver = _gameModeDataFilter.GetEntity(0);
 
@@ -43,16 +43,14 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                             eventReceiver.Get<GameOverEvent>();
                             return;
                         }
-                        else
+
+                        eventReceiver.Get<ClearGridEvent>();
+                        ref var drawData = ref eventReceiver.Get<LineDrawData>();
+                        drawData.drawData = new List<(Vector2Int, Sprite)>
                         {
-                            eventReceiver.Get<ClearGridEvent>();
-                            ref var drawData = ref eventReceiver.Get<LineDrawData>();
-                            drawData.drawData = new List<(Vector2Int, Sprite)>
-                            {
-                                (lineDatas[lineDataComponent.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
-                                (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
-                            };
-                        }
+                            (lineDatas[lineDataComponent.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
+                            (lineDatas[lineDataComponent.CurrentLine][lineDatas[lineDataComponent.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
+                        };
                     }
                     else
                     {
@@ -65,7 +63,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                     }
 
                     eventReceiver.Get<CorrectAnswerEvent>();
-                    _brezenheimIndexModel.Index = dData.Indexes[lineDataComponent.CurrentLine][lineDataComponent.CurrentPoint];
+                    _brezenheimIndexModel.Index = _brezenheimDataModel.Indexes[lineDataComponent.CurrentLine][lineDataComponent.CurrentPoint];
                 }
 
                 else

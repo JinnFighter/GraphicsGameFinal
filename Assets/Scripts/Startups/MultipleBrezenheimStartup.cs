@@ -22,6 +22,7 @@ namespace Pixelgrid.Startups
         EcsSystems _systems;
 
         private BrezenheimIndexModel _brezenheimIndexModel;
+        private BrezenheimDataModel _brezenheimDataModel;
 
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
@@ -61,6 +62,7 @@ namespace Pixelgrid.Startups
             });
 
             _brezenheimIndexModel = new BrezenheimIndexModel();
+            _brezenheimDataModel = new BrezenheimDataModel();
 
             _systems
                  // register your systems here:
@@ -134,6 +136,7 @@ namespace Pixelgrid.Startups
 
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_brezenheimIndexModel)
+                 .Inject(_brezenheimDataModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)
