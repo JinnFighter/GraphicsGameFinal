@@ -1,37 +1,39 @@
-using Leopotam.Ecs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 
-namespace Pixelgrid
+namespace Pixelgrid.Systems.GameModes.SouthCohen
 {
     public sealed class GenerateLineZonesSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
-        private readonly EcsFilter<LineData, SouthCohenData, BorderComponent> _gameModeDataFilter = null;
+        private readonly EcsFilter<SouthCohenData, BorderComponent> _gameModeDataFilter = null;
 
-        private CodeReceiver _codeReceiver;
+        private readonly CodeReceiver _codeReceiver = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
             if(!_restartEventFilter.IsEmpty())
             {
+                var lineData = _lineDataModel.LinePoints;
                 foreach(var index in _gameModeDataFilter)
                 {
-                    var border = _gameModeDataFilter.Get3(index);
+                    var border = _gameModeDataFilter.Get2(index);
                     var left = border.LeftCorner;
                     var right = border.RightCorner;
-                    var lineData = _gameModeDataFilter.Get1(index);
-                    ref var zonesData = ref _gameModeDataFilter.Get2(index);
+                    ref var zonesData = ref _gameModeDataFilter.Get1(index);
                     var zones = new List<List<int>>();
 
-                    for(var i = 0; i < lineData.LinePoints.Count; i++)
+                    for(var i = 0; i < lineData.Count; i++)
                         zones.Add(new List<int>());
 
-                    for(var i = 0; i< lineData.LinePoints.Count; i++)
+                    for(var i = 0; i< lineData.Count; i++)
                     {
-                        var start = lineData.LinePoints[i].First();
-                        var end = lineData.LinePoints[i].Last();
+                        var start = lineData[i].First();
+                        var end = lineData[i].Last();
                         var ax = start.x;
                         var ay = start.y;
                         var bx = end.x;

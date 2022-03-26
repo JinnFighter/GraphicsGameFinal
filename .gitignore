@@ -82,6 +82,10 @@ crashlytics-build.properties
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
 
+# JetBrains Rider Cache
+.idea/
+Assets/Plugins/Editor/JetBrains*
+
 *.suo
 *.user
 .vs/

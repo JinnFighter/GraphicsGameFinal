@@ -3,12 +3,14 @@ using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Brezenheim;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.UI.Views;
 using UnityEngine;
 
 namespace Pixelgrid.Startups
@@ -19,6 +21,8 @@ namespace Pixelgrid.Startups
         EcsWorld _world;
         EcsSystems _systems;
 
+        private BrezenheimModels _brezenheimModels;
+
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public BrezenheimConfigs BrezenheimConfigs;
@@ -26,7 +30,7 @@ namespace Pixelgrid.Startups
         public FlexibleGridLayout Grid;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
-        public BrezenheimDataContainer BrezenheimDataContainer;
+        public BrezenheimDataView BrezenheimDataView;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -56,6 +60,8 @@ namespace Pixelgrid.Startups
                 "CheckClick"
             });
 
+            _brezenheimModels = new BrezenheimModels();
+
             _systems
                  // register your systems here:
 
@@ -66,7 +72,6 @@ namespace Pixelgrid.Startups
                  .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
-                 .Add(new CreateLineDataSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
@@ -87,7 +92,6 @@ namespace Pixelgrid.Startups
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
-                 .Add(new UpdateDDataSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -120,7 +124,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
-                 .OneFrame<UpdateDIndexEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
                  .OneFrame<DisableSystemTypeEvent>()
@@ -129,6 +132,8 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
+                 .Inject(_brezenheimModels.BrezenheimIndexModel)
+                 .Inject(_brezenheimModels.LineDataModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)
@@ -136,7 +141,7 @@ namespace Pixelgrid.Startups
                  .Inject(Grid)
                  .Inject(timersContainer)
                  .Inject(LinesGenerator)
-                 .Inject(BrezenheimDataContainer)
+                 .Inject(BrezenheimDataView)
                  .Inject(GameContent.SpritesContent.PixelSpritesContent)
                  .Inject(GameContent.PrefabsContent)
                  .Inject(GameContent.AudioContent)

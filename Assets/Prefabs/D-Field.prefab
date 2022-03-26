@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3392237507578042103}
   - component: {fileID: 3392237507578042102}
+  - component: {fileID: 124403234272057436}
   m_Layer: 5
   m_Name: D-Field
   m_TagString: Untagged
@@ -45,6 +46,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3392237507578042100}
   m_CullTransparentMesh: 1
+--- !u!114 &124403234272057436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392237507578042100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724cace4bd6c8944399c0e288004e18a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 3392237508257939359}
 --- !u!1001 &3044780376286317690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -185,3 +199,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3044780376286317690}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3392237508257939359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 383542180261147621, guid: 86275bc7a9bf2074f82a764a7e4bef92,
+    type: 3}
+  m_PrefabInstance: {fileID: 3044780376286317690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
