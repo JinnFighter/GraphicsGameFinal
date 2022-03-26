@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
@@ -21,6 +22,7 @@ namespace Pixelgrid.Startups
 
         private LineDataModel _lineDataModel;
 
+        public SouthCohenConfigs SouthCohenConfigs;
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
@@ -133,6 +135,7 @@ namespace Pixelgrid.Startups
 
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_lineDataModel)
+                 .Inject(SouthCohenConfigs)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)

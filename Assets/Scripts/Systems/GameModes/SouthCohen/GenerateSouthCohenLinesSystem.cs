@@ -1,4 +1,5 @@
 using System.Linq;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Pixelgrid.DataModels;
 
@@ -12,38 +13,15 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         private readonly SouthCohenLinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly LineDataModel _lineDataModel = null;
+        private readonly SouthCohenConfigs _configs = null;
 
         public void Run()
         {
             if (!_restartEventFilter.IsEmpty())
             {
                 var border = _borderFilter.Get1(0);
-                int b;
-                int minLength;
-                int maxLength;
-                int linesCount;
-                switch (_difficultyConfiguration.Difficulty)
-                {
-                    case 1:
-                        linesCount = 7;
-                        maxLength = 10;
-                        minLength = 8;
-                        b = 14;
-                        break;
-                    case 2:
-                        linesCount = 10;
-                        maxLength = 11;
-                        minLength = 10;
-                        b = 19;
-                        break;
-                    default:
-                        linesCount = 5;
-                        maxLength = 8;
-                        minLength = 6;
-                        b = 9;
-                        break;
-                }
-                var lines = _lineDataGenerator.GenerateData(minLength, maxLength, b, linesCount, border.LeftCorner, border.RightCorner).ToList();
+                var config = _configs[_difficultyConfiguration.Difficulty];
+                var lines = _lineDataGenerator.GenerateData(config.MinLength, config.MaxLength, config.MaxCoordinate, config.LinesCount, border.LeftCorner, border.RightCorner).ToList();
                 _lineDataModel.LinePoints.Clear();
 
                 foreach(var line in lines)
