@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2946c19ca1504945bdbaef6e9c7f927, type: 3}
   m_Name: TurtleConfigs
   m_EditorClassIdentifier: 
+  <TurtleModeConfig>k__BackingField: {fileID: 11400000, guid: 7eda90c401b17794b999e0e34b12766b,
+    type: 2}
   <Configs>k__BackingField:
   - {fileID: 11400000, guid: de36f06c2893a3b42bcb55b8bfb99a8c, type: 2}
   - {fileID: 11400000, guid: 2e8d8936adb826347aad590fa8b8cf69, type: 2}
