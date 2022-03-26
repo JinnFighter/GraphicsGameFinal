@@ -6,5 +6,6 @@ namespace Pixelgrid.Configurations.Script
     public class GameFieldConfigs : ScriptableObject
     {
         [field: SerializeField] public GameFieldConfig[] Configs { get; private set; }
+        public GameFieldConfig this[int difficulty] => Configs[difficulty];
     }
 }

@@ -18,7 +18,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
 
         void IEcsRunSystem.Run()
         {
-            var fieldSize = _gameFieldConfigs.Configs[_difficultyConfiguration.Difficulty].FieldSize;
+            var fieldSize = _gameFieldConfigs[_difficultyConfiguration.Difficulty].FieldSize;
             foreach(var index in _filter)
             {
                 ref var turtle = ref _filter.Get1(index);

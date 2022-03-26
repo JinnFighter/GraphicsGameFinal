@@ -19,7 +19,7 @@ namespace Pixelgrid.Systems.GameField
         {
             var difficulty = _difficultyConfiguration.Difficulty;
 
-            int fieldSize = _gameFieldConfigs.Configs[difficulty].FieldSize;
+            int fieldSize = _gameFieldConfigs[difficulty].FieldSize;
 
             for (var i = 0; i < fieldSize; i++)
             {
