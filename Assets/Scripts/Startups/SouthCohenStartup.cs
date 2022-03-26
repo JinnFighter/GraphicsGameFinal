@@ -72,7 +72,6 @@ namespace Pixelgrid.Startups
                  .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
-                 .Add(new CreateSouthCohenDataSystem())
                  .Add(new GenerateBorderSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())

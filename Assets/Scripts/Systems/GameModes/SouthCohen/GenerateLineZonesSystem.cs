@@ -9,10 +9,11 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
     public sealed class GenerateLineZonesSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
-        private readonly EcsFilter<SouthCohenData, BorderComponent> _gameModeDataFilter = null;
+        private readonly EcsFilter<BorderComponent> _gameModeDataFilter = null;
 
         private readonly CodeReceiver _codeReceiver = null;
         private readonly LineDataModel _lineDataModel = null;
+        private readonly SouthCohenDataModel _southCohenDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -21,7 +22,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                 var lineData = _lineDataModel.LinePoints;
                 foreach(var index in _gameModeDataFilter)
                 {
-                    var border = _gameModeDataFilter.Get2(index);
+                    var border = _gameModeDataFilter.Get1(index);
                     var left = border.LeftCorner;
                     var right = border.RightCorner;
                     ref var zonesData = ref _gameModeDataFilter.Get1(index);
@@ -82,11 +83,10 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                         if(!outside && ! zones[i].Contains(code1))
                             zones[i].Add(code1);
                     }
-
-                    zonesData.Zones = zones;
+                    _southCohenDataModel.Zones = zones;
                     var entity = _gameModeDataFilter.GetEntity(index);
                     ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
-                    dataGeneratedEvent.DataCount = zonesData.Zones.Sum(zonePart => zonePart.Count);
+                    dataGeneratedEvent.DataCount = zones.Sum(zonePart => zonePart.Count);
                 }
             }
         }
