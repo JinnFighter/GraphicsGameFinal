@@ -1,9 +1,11 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Configurations.Script;
 using Pixelgrid.Configurations.Script;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
+using Pixelgrid.Systems.GameModes.Brezenheim;
 using Pixelgrid.Systems.Timers;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace Pixelgrid {
         EcsSystems _systems;
 
         public GameFieldConfigs GameFieldConfigs;
+        public BrezenheimConfigs BrezenheimConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
@@ -127,6 +130,7 @@ namespace Pixelgrid {
                 // inject service instances here (order doesn't important), for example:
                 .Inject(GameFieldConfigs)
                 .Inject(GameModeConfiguration)
+                .Inject(BrezenheimConfigs)
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
                 .Inject(spritesContainer)

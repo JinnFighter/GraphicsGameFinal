@@ -1,9 +1,10 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
 using System.Linq;
+using Configurations.Script;
+using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Brezenheim 
 {
     public sealed class GenerateLineDataSystem : IEcsRunSystem
     {
@@ -12,6 +13,7 @@ namespace Pixelgrid
         
         private readonly LinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly BrezenheimConfigs _brezenheimConfigs = null;
 
         public void Run()
         {
@@ -22,30 +24,9 @@ namespace Pixelgrid
                     var entity = _gameModeDataFilter.GetEntity(index);
                     ref var lineData = ref entity.Get<LineData>();
                     ref var dData = ref entity.Get<Brezenheim_D_Data>();
-                    int minLength;
-                    int maxLength;
-                    int linesCount;
-
-                    switch(_difficultyConfiguration.Difficulty)
-                    {
-                        case 1:
-                            minLength = 4;
-                            maxLength = 8;
-                            linesCount = 7;
-                            break;
-                        case 2:
-                            minLength = 5;
-                            maxLength = 10;
-                            linesCount = 10;
-                            break;
-                        default:
-                            minLength = 3;
-                            maxLength = 6;
-                            linesCount = 5;
-                            break;
-                    }
-
-                    var lines = _lineDataGenerator.GenerateData(minLength, maxLength, linesCount).ToList();
+                    var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
+                    
+                    var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
                     var lineDatas = new List<List<Vector2Int>>();
                     var dDatas = new List<List<int>>();
 
