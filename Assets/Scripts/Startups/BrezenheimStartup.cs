@@ -10,6 +10,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Brezenheim;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.UI.Views;
 using UnityEngine;
 
 namespace Pixelgrid {
@@ -28,7 +29,7 @@ namespace Pixelgrid {
         public FlexibleGridLayout Grid;
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
-        public BrezenheimDataContainer BrezenheimDataContainer;
+        public BrezenheimDataView BrezenheimDataView;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -139,7 +140,7 @@ namespace Pixelgrid {
                  .Inject(Grid)
                  .Inject(timersContainer)
                  .Inject(LinesGenerator)
-                 .Inject(BrezenheimDataContainer)
+                 .Inject(BrezenheimDataView)
                  .Inject(GameContent.SpritesContent.PixelSpritesContent)
                  .Inject(GameContent.PrefabsContent)
                  .Inject(GameContent.AudioContent)
