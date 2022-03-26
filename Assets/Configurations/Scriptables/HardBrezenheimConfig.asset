@@ -15,3 +15,4 @@ MonoBehaviour:
   <MinLineLength>k__BackingField: 5
   <MaxLineLength>k__BackingField: 10
   <LineCount>k__BackingField: 10
+  <MaxLengthSum>k__BackingField: 90

@@ -15,5 +15,6 @@ namespace Configurations.Script
         [field: SerializeField] public int MinLineLength { get; private set; } = 3;
         [field: SerializeField] public int MaxLineLength { get; private set; } = 6;
         [field: SerializeField] public int LineCount { get; private set; } = 5;
+        [field: SerializeField] public int MaxLengthSum { get; private set; } = 20;
     }
 }
