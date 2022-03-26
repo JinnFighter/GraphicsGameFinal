@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
-using Pixelgrid.Configurations.Script;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
@@ -18,6 +18,8 @@ namespace Pixelgrid
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
         EcsSystems _systems;
+
+        private BezierDataModels _bezierDataModels;
 
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
@@ -54,6 +56,8 @@ namespace Pixelgrid
                 "CheckClick"
             });
 
+            _bezierDataModels = new BezierDataModels();
+
             _systems
                  // register your systems here:
 
@@ -64,7 +68,6 @@ namespace Pixelgrid
                  .Add(new GenerateCountdownTimersSystem())
                  .Add(new GenerateTimersSystem())
                  .Add(new CreateStatDataTrackerSystem())
-                 .Add(new CreateBezierDataSystem())
                  .Add(new LoadTutorialMessageSystem())
                  .Add(new LaunchGameplayLoopSystem())
                  //The rest of the systems go here:
@@ -125,6 +128,7 @@ namespace Pixelgrid
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
+                 .Inject(_bezierDataModels.BezierDataModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
