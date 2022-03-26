@@ -1,30 +1,31 @@
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Bezier 
 {
     public sealed class CheckBezierAnswerSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<PixelPosition, PixelClickedEvent> _pixelsClickedFilter = null;
-        private readonly EcsFilter<BezierLineData> _gameModeDataFilter = null;
+        private readonly EcsWorld _world = null;
+        private readonly BezierDataModel _bezierDataModel = null;
 
         void IEcsRunSystem.Run()
         {
-            ref var lineDataComponent = ref _gameModeDataFilter.Get1(0);
-            var lineDatas = lineDataComponent.Points;
-            var eventReceiver = _gameModeDataFilter.GetEntity(0);
+            var lineDatas = _bezierDataModel.Points;
+            var eventReceiver = _world.NewEntity();
             foreach (var pixelIndex in _pixelsClickedFilter)
             {
                 var positionComponent = _pixelsClickedFilter.Get1(pixelIndex);
                 var position = positionComponent.position;
-                if (lineDataComponent.CurrentPoint >= lineDatas.Count)
+                if (_bezierDataModel.CurrentPoint >= lineDatas.Count)
                     eventReceiver.Get<GameOverEvent>();
                 else
                 {
-                    if(position.Equals(lineDatas[lineDataComponent.CurrentPoint]))
+                    if(position.Equals(lineDatas[_bezierDataModel.CurrentPoint]))
                     {
                         eventReceiver.Get<CorrectAnswerEvent>();
-                        lineDataComponent.CurrentPoint++;
-                        if (lineDataComponent.CurrentPoint >= lineDatas.Count)
+                        _bezierDataModel.CurrentPoint++;
+                        if (_bezierDataModel.CurrentPoint >= lineDatas.Count)
                             eventReceiver.Get<GameOverEvent>();
                     }
                     else

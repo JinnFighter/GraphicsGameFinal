@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
+using Pixelgrid.Systems.GameModes.ColorPicker;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +18,9 @@ namespace Pixelgrid.Startups
         EcsWorld _world;
         EcsSystems _systems;
 
+        private ColorPickerModels _colorPickerModels;
+
+        public ColorPickerConfigs ColorPickerConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public ImageHolderContainer ImageHolderContainer;
@@ -46,6 +52,8 @@ namespace Pixelgrid.Startups
                 "OnSliderValueChange",
                 "CheckColorPickerClick"
             });
+
+            _colorPickerModels = new ColorPickerModels();
 
             _systems
                  // register your systems here:
@@ -104,19 +112,22 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateTextEvent>()
                  .OneFrame<UpdateSpriteImageEvent>()
 
-                // inject service instances here (order doesn't important), for example:
-                .Inject(GameModeConfiguration)
-                .Inject(difficultyConfiguration)
-                .Inject(ImageHolderContainer)
-                .Inject(GameContent.AudioContent)
-                .Inject(AudioPlayer)
-                .Inject(EndgamePresenter)
-                .Inject(TutorialPresenter)
-                .Inject(ProgressBar)
-                .Inject(ScreenContainer)
-                .Inject(Slider)
-                .Inject(i18n)
-                .Init();
+                 // inject service instances here (order doesn't important), for example:
+                 .Inject(_colorPickerModels.ColorPickerDataModel)
+                 .Inject(_colorPickerModels.ColorContainerModel)
+                 .Inject(ColorPickerConfigs)
+                 .Inject(GameModeConfiguration)
+                 .Inject(difficultyConfiguration)
+                 .Inject(ImageHolderContainer)
+                 .Inject(GameContent.AudioContent)
+                 .Inject(AudioPlayer)
+                 .Inject(EndgamePresenter)
+                 .Inject(TutorialPresenter)
+                 .Inject(ProgressBar)
+                 .Inject(ScreenContainer)
+                 .Inject(Slider)
+                 .Inject(i18n)
+                 .Init();
         }
 
         void Update()

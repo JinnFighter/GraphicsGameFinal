@@ -3,6 +3,7 @@ using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
@@ -19,6 +20,8 @@ namespace Pixelgrid.Startups
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
         EcsSystems _systems;
+
+        private TurtleModels _turtleModels;
 
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
@@ -55,6 +58,8 @@ namespace Pixelgrid.Startups
                 "UpdateStopwatches",
                 "CheckTurtleClick"
             });
+
+            _turtleModels = new TurtleModels();
             
             _systems
                  // register your systems here:
@@ -128,6 +133,7 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
+                 .Inject(_turtleModels.TurtlePathModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)

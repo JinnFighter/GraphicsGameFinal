@@ -17,5 +17,7 @@ namespace Configurations.Script
         [field: SerializeField] public int MaxLength { get; private set; } = 8;
         [field: SerializeField] public int LinesCount { get; private set; } = 5;
         [field: SerializeField] public int MaxCoordinate { get; private set; } = 9;
+        [field: SerializeField] public Vector2Int BorderLeftCorner { get; private set; } = new Vector2Int(3, 3);
+        [field: SerializeField] public Vector2Int BorderRightCorner { get; private set; } = new Vector2Int(7, 7);
     }
 }

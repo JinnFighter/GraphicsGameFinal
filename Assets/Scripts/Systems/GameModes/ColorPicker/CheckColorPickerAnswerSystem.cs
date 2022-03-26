@@ -1,17 +1,18 @@
-using Leopotam.Ecs;
 using System;
+using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.ColorPicker 
 {
     public sealed class CheckColorPickerAnswerSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<ColorChosenEvent> _eventFilter = null;
-        private readonly EcsFilter<ColorPickerData> _dataFilter = null;
 
         private readonly ImageHolderContainer _imageHolderContainer = null;
         private readonly Slider _slider = null;
+        private readonly ColorPickerDataModel _colorPickerDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -23,20 +24,16 @@ namespace Pixelgrid
                 if(Math.Abs(colorData.Color.b - questionColor.b) < 0.2f)
                 {
                     entity.Get<CorrectAnswerEvent>();
-                    foreach(var dataIndex in _dataFilter)
-                    {
-                        ref var data = ref _dataFilter.Get1(dataIndex);
 
-                        data.CurrentColor++;
-                        if(data.CurrentColor >= data.ColorCount)
-                            entity.Get<GameOverEvent>();
-                        else
-                        {
-                            var nextColor = data.Colors[data.CurrentColor];
-                            var answerColor = new Color32(nextColor.r, nextColor.g, Convert.ToByte(_slider.value), 255);
-                            _imageHolderContainer.QuestionHolder.color = nextColor;
-                            _imageHolderContainer.AnswerHolder.color = answerColor;
-                        }    
+                    _colorPickerDataModel.CurrentColor++;
+                    if(_colorPickerDataModel.CurrentColor >= _colorPickerDataModel.ColorCount)
+                        entity.Get<GameOverEvent>();
+                    else
+                    {
+                        var nextColor = _colorPickerDataModel.Colors[_colorPickerDataModel.CurrentColor];
+                        var answerColor = new Color32(nextColor.r, nextColor.g, Convert.ToByte(_slider.value), 255);
+                        _imageHolderContainer.QuestionHolder.color = nextColor;
+                        _imageHolderContainer.AnswerHolder.color = answerColor;
                     }
                 }
                 else

@@ -1,28 +1,18 @@
+using Configurations.Script;
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.ColorPicker 
 {
     public sealed class CreateColorDataSystem : IEcsInitSystem 
     {
-        private readonly EcsFilter<ColorContainer> _filter;
-
-        private readonly DifficultyConfiguration _difficultyConfiguration;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly ColorPickerDataModel _colorPickerDataModel = null;
+        private readonly ColorPickerConfigs _colorPickerConfigs = null;
 
         public void Init()
         {
-            foreach (var index in _filter)
-            {
-                var entity = _filter.GetEntity(index);
-                ref var data = ref entity.Get<ColorPickerData>();
-                var colorsCount = _difficultyConfiguration.Difficulty switch
-                {
-                    1 => 7,
-                    2 => 10,
-                    _ => 5,
-                };
-
-                data.ColorCount = colorsCount;
-            }
+            _colorPickerDataModel.ColorCount = _colorPickerConfigs[_difficultyConfiguration.Difficulty].ColorCount;
         }
     }
 }

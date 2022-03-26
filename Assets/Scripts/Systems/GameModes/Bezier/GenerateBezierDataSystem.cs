@@ -1,30 +1,29 @@
-using Leopotam.Ecs;
 using System.Linq;
+using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 
-namespace Pixelgrid
+namespace Pixelgrid.Systems.GameModes.Bezier
 {
     public sealed class GenerateBezierDataSystem : IEcsRunSystem
     {
-        private EcsFilter<BezierLineData> _gameModeDataFilter;
-        private BezierLinesGenerator _lineDataGenerator;
-        private EcsFilter<RestartGameEvent> _restartEventFilter;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsWorld _world = null;
+        private readonly BezierLinesGenerator _lineDataGenerator = null;
 
+        private readonly BezierDataModel _bezierDataModel = null;
+        
         public void Run()
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                foreach (var index in _gameModeDataFilter)
-                {
-                    var entity = _gameModeDataFilter.GetEntity(index);
-                    ref var lineData = ref _gameModeDataFilter.Get1(index);
-                    var lines = _lineDataGenerator.GenerateData(3, 5, 3).ToList();
+                var entity = _world.NewEntity();
+                var lines = _lineDataGenerator.GenerateData(3, 5, 3).ToList();
 
-                    lineData.Points = lines;
-                    lineData.CurrentPoint = 0;
+                _bezierDataModel.Points = lines;
+                _bezierDataModel.CurrentPoint = 0;
 
-                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
-                    dataGeneratedEvent.DataCount = lineData.Points.Count;
-                }
+                ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                dataGeneratedEvent.DataCount = lines.Count;
             }
         }
     }
