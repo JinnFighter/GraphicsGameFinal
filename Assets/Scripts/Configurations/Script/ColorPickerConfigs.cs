@@ -14,5 +14,6 @@ namespace Configurations.Script
     public class ColorPickerConfig : ScriptableObject
     {
         [field: SerializeField] public int ColorCount { get; private set; } = 5;
+        [field: SerializeField] public int ColorVariantsCount { get; private set; } = 6;
     }
 }

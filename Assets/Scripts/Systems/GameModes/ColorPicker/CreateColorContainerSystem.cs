@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Pixelgrid.DataModels;
 using UnityEngine;
@@ -9,11 +10,13 @@ namespace Pixelgrid.Systems.GameModes.ColorPicker {
     public sealed class CreateColorContainerSystem : IEcsInitSystem
     {
         private readonly ColorContainerModel _colorContainerModel = null;
+        private readonly ColorPickerConfigs _colorPickerConfigs = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
         
         public void Init()
         {
             var colors = new List<Color32>();
-            for (var i = 0; i < 6; i++)
+            for (var i = 0; i < _colorPickerConfigs[_difficultyConfiguration.Difficulty].ColorVariantsCount; i++)
             {
                 colors.Add(new Color32
                 {
