@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using System.Linq;
 using Configurations.Script;
 using Leopotam.Ecs;
 using Pixelgrid.DataModels;
-using UnityEngine;
 
 namespace Pixelgrid.Systems.GameModes.Brezenheim 
 {
     public sealed class GenerateLineDataSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<LineData> _gameModeDataFilter = null;
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsWorld _world = null;
         
         private readonly LinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
@@ -21,28 +19,23 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                foreach (var index in _gameModeDataFilter)
-                {
-                    var entity = _gameModeDataFilter.GetEntity(index);
-                    ref var lineData = ref entity.Get<LineData>();
-                    var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
+                var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
                     
-                    var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
-                    var lineDatas = new List<List<Vector2Int>>();
-                    _brezenheimDataModel.Indexes.Clear();
+                var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
+                _brezenheimDataModel.Indexes.Clear();
+                _brezenheimDataModel.LinePoints.Clear();
 
-                    foreach (var line in lines)
-                    {
-                        lineDatas.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
-                        _brezenheimDataModel.Indexes.Add(ds);
-                    }
-                    lineData.LinePoints = lineDatas;
-                    lineData.CurrentPoint = 0;
-                    lineData.CurrentLine = 0;
-
-                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
-                    dataGeneratedEvent.DataCount = lineData.LinePoints.Sum(linePoint => linePoint.Count);
+                foreach (var line in lines)
+                {
+                    _brezenheimDataModel.LinePoints.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
+                    _brezenheimDataModel.Indexes.Add(ds);
                 }
+                _brezenheimDataModel.CurrentPoint = 0;
+                _brezenheimDataModel.CurrentLine = 0;
+
+                var entity = _world.NewEntity();
+                ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                dataGeneratedEvent.DataCount = _brezenheimDataModel.LinePoints.Sum(linePoint => linePoint.Count);
             }
         }
     }
