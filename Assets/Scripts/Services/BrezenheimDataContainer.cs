@@ -1,10 +1,10 @@
+using Pixelgrid.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Pixelgrid
 {
     public class BrezenheimDataContainer : MonoBehaviour
     {
-        public Text DText;
+        public BrezenheimDataView View;
     }
 }

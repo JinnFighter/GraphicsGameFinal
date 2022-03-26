@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         private readonly EcsFilter<LineData, Brezenheim_D_Data> _gameModeDataFilter = null;
 
         private readonly PixelSpritesContent _pixelSpritesContent = null;
+        private readonly BrezenheimIndexModel _brezenheimIndexModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -63,8 +65,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                     }
 
                     eventReceiver.Get<CorrectAnswerEvent>();
-                    ref var updateDEvent = ref eventReceiver.Get<UpdateDIndexEvent>();
-                    updateDEvent.index = dData.Indexes[lineDataComponent.CurrentLine][lineDataComponent.CurrentPoint];
+                    _brezenheimIndexModel.Index = dData.Indexes[lineDataComponent.CurrentLine][lineDataComponent.CurrentPoint];
                 }
 
                 else

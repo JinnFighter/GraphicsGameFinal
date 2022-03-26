@@ -13,6 +13,7 @@ namespace Pixelgrid.UI.Presenters
             _brezenheimIndexModel = model;
             _view = view;
             _brezenheimIndexModel.IndexChangedEvent += OnIndexChangedEvent;
+            _view.SetText("?");
         }
 
         private void OnIndexChangedEvent(int index)

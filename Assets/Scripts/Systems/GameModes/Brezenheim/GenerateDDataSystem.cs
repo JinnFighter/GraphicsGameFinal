@@ -1,4 +1,6 @@
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
+using Pixelgrid.UI.Presenters;
 using UnityEngine.UI;
 
 namespace Pixelgrid 
@@ -9,19 +11,13 @@ namespace Pixelgrid
         private readonly EcsFilter<Brezenheim_D_Data> _filter = null;
 
         private readonly BrezenheimDataContainer _brezenheimDataContainer = null;
+        private readonly BrezenheimIndexModel _brezenheimIndexModel = null;
 
         public void Run()
         {
             if (!_restartEventFilter.IsEmpty())
             {
-                foreach (var index in _filter)
-                {
-                    var entity = _filter.GetEntity(index);
-                    ref var dData = ref entity.Get<TextRef>();
-                    dData.Text = _brezenheimDataContainer.DText.gameObject.GetComponent<Text>();
-                    ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
-                    updateTextEvent.Text = "?";
-                }
+                var presenter = new BrezenheimIndexPresenter(_brezenheimIndexModel, _brezenheimDataContainer.View);
             }
         }
     }

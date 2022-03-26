@@ -3,6 +3,7 @@ using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
@@ -18,6 +19,8 @@ namespace Pixelgrid.Startups
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
         EcsWorld _world;
         EcsSystems _systems;
+
+        private BrezenheimIndexModel _brezenheimIndexModel;
 
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
@@ -56,6 +59,8 @@ namespace Pixelgrid.Startups
                 "CheckClick"
             });
 
+            _brezenheimIndexModel = new BrezenheimIndexModel();
+
             _systems
                  // register your systems here:
 
@@ -87,7 +92,6 @@ namespace Pixelgrid.Startups
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckBrezenheimAnswerSystem())
-                 .Add(new UpdateDDataSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -120,7 +124,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<LineDrawData>()
                  .OneFrame<ClearGridEvent>()
-                 .OneFrame<UpdateDIndexEvent>()
                  .OneFrame<PauseEvent>()
                  .OneFrame<UnpauseEvent>()
                  .OneFrame<DisableSystemTypeEvent>()
@@ -129,6 +132,7 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
+                 .Inject(_brezenheimIndexModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)
