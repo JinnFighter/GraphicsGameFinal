@@ -1,36 +1,37 @@
 using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Turtle 
 {
     public sealed class CheckTurtleAnswerSystem : IEcsRunSystem 
     {
-        private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition, TurtleCommand> _filter = null;
+        private readonly EcsFilter<TurtleComponent, PixelPosition, TurtleCommand> _filter = null;
+        private readonly TurtlePathModel _turtlePathModel = null;
 
         void IEcsRunSystem.Run()
         { 
             foreach(var index in _filter)
             {
                 var turtlePathEntity = _filter.GetEntity(index);
-                ref var turtlePath = ref _filter.Get2(index);
-                var path = turtlePath.Path;
+                
                 var gameplayEventReceiver = _filter.GetEntity(index);
 
-                var turtleCommand = _filter.Get4(index);
+                var turtleCommand = _filter.Get3(index);
                 var symbol = turtleCommand.CommandSymbol;
-                if(symbol == path[turtlePath.CurrentPath][turtlePath.CurrentSymbol])
+                if(symbol == _turtlePathModel.Path[_turtlePathModel.CurrentPath][_turtlePathModel.CurrentSymbol])
                 {
                     gameplayEventReceiver.Get<CorrectAnswerEvent>();
-                    turtlePath.CurrentSymbol++;
-                    if(turtlePath.CurrentSymbol == turtlePath.Path[turtlePath.CurrentPath].Count)
+                    _turtlePathModel.CurrentSymbol++;
+                    if(_turtlePathModel.CurrentSymbol == _turtlePathModel.Path[_turtlePathModel.CurrentPath].Count)
                     {
-                        turtlePath.CurrentSymbol = 0;
-                        turtlePath.CurrentPath++;
-                        if (turtlePath.CurrentPath == turtlePath.Path.Count)
+                        _turtlePathModel.CurrentSymbol = 0;
+                        _turtlePathModel.CurrentPath++;
+                        if (_turtlePathModel.CurrentPath == _turtlePathModel.Path.Count)
                             gameplayEventReceiver.Get<GameOverEvent>();
                         else
                         {
                             ref var updateTextEvent = ref turtlePathEntity.Get<UpdateTextEvent>();
-                            updateTextEvent.Text = new string(turtlePath.Path[turtlePath.CurrentPath].ToArray());
+                            updateTextEvent.Text = new string(_turtlePathModel.Path[_turtlePathModel.CurrentPath].ToArray());
                         }
                     }
                 }

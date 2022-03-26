@@ -2,12 +2,12 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Components;
 using UnityEngine.EventSystems;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Turtle 
 {
     public sealed class CheckTurtleClickSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<EcsUiClickEvent> _filter = null;
-        private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition> _turtleFilter = null;
+        private readonly EcsFilter<TurtleComponent, PixelPosition> _turtleFilter = null;
 
         void IEcsRunSystem.Run()
         {

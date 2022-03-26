@@ -1,15 +1,16 @@
-using Leopotam.Ecs;
 using System.Collections.Generic;
 using System.Linq;
 using Configurations.Script;
+using Leopotam.Ecs;
+using Pixelgrid.DataModels;
 using UnityEngine;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameModes.Turtle 
 {
     public sealed class GenerateTurtlePathSystem : IEcsRunSystem 
     {
-        private readonly EcsFilter<TurtlePath> _filter = null;
         private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly EcsWorld _world = null;
         
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly TurtleConfigs _turtleConfigs = null;
@@ -18,31 +19,29 @@ namespace Pixelgrid
 
         private readonly List<char> _commands = new List<char>{ 'F', '+', '-' };
 
+        private readonly TurtlePathModel _turtlePathModel = null;
+
         void IEcsRunSystem.Run() 
         {
             if(!_restartEventFilter.IsEmpty())
             {
-                foreach(var index in _filter)
-                {
-                    ref var turtlePath = ref _filter.Get1(index);
-                    var paths = turtlePath.Path;
-                    paths.Clear();
+                var paths = _turtlePathModel.Path;
+                paths.Clear();
 
-                    _direction = new RightDirectionState();
+                _direction = new RightDirectionState();
 
-                    for (var i = 0; i < _turtleConfigs[_difficultyConfiguration.Difficulty].PathCount; i++)
-                        paths.Add(GeneratePath());
+                for (var i = 0; i < _turtleConfigs[_difficultyConfiguration.Difficulty].PathCount; i++)
+                    paths.Add(GeneratePath());
 
-                    var entity = _filter.GetEntity(index);
-                    ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
-                    updateTextEvent.Text = string.Join("", paths[0]);
+                var entity = _world.NewEntity();
+                ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
+                updateTextEvent.Text = string.Join("", paths[0]);
 
-                    turtlePath.CurrentPath = 0;
-                    turtlePath.CurrentSymbol = 0;
+                _turtlePathModel.CurrentPath = 0;
+                _turtlePathModel.CurrentSymbol = 0;
 
-                    ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
-                    dataGeneratedEvent.DataCount = turtlePath.Path.Sum(path => path.Count);
-                }
+                ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
+                dataGeneratedEvent.DataCount = paths.Sum(path => path.Count);
             }
         }
 

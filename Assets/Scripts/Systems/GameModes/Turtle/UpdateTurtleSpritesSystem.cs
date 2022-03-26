@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Configurations.Script;
 using Leopotam.Ecs;
-using Pixelgrid.Configurations.Script;
 using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
 {
     public sealed class UpdateTurtleSpritesSystem : IEcsRunSystem 
     {
-        private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition, TurtleCommand, CorrectAnswerEvent> _filter = null;
+        private readonly EcsFilter<TurtleComponent, PixelPosition, TurtleCommand, CorrectAnswerEvent> _filter = null;
         
         private readonly TurtleSpritesContent _turtleSpritesContent = null;
         private readonly GameFieldConfigs _gameFieldConfigs = null;
@@ -23,8 +22,8 @@ namespace Pixelgrid.Systems.GameModes.Turtle
             foreach(var index in _filter)
             {
                 ref var turtle = ref _filter.Get1(index);
-                ref var turtlePosition = ref _filter.Get3(index);
-                var command = _filter.Get4(index);
+                ref var turtlePosition = ref _filter.Get2(index);
+                var command = _filter.Get3(index);
                 LookDirection direction;
                 var drawData = new List<(Vector2Int, Sprite)>();
 
