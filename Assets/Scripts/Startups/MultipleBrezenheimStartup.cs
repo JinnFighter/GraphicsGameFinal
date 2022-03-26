@@ -3,6 +3,8 @@ using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Brezenheim;
@@ -26,7 +28,7 @@ namespace Pixelgrid
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
-        public SoundsContainer SoundsContainer;
+        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -137,7 +139,7 @@ namespace Pixelgrid
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
-                .Inject(SoundsContainer)
+                .Inject(AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)

@@ -1,18 +1,19 @@
 using Leopotam.Ecs;
+using Pixelgrid.ScriptableObjects.Audio;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.Audio 
 {
     public sealed class EnqueueGameOverAudioClipSystem : IEcsRunSystem 
     {
-        private AudioPlayer _audioPlayer;
-        private SoundsContainer _soundsContainer;
+        private readonly AudioPlayer _audioPlayer = null;
+        private readonly AudioContent _audioContent = null;
 
-        private EcsFilter<GameOverEvent> _gameOverEventFilter;
+        private readonly EcsFilter<GameOverEvent> _gameOverEventFilter = null;
 
         void IEcsRunSystem.Run()
         {
             if (!_gameOverEventFilter.IsEmpty())
-                _audioPlayer.EnqueueClip(_soundsContainer.GameOverClip);
+                _audioPlayer.EnqueueClip(_audioContent.GameOverClip);
         }
     }
 }

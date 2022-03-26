@@ -1,6 +1,8 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,7 @@ namespace Pixelgrid
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public ImageHolderContainer ImageHolderContainer;
-        public SoundsContainer SoundsContainer;
+        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
@@ -106,7 +108,7 @@ namespace Pixelgrid
                 .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(ImageHolderContainer)
-                .Inject(SoundsContainer)
+                .Inject(AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)
