@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AudioContent>k__BackingField: {fileID: 11400000, guid: 22a6f9db0678e8c448333dcd8d1950f6,
     type: 2}
+  <PrefabsContent>k__BackingField: {fileID: 11400000, guid: d6ae5fe0b1fd12249aab2f1a8e684982,
+    type: 2}
+  <SpritesContent>k__BackingField: {fileID: 11400000, guid: 11ca13bd32c28044da3b3479d06b04e6,
+    type: 2}
