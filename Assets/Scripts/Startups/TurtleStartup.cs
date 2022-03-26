@@ -1,9 +1,9 @@
-using Leopotam.Ecs;
-using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
+using Leopotam.Ecs;
+using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
-using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
@@ -11,7 +11,7 @@ using Pixelgrid.Systems.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pixelgrid
+namespace Pixelgrid.Startups
 {
     sealed class TurtleStartup : MonoBehaviour
     {
@@ -28,7 +28,6 @@ namespace Pixelgrid
         public TimersContainer timersContainer;
         public TurtleConfiguration TurtleConfiguration;
         public TurtleConfigs TurtleConfigs;
-        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
@@ -36,6 +35,7 @@ namespace Pixelgrid
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
         public Text PathText;
+        public GameContent GameContent;
 
         void Start()
         {
@@ -139,7 +139,7 @@ namespace Pixelgrid
                 .Inject(spritesContainer)
                 .Inject(TurtleSpritesContainer)
                 .Inject(timersContainer)
-                .Inject(AudioContent)
+                .Inject(GameContent.AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)

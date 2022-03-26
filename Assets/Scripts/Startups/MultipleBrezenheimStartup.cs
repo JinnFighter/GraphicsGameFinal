@@ -1,9 +1,9 @@
-using Leopotam.Ecs;
-using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
+using Leopotam.Ecs;
+using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.Configurations.Script;
-using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
@@ -11,7 +11,7 @@ using Pixelgrid.Systems.GameModes.Brezenheim;
 using Pixelgrid.Systems.Timers;
 using UnityEngine;
 
-namespace Pixelgrid
+namespace Pixelgrid.Startups
 {
     sealed class MultipleBrezenheimStartup : MonoBehaviour
     {
@@ -28,13 +28,13 @@ namespace Pixelgrid
         public TimersContainer timersContainer;
         public LinesGenerator LinesGenerator;
         public BrezenheimDataContainer BrezenheimDataContainer;
-        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
+        public GameContent GameContent;
 
         void Start()
         {
@@ -139,7 +139,7 @@ namespace Pixelgrid
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
-                .Inject(AudioContent)
+                .Inject(GameContent.AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)

@@ -558,13 +558,13 @@ MonoBehaviour:
   difficultyConfiguration: {fileID: 11400000, guid: 0ac8155fd33ab7c4fb3d091c97c6246e,
     type: 2}
   ImageHolderContainer: {fileID: 724265815}
-  AudioContent: {fileID: 11400000, guid: 22a6f9db0678e8c448333dcd8d1950f6, type: 2}
   AudioPlayer: {fileID: 1896755959}
   EndgamePresenter: {fileID: 3572860926251362969}
   TutorialPresenter: {fileID: 1212594626}
   ProgressBar: {fileID: 532531294}
   ScreenContainer: {fileID: 1395400024}
   Slider: {fileID: 1274459859}
+  GameContent: {fileID: 11400000, guid: e7931cc360e03bb4f839503d41e18dab, type: 2}
 --- !u!224 &675663744 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7007240292433352861, guid: 11cfae3d27f1a1f46ac0c3863c05b605,

@@ -1,13 +1,13 @@
+using System.Collections.Generic;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
-using System.Collections.Generic;
-using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pixelgrid
+namespace Pixelgrid.Startups
 {
     sealed class ColorPickerStartup : MonoBehaviour
     {
@@ -18,13 +18,13 @@ namespace Pixelgrid
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public ImageHolderContainer ImageHolderContainer;
-        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
         public Slider Slider;
+        public GameContent GameContent;
 
         void Start()
         {
@@ -108,7 +108,7 @@ namespace Pixelgrid
                 .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(ImageHolderContainer)
-                .Inject(AudioContent)
+                .Inject(GameContent.AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(EndgamePresenter)
                 .Inject(TutorialPresenter)

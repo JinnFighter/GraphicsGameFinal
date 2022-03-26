@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Pixelgrid.Configurations.Script;
-using Pixelgrid.ScriptableObjects.Audio;
+using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
@@ -24,13 +24,13 @@ namespace Pixelgrid
         public SpritesContainer spritesContainer;
         public TimersContainer timersContainer;
         public BezierLinesGenerator LinesGenerator;
-        public AudioContent AudioContent;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
+        public GameContent GameContent;
 
         void Start()
         {
@@ -131,7 +131,7 @@ namespace Pixelgrid
                 .Inject(spritesContainer)
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
-                .Inject(AudioContent)
+                .Inject(GameContent.AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(CountdownPresenter)
                 .Inject(EndgamePresenter)
