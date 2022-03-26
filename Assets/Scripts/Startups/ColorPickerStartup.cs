@@ -112,6 +112,7 @@ namespace Pixelgrid.Startups
 
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_colorPickerModels.ColorPickerDataModel)
+                 .Inject(_colorPickerModels.ColorContainerModel)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)
                  .Inject(ImageHolderContainer)
