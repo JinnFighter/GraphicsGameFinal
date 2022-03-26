@@ -19,7 +19,7 @@ namespace Pixelgrid.Startups
         EcsWorld _world;
         EcsSystems _systems;
 
-        private BrezenheimDataModel _brezenheimDataModel;
+        private LineDataModel _lineDataModel;
 
         public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
@@ -58,7 +58,7 @@ namespace Pixelgrid.Startups
                 "CheckClick"
             });
 
-            _brezenheimDataModel = new BrezenheimDataModel();
+            _lineDataModel = new LineDataModel();
 
             _systems
                  // register your systems here:
@@ -132,7 +132,7 @@ namespace Pixelgrid.Startups
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
-                 .Inject(_brezenheimDataModel)
+                 .Inject(_lineDataModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)

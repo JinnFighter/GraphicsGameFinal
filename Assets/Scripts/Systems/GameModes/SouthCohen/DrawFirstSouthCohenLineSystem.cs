@@ -11,7 +11,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         private readonly EcsFilter<SouthCohenData> _dataFilter = null;
         
         private readonly PixelSpritesContent _pixelSpritesContent = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel;
+        private readonly LineDataModel _lineDataModel;
 
         public void Run()
         {
@@ -23,7 +23,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                     entity.Get<ClearGridEvent>();
                     ref var drawDataComponent = ref entity.Get<LineDrawData>();
                     var drawingData = 
-                        _brezenheimDataModel.LinePoints[0].Select(point => (point, _pixelSpritesContent.FilledSprite)).ToList();
+                        _lineDataModel.LinePoints[0].Select(point => (point, _pixelSpritesContent.FilledSprite)).ToList();
 
                     drawDataComponent.drawData = drawingData;
                 }

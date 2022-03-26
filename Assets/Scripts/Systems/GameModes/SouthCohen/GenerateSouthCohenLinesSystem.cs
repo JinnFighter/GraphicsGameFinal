@@ -11,7 +11,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
 
         private readonly SouthCohenLinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         public void Run()
         {
@@ -44,13 +44,13 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                         break;
                 }
                 var lines = _lineDataGenerator.GenerateData(minLength, maxLength, b, linesCount, border.LeftCorner, border.RightCorner).ToList();
-                _brezenheimDataModel.LinePoints.Clear();
+                _lineDataModel.LinePoints.Clear();
 
                 foreach(var line in lines)
-                    _brezenheimDataModel.LinePoints.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out _));
+                    _lineDataModel.LinePoints.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out _));
                     
-                _brezenheimDataModel.CurrentLine = 0;
-                _brezenheimDataModel.CurrentPoint = 0;
+                _lineDataModel.CurrentLine = 0;
+                _lineDataModel.CurrentPoint = 0;
             }
         }
     }

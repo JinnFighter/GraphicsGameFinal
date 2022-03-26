@@ -21,7 +21,7 @@ namespace Pixelgrid {
         EcsSystems _systems;
 
         private BrezenheimIndexModel _brezenheimIndexModel;
-        private BrezenheimDataModel _brezenheimDataModel;
+        private LineDataModel _lineDataModel;
 
         public GameFieldConfigs GameFieldConfigs;
         public BrezenheimConfigs BrezenheimConfigs;
@@ -60,7 +60,7 @@ namespace Pixelgrid {
                 "CheckClick"
             });
             _brezenheimIndexModel = new BrezenheimIndexModel();
-            _brezenheimDataModel = new BrezenheimDataModel();
+            _lineDataModel = new LineDataModel();
 
             _systems
                  // register your systems here:
@@ -134,7 +134,7 @@ namespace Pixelgrid {
 
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_brezenheimIndexModel)
-                 .Inject(_brezenheimDataModel)
+                 .Inject(_lineDataModel)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(BrezenheimConfigs)

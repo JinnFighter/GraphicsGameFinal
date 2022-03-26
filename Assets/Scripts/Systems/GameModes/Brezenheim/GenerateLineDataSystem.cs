@@ -13,7 +13,7 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         private readonly LinesGenerator _lineDataGenerator = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly BrezenheimConfigs _brezenheimConfigs = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         public void Run()
         {
@@ -22,20 +22,20 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                 var config = _brezenheimConfigs.Configs[_difficultyConfiguration.Difficulty];
                     
                 var lines = _lineDataGenerator.GenerateData(config.MinLineLength, config.MaxLineLength, config.LineCount).ToList();
-                _brezenheimDataModel.Indexes.Clear();
-                _brezenheimDataModel.LinePoints.Clear();
+                _lineDataModel.Indexes.Clear();
+                _lineDataModel.LinePoints.Clear();
 
                 foreach (var line in lines)
                 {
-                    _brezenheimDataModel.LinePoints.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
-                    _brezenheimDataModel.Indexes.Add(ds);
+                    _lineDataModel.LinePoints.Add(Algorithms.GetBrezenheimLineData(line.Item1, line.Item2, out var ds));
+                    _lineDataModel.Indexes.Add(ds);
                 }
-                _brezenheimDataModel.CurrentPoint = 0;
-                _brezenheimDataModel.CurrentLine = 0;
+                _lineDataModel.CurrentPoint = 0;
+                _lineDataModel.CurrentLine = 0;
 
                 var entity = _world.NewEntity();
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
-                dataGeneratedEvent.DataCount = _brezenheimDataModel.LinePoints.Sum(linePoint => linePoint.Count);
+                dataGeneratedEvent.DataCount = _lineDataModel.LinePoints.Sum(linePoint => linePoint.Count);
             }
         }
     }

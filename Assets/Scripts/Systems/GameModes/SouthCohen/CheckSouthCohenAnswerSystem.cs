@@ -13,7 +13,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         private readonly EcsFilter<SouthCohenData> _gameModeDataFilter = null;
         private readonly EcsFilter<BorderComponent> _borderFilter = null;
         private readonly EcsFilter<PixelComponent, PixelPosition> _pixelFilter = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         private readonly CodeReceiver _codeReceiver = null;
         private readonly PixelSpritesContent _pixelSpritesContent = null;
@@ -21,22 +21,22 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         void IEcsRunSystem.Run() 
         {
             var border = _borderFilter.Get1(0);
-            var lineData = _brezenheimDataModel.LinePoints;
+            var lineData = _lineDataModel.LinePoints;
             foreach(var index in _pixelsClickedFilter)
             {
                 var eventReceiver = _gameModeDataFilter.GetEntity(0);
                 ref var zonesData = ref _gameModeDataFilter.Get1(0);
 
-                if (_brezenheimDataModel.CurrentLine == lineData.Count)
+                if (_lineDataModel.CurrentLine == lineData.Count)
                     eventReceiver.Get<GameOverEvent>();
                 else
                 {
                     var clickedPosition = _pixelsClickedFilter.Get1(index);
                     var code = _codeReceiver.GetCode(clickedPosition.position, border.LeftCorner, border.RightCorner);
-                    if (zonesData.Zones[_brezenheimDataModel.CurrentLine].Contains(code))
+                    if (zonesData.Zones[_lineDataModel.CurrentLine].Contains(code))
                     {
                         eventReceiver.Get<CorrectAnswerEvent>();
-                        zonesData.Zones[_brezenheimDataModel.CurrentLine].Remove(code);
+                        zonesData.Zones[_lineDataModel.CurrentLine].Remove(code);
 
                         var drawData = new List<(Vector2Int, Sprite)>();
                         foreach(var pixelIndex in _pixelFilter)
@@ -45,17 +45,17 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                             if(_codeReceiver.GetCode(pixelPosition.position, border.LeftCorner, border.RightCorner) == code)
                                 drawData.Add((pixelPosition.position, _pixelSpritesContent.EmptySprite));
                         }
-                        if (!zonesData.Zones[_brezenheimDataModel.CurrentLine].Any())
+                        if (!zonesData.Zones[_lineDataModel.CurrentLine].Any())
                         {
-                            _brezenheimDataModel.CurrentLine++;
+                            _lineDataModel.CurrentLine++;
 
-                            if (_brezenheimDataModel.CurrentLine == lineData.Count)
+                            if (_lineDataModel.CurrentLine == lineData.Count)
                                 eventReceiver.Get<GameOverEvent>();
                             else
                             {
                                 eventReceiver.Get<ClearGridEvent>();
                                 
-                                foreach(var point in lineData[_brezenheimDataModel.CurrentLine])
+                                foreach(var point in lineData[_lineDataModel.CurrentLine])
                                     drawData.Add((point, _pixelSpritesContent.FilledSprite));
 
                                 ref var lineDrawData = ref eventReceiver.Get<LineDrawData>();

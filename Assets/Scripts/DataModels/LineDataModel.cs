@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Pixelgrid.DataModels
 {
-    public class BrezenheimDataModel
+    public class LineDataModel
     {
         public readonly List<List<int>> Indexes = new List<List<int>>();
-        public List<List<Vector2Int>> LinePoints = new List<List<Vector2Int>>();
+        public readonly List<List<Vector2Int>> LinePoints = new List<List<Vector2Int>>();
         public int CurrentPoint;
         public int CurrentLine;
     }

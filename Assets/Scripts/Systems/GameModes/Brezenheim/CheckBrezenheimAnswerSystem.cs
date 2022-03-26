@@ -12,31 +12,31 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
 
         private readonly PixelSpritesContent _pixelSpritesContent = null;
         private readonly BrezenheimIndexModel _brezenheimIndexModel = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
-            var lineDatas = _brezenheimDataModel.LinePoints;
+            var lineDatas = _lineDataModel.LinePoints;
 
             foreach(var pixelIndex in _pixelsClickedFilter)
             {
                 var eventReceiver = _pixelsClickedFilter.GetEntity(pixelIndex);
                 var positionComponent = _pixelsClickedFilter.Get1(pixelIndex);
                 var position = positionComponent.position;
-                if(_brezenheimDataModel.CurrentLine >= lineDatas.Count)
+                if(_lineDataModel.CurrentLine >= lineDatas.Count)
                 {
                     eventReceiver.Get<GameOverEvent>();
                     return;
                 }
 
-                var lineData = lineDatas[_brezenheimDataModel.CurrentLine];
-                if (position == lineData[_brezenheimDataModel.CurrentPoint])
+                var lineData = lineDatas[_lineDataModel.CurrentLine];
+                if (position == lineData[_lineDataModel.CurrentPoint])
                 {
-                    if(_brezenheimDataModel.CurrentPoint == lineData.Count - 1)
+                    if(_lineDataModel.CurrentPoint == lineData.Count - 1)
                     {
-                        _brezenheimDataModel.CurrentLine++;
-                        _brezenheimDataModel.CurrentPoint = 0;
-                        if (_brezenheimDataModel.CurrentLine >= lineDatas.Count)
+                        _lineDataModel.CurrentLine++;
+                        _lineDataModel.CurrentPoint = 0;
+                        if (_lineDataModel.CurrentLine >= lineDatas.Count)
                         {
                             eventReceiver.Get<GameOverEvent>();
                             return;
@@ -46,8 +46,8 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                         ref var drawData = ref eventReceiver.Get<LineDrawData>();
                         drawData.drawData = new List<(Vector2Int, Sprite)>
                         {
-                            (lineDatas[_brezenheimDataModel.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
-                            (lineDatas[_brezenheimDataModel.CurrentLine][lineDatas[_brezenheimDataModel.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
+                            (lineDatas[_lineDataModel.CurrentLine][0], _pixelSpritesContent.LineBeginningSprite),
+                            (lineDatas[_lineDataModel.CurrentLine][lineDatas[_lineDataModel.CurrentLine].Count - 1], _pixelSpritesContent.LineEndSprite)
                         };
                     }
                     else
@@ -57,11 +57,11 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                         {
                             (position, _pixelSpritesContent.FilledSprite)
                         };
-                        _brezenheimDataModel.CurrentPoint++;
+                        _lineDataModel.CurrentPoint++;
                     }
 
                     eventReceiver.Get<CorrectAnswerEvent>();
-                    _brezenheimIndexModel.Index = _brezenheimDataModel.Indexes[_brezenheimDataModel.CurrentLine][_brezenheimDataModel.CurrentPoint];
+                    _brezenheimIndexModel.Index = _lineDataModel.Indexes[_lineDataModel.CurrentLine][_lineDataModel.CurrentPoint];
                 }
 
                 else

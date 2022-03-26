@@ -12,13 +12,13 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         private readonly EcsFilter<SouthCohenData, BorderComponent> _gameModeDataFilter = null;
 
         private readonly CodeReceiver _codeReceiver = null;
-        private readonly BrezenheimDataModel _brezenheimDataModel = null;
+        private readonly LineDataModel _lineDataModel = null;
 
         void IEcsRunSystem.Run() 
         {
             if(!_restartEventFilter.IsEmpty())
             {
-                var lineData = _brezenheimDataModel.LinePoints;
+                var lineData = _lineDataModel.LinePoints;
                 foreach(var index in _gameModeDataFilter)
                 {
                     var border = _gameModeDataFilter.Get2(index);
