@@ -1,7 +1,9 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Pixelgrid.Configurations.Script;
 using Pixelgrid.Systems.Execution;
+using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.Timers;
 using UnityEngine;
 
@@ -12,6 +14,7 @@ namespace Pixelgrid {
         EcsWorld _world;
         EcsSystems _systems;
 
+        public GameFieldConfigs GameFieldConfigs;
         public GameModeConfiguration GameModeConfiguration;
         public DifficultyConfiguration difficultyConfiguration;
         public GameFieldConfiguration gameFieldConfiguration;
@@ -122,6 +125,7 @@ namespace Pixelgrid {
                  .OneFrame<UpdateSpriteImageEvent>()
 
                 // inject service instances here (order doesn't important), for example:
+                .Inject(GameFieldConfigs)
                 .Inject(GameModeConfiguration)
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)

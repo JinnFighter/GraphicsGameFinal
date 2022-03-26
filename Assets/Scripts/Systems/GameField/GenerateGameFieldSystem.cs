@@ -1,36 +1,24 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Actions;
+using Pixelgrid.Configurations.Script;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.GameField 
 {
     public sealed class GenerateGameFieldSystem : IEcsInitSystem 
     {
-        private EcsWorld _world;
-        private DifficultyConfiguration _difficultyConfiguration;
-        private GameFieldConfiguration _gameFieldConfiguration;
+        private readonly EcsWorld _world = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly GameFieldConfiguration _gameFieldConfiguration = null;
+        private readonly GameFieldConfigs _gameFieldConfigs = null;
 
         public void Init() 
         {
             var difficulty = _difficultyConfiguration.Difficulty;
 
-            int fieldSize;
-
-            switch (difficulty)
-            {
-                case 1:
-                    fieldSize = 15;
-                    break;
-                case 2:
-                    fieldSize = 20;
-                    break;
-                default:
-                    fieldSize = 10;
-                    break;
-            }
-
-            _gameFieldConfiguration.fieldSize = fieldSize;
+            int fieldSize = _gameFieldConfigs.Configs[difficulty].FieldSize;
+            
             var grid = _gameFieldConfiguration.grid;
 
             var pixelPrefab = _gameFieldConfiguration.pixel;

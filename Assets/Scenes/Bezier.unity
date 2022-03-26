@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ecsUiEmitter: {fileID: 1766571257}
+  GameFieldConfigs: {fileID: 11400000, guid: c0a59b7926eb0eb45a22f50281d54f6b, type: 2}
   GameModeConfiguration: {fileID: 1169787239}
   difficultyConfiguration: {fileID: 11400000, guid: 0ac8155fd33ab7c4fb3d091c97c6246e,
     type: 2}
