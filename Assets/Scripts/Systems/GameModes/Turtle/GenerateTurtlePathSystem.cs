@@ -30,7 +30,7 @@ namespace Pixelgrid
 
                     _direction = new RightDirectionState();
 
-                    for (var i = 0; i < _turtleConfigs.Configs[_difficultyConfiguration.Difficulty].PathCount; i++)
+                    for (var i = 0; i < _turtleConfigs[_difficultyConfiguration.Difficulty].PathCount; i++)
                         paths.Add(GeneratePath());
 
                     var entity = _filter.GetEntity(index);
@@ -49,7 +49,7 @@ namespace Pixelgrid
         List<char> GeneratePath()
         {
             var route = new List<char>();
-            for (var j = 0; j < _turtleConfigs.Configs[_difficultyConfiguration.Difficulty].PathLength; j++)
+            for (var j = 0; j < _turtleConfigs[_difficultyConfiguration.Difficulty].PathLength; j++)
             {
                 var c = _commands[Random.Range(0, 3)];
                 while (j == 0 && c != _commands[0])

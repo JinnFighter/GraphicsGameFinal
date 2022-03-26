@@ -23,7 +23,7 @@ namespace Pixelgrid
                 {
                     ref var positionComponent = ref _filter.Get2(index);
 
-                    var config = _turtleConfigs.Configs[_difficultyConfiguration.Difficulty];
+                    var config = _turtleConfigs[_difficultyConfiguration.Difficulty];
                     positionComponent.position = config.TurtleStartPosition;
 
                     var entity = _filter.GetEntity(index);

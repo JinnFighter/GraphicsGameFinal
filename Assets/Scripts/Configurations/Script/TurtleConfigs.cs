@@ -7,6 +7,7 @@ namespace Configurations.Script
     public class TurtleConfigs : ScriptableObject
     {
         [field: SerializeField] public List<TurtleConfig> Configs { get; private set; }
+        public TurtleConfig this[int difficulty] => Configs[difficulty];
     }
 
     [CreateAssetMenu(fileName = "TurtleConfig", menuName = "Configs/TurtleConfig")]
