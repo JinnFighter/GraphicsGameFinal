@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Configurations.Script;
 using Pixelgrid.Configurations.Script;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;

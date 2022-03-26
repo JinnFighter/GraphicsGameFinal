@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Configurations.Script;
 using Leopotam.Ecs;
 using Pixelgrid.Configurations.Script;
 using Pixelgrid.ScriptableObjects.Sprites;

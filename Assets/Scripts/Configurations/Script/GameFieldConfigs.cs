@@ -1,6 +1,7 @@
+using Pixelgrid.Configurations.Script;
 using UnityEngine;
 
-namespace Pixelgrid.Configurations.Script
+namespace Configurations.Script
 {
     [CreateAssetMenu(fileName = "GameFieldConfigs", menuName = "Configs/GameFieldConfigs")]
     public class GameFieldConfigs : ScriptableObject
