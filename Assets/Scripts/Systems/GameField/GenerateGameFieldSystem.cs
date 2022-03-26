@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Actions;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.ScriptableObjects.Prefabs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace Pixelgrid.Systems.GameField
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly GameFieldConfiguration _gameFieldConfiguration = null;
         private readonly GameFieldConfigs _gameFieldConfigs = null;
+        private readonly PrefabsContent _prefabsContent = null;
 
         public void Init() 
         {
@@ -21,13 +23,11 @@ namespace Pixelgrid.Systems.GameField
             
             var grid = _gameFieldConfiguration.grid;
 
-            var pixelPrefab = _gameFieldConfiguration.pixel;
-
             for (var i = 0; i < fieldSize; i++)
             {
                 for(var j = 0; j < fieldSize; j++)
                 {
-                    var pixel = Object.Instantiate(pixelPrefab, grid.transform, true);
+                    var pixel = Object.Instantiate(_prefabsContent.Pixel, grid.transform, true);
                     pixel.AddComponent<EcsUiClickAction>();
 
                     var entity = _world.NewEntity();

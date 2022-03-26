@@ -109,7 +109,7 @@ namespace Pixelgrid {
                  .Add(new PlayAudioClipSystem())
                  .InjectUi(_ecsUiEmitter)
 
-                // register one-frame components (order is important), for example:
+                 // register one-frame components (order is important), for example:
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<GameModeDataGeneratedEvent>()
@@ -139,6 +139,7 @@ namespace Pixelgrid {
                 .Inject(timersContainer)
                 .Inject(LinesGenerator)
                 .Inject(BrezenheimDataContainer)
+                .Inject(GameContent.PrefabsContent)
                 .Inject(GameContent.AudioContent)
                 .Inject(AudioPlayer)
                 .Inject(CountdownPresenter)

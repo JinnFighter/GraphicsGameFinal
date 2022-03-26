@@ -123,23 +123,24 @@ namespace Pixelgrid
                  .OneFrame<UpdateTextEvent>()
                  .OneFrame<UpdateSpriteImageEvent>()
 
-                // inject service instances here (order doesn't important), for example:
-                .Inject(GameFieldConfigs)
-                .Inject(GameModeConfiguration)
-                .Inject(difficultyConfiguration)
-                .Inject(gameFieldConfiguration)
-                .Inject(spritesContainer)
-                .Inject(timersContainer)
-                .Inject(LinesGenerator)
-                .Inject(GameContent.AudioContent)
-                .Inject(AudioPlayer)
-                .Inject(CountdownPresenter)
-                .Inject(EndgamePresenter)
-                .Inject(TutorialPresenter)
-                .Inject(ProgressBar)
-                .Inject(ScreenContainer)
-                .Inject(i18n)
-                .Init();
+                 // inject service instances here (order doesn't important), for example:
+                 .Inject(GameFieldConfigs)
+                 .Inject(GameModeConfiguration)
+                 .Inject(difficultyConfiguration)
+                 .Inject(gameFieldConfiguration)
+                 .Inject(spritesContainer)
+                 .Inject(timersContainer)
+                 .Inject(LinesGenerator)
+                 .Inject(GameContent.PrefabsContent)
+                 .Inject(GameContent.AudioContent)
+                 .Inject(AudioPlayer)
+                 .Inject(CountdownPresenter)
+                 .Inject(EndgamePresenter)
+                 .Inject(TutorialPresenter)
+                 .Inject(ProgressBar)
+                 .Inject(ScreenContainer)
+                 .Inject(i18n)
+                 .Init();
         }
 
         void Update()
