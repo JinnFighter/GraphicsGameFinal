@@ -949,6 +949,7 @@ MonoBehaviour:
   TurtleSpritesContainer: {fileID: 1374172573}
   timersContainer: {fileID: 1823950310}
   TurtleConfiguration: {fileID: 693002}
+  TurtleConfigs: {fileID: 11400000, guid: 4ebd316cf7950cd4f8216ed585a7cbc1, type: 2}
   SoundsContainer: {fileID: 1485177259}
   AudioPlayer: {fileID: 1896755959}
   CountdownPresenter: {fileID: 1228451925}

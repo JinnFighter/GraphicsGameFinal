@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
+using Configurations.Script;
 using Pixelgrid.Configurations.Script;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
@@ -24,6 +25,7 @@ namespace Pixelgrid
         public TurtleSpritesContainer TurtleSpritesContainer;
         public TimersContainer timersContainer;
         public TurtleConfiguration TurtleConfiguration;
+        public TurtleConfigs TurtleConfigs;
         public SoundsContainer SoundsContainer;
         public AudioPlayer AudioPlayer;
         public CountdownScreenPresenter CountdownPresenter;
@@ -131,6 +133,7 @@ namespace Pixelgrid
                 .Inject(difficultyConfiguration)
                 .Inject(gameFieldConfiguration)
                 .Inject(TurtleConfiguration)
+                .Inject(TurtleConfigs)
                 .Inject(spritesContainer)
                 .Inject(TurtleSpritesContainer)
                 .Inject(timersContainer)
