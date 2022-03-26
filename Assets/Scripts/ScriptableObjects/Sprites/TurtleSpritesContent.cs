@@ -5,18 +5,18 @@ namespace Pixelgrid.ScriptableObjects.Sprites
     [CreateAssetMenu(fileName = "TurtleSpritesContent", menuName = "Content/TurtleSpritesContent")]
     public class TurtleSpritesContent : ScriptableObject
     {
-        [SerializeField] private Sprite _turtleUp;
-        [SerializeField] private Sprite _turtleDown;
-        [SerializeField] private Sprite _turtleLeft;
-        [SerializeField] private Sprite _turtleRight;
+        [field: SerializeField] public Sprite TurtleUp { get; private set; }
+        [field: SerializeField] public Sprite TurtleDown { get; private set; }
+        [field: SerializeField] public Sprite TurtleLeft { get; private set; }
+        [field: SerializeField] public Sprite TurtleRight { get; private set; }
         
         public Sprite this[LookDirection direction] => direction switch
         {
-            LookDirection.Up => _turtleUp,
-            LookDirection.Down => _turtleDown,
-            LookDirection.Left => _turtleLeft,
-            LookDirection.Right => _turtleRight,
-            _ => _turtleRight
+            LookDirection.Up => TurtleUp,
+            LookDirection.Down => TurtleDown,
+            LookDirection.Left => TurtleLeft,
+            LookDirection.Right => TurtleRight,
+            _ => TurtleRight
         };
     }
 }

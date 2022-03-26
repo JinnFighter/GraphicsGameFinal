@@ -25,7 +25,6 @@ namespace Pixelgrid.Startups
         public DifficultyConfiguration difficultyConfiguration;
         public FlexibleGridLayout Grid;
         public SpritesContainer spritesContainer;
-        public TurtleSpritesContainer TurtleSpritesContainer;
         public TimersContainer timersContainer;
         public TurtleConfigs TurtleConfigs;
         public AudioPlayer AudioPlayer;
@@ -136,7 +135,7 @@ namespace Pixelgrid.Startups
                  .Inject(Grid)
                  .Inject(TurtleConfigs)
                  .Inject(spritesContainer)
-                 .Inject(TurtleSpritesContainer)
+                 .Inject(GameContent.SpritesContent.TurtleSpritesContent)
                  .Inject(timersContainer)
                  .Inject(GameContent.PrefabsContent)
                  .Inject(GameContent.AudioContent)

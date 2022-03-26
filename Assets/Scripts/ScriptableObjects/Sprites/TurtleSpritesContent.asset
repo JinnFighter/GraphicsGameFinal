@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb5f15e6cf162645b07143cefbe824c, type: 3}
   m_Name: TurtleSpritesContent
   m_EditorClassIdentifier: 
-  _turtleUp: {fileID: 21300000, guid: 7e2986cd5ecc79e4abef92556b50da54, type: 3}
-  _turtleDown: {fileID: 21300000, guid: b0e53432e4d29e4419958bcf926c9e48, type: 3}
-  _turtleLeft: {fileID: 21300000, guid: 4494de5e464682641834ab605b97448a, type: 3}
-  _turtleRight: {fileID: 21300000, guid: 51d099ae24cf7414ead198310a52383e, type: 3}
+  <TurtleUp>k__BackingField: {fileID: 21300000, guid: 7e2986cd5ecc79e4abef92556b50da54,
+    type: 3}
+  <TurtleDown>k__BackingField: {fileID: 21300000, guid: b0e53432e4d29e4419958bcf926c9e48,
+    type: 3}
+  <TurtleLeft>k__BackingField: {fileID: 21300000, guid: 4494de5e464682641834ab605b97448a,
+    type: 3}
+  <TurtleRight>k__BackingField: {fileID: 21300000, guid: 51d099ae24cf7414ead198310a52383e,
+    type: 3}

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Leopotam.Ecs;
 using Pixelgrid.Configurations.Script;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
 namespace Pixelgrid.Systems.GameModes.Turtle 
@@ -9,8 +10,8 @@ namespace Pixelgrid.Systems.GameModes.Turtle
     public sealed class UpdateTurtleSpritesSystem : IEcsRunSystem 
     {
         private readonly EcsFilter<TurtleComponent, TurtlePath, PixelPosition, TurtleCommand, CorrectAnswerEvent> _filter = null;
-
-        private readonly TurtleSpritesContainer _turtleSpritesContainer = null;
+        
+        private readonly TurtleSpritesContent _turtleSpritesContent = null;
         private readonly GameFieldConfigs _gameFieldConfigs = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly SpritesContainer _spritesContainer = null;
@@ -39,12 +40,12 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                         break;
                     case '+':
                         turtle.DirectionState = turtle.DirectionState.RotateLeft(out direction);
-                        turtle.CurrentSprite = _turtleSpritesContainer.GetSprite(direction);
+                        turtle.CurrentSprite = _turtleSpritesContent[direction];
                         drawData.Add((turtlePosition.position, turtle.CurrentSprite));
                         break;
                     case '-':
                         turtle.DirectionState = turtle.DirectionState.RotateRight(out direction);
-                        turtle.CurrentSprite = _turtleSpritesContainer.GetSprite(direction);
+                        turtle.CurrentSprite = _turtleSpritesContent[direction];
                         drawData.Add((turtlePosition.position, turtle.CurrentSprite));
                         break;
                 }

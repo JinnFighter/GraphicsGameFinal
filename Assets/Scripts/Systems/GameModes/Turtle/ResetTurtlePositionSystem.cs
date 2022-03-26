@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
 using Configurations.Script;
+using Pixelgrid.ScriptableObjects.Sprites;
 using UnityEngine;
 
 namespace Pixelgrid 
@@ -11,7 +12,7 @@ namespace Pixelgrid
         private readonly EcsFilter<TurtleComponent, PixelPosition> _filter = null;
 
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
-        private readonly TurtleSpritesContainer _turtleSpritesContainer = null;
+        private readonly TurtleSpritesContent _turtleSpritesContent = null;
         private readonly TurtleConfigs _turtleConfigs = null;
 
         void IEcsRunSystem.Run() 
@@ -30,11 +31,11 @@ namespace Pixelgrid
                     ref var drawData = ref entity.Get<LineDrawData>();
                     drawData.drawData = new List<(Vector2Int, Sprite)>
                 {
-                    (positionComponent.position, _turtleSpritesContainer.TurtleRight)
+                    (positionComponent.position, _turtleSpritesContent.TurtleRight)
                 };
 
                     ref var turtle = ref _filter.Get1(index);
-                    turtle.CurrentSprite = _turtleSpritesContainer.TurtleRight;
+                    turtle.CurrentSprite = _turtleSpritesContent.TurtleRight;
                     turtle.DirectionState = new RightDirectionState();
                 }
             }
