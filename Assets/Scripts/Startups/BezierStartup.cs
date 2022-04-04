@@ -100,7 +100,6 @@ namespace Pixelgrid
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
                  //Update UI-system goes here:
-                 .Add(new UpdateUiTextSystem())
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -124,7 +123,6 @@ namespace Pixelgrid
                  .OneFrame<UnpauseEvent>()
                  .OneFrame<DisableSystemTypeEvent>()
                  .OneFrame<EnableSystemTypeEvent>()
-                 .OneFrame<UpdateTextEvent>()
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
