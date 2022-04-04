@@ -34,11 +34,9 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                     paths.Add(GeneratePath());
 
                 var entity = _world.NewEntity();
-                ref var updateTextEvent = ref entity.Get<UpdateTextEvent>();
-                updateTextEvent.Text = string.Join("", paths[0]);
 
-                _turtlePathModel.CurrentPath = 0;
                 _turtlePathModel.CurrentSymbol = 0;
+                _turtlePathModel.CurrentPath = 0;
 
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = paths.Sum(path => path.Count);
