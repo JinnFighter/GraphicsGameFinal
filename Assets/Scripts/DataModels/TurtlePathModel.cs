@@ -5,7 +5,16 @@ namespace Pixelgrid.DataModels
     public class TurtlePathModel
     {
         public List<List<char>> Path = new List<List<char>>();
-        public int CurrentPath;
+        private int _currentPath;
+        public int CurrentPath
+        {
+            get => _currentPath;
+            set
+            {
+                _currentPath = value;
+                PathChangedEvent?.Invoke(_currentPath);
+            }
+        }
         public int CurrentSymbol;
 
         public delegate void PathChanged(int pathIndex);

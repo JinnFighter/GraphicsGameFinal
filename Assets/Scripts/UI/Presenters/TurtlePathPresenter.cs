@@ -1,10 +1,9 @@
 using Pixelgrid.DataModels;
 using Pixelgrid.UI.Views;
-using UnityEngine;
 
 namespace Pixelgrid.UI.Presenters
 {
-    public class TurtlePathPresenter : MonoBehaviour
+    public class TurtlePathPresenter
     {
         private readonly TurtlePathModel _turtlePathModel;
         private readonly TurtlePathView _turtlePathView;

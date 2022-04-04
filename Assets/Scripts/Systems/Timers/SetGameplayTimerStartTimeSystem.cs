@@ -1,13 +1,13 @@
 using Leopotam.Ecs;
 using Pixelgrid.Components.Time.Timer;
 
-namespace Pixelgrid 
+namespace Pixelgrid.Systems.Timers 
 {
     public sealed class SetGameplayTimerStartTimeSystem : IEcsRunSystem 
     {
-        private DifficultyConfiguration _difficultyConfiguration;
-        private EcsFilter<Timer, GameplayTimerComponent> _filter = null;
-        private EcsFilter<RestartGameEvent> _restartEventFilter = null;
+        private readonly DifficultyConfiguration _difficultyConfiguration = null;
+        private readonly EcsFilter<Timer, GameplayTimerComponent> _filter = null;
+        private readonly EcsFilter<RestartGameEvent> _restartEventFilter = null;
 
         public void Run()
         {

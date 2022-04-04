@@ -906,6 +906,7 @@ MonoBehaviour:
   CountdownPresenter: {fileID: 1228451925}
   EndgamePresenter: {fileID: 3572860926251362969}
   TutorialPresenter: {fileID: 1212594626}
+  TurtlePathView: {fileID: 3392237506291219003}
   ProgressBar: {fileID: 532531294}
   ScreenContainer: {fileID: 1395400024}
   PathText: {fileID: 3392237506986824529}
@@ -1272,6 +1273,7 @@ GameObject:
   - component: {fileID: 1028802214}
   - component: {fileID: 1028802213}
   - component: {fileID: 1028802212}
+  - component: {fileID: 1028802215}
   m_Layer: 5
   m_Name: TimerText
   m_TagString: Untagged
@@ -1352,6 +1354,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028802210}
   m_CullTransparentMesh: 1
+--- !u!114 &1028802215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028802210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb11546e55f3ed74cbd209a190208fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1064462200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,6 +2532,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 582723246124785759}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &582723246124785761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582723246124785760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb11546e55f3ed74cbd209a190208fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3084419950751530318 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7412361888334811047, guid: b87af42e47a10134f9e7599d52ee1feb,
