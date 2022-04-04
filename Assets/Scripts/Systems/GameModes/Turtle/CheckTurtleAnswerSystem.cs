@@ -12,8 +12,6 @@ namespace Pixelgrid.Systems.GameModes.Turtle
         { 
             foreach(var index in _filter)
             {
-                var turtlePathEntity = _filter.GetEntity(index);
-                
                 var gameplayEventReceiver = _filter.GetEntity(index);
 
                 var turtleCommand = _filter.Get3(index);
@@ -28,11 +26,6 @@ namespace Pixelgrid.Systems.GameModes.Turtle
                         _turtlePathModel.CurrentPath++;
                         if (_turtlePathModel.CurrentPath == _turtlePathModel.Path.Count)
                             gameplayEventReceiver.Get<GameOverEvent>();
-                        else
-                        {
-                            ref var updateTextEvent = ref turtlePathEntity.Get<UpdateTextEvent>();
-                            updateTextEvent.Text = new string(_turtlePathModel.Path[_turtlePathModel.CurrentPath].ToArray());
-                        }
                     }
                 }
                 else

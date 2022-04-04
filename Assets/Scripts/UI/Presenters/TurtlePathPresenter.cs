@@ -19,7 +19,10 @@ namespace Pixelgrid.UI.Presenters
 
         private void OnPathChangedEvent(int pathIndex)
         {
-            _turtlePathView.SetText(new string(_turtlePathModel.Path[_turtlePathModel.CurrentPath].ToArray()));
+            if (pathIndex < _turtlePathModel.Path.Count)
+            {
+                _turtlePathView.SetText(new string(_turtlePathModel.Path[_turtlePathModel.CurrentPath].ToArray()));
+            }
         }
     }
 }
