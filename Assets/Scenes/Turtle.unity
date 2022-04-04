@@ -2636,6 +2636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3392237506291219001}
   - component: {fileID: 3392237506291219000}
+  - component: {fileID: 3392237506291219003}
   m_Layer: 5
   m_Name: D-Field
   m_TagString: Untagged
@@ -2643,6 +2644,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3392237506291219003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392237506291219002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db601a7d6c6bc47ab1cf82d3bb7403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pathText: {fileID: 3392237506986824529}
 --- !u!222 &3392237506986824528
 CanvasRenderer:
   m_ObjectHideFlags: 0
