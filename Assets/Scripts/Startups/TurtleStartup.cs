@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Configurations.Script;
 using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
-using Pixelgrid.Configurations.Script;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
@@ -12,7 +11,6 @@ using Pixelgrid.Systems.GameModes.Turtle;
 using Pixelgrid.Systems.Timers;
 using Pixelgrid.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Pixelgrid.Startups
 {
@@ -37,7 +35,6 @@ namespace Pixelgrid.Startups
         public TurtlePathView TurtlePathView;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
-        public Text PathText;
         public GameContent GameContent;
         
         void Start()
@@ -150,7 +147,6 @@ namespace Pixelgrid.Startups
                  .Inject(TutorialPresenter)
                  .Inject(ProgressBar)
                  .Inject(ScreenContainer)
-                 .Inject(PathText)
                  .Inject(TurtlePathView)
                  .Inject(i18n)
                  .Init();
