@@ -10,6 +10,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Turtle;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,11 +34,12 @@ namespace Pixelgrid.Startups
         public CountdownScreenPresenter CountdownPresenter;
         public EndgameScreenPresenter EndgamePresenter;
         public TutorialScreenPresenter TutorialPresenter;
+        public TurtlePathView TurtlePathView;
         public ProgressBar ProgressBar;
         public UiScreenContainer ScreenContainer;
         public Text PathText;
         public GameContent GameContent;
-
+        
         void Start()
         {
             var i18n = I18n.Instance;
@@ -105,7 +107,6 @@ namespace Pixelgrid.Startups
                  .Add(new UnpauseSystem())
                  .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
                  .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
-                 .Add(new UpdateUiTextSystem())
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -129,7 +130,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<UnpauseEvent>()
                  .OneFrame<DisableSystemTypeEvent>()
                  .OneFrame<EnableSystemTypeEvent>()
-                 .OneFrame<UpdateTextEvent>()
                  .OneFrame<UpdateSpriteImageEvent>()
 
                  // inject service instances here (order doesn't important), for example:
@@ -151,6 +151,7 @@ namespace Pixelgrid.Startups
                  .Inject(ProgressBar)
                  .Inject(ScreenContainer)
                  .Inject(PathText)
+                 .Inject(TurtlePathView)
                  .Inject(i18n)
                  .Init();
         }
