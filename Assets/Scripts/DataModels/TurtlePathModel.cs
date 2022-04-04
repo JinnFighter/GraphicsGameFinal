@@ -7,5 +7,9 @@ namespace Pixelgrid.DataModels
         public List<List<char>> Path = new List<List<char>>();
         public int CurrentPath;
         public int CurrentSymbol;
+
+        public delegate void PathChanged(int pathIndex);
+
+        public event PathChanged PathChangedEvent;
     }
 }
