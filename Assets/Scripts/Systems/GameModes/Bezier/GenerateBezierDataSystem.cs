@@ -11,6 +11,7 @@ namespace Pixelgrid.Systems.GameModes.Bezier
         private readonly BezierLinesGenerator _lineDataGenerator = null;
 
         private readonly BezierDataModel _bezierDataModel = null;
+        private readonly AnswersModel _answersModel = null;
         
         public void Run()
         {
@@ -24,6 +25,9 @@ namespace Pixelgrid.Systems.GameModes.Bezier
 
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = lines.Count;
+
+                _answersModel.MaxAnswerCount = lines.Count;
+                _answersModel.CurrentAnswerCount = 0;
             }
         }
     }
