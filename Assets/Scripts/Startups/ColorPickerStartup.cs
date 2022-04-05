@@ -105,7 +105,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<GameModeDataGeneratedEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
-                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<GameOverEvent>()
                  .OneFrame<RestartGameEvent>()
                  .OneFrame<PauseEvent>()
