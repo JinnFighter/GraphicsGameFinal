@@ -86,6 +86,7 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                 var entity = _world.NewEntity();
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = zones.Sum(zonePart => zonePart.Count);
+
             }
         }
 

@@ -11,7 +11,7 @@ namespace Pixelgrid.Systems.GameModes.Bezier
         private readonly BezierLinesGenerator _lineDataGenerator = null;
 
         private readonly BezierDataModel _bezierDataModel = null;
-        
+
         public void Run()
         {
             if (!_restartEventFilter.IsEmpty())

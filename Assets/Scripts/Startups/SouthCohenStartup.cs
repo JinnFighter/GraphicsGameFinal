@@ -4,6 +4,8 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
+using Pixelgrid.Systems;
+using Pixelgrid.Systems.Answers;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
@@ -86,6 +88,7 @@ namespace Pixelgrid.Startups
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateSouthCohenLinesSystem())
                  .Add(new GenerateLineZonesSystem())
+                 .Add(new ResetAnswersModelSystem())
                  .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
@@ -97,6 +100,7 @@ namespace Pixelgrid.Startups
                  .Add(new LaunchGameplayTimerSystem())
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckSouthCohenAnswerSystem())
+                 .Add(new UpdateAnswersModelSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
@@ -136,6 +140,7 @@ namespace Pixelgrid.Startups
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_southCohenModels.LineDataModel)
                  .Inject(_southCohenModels.SouthCohenDataModel)
+                 .Inject(_southCohenModels.AnswersModel)
                  .Inject(SouthCohenConfigs)
                  .Inject(GameFieldConfigs)
                  .Inject(GameModeConfiguration)

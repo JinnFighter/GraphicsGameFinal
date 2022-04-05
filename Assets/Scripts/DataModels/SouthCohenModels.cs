@@ -4,5 +4,6 @@ namespace Pixelgrid.DataModels
     {
         public SouthCohenDataModel SouthCohenDataModel { get; } = new SouthCohenDataModel();
         public LineDataModel LineDataModel { get; } = new LineDataModel();
+        public AnswersModel AnswersModel { get; } = new AnswersModel();
     }
 }
