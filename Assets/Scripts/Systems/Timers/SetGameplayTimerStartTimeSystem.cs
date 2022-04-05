@@ -33,10 +33,6 @@ namespace Pixelgrid.Systems.Timers
                     ref var timer = ref _filter.Get1(index);
                     timer.startTime = startTime;
                     timer.currentTime = startTime;
-
-                    var entity = _filter.GetEntity(index);
-                    ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
-                    timeChangeEvent.CurrentTime = timer.currentTime;
                 }
             }
         }

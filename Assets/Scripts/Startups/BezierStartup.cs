@@ -9,6 +9,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Bezier;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.Systems.UI.Timer;
 using UnityEngine;
 
 namespace Pixelgrid.Startups
@@ -115,7 +116,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<PixelClickedEvent>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<GameModeDataGeneratedEvent>()
-                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
@@ -150,6 +150,15 @@ namespace Pixelgrid.Startups
                  .Init();
             
             _uiSystems
+                // Init systems go here:    
+                .Add(new InitCountdownTimerViewSystem())
+                .Add(new InitGameplayTimerViewSystem())
+                // RunSystems go here:
+                .Add(new UpdateTimerViewSystem())
+                // DestroySystems go here:
+                .Add(new DestroyTimerViewsSystem())
+                // Inject services here:
+                .Inject(timersContainer)
                 .Init();
         }
 

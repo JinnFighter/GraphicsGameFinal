@@ -22,9 +22,6 @@ namespace Pixelgrid.Systems.Timers
 
                 timerData.currentTime = currentTime;
 
-                ref var timeChangeEvent = ref entity.Get<TimeChangeEvent>();
-                timeChangeEvent.CurrentTime = timerData.currentTime;
-
                 if (timerData.currentTime <= 0.0000f)
                 {
                     entity.Del<Counting>();

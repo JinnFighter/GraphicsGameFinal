@@ -1663,8 +1663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63f821a3a6207a4c990c04b982aa98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CountdownTimer: {fileID: 582723246124785760}
-  gameplayTimer: {fileID: 1028802210}
+  CountdownTimer: {fileID: 582723246124785761}
+  GameplayTimer: {fileID: 1028802215}
 --- !u!1 &1896755958
 GameObject:
   m_ObjectHideFlags: 0

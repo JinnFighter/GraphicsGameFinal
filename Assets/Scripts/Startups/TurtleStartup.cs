@@ -9,6 +9,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Turtle;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.Systems.UI.Timer;
 using Pixelgrid.UI.Views;
 using UnityEngine;
 
@@ -119,7 +120,6 @@ namespace Pixelgrid.Startups
                  .OneFrame<TurtleCommand>()
                  .OneFrame<StartGameEvent>()
                  .OneFrame<GameModeDataGeneratedEvent>()
-                 .OneFrame<TimeChangeEvent>()
                  .OneFrame<TimerEndEvent>()
                  .OneFrame<CorrectAnswerEvent>()
                  .OneFrame<WrongAnswerEvent>()
@@ -156,6 +156,15 @@ namespace Pixelgrid.Startups
                  .Init();
             
             _uiSystems
+                // Init systems go here:    
+                .Add(new InitCountdownTimerViewSystem())
+                .Add(new InitGameplayTimerViewSystem())
+                // RunSystems go here:
+                .Add(new UpdateTimerViewSystem())
+                // DestroySystems go here:
+                .Add(new DestroyTimerViewsSystem())
+                // Inject services here:
+                .Inject(timersContainer)
                 .Init();
         }
 
