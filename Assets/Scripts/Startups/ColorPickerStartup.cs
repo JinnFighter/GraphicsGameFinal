@@ -77,6 +77,7 @@ namespace Pixelgrid.Startups
                  .Add(new CheckRestartClickSystem())
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new ResetColorsDataSystem())
+                 .Add(new ResetAnswersModelSystem())
                  .Add(new ResetProgressBarSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())

@@ -16,7 +16,6 @@ namespace Pixelgrid.Systems.GameModes.ColorPicker
         private readonly Slider _slider = null;
         private readonly ColorPickerDataModel _colorPickerDataModel = null;
         private readonly ColorContainerModel _colorContainerModel = null;
-        private readonly AnswersModel _answersModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -40,8 +39,6 @@ namespace Pixelgrid.Systems.GameModes.ColorPicker
                 var entity = _world.NewEntity();
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = _colorPickerDataModel.ColorCount;
-                _answersModel.MaxAnswerCount = dataGeneratedEvent.DataCount;
-                _answersModel.CurrentAnswerCount = 0;
             }
         }
     }
