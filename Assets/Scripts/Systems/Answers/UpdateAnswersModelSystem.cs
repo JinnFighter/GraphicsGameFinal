@@ -1,7 +1,7 @@
 using Leopotam.Ecs;
 using Pixelgrid.DataModels;
 
-namespace Pixelgrid.Systems
+namespace Pixelgrid.Systems.Answers
 {
     public class UpdateAnswersModelSystem : IEcsRunSystem
     {
