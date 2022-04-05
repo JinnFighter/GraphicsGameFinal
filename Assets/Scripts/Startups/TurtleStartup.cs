@@ -9,6 +9,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Turtle;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.Systems.UI.Timer;
 using Pixelgrid.UI.Views;
 using UnityEngine;
 
@@ -155,6 +156,13 @@ namespace Pixelgrid.Startups
                  .Init();
             
             _uiSystems
+                // Init systems go here:    
+                .Add(new InitCountdownTimerViewSystem())
+                .Add(new InitGameplayTimerViewSystem())
+                // RunSystems go here:
+                .Add(new UpdateTimerViewSystem())
+                // Inject services here:
+                .Inject(timersContainer)
                 .Init();
         }
 

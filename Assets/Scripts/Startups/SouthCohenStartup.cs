@@ -9,6 +9,7 @@ using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.SouthCohen;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.Systems.UI.Timer;
 using UnityEngine;
 
 namespace Pixelgrid.Startups
@@ -157,6 +158,13 @@ namespace Pixelgrid.Startups
                  .Init();
             
             _uiSystems
+                // Init systems go here:    
+                .Add(new InitCountdownTimerViewSystem())
+                .Add(new InitGameplayTimerViewSystem())
+                // RunSystems go here:
+                .Add(new UpdateTimerViewSystem())
+                // Inject services here:
+                .Inject(timersContainer)
                 .Init();
         }
 
