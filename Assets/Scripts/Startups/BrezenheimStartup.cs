@@ -1,8 +1,7 @@
-using Leopotam.Ecs;
-using Leopotam.Ecs.Ui.Systems;
 using System.Collections.Generic;
 using Configurations.Script;
-using Pixelgrid.Configurations.Script;
+using Leopotam.Ecs;
+using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
 using Pixelgrid.Systems.Audio;
@@ -13,7 +12,7 @@ using Pixelgrid.Systems.Timers;
 using Pixelgrid.UI.Views;
 using UnityEngine;
 
-namespace Pixelgrid {
+namespace Pixelgrid.Startups {
     sealed class BrezenheimStartup : MonoBehaviour 
     {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
