@@ -86,6 +86,7 @@ namespace Pixelgrid.Startups {
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new GenerateLineDataSystem())
                  .Add(new GenerateDDataSystem())
+                 .Add(new ResetAnswersModelSystem())
                  .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())

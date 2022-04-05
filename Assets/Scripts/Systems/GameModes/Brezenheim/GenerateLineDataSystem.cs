@@ -14,7 +14,6 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
         private readonly BrezenheimConfigs _brezenheimConfigs = null;
         private readonly LineDataModel _lineDataModel = null;
-        private readonly AnswersModel _answersModel = null;
 
         public void Run()
         {
@@ -37,8 +36,6 @@ namespace Pixelgrid.Systems.GameModes.Brezenheim
                 var entity = _world.NewEntity();
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = _lineDataModel.LinePoints.Sum(linePoint => linePoint.Count);
-                _answersModel.MaxAnswerCount = dataGeneratedEvent.DataCount;
-                _answersModel.CurrentAnswerCount = 0;
             }
         }
     }
