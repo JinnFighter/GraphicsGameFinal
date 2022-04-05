@@ -17,8 +17,9 @@ namespace Pixelgrid {
     sealed class BrezenheimStartup : MonoBehaviour 
     {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
-        EcsWorld _world;
-        EcsSystems _systems;
+        private EcsWorld _world;
+        private EcsSystems _logicSystems;
+        private EcsSystems _uiSystems;
 
         private BrezenheimModels _brezenheimModels = new BrezenheimModels();
 
@@ -44,10 +45,12 @@ namespace Pixelgrid {
             I18n.SetLocale("ru-RU");
             // void can be switched to IEnumerator for support coroutines.
             _world = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _logicSystems = new EcsSystems (_world);
+            _uiSystems = new EcsSystems(_world);
 #if UNITY_EDITOR
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create (_world);
-            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_systems);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_logicSystems);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (_uiSystems);
 #endif
 
             var systemNamesContainer = new SystemNamesContainer();
@@ -61,7 +64,7 @@ namespace Pixelgrid {
 
             _brezenheimModels = new BrezenheimModels();
 
-            _systems
+            _logicSystems
                  // register your systems here:
 
                  //InitSystems go here:
@@ -102,8 +105,8 @@ namespace Pixelgrid {
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem())
                  .Add(new UnpauseSystem())
-                 .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
-                 .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
+                 .Add(new DisableSystemsByTypeSystem(_logicSystems, systemNamesContainer))
+                 .Add(new EnableSystemsByTypeSystem(_logicSystems, systemNamesContainer))
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -151,19 +154,32 @@ namespace Pixelgrid {
                  .Inject(ScreenContainer)
                  .Inject(i18n)
                  .Init ();
+            
+            _uiSystems.
+                Init();
         }
 
-        void Update () {
-            _systems?.Run ();
+        void Update() 
+        {
+            _logicSystems?.Run();
+            _uiSystems?.Run();
         }
 
-        void OnDestroy () {
-            if (_systems != null) {
-                _systems.Destroy ();
-                _systems = null;
-                _world.Destroy ();
-                _world = null;
+        void OnDestroy() 
+        {
+            if (_uiSystems != null)
+            {
+                _uiSystems.Destroy();
+                _uiSystems = null;
             }
+            
+            if (_logicSystems != null) {
+                _logicSystems.Destroy ();
+                _logicSystems = null;
+            }
+            
+            _world.Destroy();
+            _world = null;
         }
     }
 }
