@@ -161,6 +161,8 @@ namespace Pixelgrid.Startups
                 .Add(new InitGameplayTimerViewSystem())
                 // RunSystems go here:
                 .Add(new UpdateTimerViewSystem())
+                // DestroySystems go here:
+                .Add(new DestroyTimerViewsSystem())
                 // Inject services here:
                 .Inject(timersContainer)
                 .Init();
