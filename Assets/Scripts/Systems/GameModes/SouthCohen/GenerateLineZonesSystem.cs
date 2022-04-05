@@ -17,7 +17,6 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
         private readonly SouthCohenDataModel _southCohenDataModel = null;
         private readonly SouthCohenConfigs _southCohenConfigs = null;
         private readonly DifficultyConfiguration _difficultyConfiguration = null;
-        private readonly AnswersModel _answersModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -87,8 +86,6 @@ namespace Pixelgrid.Systems.GameModes.SouthCohen
                 var entity = _world.NewEntity();
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = zones.Sum(zonePart => zonePart.Count);
-                _answersModel.MaxAnswerCount = dataGeneratedEvent.DataCount;
-                _answersModel.CurrentAnswerCount = 0;
 
             }
         }
