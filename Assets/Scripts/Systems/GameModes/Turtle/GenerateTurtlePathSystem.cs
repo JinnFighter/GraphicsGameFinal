@@ -20,6 +20,7 @@ namespace Pixelgrid.Systems.GameModes.Turtle
         private readonly List<char> _commands = new List<char>{ TurtleModeConfig.ForwardSymbol, TurtleModeConfig.TurnLeftSymbol, TurtleModeConfig.TurnRightSymbol };
 
         private readonly TurtlePathModel _turtlePathModel = null;
+        private readonly AnswersModel _answersModel = null;
 
         void IEcsRunSystem.Run() 
         {
@@ -40,6 +41,8 @@ namespace Pixelgrid.Systems.GameModes.Turtle
 
                 ref var dataGeneratedEvent = ref entity.Get<GameModeDataGeneratedEvent>();
                 dataGeneratedEvent.DataCount = paths.Sum(path => path.Count);
+                _answersModel.MaxAnswerCount = dataGeneratedEvent.DataCount;
+                _answersModel.CurrentAnswerCount = 0;
             }
         }
 
