@@ -4,6 +4,7 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
+using Pixelgrid.Systems;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameModes.ColorPicker;
@@ -83,6 +84,7 @@ namespace Pixelgrid.Startups
                  .Add(new CheckColorPickerClickSystem(), "CheckColorPickerClick")
                  .Add(new LaunchStatTrackerStopwatchSystem())
                  .Add(new CheckColorPickerAnswerSystem())
+                 .Add(new UpdateAnswersModelSystem())
                  .Add(new UpdateStatDataSystem())
                  .Add(new UpdateProgressBarSystem())
                  .Add(new GameOverOnTimerEndSystem())
@@ -116,6 +118,7 @@ namespace Pixelgrid.Startups
                  // inject service instances here (order doesn't important), for example:
                  .Inject(_colorPickerModels.ColorPickerDataModel)
                  .Inject(_colorPickerModels.ColorContainerModel)
+                 .Inject(_colorPickerModels.AnswersModel)
                  .Inject(ColorPickerConfigs)
                  .Inject(GameModeConfiguration)
                  .Inject(difficultyConfiguration)

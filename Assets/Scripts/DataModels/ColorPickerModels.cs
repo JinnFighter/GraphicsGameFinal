@@ -4,5 +4,6 @@ namespace Pixelgrid.DataModels
     {
         public ColorPickerDataModel ColorPickerDataModel { get; } = new ColorPickerDataModel();
         public ColorContainerModel ColorContainerModel { get; } = new ColorContainerModel();
+        public AnswersModel AnswersModel { get; } = new AnswersModel();
     }
 }
