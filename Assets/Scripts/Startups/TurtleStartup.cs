@@ -17,8 +17,9 @@ namespace Pixelgrid.Startups
     sealed class TurtleStartup : MonoBehaviour
     {
         [SerializeField] EcsUiEmitter _ecsUiEmitter;
-        EcsWorld _world;
-        EcsSystems _systems;
+        private EcsWorld _world;
+        private EcsSystems _logicSystems;
+        private EcsSystems _uiSystems;
 
         private TurtleModels _turtleModels;
 
@@ -43,10 +44,13 @@ namespace Pixelgrid.Startups
             I18n.SetLocale("ru-RU");
             // void can be switched to IEnumerator for support coroutines.
             _world = new EcsWorld();
-            _systems = new EcsSystems(_world);
+            _logicSystems = new EcsSystems(_world);
+            _uiSystems = new EcsSystems(_world);
+            
 #if UNITY_EDITOR
             Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
-            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_logicSystems);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_uiSystems);
 #endif
             
             var systemNamesContainer = new SystemNamesContainer();
@@ -60,7 +64,7 @@ namespace Pixelgrid.Startups
 
             _turtleModels = new TurtleModels();
             
-            _systems
+            _logicSystems
                  // register your systems here:
 
                  //InitSystems go here:
@@ -102,8 +106,8 @@ namespace Pixelgrid.Startups
                  .Add(new ShowEndgameScreenSystem())
                  .Add(new PauseSystem())
                  .Add(new UnpauseSystem())
-                 .Add(new DisableSystemsByTypeSystem(_systems, systemNamesContainer))
-                 .Add(new EnableSystemsByTypeSystem(_systems, systemNamesContainer))
+                 .Add(new DisableSystemsByTypeSystem(_logicSystems, systemNamesContainer))
+                 .Add(new EnableSystemsByTypeSystem(_logicSystems, systemNamesContainer))
                  .Add(new UpdateImageSpritesSystem())
                  .Add(new EnqueueCorrectAnswerAudioClipSystem())
                  .Add(new EnqueueWrongAnswerAudioClipSystem())
@@ -150,22 +154,33 @@ namespace Pixelgrid.Startups
                  .Inject(TurtlePathView)
                  .Inject(i18n)
                  .Init();
+            
+            _uiSystems
+                .Init();
         }
 
         void Update()
         {
-            _systems?.Run();
+            _logicSystems?.Run();
+            _uiSystems?.Run();
         }
 
         void OnDestroy()
         {
-            if (_systems != null)
+            if (_uiSystems != null)
             {
-                _systems.Destroy();
-                _systems = null;
-                _world.Destroy();
-                _world = null;
+                _uiSystems.Destroy();
+                _uiSystems = null;
             }
+            
+            if (_logicSystems != null)
+            {
+                _logicSystems.Destroy();
+                _logicSystems = null;
+            }
+            
+            _world.Destroy();
+            _world = null;
         }
     }
 }
