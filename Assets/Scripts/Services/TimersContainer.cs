@@ -1,10 +1,11 @@
+using Pixelgrid.UI.Views;
 using UnityEngine;
 
 namespace Pixelgrid
 {
     public class TimersContainer : MonoBehaviour
     {
-        public GameObject CountdownTimer;
-        public GameObject gameplayTimer;
+        public TimerView CountdownTimer;
+        public TimerView GameplayTimer;
     }
 }
