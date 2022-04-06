@@ -4,13 +4,13 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
-using Pixelgrid.Systems;
 using Pixelgrid.Systems.Answers;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameField;
 using Pixelgrid.Systems.GameModes.Brezenheim;
 using Pixelgrid.Systems.Timers;
+using Pixelgrid.Systems.UI.ProgressBar;
 using Pixelgrid.Systems.UI.Timer;
 using Pixelgrid.UI.Views;
 using UnityEngine;
@@ -87,7 +87,6 @@ namespace Pixelgrid.Startups {
                  .Add(new GenerateLineDataSystem())
                  .Add(new GenerateDDataSystem())
                  .Add(new ResetAnswersModelSystem())
-                 .Add(new ResetProgressBarSystem())
                  .Add(new SetGameplayTimerStartTimeSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
@@ -102,7 +101,6 @@ namespace Pixelgrid.Startups {
                  .Add(new UpdateStatDataSystem())
                  .Add(new ClearGridSystem())
                  .Add(new UpdateGameFieldPixelsSystem())
-                 .Add(new UpdateProgressBarSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new DisableGameplayTimerOnGameOverSystem())
@@ -154,7 +152,6 @@ namespace Pixelgrid.Startups {
                  .Inject(CountdownPresenter)
                  .Inject(EndgamePresenter)
                  .Inject(TutorialPresenter)
-                 .Inject(ProgressBar)
                  .Inject(ScreenContainer)
                  .Inject(i18n)
                  .Init ();
@@ -163,12 +160,17 @@ namespace Pixelgrid.Startups {
                 // Init systems go here:    
                 .Add(new InitCountdownTimerViewSystem())
                 .Add(new InitGameplayTimerViewSystem())
+                .Add(new InitProgressBarViewSystem())
                 // RunSystems go here:
                 .Add(new UpdateTimerViewSystem())
+                .Add(new UpdateProgressBarViewSystem())
                 // DestroySystems go here:
                 .Add(new DestroyTimerViewsSystem())
+                .Add(new DestroyProgressBarViewSystem())
                 // Inject services here:
                 .Inject(timersContainer)
+                .Inject(_brezenheimModels.AnswersModel)
+                .Inject(ProgressBar)
                 .Init();
         }
 

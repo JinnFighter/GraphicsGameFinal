@@ -4,11 +4,11 @@ using Leopotam.Ecs;
 using Leopotam.Ecs.Ui.Systems;
 using Pixelgrid.DataModels;
 using Pixelgrid.ScriptableObjects;
-using Pixelgrid.Systems;
 using Pixelgrid.Systems.Answers;
 using Pixelgrid.Systems.Audio;
 using Pixelgrid.Systems.Execution;
 using Pixelgrid.Systems.GameModes.ColorPicker;
+using Pixelgrid.Systems.UI.ProgressBar;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,7 +78,6 @@ namespace Pixelgrid.Startups
                  .Add(new UpdateStopwatchesSystem(), "UpdateStopwatches")
                  .Add(new ResetColorsDataSystem())
                  .Add(new ResetAnswersModelSystem())
-                 .Add(new ResetProgressBarSystem())
                  .Add(new ResetStopwatchTimeSystem())
                  .Add(new ResetStatTrackerSystem())
                  .Add(new StartGameSystem())
@@ -88,7 +87,6 @@ namespace Pixelgrid.Startups
                  .Add(new CheckColorPickerAnswerSystem())
                  .Add(new UpdateAnswersModelSystem())
                  .Add(new UpdateStatDataSystem())
-                 .Add(new UpdateProgressBarSystem())
                  .Add(new GameOverOnTimerEndSystem())
                  .Add(new DisableStopwatchOnGameOverSystem())
                  .Add(new ShowEndgameScreenSystem())
@@ -129,13 +127,21 @@ namespace Pixelgrid.Startups
                  .Inject(AudioPlayer)
                  .Inject(EndgamePresenter)
                  .Inject(TutorialPresenter)
-                 .Inject(ProgressBar)
                  .Inject(ScreenContainer)
                  .Inject(Slider)
                  .Inject(i18n)
                  .Init();
             
             _uiSystems
+                 // Init systems go here:
+                .Add(new InitProgressBarViewSystem())
+                 // Run systems go here:
+                 .Add(new UpdateProgressBarViewSystem())
+                 // Destroy systems go here:
+                 .Add(new DestroyProgressBarViewSystem())
+                 // Inject services here:
+                 .Inject(_colorPickerModels.AnswersModel)
+                 .Inject(ProgressBar)
                 .Init();
         }
 
